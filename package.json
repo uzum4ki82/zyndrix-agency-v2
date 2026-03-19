@@ -1,0 +1,14 @@
+{
+  "name": "zyndrix-agency",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx servor ./ 50237",
+    "dashboard:dev": "cd dashboard && npm run dev",
+    "dashboard:build": "cd dashboard && npm run build",
+    "dashboard:start": "cd dashboard && npm run start"
+  },
+  "devDependencies": {
+    "servor": "^4.0.2"
+  }
+}

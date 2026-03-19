@@ -1,0 +1,111 @@
+{
+  "name": "ZYNDRIX - Lead Discovery Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1-5"
+            }
+          ]
+        }
+      },
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "search_queries",
+              "value": "real estate agencies Barcelona, dental clinics Madrid, ecommerce stores Spain"
+            }
+          ]
+        }
+      },
+      "name": "Search Queries",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "search_queries",
+        "options": {
+          "splitChar": ","
+        }
+      },
+      "name": "Split Queries",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://maps.googleapis.com/maps/api/place/textsearch/json?query={{$json[\"search_queries\"]}}&key=YOUR_GOOGLE_API_KEY",
+        "options": {}
+      },
+      "name": "Google Maps Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "name": "Extract Results",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "companies",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{$json.name}}",
+            "website": "={{$json.website}}",
+            "location": "={{$json.formatted_address}}",
+            "industry": "={{$json.types[0]}}"
+          }
+        },
+        "options": {
+          "onConflict": "doNothing"
+        }
+      },
+      "name": "Upsert to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1200, 300]
+    }
+  ],
+  "connections": {
+    "Daily Schedule": {
+      "main": [[{ "node": "Search Queries", "type": "main", "index": 0 }]]
+    },
+    "Search Queries": {
+      "main": [[{ "node": "Split Queries", "type": "main", "index": 0 }]]
+    },
+    "Split Queries": {
+      "main": [[{ "node": "Google Maps Search", "type": "main", "index": 0 }]]
+    },
+    "Google Maps Search": {
+      "main": [[{ "node": "Extract Results", "type": "main", "index": 0 }]]
+    },
+    "Extract Results": {
+      "main": [[{ "node": "Upsert to Supabase", "type": "main", "index": 0 }]]
+    }
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "name": "ZYNDRIX | V5 (Seguro y Funcional)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "options": {}
+      },
+      "name": "Webhook (Supabase Trigger)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [-50, 300],
+      "webhookId": "zyndrix-lead-scoring-webhook-id"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Eres el Agente de Inteligencia de Ventas Executive de ZYNDRIX. Tu misión es analizar leads de alto valor tecnológico con precisión quirúrgica.\n\nAnaliza los datos del lead y devuelve un JSON estricto con:\n1. \"lead_score\" (1-10): \n   - 9-10: C-Level de Fortune 500 o Startup Serie B+, con necesidad clara de IA.\n   - 7-8: Empresa mediana con procesos digitalizados y presupuesto asignado.\n   - 4-6: SMB o Freelance con dudas básicas; potencial de crecimiento bajo.\n   - 1-3: Spam, estudiantes, o servicios no alineados.\n2. \"reasoning\": Justificación estratégica basada en el tamaño de mercado, sector y madurez digital percibida.\n3. \"suggested_email\": Redacta un correo de nivel director. \n   - Estilo: Minimalista, directo, futurista.\n   - Si es VIP: Propón una sesión de arquitectura IA personalizada.\n   - Si es Medio: Envía un PDF de casos de éxito y link a agenda.\n   - Si es Bajo: Despide con recursos gratuitos y elegancia.\n   - USA HTML: Solo tags <p>, <b>, <br>."
+            },
+            {
+              "role": "user",
+              "content": "={{ 'Datos:\\nNombre: ' + $('Webhook (Supabase Trigger)').first().json.body.record.name + '\\nEmpresa: ' + $('Webhook (Supabase Trigger)').first().json.body.record.company_name + '\\nEmail: ' + $('Webhook (Supabase Trigger)').first().json.body.record.email + '\\nMensaje/Interés: ' + $('Webhook (Supabase Trigger)').first().json.body.record.message }}"
+            }
+          ]
+        },
+        "responseFormat": {
+          "type": "json_object"
+        },
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "name": "OpenAI (Lead Analyzer)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [150, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "lead_score",
+              "value": "={{ JSON.parse($json.message.content).lead_score }}"
+            }
+          ],
+          "string": [
+            {
+              "name": "reasoning",
+              "value": "={{ JSON.parse($json.message.content).reasoning }}"
+            },
+            {
+              "name": "suggested_email",
+              "value": "={{ JSON.parse($json.message.content).suggested_email }}"
+            },
+            {
+              "name": "id",
+              "value": "={{ $('Webhook (Supabase Trigger)').first().json.body.record.id }}"
+            },
+            {
+              "name": "lead_email",
+              "value": "={{ $('Webhook (Supabase Trigger)').first().json.body.record.email }}"
+            },
+            {
+              "name": "lead_name",
+              "value": "={{ $('Webhook (Supabase Trigger)').first().json.body.record.name }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $('Webhook (Supabase Trigger)').first().json.body.record.company_name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Format JSON Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [350, 300]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE leads SET lead_score = $1, reasoning = $2 WHERE id = $3",
+        "queryParams": "={{ [$json.lead_score, $json.reasoning, $json.id] }}",
+        "options": {}
+      },
+      "name": "Postgres (Update DB)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [600, 150],
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_POSTGRES_CREDENTIAL_ID",
+          "name": "Supabase Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "number",
+        "value1": "={{ $json.lead_score }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": 8,
+              "operation": "largerEqual"
+            },
+            {
+              "value2": 5,
+              "operation": "largerEqual"
+            }
+          ]
+        }
+      },
+      "name": "Switch (Routing)",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 2,
+      "position": [600, 400]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "={{ '🚨 *NUEVO LEAD VIP DETECTADO*\\n\\n👤 Nombre: ' + $json.lead_name + '\\n🏢 Empresa: ' + $json.company_name + '\\n📈 *Lead Score: ' + $json.lead_score + '/10*\\n🧠 *Razón:* ' + $json.reasoning + '\\n\\n👉 *Acción requerida:* ¡Llama ahora mismo!' }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "name": "Telegram (Alerta VIP)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [900, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_BOT_TOKEN",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.lead_email }}",
+        "subject": "Tu consulta técnica sobre IA en ZYNDRIX",
+        "emailType": "html",
+        "message": "={{ '<!DOCTYPE html>\\n<html lang=\"es\">\\n<head>\\n<meta charset=\"UTF-8\">\\n<style>\\nbody { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; background-color: #020617; color: #f8fafc; margin: 0; padding: 0; }\\n.wrapper { background-color: #020617; padding: 40px 10px; }\\n.container { max-width: 600px; margin: 0 auto; background: linear-gradient(180deg, #0f172a 0%, #020617 100%); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 24px; overflow: hidden; }\\n.header { padding: 40px 30px; text-align: left; }\\n.logo { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: #fff; text-transform: uppercase; }\\n.logo span { color: #38bdf8; }\\n.content { padding: 0 40px 40px; font-size: 16px; line-height: 1.8; color: #94a3b8; }\\n.content b { color: #f1f5f9; }\\n.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent); margin: 30px 0; }\\n.cta-wrap { text-align: left; margin-top: 40px; }\\n.cta-btn { background: #38bdf8; color: #020617 !important; text-decoration: none; padding: 16px 36px; border-radius: 12px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; }\\n.footer { padding: 30px 40px; background: rgba(15, 23, 42, 0.5); font-size: 11px; color: #475569; text-align: left; border-top: 1px solid rgba(255,255,255,0.03); }\\n</style>\\n</head>\\n<body>\\n<div class=\"wrapper\">\\n<div class=\"container\">\\n<div class=\"header\">\\n<div class=\"logo\">ZYNDR<span>IX</span></div>\\n<p style=\"color: #38bdf8; font-size: 11px; font-weight: 700; letter-spacing: 3px; margin: 8px 0 0;\">INTELLIGENCE AGENCY</p>\\n</div>\\n<div class=\"content\">\\n<p>Hola <b>' + $json.lead_name + '</b>,</p>\\n' + $json.suggested_email + '\\n<div class=\"divider\"></div>\\n<div class=\"cta-wrap\">\\n<a href=\"https://calendly.com/zyndrix\" class=\"cta-btn\">Agendar Discovery Session</a>\\n</div>\\n</div>\\n<div class=\"footer\">\\n<p>&copy; 2026 ZYNDRIX Intelligence. Este mensaje es confidencial y procesado mediante nuestro pipeline de IA autónomo. Madrid, España.</p>\\n</div>\\n</div>\\n</div>\\n</body>\\n</html>' }}",
+        "appendAttribution": false,
+        "options": {}
+      },
+      "name": "Gmail (HTML - Standard)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [900, 400],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.lead_email }}",
+        "subject": "Gracias por interesarte en ZYNDRIX",
+        "emailType": "html",
+        "message": "={{ '<!DOCTYPE html>\\n<html lang=\"es\">\\n<head>\\n<meta charset=\"UTF-8\">\\n<style>\\nbody { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif; background-color: #020617; color: #f8fafc; margin: 0; padding: 0; }\\n.wrapper { background-color: #020617; padding: 40px 10px; }\\n.container { max-width: 600px; margin: 0 auto; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; overflow: hidden; }\\n.header { padding: 30px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03); }\\n.logo { font-size: 22px; font-weight: 700; letter-spacing: 2px; color: #fff; }\\n.content { padding: 30px; font-size: 15px; line-height: 1.7; color: #94a3b8; }\\n.footer { padding: 20px; font-size: 10px; color: #475569; text-align: center; }\\n</style>\\n</head>\\n<body>\\n<div class=\"wrapper\">\\n<div class=\"container\">\\n<div class=\"header\"><div class=\"logo\">ZYNDRIX</div></div>\\n<div class=\"content\">\\n<p>Hola <b>' + $json.lead_name + '</b>,</p>\\n' + $json.suggested_email + '\\n</div>\\n<div class=\"footer\"><p>&copy; 2026 Zyndrix AI Agency</p></div>\\n</div>\\n</div>\\n</body>\\n</html>' }}",
+        "appendAttribution": false,
+        "options": {}
+      },
+      "name": "Gmail (HTML - Low Priority)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [900, 600],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook (Supabase Trigger)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI (Lead Analyzer)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI (Lead Analyzer)": {
+      "main": [
+        [
+          {
+            "node": "Format JSON Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format JSON Output": {
+      "main": [
+        [
+          {
+            "node": "Postgres (Update DB)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch (Routing)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch (Routing)": {
+      "main": [
+        [
+          {
+            "node": "Telegram (Alerta VIP)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail (HTML - Standard)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail (HTML - Low Priority)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}

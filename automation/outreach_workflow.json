@@ -1,0 +1,85 @@
+{
+  "name": "ZYNDRIX - Outreach & Response Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": "prospects",
+        "event": "rowUpdated",
+        "filters": {
+          "status": "Enriched",
+          "lead_score": ">=7"
+        }
+      },
+      "name": "Qualified Lead Trigger",
+      "type": "n8n-nodes-base.supabaseTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "model": "claude-3-5-sonnet-20240620",
+        "prompt": "={{$node[\"Outreach Prompt\"].json.content}}",
+        "jsonMode": true
+      },
+      "name": "Generate Message",
+      "type": "n8n-nodes-base.anthropic",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "resource": "email",
+        "fromEmail": "sales@zyndrix.ai",
+        "toEmail": "={{$node[\"Qualified Lead Trigger\"].json.email}}",
+        "subject": "={{$json.subject}}",
+        "text": "={{$json.message}}",
+        "options": {}
+      },
+      "name": "Send SMTP Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "outreach_messages",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prospect_id": "={{$node[\"Qualified Lead Trigger\"].json.id}}",
+            "message": "={{$node[\"Generate Message\"].json.message}}",
+            "subject": "={{$node[\"Generate Message\"].json.subject}}",
+            "status": "Sent",
+            "sent_at": "={{$now}}"
+          }
+        }
+      },
+      "name": "Log Sent Message",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [950, 300]
+    }
+  ],
+  "connections": {
+    "Qualified Lead Trigger": {
+      "main": [[{ "node": "Generate Message", "type": "main", "index": 0 }]]
+    },
+    "Generate Message": {
+      "main": [[{ "node": "Send SMTP Email", "type": "main", "index": 0 }]]
+    },
+    "Send SMTP Email": {
+      "main": [[{ "node": "Log Sent Message", "type": "main", "index": 0 }]]
+    }
+  }
+}

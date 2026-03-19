@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/dashboard/(.*)",
+      "destination": "/dashboard/$1"
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
