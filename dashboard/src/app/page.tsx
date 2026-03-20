@@ -153,42 +153,44 @@ export default function OverviewPage() {
             <div className="w-1 h-1 rounded-full bg-slate-700" />
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Estado: Operativo</span>
           </div>
-          <h2 className="text-5xl font-extrabold tracking-tighter text-white uppercase italic">Vista General</h2>
-          <p className="text-slate-400 text-lg font-medium italic">
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter text-white uppercase italic">Vista General</h2>
+          <p className="text-slate-400 text-base md:text-lg font-medium italic">
             Pipeline autónomo operando al <span className="text-emerald-400 font-bold underline decoration-emerald-500/30 underline-offset-4">98.2% de eficiencia</span>.
-            <span className="ml-3 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] uppercase tracking-widest not-italic inline-flex items-center gap-2">
+            <span className="md:ml-3 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] uppercase tracking-widest not-italic inline-flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
               Uptime: 99.99%
             </span>
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" onClick={handleDownload}>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="outline" onClick={handleDownload} className="flex-1 md:flex-none justify-center">
             <Download size={16} />
-            Descargar Reporte
+            <span className="hidden sm:inline">Descargar Reporte</span>
+            <span className="sm:hidden">Reporte</span>
           </Button>
-          <Button variant="primary" onClick={handleNewCampaign}>
+          <Button variant="primary" onClick={handleNewCampaign} className="flex-1 md:flex-none justify-center">
             <Zap size={16} fill="currentColor" />
-            Nueva Campaña
+            <span className="hidden sm:inline">Nueva Campaña</span>
+            <span className="sm:hidden">Campaña</span>
           </Button>
         </div>
       </section>
 
       {/* STATS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {stats.map((stat, i) => (
           <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-8 rounded-[2.5rem] bg-slate-900/30 border border-slate-800/40 hover:border-slate-700 transition-all group relative overflow-hidden cursor-pointer"
+            className="p-5 md:p-8 rounded-3xl md:rounded-[2.5rem] bg-slate-900/30 border border-slate-800/40 hover:border-slate-700 transition-all group relative overflow-hidden cursor-pointer"
           >
             <div className={`absolute top-0 right-0 w-32 h-32 ${stat.bg} blur-[80px] rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform`} />
             
-            <div className="flex justify-between items-start mb-10 relative z-10">
-              <div className={`p-5 rounded-2xl ${stat.bg} ${stat.color} border ${stat.border} shadow-2xl`}>
-                <stat.icon size={32} />
+            <div className="flex justify-between items-start mb-6 md:mb-10 relative z-10">
+              <div className={`p-4 md:p-5 rounded-xl md:rounded-2xl ${stat.bg} ${stat.color} border ${stat.border} shadow-2xl`}>
+                <stat.icon size={24} className="md:w-8 md:h-8" />
               </div>
               <div className="flex items-center gap-1 text-emerald-400 text-[10px] font-black bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20 uppercase tracking-widest">
                 <TrendingUp size={12} />
@@ -198,7 +200,7 @@ export default function OverviewPage() {
             
             <div className="space-y-1 relative z-10">
               <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{stat.label}</p>
-              <p className="text-5xl font-black text-white tracking-tighter font-mono">{stat.value}</p>
+              <p className="text-3xl md:text-5xl font-black text-white tracking-tighter font-mono">{stat.value}</p>
             </div>
           </motion.div>
         ))}
@@ -207,42 +209,42 @@ export default function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-10">
         {/* ACTIVITY FEED */}
         <section className="lg:col-span-2 space-y-6 flex flex-col">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-bold text-white uppercase tracking-tighter flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h3 className="text-lg md:text-xl font-bold text-white uppercase tracking-tighter flex items-center gap-3">
               <Activity className="text-cyan-400" size={24} />
-              Flujo de Actividad en Tiempo Real
+              Flujo de Actividad
             </h3>
-            <Button variant="ghost" size="sm" className="text-cyan-400">
+            <Button variant="ghost" size="sm" className="text-cyan-400 self-start sm:self-auto">
               Ver todos <ArrowUpRight size={14} />
             </Button>
           </div>
-          <div className="flex-1 rounded-[3rem] border border-slate-800/40 overflow-hidden bg-slate-950/20 backdrop-blur-md">
+          <div className="flex-1 rounded-[2rem] md:rounded-[3rem] border border-slate-800/40 overflow-hidden bg-slate-950/20 backdrop-blur-md">
             <div className="divide-y divide-slate-800/30">
               {recentActivity.map((item, i) => (
-                <div key={i} className="p-8 flex items-center justify-between hover:bg-slate-800/20 transition-all group cursor-pointer">
-                  <div className="flex items-center gap-6">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 font-black text-xl shadow-2xl group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">
+                <div key={i} className="p-4 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between hover:bg-slate-800/20 transition-all group cursor-pointer gap-4">
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 font-black text-lg md:text-xl shadow-2xl group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">
                       {item.company.charAt(0)}
                     </div>
                     <div>
                       <div className="flex items-center gap-3">
-                        <p className="text-lg font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight leading-none">{item.company}</p>
-                        <Badge variant="slate">{item.type}</Badge>
+                        <p className="text-base md:text-lg font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight leading-none">{item.company}</p>
+                        <Badge variant="slate" className="text-[9px]">{item.type}</Badge>
                       </div>
-                      <p className="text-sm text-slate-500 flex items-center gap-1.5 mt-2 font-medium">
+                      <p className="text-xs md:text-sm text-slate-500 flex items-center gap-1.5 mt-1.5 md:mt-2 font-medium">
                         <Clock size={12} className="text-slate-600" />
                         {item.action} • {item.time}
                       </p>
                     </div>
                   </div>
-                  <div className="text-right flex flex-col items-end gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">IA SCORE</span>
-                      <span className={`text-base font-black font-mono leading-none ${item.score > 9 ? 'text-cyan-400' : 'text-emerald-400'}`}>
+                  <div className="flex items-center justify-between sm:flex-col sm:items-end gap-3 sm:gap-3">
+                    <div className="flex items-center gap-2 md:gap-3">
+                      <span className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">IA SCORE</span>
+                      <span className={`text-sm md:text-base font-black font-mono leading-none ${item.score > 9 ? 'text-cyan-400' : 'text-emerald-400'}`}>
                         {item.score}/10
                       </span>
                     </div>
-                    <div className="w-28 h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800/50">
+                    <div className="w-24 md:w-28 h-1.5 md:h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800/50">
                       <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${item.score * 10}%` }}
@@ -258,11 +260,11 @@ export default function OverviewPage() {
 
         {/* AI TERMINAL SIDEBAR */}
         <section className="space-y-6 flex flex-col">
-          <h3 className="text-xl font-bold text-white uppercase tracking-tighter flex items-center gap-3">
+          <h3 className="text-lg md:text-xl font-bold text-white uppercase tracking-tighter flex items-center gap-3">
             <Sparkles className="text-cyan-400" size={24} />
             Monitor de Orquestación
           </h3>
-          <div className="flex-1">
+          <div className="flex-1 min-h-[300px]">
             <AITerminal externalLog={latestLog} />
           </div>
         </section>

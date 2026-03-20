@@ -14,29 +14,60 @@ import {
   Command as CommandIcon,
   Globe,
   Wind,
-  ExternalLink
+  ExternalLink,
+  X
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-72 border-r border-slate-800/40 bg-[#020617]/40 backdrop-blur-3xl sticky top-0 h-screen flex flex-col p-6 overflow-y-auto">
-      <div className="flex items-center gap-3 mb-12 px-2">
-        <Image 
-          src="/web/img/zyndrix-logo-surgical.png" 
-          alt="Zyndrix Logo" 
-          width={40}
-          height={40}
-          className="object-contain"
-        />
-        <span className="font-bold text-2xl tracking-tighter text-white uppercase italic">
-          Zyndrix
-        </span>
-      </div>
+    <>
+      {/* OVERLAY FOR MOBILE */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden"
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="flex-1 space-y-8">
+      <aside className={`
+        fixed inset-y-0 left-0 z-[101] w-72 border-r border-slate-800/40 bg-[#020617]/80 backdrop-blur-3xl 
+        transition-transform duration-300 transform 
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+        lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen flex flex-col p-6 overflow-y-auto
+      `}>
+        <div className="flex items-center justify-between mb-12 px-2">
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/web/img/zyndrix-logo-surgical.png" 
+              alt="Zyndrix Logo" 
+              width={40}
+              height={40}
+              className="object-contain"
+            />
+            <span className="font-bold text-2xl tracking-tighter text-white uppercase italic">
+              Zyndrix
+            </span>
+          </div>
+          <button onClick={onClose} className="lg:hidden text-slate-400 hover:text-white p-2">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="flex-1 space-y-8">
         <nav className="space-y-1">
           <p className="px-3 mb-3 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] opacity-80">Navegación</p>
           <SidebarItem icon={LayoutDashboard} label="Vista General" href="/" active={pathname === '/'} />
@@ -119,6 +150,7 @@ export function Sidebar() {
         <SidebarItem icon={Settings} label="Configuración" href="/settings" active={pathname === '/settings'} />
       </div>
     </aside>
+    </>
   );
 }
 
