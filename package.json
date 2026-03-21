@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "npx servor ./ 50237",
+    "build": "npm run dashboard:build",
+    "postinstall": "cd dashboard && npm install",
     "dashboard:dev": "cd dashboard && npm run dev",
     "dashboard:build": "cd dashboard && npm run build",
     "dashboard:start": "cd dashboard && npm run start"
