@@ -34,6 +34,10 @@ export default function OverviewPage() {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
+        if (!supabase) {
+          console.warn('Supabase client not initialized.');
+          return;
+        }
         // Fetch total count
         const { count, error: countError } = await supabase
           .from('leads')
@@ -76,6 +80,8 @@ export default function OverviewPage() {
     const interval = setInterval(fetchDashboardData, 30000);
 
     // REAL-TIME SUBSCRIPTION
+    if (!supabase) return;
+
     const channel = supabase
       .channel('schema-db-changes')
       .on(
@@ -114,7 +120,9 @@ export default function OverviewPage() {
 
     return () => {
       clearInterval(interval);
-      supabase.removeChannel(channel);
+      if (supabase) {
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 
