@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
         source: '/',
         destination: '/index.html',
       },
+      {
+        source: '/privacidad',
+        destination: '/privacidad.html',
+      },
+      {
+        source: '/terminos',
+        destination: '/terminos.html',
+      },
     ];
   },
 };
