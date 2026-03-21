@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DashboardContainer } from "@/components/layout/dashboard-container";
 
 export const metadata: Metadata = {
   title: "ZYNDRIX | Control Center",
@@ -16,9 +15,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="antialiased min-h-screen bg-[#020617] text-slate-200">
         <div className="dark-grid" />
-        <DashboardContainer>
-          {children}
-        </DashboardContainer>
+        {children}
       </body>
     </html>
   );
