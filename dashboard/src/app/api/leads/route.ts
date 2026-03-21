@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     };
 
     // Simulate n8n/Webhook Hook (Background)
-    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
+    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://n8n.zyndrix.dev/webhook-test/zyndrix-lead-scoring';
     if (n8nWebhookUrl) {
       fetch(n8nWebhookUrl, {
         method: 'POST',

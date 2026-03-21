@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       anonKey: 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE'
     },
     n8n: {
-      webhookUrl: 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring'
+      webhookUrl: 'https://n8n.zyndrix.dev/webhook-test/zyndrix-lead-scoring'
     },
     validation: {
       emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
