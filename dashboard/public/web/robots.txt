@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /dashboard/
+Disallow: /dashboard/*
+Allow: /
+
+Sitemap: https://zyndrix.ai/sitemap.xml

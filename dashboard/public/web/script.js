@@ -3,6 +3,19 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* ───── PROFESSIONAL CONFIGURATION ───── */
+  const CONFIG = {
+    supabase: {
+      url: 'https://vrvfftftnlspajplqjye.supabase.co',
+      anonKey: 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE'
+    },
+    n8n: {
+      webhookUrl: 'https://n8n.zyndrix.dev/webhook-test/zyndrix-lead-scoring'
+    },
+    validation: {
+      emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    }
+  };
 
   // ───── NAVBAR SCROLL EFFECT ─────
   const navbar = document.getElementById('navbar');
@@ -38,8 +51,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ───── NEURAL CAPSULE MENU INTERACTION ─────
+  const navIndicator = document.getElementById('navIndicator');
+  const navItems = navLinks.querySelectorAll('a');
+
+  function moveIndicator(element) {
+    if (!element) return;
+    const rect = element.getBoundingClientRect();
+    const parentRect = navLinks.getBoundingClientRect();
+    
+    navIndicator.style.width = `${rect.width}px`;
+    navIndicator.style.left = `${rect.left - parentRect.left}px`;
+    navIndicator.style.top = `${rect.top - parentRect.top}px`;
+    navIndicator.style.opacity = '1';
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      moveIndicator(item);
+    });
+
+    item.addEventListener('click', (e) => {
+      navItems.forEach(nav => nav.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  navLinks.addEventListener('mouseleave', () => {
+    const activeItem = navLinks.querySelector('a.active');
+    if (activeItem) {
+      moveIndicator(activeItem);
+    } else {
+      navIndicator.style.opacity = '0';
+    }
+  });
+
+  // Initial position for active section (default to first or based on hash)
+  setTimeout(() => {
+    const hash = window.location.hash;
+    const initialActive = hash ? navLinks.querySelector(`a[href="${hash}"]`) : navItems[0];
+    if (initialActive) {
+      initialActive.classList.add('active');
+      moveIndicator(initialActive);
+    }
+  }, 500);
+
+  // ───── SECTION SCROLL DETECTION (Sync Active Menu) ─────
+  const sections = document.querySelectorAll('section[id]');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        const activeLink = navLinks.querySelector(`a[href="#${id}"]`);
+        if (activeLink) {
+          navItems.forEach(nav => nav.classList.remove('active'));
+          activeLink.classList.add('active');
+          moveIndicator(activeLink);
+        }
+      }
+    });
+  }, { threshold: 0.5, rootMargin: '-10% 0px -80% 0px' });
+
+  sections.forEach(section => navObserver.observe(section));
+
   // Close mobile menu on link click
-  navLinks.querySelectorAll('a').forEach(link => {
+  navItems.forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       document.body.classList.remove('nav-open');
@@ -264,7 +340,59 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') sendChatMessage();
   });
 
-  // ───── CONTACT FORM ─────
+  // ───── CURSOR AURA (Ultra-Elite) ─────
+  const aura = document.createElement('div');
+  aura.className = 'cursor-aura';
+  document.body.appendChild(aura);
+
+  let mouseX = 0, mouseY = 0;
+  let auraX = 0, auraY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateAura() {
+    // Smooth easing for the aura
+    const dx = mouseX - auraX;
+    const dy = mouseY - auraY;
+    auraX += dx * 0.1;
+    auraY += dy * 0.1;
+
+    aura.style.transform = `translate(${auraX - 150}px, ${auraY - 150}px)`;
+    requestAnimationFrame(animateAura);
+  }
+  animateAura();
+
+  // ───── MAGNETIC BUTTONS ─────
+  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-logo');
+  
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      // Pull strength (adjust for subtlety)
+      const strength = 15;
+      const moveX = (x / rect.width) * strength;
+      const moveY = (y / rect.height) * strength;
+      
+      btn.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ───── MICRO-NOISE OVERLAY ─────
+  const noise = document.createElement('div');
+  noise.className = 'micro-noise';
+  document.body.appendChild(noise);
+
+  // ───── CONTACT FORM & WEBHOOK INTEGRATION (Professionalized) ─────
   const contactForm = document.getElementById('contactForm');
   const formSubmit = document.getElementById('formSubmit');
 
@@ -272,291 +400,110 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const name = document.getElementById('formName')?.value;
-      const email = document.getElementById('formEmail')?.value;
-      const company = document.getElementById('formCompany')?.value || 'N/A';
-      const msg = document.getElementById('formMessage')?.value || '';
+      const name = document.getElementById('formName')?.value?.trim();
+      const email = document.getElementById('formEmail')?.value?.trim();
+      const company = document.getElementById('formCompany')?.value?.trim() || 'N/A';
+      const service = document.getElementById('formService')?.value || 'No especificado';
+      const msg = document.getElementById('formMessage')?.value?.trim() || '';
 
+      // 1. Better Validation
       if (!name || !email) {
-        alert('Por favor, completa los campos requeridos.');
+        showFormStatus('Por favor, completa los campos requeridos.', 'error');
+        return;
+      }
+      if (!CONFIG.validation.emailRegex.test(email)) {
+        showFormStatus('Por favor, introduce un email válido.', 'error');
         return;
       }
 
-      // State: Sending
+      // 2. Loading State
       const originalText = formSubmit.innerHTML;
-      formSubmit.innerHTML = '<span class="loader-inline"></span> Enviando...';
+      formSubmit.innerHTML = 'Enviando lead... <span class="btn-icon">⏳</span>';
+      formSubmit.style.opacity = '0.7';
       formSubmit.disabled = true;
 
+      const payload = {
+        name,
+        email,
+        company_name: company,
+        message: `[Interés: ${service}] - ${msg}`
+      };
+
       try {
-        const response = await fetch('http://localhost:3005/api/leads', {
+        const response = await fetch(`${CONFIG.supabase.url}/rest/v1/leads`, {
           method: 'POST',
-          mode: 'cors',
           headers: { 
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'apikey': CONFIG.supabase.anonKey,
+            'Authorization': `Bearer ${CONFIG.supabase.anonKey}`,
+            'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ 
-            company_name: company, 
-            email: email, 
-            name: name,
-            message: msg,
-            source: 'Landing Page v3'
-          })
+          body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
-          formSubmit.innerHTML = '✓ ¡Mensaje enviado con éxito!';
-          formSubmit.style.background = 'linear-gradient(135deg, #0cebeb, #20e3b2)';
-          contactForm.reset();
-          
-          setTimeout(() => {
-            formSubmit.innerHTML = originalText;
-            formSubmit.style.background = '';
-            formSubmit.disabled = false;
-          }, 4000);
-        } else {
+        if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.details || 'Error en el servidor');
+          throw new Error(errorData.message || 'Error al guardar en Supabase');
         }
+
+        // 3. Parallel n8n Webhook Call (Fire and forget, don't block success)
+        fetch(CONFIG.n8n.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...payload,
+            source: 'Landing Page',
+            timestamp: new Date().toISOString()
+          })
+        }).catch(err => console.error('n8n Webhook Error:', err));
+
+        // 4. Success State
+        formSubmit.innerHTML = '¡Lead Recibido! <span class="btn-icon">✅</span>';
+        formSubmit.style.backgroundColor = '#10B981'; 
+        formSubmit.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.5)';
+        contactForm.reset();
+
       } catch (error) {
         console.error('Submission error:', error);
-        formSubmit.innerHTML = '✕ Error al enviar. Reintentar?';
-        formSubmit.style.background = 'linear-gradient(135deg, #ff4b2b, #ff416c)';
+        formSubmit.innerHTML = '✕ Error de red. ¿Reintentar?';
+        formSubmit.style.backgroundColor = '#EF4444';
+        formSubmit.style.boxShadow = '0 0 30px rgba(239, 68, 68, 0.4)';
         formSubmit.disabled = false;
-        
+      } finally {
         setTimeout(() => {
           formSubmit.innerHTML = originalText;
-          formSubmit.style.background = '';
-        }, 5000);
+          formSubmit.style.opacity = '1';
+          formSubmit.style.backgroundColor = '';
+          formSubmit.style.boxShadow = '';
+          formSubmit.disabled = false;
+        }, 6000);
       }
     });
   }
 
-  // ───── MAGNETIC BUTTONS & SPATIAL CARDS (Elite Tier) ─────
-  
-  // Magnetic CTAs
-  document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      
-      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
-      const icon = btn.querySelector('.btn-icon');
-      if (icon) icon.style.transform = `translateX(${x * 0.1}px)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
-      const icon = btn.querySelector('.btn-icon');
-      if (icon) icon.style.transform = '';
-    });
-  });
-
-  // Spatial Cards Perspective Shift
-  document.querySelectorAll('.glass-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 15;
-      const rotateY = (centerX - x) / 15;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
-      
-      // Update highlight position
-      const highlight = card.querySelector('.card-highlight');
-      if (highlight) {
-        highlight.style.left = `${x}px`;
-        highlight.style.top = `${y}px`;
-      }
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-
-    // Create highlight element if not exists
-    if (!card.querySelector('.card-highlight')) {
-      const highlight = document.createElement('div');
-      highlight.className = 'card-highlight';
-      card.appendChild(highlight);
-    }
-  });
-
-  // ───── PARALLAX ORBS (Hero) ─────
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    hero.addEventListener('mousemove', (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      const orbs = hero.querySelectorAll('.hero-orb');
-      orbs.forEach((orb, i) => {
-        const speed = (i + 1) * 15;
-        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-      });
-    });
-  }
-
-  // ───── NEURAL PULSE WEB ─────
-  const canvas = document.getElementById('aiNetworkCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
-    let pulses = [];
-    const nodeCount = 60;
-    const maxDistance = 150;
-    let mouse = { x: null, y: null };
-
-    class Node {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.originX = this.x;
-        this.originY = this.y;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.radius = Math.random() * 2 + 1;
-        this.glow = 10 + Math.random() * 10;
-        this.opacity = 0.4 + Math.random() * 0.4;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Mouse interaction
-        if (mouse.x && mouse.y) {
-          const dx = this.x - mouse.x;
-          const dy = this.y - mouse.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            this.x += dx * 0.02;
-            this.y += dy * 0.02;
-          }
-        }
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.save();
-        ctx.fillStyle = `rgba(0, 245, 255, ${this.opacity})`;
-        ctx.shadowBlur = this.glow;
-        ctx.shadowColor = '#00f5ff';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    class Pulse {
-      constructor(startNode, endNode) {
-        this.start = startNode;
-        this.end = endNode;
-        this.progress = 0;
-        this.speed = 0.008 + Math.random() * 0.015;
-        this.color = Math.random() > 0.5 ? '#00f5ff' : '#fff';
-      }
-
-      update() {
-        this.progress += this.speed;
-        return this.progress < 1;
-      }
-
-      draw() {
-        const x = this.start.x + (this.end.x - this.start.x) * this.progress;
-        const y = this.start.y + (this.end.y - this.start.y) * this.progress;
-
-        ctx.save();
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = '#00f5ff';
-        ctx.beginPath();
-        // Dynamic size based on progress for "pulse" feel
-        const size = 1.5 + Math.sin(this.progress * Math.PI) * 1.5;
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
-    }
-
-    function init() {
-      nodes = Array.from({ length: nodeCount }, () => new Node());
-      pulses = [];
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update Nodes
-      nodes.forEach(node => {
-        node.update();
-        node.draw();
-      });
-
-      // Connections & Pulses spawning
-      ctx.lineWidth = 0.8;
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < maxDistance) {
-            ctx.strokeStyle = `rgba(0, 245, 255, ${(1 - dist / maxDistance) * 0.15})`;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.stroke();
-
-            // Randomly spawn pulses on connections
-            if (Math.random() < 0.0005 && pulses.length < 20) {
-              pulses.push(new Pulse(nodes[i], nodes[j]));
-            }
-          }
-        }
-      }
-
-      // Update & Draw Pulses
-      pulses = pulses.filter(pulse => {
-        const active = pulse.update();
-        if (active) pulse.draw();
-        return active;
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    window.addEventListener('resize', resize);
-    
+  function showFormStatus(message, type) {
+    // Elegant toast or simple alert for now, but let's make it a professional alert
+    const statusEl = document.createElement('div');
+    statusEl.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 10000;
+      color: white;
+      background: ${type === 'error' ? '#EF4444' : '#10B981'};
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: message-in 0.4s ease forwards;
+    `;
+    statusEl.textContent = message;
+    document.body.appendChild(statusEl);
     setTimeout(() => {
-      resize();
-      animate();
-      console.log('Neural Pulse Web Active');
-    }, 100);
+      statusEl.style.animation = 'fade-up 0.4s ease reverse forwards';
+      setTimeout(() => statusEl.remove(), 400);
+    }, 4000);
   }
 });

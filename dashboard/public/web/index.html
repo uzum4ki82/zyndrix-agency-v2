@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://zyndrix.ai/">
   <meta property="og:title" content="Zyndrix — Agencia de Inteligencia Artificial">
   <meta property="og:description" content="Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.">
-  <meta property="og:image" content="img/zyndrix-logo-atomic.png">
+  <meta property="og:image" content="img/zyndrix-logo-surgical.png">
   <meta property="og:site_name" content="Zyndrix">
 
   <!-- Twitter -->
@@ -20,10 +20,40 @@
   <meta property="twitter:url" content="https://zyndrix.ai/">
   <meta property="twitter:title" content="Zyndrix — Agencia de Inteligencia Artificial">
   <meta property="twitter:description" content="Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.">
-  <meta property="twitter:image" content="img/zyndrix-logo-atomic.png">
+  <meta property="twitter:image" content="img/zyndrix-logo-surgical.png">
   <meta name="twitter:site" content="@zyndrix">
 
   <title>Zyndrix — Agencia de Inteligencia Artificial</title>
+  
+  <!-- Schema.org Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Zyndrix",
+    "image": "https://zyndrix.ai/img/zyndrix-logo-surgical.png",
+    "url": "https://zyndrix.ai",
+    "description": "Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "ES"
+    },
+    "sameAs": [
+      "https://twitter.com/zyndrix",
+      "https://linkedin.com/company/zyndrix"
+    ]
+  }
+  </script>
+
+  <!-- Google Analytics / Tag Manager (Placeholder) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
   <link rel="stylesheet" href="styles.css?v=22.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='%2300F5FF'>Z</text></svg>">
 </head>
@@ -32,10 +62,11 @@
   <!-- ============ NAVBAR ============ -->
   <nav class="navbar" id="navbar">
     <div class="container">
-      <a href="#" class="nav-logo">
-        <img src="img/zyndrix-logo-atomic.png" alt="Zyndrix Agency" class="nav-logo-img">
+      <a href="#" class="nav-logo" aria-label="Zyndrix - Ir al inicio">
+        <img src="img/zyndrix-logo-surgical.png" alt="Zyndrix Agencia de Inteligencia Artificial - Logo" class="nav-logo-img">
       </a>
       <div class="nav-links" id="navLinks">
+        <div class="nav-indicator" id="navIndicator"></div>
         <a href="#servicios">Servicios</a>
         <a href="#casos">Casos</a>
         <a href="#proceso">Proceso</a>
@@ -43,7 +74,7 @@
         <a href="#faq">FAQ</a>
       </div>
       <div class="nav-actions">
-        <a href="#contacto" class="btn btn-primary nav-cta">Hablemos →</a>
+        <a href="#contacto" class="btn btn-primary nav-cta">Hablemos 🚀</a>
       </div>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">
         <span></span>
@@ -65,7 +96,7 @@
     <div class="hero-content">
       <div class="hero-badge">
         <span class="dot"></span>
-        Arquitectura IA de Clase-Enterprise 
+        ARQUITECTURA IA DE CLASE-ENTERPRISE 
       </div>
       <h1>
         Industrializa tu ventaja competitiva con 
@@ -107,43 +138,72 @@
     </div>
   </section>
   
-  <!-- ============ LOGOS STRIP ============ -->
-  <div class="logos-strip">
-    <div class="container">
-      <p class="logos-strip-title">Potenciado por los modelos más avanzados del mundo</p>
-      <div class="logos-grid tech-track">
-        <div class="logo-item" title="ChatGPT">
-          <img src="img/chatgpt-logo.png" alt="Logo de ChatGPT" loading="lazy">
-          <span>ChatGPT</span>
+  <!-- ============ AI INTEGRATIONS MARQUEE ============ -->
+  <div class="logos-marquee">
+    <div class="marquee-fade-left"></div>
+    <div class="marquee-fade-right"></div>
+    <div class="container marquee-header">
+      <p class="logos-strip-title">Potenciado por el Estado del Arte</p>
+    </div>
+    <div class="tech-marquee-v2">
+      <div class="marquee-track">
+        <!-- ChatGPT -->
+        <div class="marquee-item brand-chatgpt" title="OpenAI ChatGPT 4o">
+          <img src="img/chatgpt-logo-clean.png" alt="ChatGPT">
         </div>
-        <div class="logo-item" title="Claude">
-          <img src="img/claude-logo.png" alt="Logo de Claude AI" loading="lazy">
-          <span>Claude</span>
+        <!-- Claude -->
+        <div class="marquee-item brand-claude" title="Anthropic Claude 3.5">
+          <img src="img/claude-logo-clean.png" alt="Claude">
         </div>
-        <div class="logo-item" title="Grok">
-          <img src="img/grok-logo.png" alt="Logo de Grok AI" loading="lazy">
-          <span>Grok</span>
+        <!-- Mistral -->
+        <div class="marquee-item brand-mistral" title="Mistral Large">
+          <img src="img/mistral-logo-clean.png" alt="Mistral AI">
         </div>
-        <div class="logo-item" title="Google Veo">
-          <img src="img/veo-logo.png" alt="Logo de Google Veo" loading="lazy">
-          <span>Veo3</span>
+        <!-- Grok -->
+        <div class="marquee-item brand-grok" title="xAI Grok-1.5">
+          <img src="img/grok-logo-clean.png" alt="Grok">
         </div>
-        <!-- Duplicate for infinite scroll -->
-        <div class="logo-item" title="ChatGPT">
-          <img src="img/chatgpt-logo.png" alt="Logo de ChatGPT" loading="lazy">
-          <span>ChatGPT</span>
+        <!-- Llama -->
+        <div class="marquee-item brand-llama" title="Meta Llama 3">
+          <img src="img/llama-logo-clean.png" alt="Llama 3">
         </div>
-        <div class="logo-item" title="Claude">
-          <img src="img/claude-logo.png" alt="Logo de Claude AI" loading="lazy">
-          <span>Claude</span>
+        <!-- Perplexity -->
+        <div class="marquee-item brand-perplexity" title="Perplexity AI">
+          <img src="img/perplexity-logo-clean.png" alt="Perplexity">
         </div>
-        <div class="logo-item" title="Grok">
-          <img src="img/grok-logo.png" alt="Logo de Grok AI" loading="lazy">
-          <span>Grok</span>
+        <!-- n8n -->
+        <div class="marquee-item brand-n8n" title="n8n.io">
+          <img src="img/icon-n8n.png" alt="n8n">
         </div>
-        <div class="logo-item" title="Google Veo">
-          <img src="img/veo-logo.png" alt="Logo de Google Veo" loading="lazy">
-          <span>Veo3</span>
+        <!-- Google -->
+        <div class="marquee-item brand-gemini" title="Google Gemini Pro">
+          <img src="img/veo-logo-clean.png" alt="Gemini">
+        </div>
+        
+        <!-- DUPLICATE FOR INFINITE EFFECT -->
+        <div class="marquee-item brand-chatgpt" title="OpenAI ChatGPT 4o">
+          <img src="img/chatgpt-logo-clean.png" alt="ChatGPT">
+        </div>
+        <div class="marquee-item brand-claude" title="Anthropic Claude 3.5">
+          <img src="img/claude-logo-clean.png" alt="Claude">
+        </div>
+        <div class="marquee-item brand-mistral" title="Mistral Large">
+          <img src="img/mistral-logo-clean.png" alt="Mistral AI">
+        </div>
+        <div class="marquee-item brand-grok" title="xAI Grok-1.5">
+          <img src="img/grok-logo-clean.png" alt="Grok">
+        </div>
+        <div class="marquee-item brand-llama" title="Meta Llama 3">
+          <img src="img/llama-logo-clean.png" alt="Llama 3">
+        </div>
+        <div class="marquee-item brand-perplexity" title="Perplexity AI">
+          <img src="img/perplexity-logo-clean.png" alt="Perplexity">
+        </div>
+        <div class="marquee-item brand-n8n" title="n8n.io">
+          <img src="img/icon-n8n.png" alt="n8n">
+        </div>
+        <div class="marquee-item brand-gemini" title="Google Gemini Pro">
+          <img src="img/veo-logo-clean.png" alt="Gemini">
         </div>
       </div>
     </div>
@@ -214,11 +274,11 @@
               <p><strong>Automatizaciones</strong> que eliminan el trabajo repetitivo por completo</p>
             </div>
             <div class="solution-feature">
-              <div class="solution-feature-icon">📊</div>
+              <div class="solution-feature-icon">📈</div>
               <p><strong>Análisis predictivo</strong> que anticipa tendencias y oportunidades</p>
             </div>
             <div class="solution-feature">
-              <div class="solution-feature-icon">🔗</div>
+              <div class="solution-feature-icon">⚙️</div>
               <p><strong>Integración total</strong> con tus herramientas y flujos actuales</p>
             </div>
           </div>
@@ -232,10 +292,10 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
               <div class="diagram-node">🤖 Agentes</div>
               <div class="diagram-node">📧 Marketing</div>
-              <div class="diagram-node">📊 Analytics</div>
+              <div class="diagram-node">📈 Analytics</div>
             </div>
             <div class="diagram-arrow">↓</div>
-            <div class="diagram-node active">📈 Resultados x10</div>
+            <div class="diagram-node active">📊 Resultados x10</div>
           </div>
         </div>
       </div>
@@ -253,36 +313,104 @@
           que se adaptan a tus objetivos y escalan contigo.
         </p>
       </div>
-      <div class="services-grid">
-        <div class="glass-card service-card reveal reveal-delay-1">
-          <div class="service-icon"><img src="img/icon-agents.png" alt="Icono de Agentes Inteligentes" class="tech-icon-img" loading="lazy"></div>
-          <h3>Agentes Inteligentes</h3>
-          <p>Creamos agentes de IA conversacionales y autónomos que atienden clientes, gestionan tareas y toman decisiones en tiempo real.</p>
+      <div class="bento-grid services-bento">
+        <!-- Card 1: Agentes Inteligentes (Featured) -->
+        <div class="glass-card bento-item bento-featured reveal">
+          <div class="service-icon"><img src="img/icon-agents.png" alt="Agentes Inteligentes"></div>
+          <div class="bento-content">
+            <div class="bento-tag">Enterprise Tier</div>
+            <h3>Agentes Inteligentes Autónomos</h3>
+            <p>Orquestadores que ejecutan estrategias complejas y escalan operaciones sin límites.</p>
+            <ul class="service-features">
+              <li>Orquestación multi-modelo</li>
+              <li>Memoria persistente de largo plazo</li>
+              <li>Ejecución autónoma de tareas</li>
+              <li>Integración nativa con sistemas core</li>
+            </ul>
+          </div>
+          <div class="bento-visual">
+            <div class="ai-orb-mini"></div>
+          </div>
         </div>
-        <div class="glass-card service-card reveal reveal-delay-2">
-          <div class="service-icon"><img src="img/icon-automation.png" alt="Icono de Automatización IA" class="tech-icon-img" loading="lazy"></div>
-          <h3>Automatización con IA</h3>
-          <p>Eliminamos el trabajo repetitivo con flujos automatizados inteligentes que aprenden y se optimizan con cada ejecución.</p>
+
+        <!-- Card 2: Flujos Inteligentes -->
+        <div class="glass-card bento-item reveal reveal-delay-1">
+          <div class="service-icon"><img src="img/icon-automation.png" alt="Automatización IA"></div>
+          <h3>Flujos Inteligentes</h3>
+          <p>Eliminamos el trabajo repetitivo con arquitecturas reactivas.</p>
+          <ul class="service-features">
+            <li>Lógica condicional avanzada</li>
+            <li>Procesamiento real-time</li>
+          </ul>
         </div>
-        <div class="glass-card service-card reveal reveal-delay-3">
-          <div class="service-icon"><img src="img/icon-n8n.png" alt="Icono de Automatización n8n" class="tech-icon-img" loading="lazy"></div>
-          <h3>Automatizaciones n8n</h3>
-          <p>Conectamos todas tus herramientas con n8n y potenciamos los flujos con nodos de IA para una automatización sin límites.</p>
+
+        <!-- Card 3: n8n -->
+        <div class="glass-card bento-item reveal reveal-delay-2">
+          <div class="service-icon"><img src="img/icon-n8n.png" alt="n8n"></div>
+          <h3>Ecosistema n8n</h3>
+          <p>Conectamos todo tu stack con potencia de IA.</p>
+          <ul class="service-features">
+            <li>+400 conectores nativos</li>
+            <li>Workflows escalables</li>
+          </ul>
         </div>
-        <div class="glass-card service-card reveal reveal-delay-4">
-          <div class="service-icon"><img src="img/icon-enterprise.png" alt="Icono de Integración de IA" class="tech-icon-img" loading="lazy"></div>
-          <h3>Integración de IA Empresarial</h3>
-          <p>Integramos modelos de lenguaje, visión y análisis de datos directamente en tus sistemas existentes sin disrupciones.</p>
+
+        <!-- Card 4: Enterprise (Wide) -->
+        <div class="glass-card bento-item bento-wide reveal reveal-delay-3">
+          <div class="service-icon"><img src="img/icon-enterprise.png" alt="Enterprise"></div>
+          <div class="bento-content">
+            <h3>Soluciones Enterprise Native</h3>
+            <p>Integración profunda de modelos en sistemas corporativos sin fricciones.</p>
+            <ul class="service-features">
+              <li>Seguridad de grado bancario</li>
+              <li>Despliegue On-premise o Cloud</li>
+              <li>Compliance GDPR/ISO</li>
+            </ul>
+          </div>
         </div>
-        <div class="glass-card service-card reveal reveal-delay-5">
-          <div class="service-icon"><img src="img/icon-marketing.png" alt="Icono de Marketing con IA" class="tech-icon-img" loading="lazy"></div>
-          <h3>Marketing con IA</h3>
-          <p>Automatizamos campañas, generamos contenido personalizado y optimizamos la adquisición de clientes con inteligencia artificial.</p>
+
+        <!-- Card 5: Marketing -->
+        <div class="glass-card bento-item reveal reveal-delay-4">
+          <div class="service-icon"><img src="img/icon-marketing.png" alt="Marketing"></div>
+          <h3>Marketing IA</h3>
+          <p>Optimización de conversión algorítmica.</p>
+          <ul class="service-features">
+            <li>SEO de 3ª generación</li>
+            <li>Copywriting dinámico</li>
+          </ul>
         </div>
-        <div class="glass-card service-card reveal reveal-delay-6">
-          <div class="service-icon"><img src="img/icon-content.png" alt="Icono de Generación de Contenido" class="tech-icon-img" loading="lazy"></div>
-          <h3>Generación de Contenido</h3>
-          <p>Sistemas de IA que producen textos, imágenes y vídeos de calidad profesional alineados con la voz de tu marca.</p>
+
+        <!-- Card 6: Contenido -->
+        <div class="glass-card bento-item reveal reveal-delay-5">
+          <div class="service-icon"><img src="img/icon-content.png" alt="Contenido"></div>
+          <h3>Generación High-Fi</h3>
+          <p>Textos y visuales con alma de marca.</p>
+          <ul class="service-features">
+            <li>Video Marketing IA</li>
+            <li>Identidad visual coherente</li>
+          </ul>
+        </div>
+
+        <!-- Card 7: RAG -->
+        <div class="glass-card bento-item reveal reveal-delay-6">
+          <div class="service-icon"><img src="img/icon-rag.png" alt="Sistemas RAG"></div>
+          <h3>Knowledge Base RAG</h3>
+          <p>IA conectada a tus documentos internos.</p>
+          <ul class="service-features">
+            <li>Búsqueda semántica</li>
+            <li>Bases de datos vectoriales</li>
+          </ul>
+        </div>
+
+        <!-- Card 8: Sales -->
+        <div class="glass-card bento-item reveal reveal-delay-7">
+          <div class="service-icon"><img src="img/icon-sales.png" alt="Ventas Autónomas"></div>
+          <h3>Ventas Autónomas</h3>
+          <p>Agentes optimizados para cualificar y cerrar.</p>
+          <ul class="service-features">
+            <li>Outbound inteligente</li>
+            <li>Integración total con CRM</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -462,7 +590,7 @@
         <div class="section-badge">Beneficios</div>
         <h2 class="section-title">¿Por qué elegir Zyndrix?</h2>
         <p class="section-subtitle">
-          No somos una consultora genérica. Somos arquitectos de sistemas de IA 
+          No somos una consultoría genérica. Somos arquitectos de sistemas de IA 
           que generan valor tangible para tu negocio.
         </p>
       </div>
@@ -639,33 +767,33 @@
     <div class="tech-marquee reveal">
       <div class="tech-track">
         <div class="tech-item"><span class="tech-item-icon">🧠</span> OpenAI GPT-4</div>
-        <div class="tech-item"><span class="tech-item-icon">🔮</span> Claude (Anthropic)</div>
+        <div class="tech-item"><span class="tech-item-icon">⚛️</span> Claude (Anthropic)</div>
         <div class="tech-item"><span class="tech-item-icon">💎</span> Gemini (Google)</div>
-        <div class="tech-item"><span class="tech-item-icon">🔄</span> n8n</div>
+        <div class="tech-item"><span class="tech-item-icon">🔗</span> n8n</div>
         <div class="tech-item"><span class="tech-item-icon">🐍</span> Python</div>
         <div class="tech-item"><span class="tech-item-icon">⚛️</span> React / Next.js</div>
         <div class="tech-item"><span class="tech-item-icon">🗄️</span> PostgreSQL</div>
         <div class="tech-item"><span class="tech-item-icon">🔥</span> Firebase</div>
-        <div class="tech-item"><span class="tech-item-icon">📊</span> LangChain</div>
+        <div class="tech-item"><span class="tech-item-icon">📈</span> LangChain</div>
         <div class="tech-item"><span class="tech-item-icon">🚀</span> Vercel</div>
         <div class="tech-item"><span class="tech-item-icon">☁️</span> AWS / GCP</div>
         <div class="tech-item"><span class="tech-item-icon">🐳</span> Docker</div>
-        <div class="tech-item"><span class="tech-item-icon">📡</span> API REST / GraphQL</div>
+        <div class="tech-item"><span class="tech-item-icon">📱</span> API REST / GraphQL</div>
         <div class="tech-item"><span class="tech-item-icon">🔒</span> Auth0</div>
         <!-- Duplicate for infinite scroll -->
         <div class="tech-item"><span class="tech-item-icon">🧠</span> OpenAI GPT-4</div>
-        <div class="tech-item"><span class="tech-item-icon">🔮</span> Claude (Anthropic)</div>
+        <div class="tech-item"><span class="tech-item-icon">⚛️</span> Claude (Anthropic)</div>
         <div class="tech-item"><span class="tech-item-icon">💎</span> Gemini (Google)</div>
-        <div class="tech-item"><span class="tech-item-icon">🔄</span> n8n</div>
+        <div class="tech-item"><span class="tech-item-icon">🔗</span> n8n</div>
         <div class="tech-item"><span class="tech-item-icon">🐍</span> Python</div>
         <div class="tech-item"><span class="tech-item-icon">⚛️</span> React / Next.js</div>
         <div class="tech-item"><span class="tech-item-icon">🗄️</span> PostgreSQL</div>
         <div class="tech-item"><span class="tech-item-icon">🔥</span> Firebase</div>
-        <div class="tech-item"><span class="tech-item-icon">📊</span> LangChain</div>
+        <div class="tech-item"><span class="tech-item-icon">📈</span> LangChain</div>
         <div class="tech-item"><span class="tech-item-icon">🚀</span> Vercel</div>
         <div class="tech-item"><span class="tech-item-icon">☁️</span> AWS / GCP</div>
         <div class="tech-item"><span class="tech-item-icon">🐳</span> Docker</div>
-        <div class="tech-item"><span class="tech-item-icon">📡</span> API REST / GraphQL</div>
+        <div class="tech-item"><span class="tech-item-icon">📱</span> API REST / GraphQL</div>
         <div class="tech-item"><span class="tech-item-icon">🔒</span> Auth0</div>
       </div>
     </div>
@@ -684,15 +812,15 @@
           puede multiplicar los resultados de tu empresa.
         </p>
         <p style="font-size: 0.9rem; color: var(--cyan-light); margin-bottom: 8px;">
-          🎯 Sin compromiso · Análisis personalizado · Propuesta en 48h
+          🎉 Sin compromiso · Análisis personalizado · Propuesta en 48h
         </p>
-        <form class="cta-form" id="contactForm" onsubmit="return false;">
+        <form class="cta-form" id="contactForm">
           <div class="cta-form-row">
-            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName">
-            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail">
+            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName" aria-required="true" aria-label="Nombre completo">
+            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail" aria-required="true" aria-label="Correo electrónico profesional">
           </div>
-          <input type="text" class="cta-input" placeholder="Nombre de tu empresa" id="formCompany">
-          <select class="cta-input" id="formService">
+          <input type="text" class="cta-input" placeholder="Nombre de tu empresa" id="formCompany" aria-label="Nombre de la empresa">
+          <select class="cta-input" id="formService" aria-label="Servicio de interés">
             <option value="" disabled selected>¿Qué servicio te interesa?</option>
             <option value="agentes">Agentes Inteligentes</option>
             <option value="automatizacion">Automatización con IA</option>
@@ -702,8 +830,8 @@
             <option value="contenido">Generación de Contenido</option>
             <option value="otro">Otro</option>
           </select>
-          <textarea class="cta-input" placeholder="Cuéntanos brevemente tu proyecto o necesidad..." id="formMessage"></textarea>
-          <button type="submit" class="btn btn-primary" id="formSubmit">
+          <textarea class="cta-input" placeholder="Cuéntanos brevemente tu proyecto o necesidad..." id="formMessage" aria-label="Descripción del proyecto"></textarea>
+          <button type="submit" class="btn btn-primary" id="formSubmit" aria-label="Enviar solicitud de consulta gratuita">
             Agenda tu consulta gratuita
             <span class="btn-icon">→</span>
           </button>
@@ -789,16 +917,16 @@
             <div class="footer-grid">
                 <div class="footer-brand" data-reveal="fade-up">
                     <div class="nav-logo logo">
-                        <img src="https://omontesquesada.app.n8n.cloud/webhook-test/6864190c-ad16-43f1-b1e6-2ca5d9ced020" alt="Zyndrix Logo" class="nav-logo-img">
+                        <img src="img/zyndrix-logo-surgical.png" alt="Zyndrix Logo" class="nav-logo-img">
                         <span class="nav-logo-text">ZYNDRIX</span>
                     </div>
-                    <p>Liderando la industrializaci�n de la Inteligencia Artificial para corporaciones que exigen escalabilidad absoluta y precisi�n quir�rgica.</p>
+                    <p>Liderando la industrialización de la Inteligencia Artificial para corporaciones que exigen escalabilidad absoluta y precisión quirúrgica.</p>
                 </div>
                 
                 <div class="footer-column" data-reveal="fade-up" style="transition-delay: 0.1s">
                     <h4 class="footer-title">Agencia</h4>
                     <ul class="footer-links">
-                        <li><a href="#about">Misi�n</a></li>
+                        <li><a href="#about">Misión</a></li>
                         <li><a href="#services">Servicios Elite</a></li>
                         <li><a href="#impact">Impacto Real</a></li>
                         <li><a href="/dashboard">Control Center</a></li>
@@ -806,10 +934,10 @@
                 </div>
 
                 <div class="footer-column" data-reveal="fade-up" style="transition-delay: 0.2s">
-                    <h4 class="footer-title">Tecnolog�a</h4>
+                    <h4 class="footer-title">Tecnología</h4>
                     <ul class="footer-links">
                         <li><a href="#">Neural Core</a></li>
-                        <li><a href="#">Orquestaci�n</a></li>
+                        <li><a href="#">Orquestación</a></li>
                         <li><a href="#">Seguridad IA</a></li>
                         <li><a href="#">Modelos Propietarios</a></li>
                     </ul>
@@ -828,8 +956,8 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 ZYNDRIX AI AGENCY. Todos los derechos reservados.</p>
                 <div class="footer-legal-links">
-                    <a href="#">Privacidad</a>
-                    <a href="#">T�rminos</a>
+                    <a href="privacidad.html">Privacidad</a>
+                    <a href="terminos.html">Términos</a>
                     <a href="#">Seguridad</a>
                 </div>
             </div>
@@ -860,6 +988,6 @@
     <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat">💬</button>
   </div>
 
-  <script src="script.js?v=22.0"></script>
+  <script src="script.js?v=23.0"></script>
 </body>
 </html>
