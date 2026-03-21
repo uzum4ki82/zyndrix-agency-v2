@@ -36,7 +36,7 @@
     {
       "parameters": {
         "resource": "email",
-        "fromEmail": "sales@zyndrix.ai",
+        "fromEmail": "sales@zyndrix.dev",
         "toEmail": "={{$node[\"Qualified Lead Trigger\"].json.email}}",
         "subject": "={{$json.subject}}",
         "text": "={{$json.message}}",
