@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://vrvfftftnlspajplqjye.supabase.co',
       anonKey: 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE'
     },
+    n8n: {
+      webhookUrl: 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring'
+    },
     validation: {
       emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     }
@@ -443,7 +446,18 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error(errorData.message || 'Error al guardar en Supabase');
         }
 
-        // 3. Success State
+        // 3. Parallel n8n Webhook Call (Fire and forget, don't block success)
+        fetch(CONFIG.n8n.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...payload,
+            source: 'Landing Page',
+            timestamp: new Date().toISOString()
+          })
+        }).catch(err => console.error('n8n Webhook Error:', err));
+
+        // 4. Success State
         formSubmit.innerHTML = '¡Lead Recibido! <span class="btn-icon">✅</span>';
         formSubmit.style.backgroundColor = '#10B981'; 
         formSubmit.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.5)';
