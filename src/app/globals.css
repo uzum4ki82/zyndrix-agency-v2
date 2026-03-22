@@ -1,60 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
-
 @import "tailwindcss";
 
-:root {
-  --background: #020617;
-  --foreground: #f8fafc;
-  --card: #0f172a;
-  --card-foreground: #f8fafc;
-  --popover: #0f172a;
-  --popover-foreground: #f8fafc;
-  --primary: #06b6d4;
-  --primary-foreground: #020617;
-  --secondary: #1e293b;
-  --secondary-foreground: #f8fafc;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --accent: #1e293b;
-  --accent-foreground: #f8fafc;
-  --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
-  --border: #1e293b;
-  --input: #1e293b;
-  --ring: #06b6d4;
-  --radius: 0.75rem;
+@theme {
+  --color-base: #030712; /* Deep Obsidian */
+  --color-surface-low: #0f172a;
+  --color-surface-mid: #1e293b;
+  --color-surface-high: #334155;
+  --color-primary: #38bdf8; /* Sky Blue */
+  --color-secondary: #818cf8; /* Indigo */
+  --color-accent: #f472b6; /* Pink accent for rare glows */
+  --color-gold: #fbbf24;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+@layer base {
+  :root {
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: #f8fafc;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.04em;
+  }
 }
 
-h1, h2, h3, h4, .font-outfit {
-  font-family: 'Outfit', sans-serif;
+@layer components {
+  /* Glassmorphism Ultra */
+  .glass-premium {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  }
+
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg, var(--color-primary), transparent, var(--color-secondary));
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .glow-border:hover::after {
+    opacity: 0.3;
+  }
+
+  .btn-elite {
+    @apply px-10 py-5 bg-white text-black font-black uppercase tracking-widest rounded-full transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] active:scale-95 flex items-center gap-3 overflow-hidden relative;
+  }
+
+  .grainy-bg {
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    filter: contrast(150%) brightness(100%);
+  }
 }
 
-.dark-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(circle at center, black 0%, transparent 100%);
-  position: fixed;
-  inset: 0;
-  z-index: -1;
+/* Advanced Animations */
+@keyframes mesh-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.glass {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-15px) rotate(1deg); }
 }
 
-.glass-cyan {
-  background: rgba(6, 182, 212, 0.05);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(6, 182, 212, 0.1);
+@keyframes beam {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.animate-mesh { background-size: 200% 200%; animation: mesh-gradient 15s ease infinite; }
+.animate-float-subtle { animation: float-subtle 8s ease-in-out infinite; }
+.animate-beam { animation: beam 3s linear infinite; }
+
+.text-gradient-silver {
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html {
+  scroll-behavior: smooth;
 }
