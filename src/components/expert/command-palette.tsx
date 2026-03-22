@@ -23,15 +23,7 @@ export function CommandPalette() {
   }, []);
 
   const items = [
-    { icon: LayoutDashboard, label: 'Vista General', href: '/', shortcut: 'G' },
-    { icon: Users, label: 'Prospectos', href: '/prospects', shortcut: 'P' },
-    { icon: Send, label: 'Outreach', href: '/outreach', shortcut: 'O' },
-    { icon: BarChart3, label: 'Analíticas', href: '/analytics', shortcut: 'A' },
-    { icon: Zap, label: 'Workflows', href: '/workflows', shortcut: 'W' },
-    { icon: MessageSquare, label: 'Respuestas', href: '/responses', shortcut: 'R' },
-    { icon: ShieldCheck, label: 'IA Scoring', href: '/scoring', shortcut: 'S' },
-    { icon: Settings, label: 'Configuración', href: '/settings', shortcut: 'C' },
-    { icon: Globe, label: 'Ir a Sitio Web', href: '/web/index.html', shortcut: 'WEB', external: true },
+    { icon: Globe, label: 'Ir a Sitio Web', href: '/', shortcut: 'WEB' },
     { icon: Wind, label: 'Ir a n8n', href: 'https://omontesquesada.app.n8n.cloud/', shortcut: 'N8N', external: true },
   ];
 

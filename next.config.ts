@@ -9,11 +9,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/privacidad',
-        destination: '/privacidad.html',
+        destination: '/privacy',
       },
       {
         source: '/terminos',
-        destination: '/terminos.html',
+        destination: '/terms',
+      },
+      {
+        source: '/seguridad',
+        destination: '/security',
+      },
+      {
+        source: '/dashboard',
+        destination: '/',
+      },
+      {
+        source: '/dashboards',
+        destination: '/',
+      },
+      {
+        source: '/login',
+        destination: '/',
       },
     ];
   },
