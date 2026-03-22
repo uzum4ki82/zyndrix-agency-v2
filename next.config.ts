@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/landing.html',
+        destination: '/index.html',
       },
       {
         source: '/privacidad',
