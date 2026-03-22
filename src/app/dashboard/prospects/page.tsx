@@ -54,6 +54,11 @@ export default function ProspectsPage() {
 
   const fetchLeads = async () => {
     try {
+            if (!supabase) {
+                      setLoading(false);
+                      return;
+            }
+      
       const { data, error } = await supabase
         .from('leads')
         .select('*')
