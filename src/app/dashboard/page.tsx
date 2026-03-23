@@ -69,7 +69,7 @@ export default function DashboardOverview() {
           <div className="flex items-center gap-3 text-sm font-medium text-slate-500">
              <span>Agencia IA • Resumen Operativo</span>
              <span className="w-1 h-1 rounded-full bg-slate-700" />
-             <span className="text-blue-400/80 font-mono tracking-tighter">Instance ID: ZYX-01</span>
+             <span className="text-blue-400/80 font-mono tracking-tighter uppercase">Instance ID: ZYX-01 • Version: XP-5.1</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
