@@ -19,11 +19,15 @@
   
   --sidebar-width: 260px;
   --header-height: 64px;
-  --radius-pro: 12px;
-  --radius-sm: 8px;
+  --radius-pro: 16px;
+  --radius-sm: 10px;
   
-  --font-display: 'Outfit', sans-serif;
-  --font-mono: 'Azeret Mono', monospace;
+  --font-display: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Azeret Mono', monospace;
+  
+  /* Glows */
+  --glow-primary: 0 0 20px -5px rgba(59, 130, 246, 0.4);
+  --glow-emerald: 0 0 20px -5px rgba(16, 185, 129, 0.4);
 }
 
 /* Base Dashboard Styles */
@@ -151,10 +155,11 @@
 }
 
 .pro-table td {
-  padding: 16px;
-  font-size: 14px;
+  padding: 20px 16px;
+  font-size: 13px;
   color: var(--ds-text-secondary);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
 }
 
 .pro-table tr:hover td {
