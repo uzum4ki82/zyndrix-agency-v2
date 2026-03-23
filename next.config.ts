@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
         source: '/dashboard',
         destination: '/dashboard/index.html',
       },
+      {
+        source: '/privacidad',
+        destination: '/privacidad.html',
+      },
+      {
+        source: '/terminos',
+        destination: '/terminos.html',
+      },
+      {
+        source: '/seguridad',
+        destination: '/seguridad.html',
+      },
     ];
   },
 };
