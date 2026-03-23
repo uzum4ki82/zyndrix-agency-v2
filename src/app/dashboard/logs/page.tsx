@@ -6,17 +6,13 @@ import {
   Search, 
   Filter, 
   Download, 
-  CheckCircle2, 
+  Terminal, 
+  Zap, 
+  Activity, 
+  Clock, 
   XCircle, 
-  AlertTriangle, 
-  Eye, 
-  ExternalLink,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Zap,
-  Terminal,
-  Code
+  CheckCircle2, 
+  AlertTriangle 
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -25,20 +21,9 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const mockLogs = [
-  { id: 'ex_1842', webhook: 'zyndrix-lead-scoring', status: 'SUCCESS', runtime: '428ms', timestamp: '22 Mar, 10:42:01', integration: 'n8n Cloud' },
-  { id: 'ex_1841', webhook: 'auto-responder-lead', status: 'SUCCESS', runtime: '812ms', timestamp: '22 Mar, 10:41:45', integration: 'n8n Cloud' },
-  { id: 'ex_1840', webhook: 'zyndrix-lead-scoring', status: 'ERROR', runtime: '1241ms', timestamp: '22 Mar, 10:38:12', integration: 'n8n Cloud' },
-  { id: 'ex_1839', webhook: 'slack-notif-bot', status: 'WARNING', runtime: '215ms', timestamp: '22 Mar, 10:12:05', integration: 'n8n Cloud' },
-  { id: 'ex_1838', webhook: 'zyndrix-lead-scoring', status: 'SUCCESS', runtime: '394ms', timestamp: '22 Mar, 09:56:44', integration: 'n8n Cloud' },
-  { id: 'ex_1837', webhook: 'database-sync-hub', status: 'SUCCESS', runtime: '184ms', timestamp: '22 Mar, 09:12:31', integration: 'n8n Cloud' },
-  { id: 'ex_1836', webhook: 'zyndrix-lead-scoring', status: 'SUCCESS', runtime: '411ms', timestamp: '22 Mar, 08:44:11', integration: 'n8n Cloud' },
-  { id: 'ex_1835', webhook: 'email-gemini-gen', status: 'SUCCESS', runtime: '2481ms', timestamp: '22 Mar, 08:32:00', integration: 'n8n Cloud' },
-];
-
 export default function LogsPage() {
   return (
-    <div className="flex flex-col gap-6 opacity-0 translate-y-4 animate-in fill-mode-forwards duration-700 ease-out-quint">
+    <div className="flex flex-col gap-6 animate-in">
       <header className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest">
@@ -47,7 +32,7 @@ export default function LogsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-white uppercase font-mono tracking-tight">System Events</h1>
         </div>
         <div className="flex items-center gap-3">
-          <button className="ds-button ghost">
+          <button className="ds-button ghost opacity-50 pointer-events-none">
              <Download className="w-4 h-4" />
              <span>Export Log History</span>
           </button>
@@ -56,19 +41,14 @@ export default function LogsPage() {
 
       {/* FILTER SEARCH BAR */}
       <div className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
-          <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.1] rounded-xl px-4 py-2 flex-1 max-w-sm focus-within:border-blue-500/50 transition-all">
+          <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.1] rounded-xl px-4 py-2 flex-1 max-w-sm">
              <Search className="w-4 h-4 text-slate-500" />
              <input 
                 type="text" 
-                placeholder="Buscar por ID o integración..." 
+                placeholder="No hay eventos registrados..." 
                 className="bg-transparent border-none outline-none text-sm w-full font-medium"
+                readOnly
              />
-          </div>
-          <div className="flex items-center gap-2">
-             <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.1] hover:bg-white/[0.06] transition-all text-xs font-bold text-slate-500 uppercase tracking-widest">
-                <Filter className="w-4 h-4" />
-                <span>Status: All</span>
-             </button>
           </div>
       </div>
 
@@ -85,63 +65,30 @@ export default function LogsPage() {
                </tr>
             </thead>
             <tbody>
-               {mockLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-white/[0.03] transition-colors border-b border-white/[0.02]">
-                     <td>
-                        <span className="text-[11px] font-bold font-mono text-slate-500 px-2 py-1 rounded bg-white/[0.05] border border-white/[0.05]">
-                           {log.id}
-                        </span>
-                     </td>
-                     <td>
-                        <div className="flex items-center gap-3">
-                           <Zap className="w-3.5 h-3.5 text-blue-500" />
-                           <span className="text-sm font-bold text-slate-200 uppercase font-mono tracking-tighter">{log.webhook}</span>
+               <tr>
+                  <td colSpan={6} className="py-40 text-center text-slate-700 font-medium h-[400px]">
+                     <div className="flex flex-col items-center gap-6 max-w-md mx-auto">
+                        <div className="w-20 h-20 rounded-full bg-emerald-500/5 flex items-center justify-center border border-white/[0.05] shadow-inner text-slate-800">
+                           <Terminal size={32} />
                         </div>
-                     </td>
-                     <td>
-                        <div className="flex items-center gap-2">
-                           {log.status === 'SUCCESS' ? <CheckCircle2 size={12} className="text-emerald-500" /> : log.status === 'ERROR' ? <XCircle size={12} className="text-rose-500" /> : <AlertTriangle size={12} className="text-amber-500" />}
-                           <span className={cn(
-                             "text-[10px] font-black tracking-widest rounded px-1.5 py-0.5 border border-white/[0.02]",
-                             log.status === 'SUCCESS' ? 'text-emerald-500 bg-emerald-500/10' : log.status === 'ERROR' ? 'text-rose-500 bg-rose-500/10' : 'text-amber-500 bg-amber-500/10'
-                           )}>
-                              {log.status}
-                           </span>
+                        <div className="flex flex-col gap-2">
+                           <h4 className="text-lg font-bold text-slate-500 uppercase font-mono tracking-tight">Registro de Eventos Vacío</h4>
+                           <p className="text-[11px] text-slate-600 leading-relaxed font-medium">El audit trail del sistema no contiene ejecuciones previas. Todas las llamadas a webhooks y logs de n8n se registrarán aquí en tiempo real una vez que el sistema esté operativo.</p>
                         </div>
-                     </td>
-                     <td>
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 font-mono italic">
-                           <Clock className="w-3 h-3" /> {log.runtime}
-                        </div>
-                     </td>
-                     <td>
-                        <span className="text-xs font-medium text-slate-600">{log.timestamp}</span>
-                     </td>
-                     <td className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                           <button className="p-2 rounded-lg hover:bg-white/[0.1] text-slate-500 hover:text-white transition-all group" title="View Payload">
-                              <Code className="w-4 h-4 group-hover:scale-110" />
-                           </button>
-                           <button className="p-2 rounded-lg hover:bg-white/[0.1] text-slate-500 hover:text-white transition-all group" title="Open n8n Workflow">
-                              <ExternalLink className="w-4 h-4 group-hover:scale-110" />
-                           </button>
-                        </div>
-                     </td>
-                  </tr>
-               ))}
+                     </div>
+                  </td>
+               </tr>
             </tbody>
          </table>
       </div>
 
       <div className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/[0.05] rounded-2xl">
-         <div className="flex items-center gap-2">
+         <div className="flex items-center gap-2 opacity-30 pointer-events-none">
             <button className="ds-button ghost text-xs px-3">Prev</button>
             <button className="ds-button ghost text-xs px-3 border-blue-500 text-blue-500">1</button>
-            <button className="ds-button ghost text-xs px-3">2</button>
-            <button className="ds-button ghost text-xs px-3">3</button>
             <button className="ds-button ghost text-xs px-3">Next</button>
          </div>
-         <span className="text-[10px] font-black text-slate-600 uppercase tracking-widest">Event Logging active (Persistence: 30 days)</span>
+         <span className="text-[10px] font-black text-slate-700 uppercase tracking-widest">Event Logging ON (Persistent: 30 days)</span>
       </div>
     </div>
   );
