@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Background } from "@/components/common/Background";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,8 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased min-h-screen bg-[#020617] text-slate-200">
-        <div className="dark-grid" />
+      <body className="antialiased min-h-screen">
+        <Background />
         {children}
       </body>
     </html>

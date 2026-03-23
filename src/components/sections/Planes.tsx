@@ -5,7 +5,7 @@ import { CheckCircle2, Zap } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
 export const Planes = () => (
-  <section className="py-60 px-10 bg-surface-low/30 backdrop-blur-3xl relative overflow-hidden">
+  <section className="py-60 px-10 relative overflow-hidden">
     <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
     <div className="max-w-7xl mx-auto relative z-10">
       <SectionHeader title="Capacidad de Carga" subtitle="Consultoría Estratégica" centered />

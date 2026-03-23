@@ -5,12 +5,11 @@ import { Quote } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
 export const Testimonios = () => (
-  <section id="testimonios" className="py-60 px-10 relative bg-surface-low/10">
+  <section id="testimonios" className="py-60 px-10 relative">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title="Casos Reales" subtitle="Autoridad Industrial" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full z-0 pointer-events-none" />
 
         <motion.div 
           whileHover={{ y: -15, scale: 1.02 }}

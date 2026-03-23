@@ -26,7 +26,7 @@ export const Metodo = () => {
   ];
 
   return (
-    <section id="proceso" ref={containerRef} className="py-60 px-10 relative overflow-hidden bg-surface-low/30 backdrop-blur-3xl">
+    <section id="proceso" ref={containerRef} className="py-60 px-10 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionHeader title="El Protocolo" subtitle="Ingeniería Industrial" centered />
 

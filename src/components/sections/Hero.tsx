@@ -4,13 +4,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 export const Hero = () => (
-  <section className="min-h-screen flex flex-col justify-center items-center px-10 relative overflow-hidden bg-base">
-    {/* Animated Mesh Gradient Background */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[800px] opacity-30 blur-[150px] pointer-events-none select-none">
-      <div className="absolute inset-0 bg-primary/20 rounded-full animate-mesh blur-[200px]" />
-      <div className="absolute top-40 right-40 w-96 h-96 bg-secondary/30 rounded-full animate-mesh blur-[200px]" />
-      <div className="absolute bottom-40 left-40 w-80 h-80 bg-accent/20 rounded-full animate-mesh blur-[200px]" />
-    </div>
+  <section className="min-h-screen flex flex-col justify-center items-center px-10 relative overflow-hidden">
+    
 
     <motion.div 
       initial={{ opacity: 0, y: 30 }}

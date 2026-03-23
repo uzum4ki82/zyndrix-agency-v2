@@ -5,7 +5,7 @@ import { Send, Twitter, Linkedin, Facebook, Instagram, Share2, ShieldCheck, File
 import Link from 'next/link';
 
 export const Contacto = () => (
-    <section id="contacto" className="py-80 px-10 relative overflow-hidden bg-white/5 backdrop-blur-3xl">
+    <section id="contacto" className="py-80 px-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.05)_0%,transparent_100%)]" />
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-40">
             <div className="md:w-1/2">
@@ -51,7 +51,7 @@ export const Contacto = () => (
 );
 
 export const Footer = () => (
-    <footer className="py-40 px-10 border-t border-white/5 bg-base-dark overflow-hidden relative">
+    <footer className="py-40 px-10 border-t border-white/5 overflow-hidden relative">
         <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-20">
             <div className="flex flex-col gap-6 items-center md:items-start">
