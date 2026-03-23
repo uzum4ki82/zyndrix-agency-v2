@@ -21,7 +21,7 @@ import { motion } from 'framer-motion';
 
 export default function DashboardOverview() {
   return (
-    <div className="flex flex-col gap-8 opacity-0 translate-y-4 animate-in fill-mode-forwards duration-700 ease-out-quint delay-0">
+    <div className="flex flex-col gap-8 animate-in">
       <header className="flex items-center justify-between pb-2">
         <div className="flex flex-col gap-1">
           <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-2">

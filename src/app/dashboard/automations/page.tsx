@@ -42,7 +42,7 @@ export default function AutomationsPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div className="flex flex-col gap-6 opacity-0 translate-y-4 animate-in fill-mode-forwards duration-700 ease-out-quint">
+    <div className="flex flex-col gap-6 animate-in">
       <header className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest">
