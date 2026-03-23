@@ -14,8 +14,13 @@ export async function POST(request: Request) {
     });
 
     if (!n8nResponse.ok) {
-      console.error('n8n proxy error:', await n8nResponse.text());
-      return NextResponse.json({ error: 'Failed to forward to n8n' }, { status: 502 });
+      const errorText = await n8nResponse.text();
+      console.error('n8n response error:', n8nResponse.status, errorText);
+      return NextResponse.json({ 
+        error: 'n8n error', 
+        status: n8nResponse.status,
+        details: errorText 
+      }, { status: n8nResponse.status });
     }
 
     return NextResponse.json({ success: true });
