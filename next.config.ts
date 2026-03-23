@@ -8,10 +8,6 @@ const nextConfig: NextConfig = {
         destination: '/index-zyndrix.html',
       },
       {
-        source: '/dashboard',
-        destination: '/dashboard/index.html',
-      },
-      {
         source: '/privacidad',
         destination: '/privacidad.html',
       },

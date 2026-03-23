@@ -1,0 +1,197 @@
+:root {
+  /* SaaS Professional Palette */
+  --ds-bg: #09090b; /* Deep Zinc / Coal */
+  --ds-surface: #121215;
+  --ds-card: #18181b;
+  --ds-card-hover: #27272a;
+  --ds-border: rgba(255, 255, 255, 0.08);
+  --ds-border-strong: rgba(255, 255, 255, 0.15);
+  
+  --ds-primary: #3b82f6; /* Indigo / Blue */
+  --ds-primary-muted: rgba(59, 130, 246, 0.15);
+  --ds-success: #10b981; /* Emerald */
+  --ds-warning: #f59e0b; /* Amber */
+  --ds-error: #ef4444; /* Rose */
+  
+  --ds-text-primary: #f8fafc;
+  --ds-text-secondary: #94a3b8;
+  --ds-text-muted: #64748b;
+  
+  --sidebar-width: 260px;
+  --header-height: 64px;
+  --radius-pro: 12px;
+  --radius-sm: 8px;
+  
+  --font-display: 'Outfit', sans-serif;
+  --font-mono: 'Azeret Mono', monospace;
+}
+
+/* Base Dashboard Styles */
+.dashboard-container {
+  min-height: 100vh;
+  background-color: var(--ds-bg);
+  color: var(--ds-text-primary);
+  display: flex;
+}
+
+/* Sidebar Shell */
+.sidebar-shell {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: var(--ds-surface);
+  border-right: 1px solid var(--ds-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.sidebar-logo {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-group {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--ds-text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  background: var(--ds-card);
+  color: var(--ds-text-primary);
+}
+
+.nav-link.active {
+  background: var(--ds-primary-muted);
+  color: var(--ds-primary);
+  box-shadow: 0 0 0 1px var(--ds-primary) inset;
+}
+
+/* Main Layout */
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.dashboard-header {
+  height: var(--header-height);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--ds-border);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.content-canvas {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Card Design */
+.ds-card {
+  background: var(--ds-card);
+  border: 1px solid var(--ds-border);
+  border-radius: var(--radius-pro);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.ds-card:hover {
+  border-color: var(--ds-border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Table Design (CRM Style) */
+.pro-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.pro-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--ds-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+.pro-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--ds-text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pro-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* SaaS Buttons */
+.ds-button {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-button.primary {
+  background: var(--ds-primary);
+  color: white;
+}
+
+.ds-button.primary:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+
+.ds-button.ghost {
+  background: transparent;
+  color: var(--ds-text-secondary);
+  border: 1px solid var(--ds-border);
+}
+
+.ds-button.ghost:hover {
+  background: var(--ds-card);
+  color: var(--ds-text-primary);
+}
