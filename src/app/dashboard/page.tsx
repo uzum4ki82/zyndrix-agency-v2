@@ -66,7 +66,7 @@ export default function DashboardOverview() {
       <header className="flex items-center justify-between pb-2">
         <div className="flex flex-col gap-1">
           <h1 className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
-            Mission <span className="text-blue-500 font-mono italic">Control</span> <TrendingUp size={24} className="text-slate-800" />
+            MISSION <span className="text-rose-500 font-mono italic">CONTROL V7</span> <TrendingUp size={24} className="text-slate-800" />
           </h1>
           <div className="flex items-center gap-3 text-sm font-medium text-slate-500">
              <span>Agencia IA • Resumen Operativo</span>

@@ -30,7 +30,7 @@ const colorMap = {
 
 export default function StatCard({ 
   label, 
-  value, 
+  value = 0, 
   trend, 
   trendType = 'up', 
   icon: Icon, 
