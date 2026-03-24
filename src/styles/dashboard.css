@@ -217,6 +217,80 @@
   background: var(--ds-text-muted);
 }
 
+/* Mobile Adjustments */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+
+  .sidebar-shell {
+    position: fixed;
+    left: -280px;
+    width: 280px;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar-shell.mobile-open {
+    transform: translateX(280px);
+  }
+
+  .main-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .dashboard-header {
+    padding: 0 16px;
+  }
+
+  .content-canvas {
+    padding: 20px 16px;
+  }
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Table responsiveness fallback */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.pro-table {
+  min-width: 800px;
+}
+
+@media (max-width: 768px) {
+  .grid-cols-4, .grid-cols-3, .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-card {
+    padding: 16px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 .ds-button.primary {
   background: var(--ds-primary);
   color: white;

@@ -14,18 +14,31 @@ import {
   Settings2,
   Lock,
   MessageSquare,
-  Zap
+  Zap,
+  Menu
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CommandPalette from './CommandPalette';
 
-export default function Topbar() {
+interface TopbarProps {
+  onMenuClick?: () => void;
+}
+
+export default function Topbar({ onMenuClick }: TopbarProps) {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   return (
     <header className="dashboard-header">
+      {/* Mobile Menu Button */}
+      <button 
+        onClick={onMenuClick}
+        className="lg:hidden p-2 -ml-2 mr-2 text-slate-500 hover:text-white"
+      >
+        <Menu size={20} />
+      </button>
+
       <div className="flex items-center gap-6 flex-1">
         <button 
           onClick={() => setIsCommandOpen(true)}

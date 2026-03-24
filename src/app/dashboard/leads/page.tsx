@@ -59,6 +59,23 @@ export default function LeadsPage() {
 
   useEffect(() => {
     fetchLeads();
+
+    // Subscribe to real-time changes
+    const channel = supabase
+      .channel('leads-crm-updates')
+      .on(
+        'postgres_changes', 
+        { event: '*', schema: 'public', table: 'leads' }, 
+        (payload) => {
+          console.log('CRM update detected:', payload);
+          fetchLeads();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const filteredLeads = leads.filter(l => 
@@ -69,7 +86,7 @@ export default function LeadsPage() {
 
   return (
     <div className="flex flex-col gap-6 animate-in">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest">
              <Target size={14} className="text-blue-500" /> Database Live Connection
@@ -83,12 +100,12 @@ export default function LeadsPage() {
           <button 
             onClick={fetchLeads}
             disabled={refreshing}
-            className="ds-button ghost group relative overflow-hidden"
+            className="ds-button ghost group relative overflow-hidden flex-1 md:flex-none justify-center"
           >
              <RefreshCcw className={cn("w-4 h-4 transition-transform", refreshing && "animate-spin")} />
-             <span>Refrescar Supabase</span>
+             <span>Refrescar</span>
           </button>
-          <button className="ds-button primary shadow-lg shadow-blue-500/20">
+          <button className="ds-button primary shadow-lg shadow-blue-500/20 flex-1 md:flex-none justify-center">
             <Plus className="w-4 h-4" />
             <span>Nuevo Lead</span>
           </button>
@@ -96,8 +113,8 @@ export default function LeadsPage() {
       </header>
 
       {/* FILTER SEARCH BAR */}
-      <div className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm">
-          <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.1] rounded-xl px-4 py-2 flex-1 max-w-sm focus-within:border-blue-500/50 transition-all group">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm">
+          <div className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.1] rounded-xl px-4 py-2 w-full md:max-w-sm focus-within:border-blue-500/50 transition-all group">
              <Search className="w-4 h-4 text-slate-600 group-focus-within:text-blue-500" />
              <input 
                 type="text" 
@@ -107,7 +124,7 @@ export default function LeadsPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
              />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto">
              <div className="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-[10px] font-black text-blue-500 uppercase tracking-widest">
                 {filteredLeads.length} Registros
              </div>
@@ -120,7 +137,8 @@ export default function LeadsPage() {
 
       <div className="ds-card p-0 overflow-hidden bg-white/[0.01] border-white/[0.08] relative group">
          <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" />
-         <table className="pro-table">
+         <div className="table-container">
+          <table className="pro-table">
             <thead className="bg-white/[0.04]">
                <tr>
                   <th className="w-12 text-center">ID</th>
@@ -218,7 +236,8 @@ export default function LeadsPage() {
                )}
                </AnimatePresence>
             </tbody>
-         </table>
+          </table>
+         </div>
       </div>
 
       {/* PAGINATION (MOCKED FOR NOW) */}

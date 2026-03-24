@@ -12,7 +12,8 @@ import {
   Settings, 
   ChevronRight,
   Database,
-  BookOpen
+  BookOpen,
+  X
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -31,11 +32,11 @@ const navItems = [
   { id: 'database', name: 'Base de Datos', icon: Database, href: '/dashboard/database' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="sidebar-shell">
+    <aside className="h-full flex flex-col">
       <div className="sidebar-logo">
         <div 
           className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/20"
@@ -45,6 +46,14 @@ export default function Sidebar() {
         <span className="font-bold tracking-tight text-lg pl-1 whitespace-nowrap">
           Zyndrix <span className="text-blue-500 font-medium">OS</span>
         </span>
+        
+        {/* Mobile Close Button */}
+        <button 
+          onClick={onClose}
+          className="lg:hidden ml-auto p-2 text-slate-500 hover:text-white"
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <nav className="nav-group">
