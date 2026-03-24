@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       .insert([{
         name: body.name,
         email: body.email,
-        company: body.company_name || null,
+        company_name: body.company_name || null,
         message: body.message || null,
         status: 'new',
         score_ia: Math.min(score, 10),

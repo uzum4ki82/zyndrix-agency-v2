@@ -81,7 +81,7 @@ export default function LeadsPage() {
   const filteredLeads = leads.filter(l => 
     l.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
     l.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    l.company?.toLowerCase().includes(searchTerm.toLowerCase())
+    l.company_name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -175,7 +175,7 @@ export default function LeadsPage() {
                         <td>
                            <div className="flex flex-col gap-0.5">
                               <span className="font-bold text-slate-100 group-hover:text-blue-400 transition-colors uppercase font-mono tracking-tighter">{lead.name}</span>
-                              <span className="text-[10px] text-slate-500 font-medium">{lead.email || lead.company || 'Sin Empresa'}</span>
+                              <span className="text-[10px] text-slate-500 font-medium">{lead.email || lead.company_name || 'Sin Empresa'}</span>
                            </div>
                         </td>
                         <td>
