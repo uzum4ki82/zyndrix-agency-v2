@@ -11,19 +11,8 @@ export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
-export async function GET() {
-  try {
-    const { data, error } = await supabase
-      .from('leads')
-      .select('*')
-      .order('created_at', { ascending: false });
-      
-    if (error) throw error;
-    return NextResponse.json(data || [], { headers: corsHeaders });
-  } catch (error) {
-    return NextResponse.json([], { headers: corsHeaders });
-  }
-}
+// GET is removed for security as it was exposing sensitive lead data publicly. 
+// Use the Supabase client with RLS for secure data fetching in the dashboard.
 
 export async function POST(request: Request) {
   try {

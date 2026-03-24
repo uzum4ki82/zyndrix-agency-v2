@@ -6,10 +6,6 @@ import { Lock, User, ShieldCheck, Zap, ArrowRight, Loader2, Sparkles, AlertCircl
 import { motion, AnimatePresence } from 'framer-motion';
 import '@/styles/dashboard.css';
 
-// Admin fallback if env is missing
-const ADMIN_USER = process.env.NEXT_PUBLIC_ADMIN_USER || 'admin';
-const ADMIN_PASS = process.env.NEXT_PUBLIC_ADMIN_PASS || 'zyndrix2026';
-
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,20 +15,26 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // If already logged in, skip
     if (localStorage.getItem('zyndrix_session') === 'active') {
       router.replace('/dashboard');
     }
   }, [router]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Simulate tech processing
-    setTimeout(() => {
-      if (username === ADMIN_USER && password === ADMIN_PASS) {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         setSuccess(true);
         localStorage.setItem('zyndrix_session', 'active');
         localStorage.setItem('zyndrix_user', username);
@@ -41,20 +43,20 @@ export default function LoginPage() {
           router.replace('/dashboard');
         }, 1200);
       } else {
-        setError('Credenciales de acceso no válidas. Acceso denegado.');
+        setError(data.error || 'Credenciales no válidas.');
         setLoading(false);
       }
-    }, 1500);
+    } catch (err) {
+      setError('Fallo en la comunicación con el servidor de seguridad.');
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 relative overflow-hidden font-sans">
-      {/* BACKGROUND EFFECTS */}
       <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600/10 blur-[150px] rounded-full" />
       <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/10 blur-[150px] rounded-full" />
       
-      {/* GRID MESH */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none" />
       <div className="absolute inset-0 bg-grid-white/[0.02] pointer-events-none" />
 
       <motion.div 
@@ -62,7 +64,6 @@ export default function LoginPage() {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className="w-full max-w-md relative z-10"
       >
-        {/* LOGO AREA */}
         <div className="flex flex-col items-center mb-10">
           <motion.div 
             whileHover={{ scale: 1.05, rotate: 5 }}
@@ -80,13 +81,11 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* LOGIN CARD */}
         <div className="ds-card p-0 bg-[#121215]/80 backdrop-blur-2xl border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
           <div className="h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500" />
           
           <div className="p-10">
             <form onSubmit={handleLogin} className="flex flex-col gap-6">
-              {/* USERNAME */}
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Identificador</label>
                 <div className="relative">
@@ -102,7 +101,6 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* PASSWORD */}
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest pl-1">Clave de Seguridad</label>
                 <div className="relative">
@@ -118,7 +116,6 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* ERROR STATE */}
               <AnimatePresence>
                 {error && (
                   <motion.div 
@@ -133,7 +130,6 @@ export default function LoginPage() {
                 )}
               </AnimatePresence>
 
-              {/* SUBMIT */}
               <button 
                 type="submit" 
                 disabled={loading || success}
@@ -166,12 +162,11 @@ export default function LoginPage() {
           <div className="p-6 bg-white/[0.02] border-t border-white/[0.05] text-center">
              <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
                 <Sparkles size={12} className="text-blue-500" />
-                Auth Engine V3.2 • Secure Encryption
+                Auth Engine V4.0 • Server-Side Encryption
              </p>
           </div>
         </div>
 
-        {/* FOOTER INFO */}
         <div className="mt-8 text-center text-[10px] text-slate-700 font-bold uppercase tracking-[0.2em] leading-relaxed">
           Propiedad de Zyndrix AI Agency <br />
           Uso estrictamente confidencial • IP Logged
