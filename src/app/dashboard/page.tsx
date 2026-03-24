@@ -31,6 +31,17 @@ export default function DashboardOverview() {
   const [conversionRate, setConversionRate] = useState<number | null>(null);
   const [recentLeads, setRecentLeads] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [n8nLogs, setN8nLogs] = useState<any[]>([]);
+
+  const fetchN8nData = async () => {
+    try {
+      const resp = await fetch('https://n8n.zyndrix.dev/webhook/dashboard-data');
+      if (resp.ok) {
+        const data = await resp.json();
+        setN8nLogs(data.feed || []);
+      }
+    } catch (e) { console.error('n8n dash error:', e); }
+  };
 
   const fetchData = async () => {
     try {
@@ -62,6 +73,8 @@ export default function DashboardOverview() {
 
   useEffect(() => {
     fetchData();
+    fetchN8nData();
+    const n8nInterval = setInterval(fetchN8nData, 20000);
 
     // Subscribe to real-time changes
     const channel = supabase
@@ -78,6 +91,7 @@ export default function DashboardOverview() {
 
     return () => {
       supabase.removeChannel(channel);
+      clearInterval(n8nInterval);
     };
   }, []);
 
@@ -251,18 +265,33 @@ export default function DashboardOverview() {
                Sistema Neural (Logs)
             </h3>
           </div>
-          <div className="p-6 flex-1 flex flex-col items-center justify-center py-20 text-center gap-5 opacity-40">
-             <div className="w-16 h-16 rounded-full bg-white/[0.02] border border-white/[0.05] flex items-center justify-center text-slate-700 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-blue-500/10 animate-pulse" />
-                <Zap size={24} className="relative z-10" />
-             </div>
-             <div className="flex flex-col gap-1">
-                <p className="text-xs font-black text-slate-500 uppercase tracking-widest">En espera</p>
-                <p className="text-[10px] text-slate-600 font-medium px-8 leading-relaxed">Conecta n8n para ver la actividad del motor de inferencia en tiempo real.</p>
-             </div>
-             <Link href="/dashboard/docs">
-               <button className="text-[9px] font-black text-blue-500/50 hover:text-blue-500 uppercase tracking-widest underline underline-offset-4 decoration-blue-500/20">Documentación SDK ›</button>
-             </Link>
+          <div className="flex-1 overflow-y-auto max-h-[400px]">
+            {n8nLogs.length > 0 ? (
+               <div className="flex flex-col">
+                  {n8nLogs.map((log, i) => (
+                    <div key={i} className="group p-4 border-b border-white/[0.02] hover:bg-white/[0.02] transition-all flex items-start gap-4 animate-in fade-in slide-in-from-right-2 duration-500">
+                      <div className="w-1.5 h-1.5 rounded-full mt-2 animate-pulse" style={{ backgroundColor: log.c || '#4F46E5', boxShadow: `0 0 10px ${log.c || '#4F46E5'}` }} />
+                      <div className="flex-1 flex flex-col gap-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{log.br || 'AGENT'} — {log.t || 'NOW'}</span>
+                        </div>
+                        <p className="text-xs font-bold text-slate-200">{log.a || 'Evento de Automatización'}</p>
+                        <p className="text-[10px] text-slate-500 font-medium leading-relaxed">{log.dt || 'Procesando datos en tiempo real'}</p>
+                      </div>
+                    </div>
+                  ))}
+               </div>
+            ) : (
+              <div className="p-12 flex flex-col items-center justify-center text-center gap-5 opacity-40">
+                <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 border border-indigo-500/20 animate-pulse">
+                  <Activity size={32} />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="text-xs font-black text-slate-500 uppercase tracking-widest">En espera</p>
+                  <p className="text-[10px] text-slate-600 font-medium px-8 leading-relaxed">Conecta n8n para ver la actividad del motor de inferencia en tiempo real.</p>
+                </div>
+              </div>
+            )}
           </div>
           <div className="p-4 bg-white/[0.02] border-t border-white/[0.05] flex items-center justify-between">
              <span className="text-[9px] font-black text-slate-700 uppercase tracking-widest">Heartbeat: Active</span>
