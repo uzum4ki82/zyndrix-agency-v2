@@ -34,20 +34,20 @@ export async function POST(request: Request) {
         company_name: body.company_name || null,
         message: body.message || null,
         status: 'new',
-        score_ia: Math.min(score, 10),
       }])
       .select()
       .single();
 
     if (error) throw error;
     
-    // Simulate n8n/Webhook Hook (Fire-and-forget)
-    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://n8n.zyndrix.dev/webhook-test/zyndrix-lead-scoring';
-    fetch(n8nWebhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...newLead, source: 'API Gateway' })
-    }).catch(err => console.error('Webhook error:', err));
+    // Send to n8n if webhook is configured
+    if (process.env.N8N_WEBHOOK_URL) {
+      fetch(process.env.N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...newLead, source: 'API Gateway' })
+      }).catch(err => console.error('n8n Webhook error:', err));
+    }
     
     return NextResponse.json(newLead, { 
       status: 201,
