@@ -13,10 +13,12 @@ import {
   ChevronRight,
   Database,
   BookOpen,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useRouter } from 'next/navigation';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -34,6 +36,13 @@ const navItems = [
 
 export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem('zyndrix_session');
+    localStorage.removeItem('zyndrix_user');
+    router.replace('/dashboard/login');
+  };
 
   return (
     <aside className="h-full flex flex-col">
@@ -94,11 +103,18 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         })}
       </nav>
 
-      <div className="mt-auto p-4 border-t border-white/[0.04]">
+      <div className="mt-auto p-4 border-t border-white/[0.04] flex flex-col gap-1">
         <Link href="/dashboard/settings" className={cn("nav-link", pathname === '/dashboard/settings' && "active")}>
           <Settings className="w-4 h-4" />
           <span>Configuración</span>
         </Link>
+        <button 
+          onClick={handleLogout}
+          className="nav-link w-full text-left text-rose-500/70 hover:text-rose-500 hover:bg-rose-500/10 transition-all mt-1"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Cerrar Sesión</span>
+        </button>
       </div>
     </aside>
   );
