@@ -404,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('formEmail')?.value?.trim();
       const company = document.getElementById('formCompany')?.value?.trim() || 'N/A';
       const service = document.getElementById('formService')?.value || 'No especificado';
+      const budget = document.getElementById('formBudget')?.value || 'No especificado';
       const msg = document.getElementById('formMessage')?.value?.trim() || '';
 
       // 1. Better Validation
@@ -426,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
         name,
         email,
         company_name: company,
-        message: `[Interés: ${service}] - ${msg}`
+        message: `[Interés: ${service}] [Presupuesto: ${budget}] - ${msg}`
       };
 
       try {

@@ -1,120 +1,84 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  LayoutDashboard, 
+  BarChart3, 
   Users, 
-  Zap, 
-  Brain, 
-  ScrollText, 
   Settings, 
-  ChevronRight,
-  Database,
-  BookOpen,
-  X,
-  LogOut
+  LogOut, 
+  Brain, 
+  Zap, 
+  FileText, 
+  Activity,
+  Box,
+  LayoutDashboard
 } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-const navItems = [
-  { id: 'overview', name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
-  { id: 'leads', name: 'Leads (CRM)', icon: Users, href: '/dashboard/leads' },
-  { id: 'automations', name: 'Automatizaciones', icon: Zap, href: '/dashboard/automations' },
-  { id: 'ai-tools', name: 'AI Core Tools', icon: Brain, href: '/dashboard/ai-tools' },
-  { id: 'logs', name: 'Historial / Logs', icon: ScrollText, href: '/dashboard/logs' },
-  { id: 'docs', name: 'SDK & API Docs', icon: BookOpen, href: '/dashboard/docs' },
-  { id: 'database', name: 'Base de Datos', icon: Database, href: '/dashboard/database' },
+const menuItems = [
+  { icon: LayoutDashboard, label: 'Resumen', href: '/dashboard' },
+  { icon: Users, label: 'Prospectos', href: '/dashboard/leads' },
+  { icon: Zap, label: 'Automatizaciones', href: '/dashboard/automations' },
+  { icon: Box, label: 'Herramientas IA', href: '/dashboard/ai-tools' },
+  { icon: Activity, label: 'Logs del Sistema', href: '/dashboard/logs' },
+  { icon: FileText, label: 'Documentación', href: '/dashboard/docs' },
+  { icon: Settings, label: 'Configuración', href: '/dashboard/settings' },
 ];
 
-export default function Sidebar({ onClose }: { onClose?: () => void }) {
+export function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem('zyndrix_session');
-    localStorage.removeItem('zyndrix_user');
-    router.replace('/dashboard/login');
+    // Simple redirect to home for now, as real auth isn't implemented
+    window.location.href = '/';
   };
 
   return (
     <aside className="h-full flex flex-col">
       <div className="sidebar-logo">
-        <div 
-          className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/20"
-        >
-          Z
+        <div className="w-full flex items-center justify-center py-2">
+          <img 
+            src="/img/zyndrix-logo-v13.png" 
+            alt="Zyndrix Logo" 
+            className="w-auto h-12 object-contain brightness-110 active:scale-95 transition-all"
+          />
         </div>
-        <span className="font-bold tracking-tight text-lg pl-1 whitespace-nowrap">
-          Zyndrix <span className="text-blue-500 font-medium">OS</span>
-        </span>
-        
-        {/* Mobile Close Button */}
+      </div>
+
+      <nav className="flex-1 px-4 space-y-2 mt-4">
+        {menuItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "sidebar-link",
+              pathname === item.href ? "active" : ""
+            )}
+          >
+            <item.icon className="w-5 h-5 flex-shrink-0" />
+            <span className="font-medium tracking-wide">{item.label}</span>
+          </Link>
+        ))}
+      </nav>
+
+      <div className="p-4 border-t border-white/[0.05]">
         <button 
-          onClick={onClose}
-          className="lg:hidden ml-auto p-2 text-slate-500 hover:text-white"
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all group"
         >
-          <X size={20} />
+          <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-semibold text-sm">Cerrar Sesión</span>
         </button>
       </div>
 
-      <nav className="nav-group">
-        <div className="text-[10px] font-bold text-slate-500 tracking-widest uppercase px-4 mb-2">
-          General
+      <div className="p-4 mx-4 mb-4 bg-gradient-to-br from-blue-600/20 to-violet-600/20 rounded-2xl border border-white/10">
+        <div className="flex items-center gap-2 mb-2">
+          <Brain className="w-4 h-4 text-blue-400" />
+          <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Neuro Engine V7</span>
         </div>
-        {navItems.slice(0, 3).map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link 
-              key={item.id} 
-              href={item.href}
-              className={cn("nav-link", isActive && "active")}
-            >
-              <item.icon className="w-4 h-4" />
-              <span>{item.name}</span>
-              {isActive && <ChevronRight className="w-3 h-3 ml-auto opacity-40" />}
-            </Link>
-          );
-        })}
-
-        <div className="text-[10px] font-bold text-slate-500 tracking-widest uppercase px-4 mt-8 mb-2">
-          Inteligencia
-        </div>
-        {navItems.slice(3).map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link 
-              key={item.id} 
-              href={item.href}
-              className={cn("nav-link", isActive && "active")}
-            >
-              <item.icon className="w-4 h-4" />
-              <span>{item.name}</span>
-              {isActive && <ChevronRight className="w-3 h-3 ml-auto opacity-40" />}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="mt-auto p-4 border-t border-white/[0.04] flex flex-col gap-1">
-        <Link href="/dashboard/settings" className={cn("nav-link", pathname === '/dashboard/settings' && "active")}>
-          <Settings className="w-4 h-4" />
-          <span>Configuración</span>
-        </Link>
-        <button 
-          onClick={handleLogout}
-          className="nav-link w-full text-left text-rose-500/70 hover:text-rose-500 hover:bg-rose-500/10 transition-all mt-1"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Cerrar Sesión</span>
-        </button>
+        <p className="text-[11px] text-slate-400 leading-relaxed font-medium">
+          Monitorización neuronal activa. Procesando leads en tiempo real.
+        </p>
       </div>
     </aside>
   );

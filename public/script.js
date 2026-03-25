@@ -1,520 +1,173 @@
-/* ============================================================
-   Zyndrix — JavaScript Interactivity
-   ============================================================ */
+/**
+ * ZYNDRIX - Protocolo de Interacción y Automatización
+ * Script principal de la landing page
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ───── PROFESSIONAL CONFIGURATION ───── */
-  const CONFIG = {
-    supabase: {
-      url: 'https://vrvfftftnlspajplqjye.supabase.co',
-      anonKey: 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE'
-    },
-    n8n: {
-      webhookUrl: '/api/lead'
-    },
-    validation: {
-      emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    }
+  // === CONFIGURACIÓN Y ESTADO ===
+  const state = {
+    isMenuOpen: false,
+    currentStep: 0,
+    isScrolled: false
   };
 
-  // ───── NAVBAR SCROLL EFFECT ─────
+  // === ELEMENTOS DEL DOM ===
   const navbar = document.getElementById('navbar');
-  let lastScroll = 0;
-
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    if (currentScroll > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-    lastScroll = currentScroll;
-  });
-
-  // ───── MOBILE MENU TOGGLE ─────
   const mobileToggle = document.getElementById('mobileToggle');
   const navLinks = document.getElementById('navLinks');
-
-  mobileToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    document.body.classList.toggle('nav-open');
-    // Animate hamburger
-    const spans = mobileToggle.querySelectorAll('span');
-    if (navLinks.classList.contains('open')) {
-      spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-    } else {
-      spans[0].style.transform = '';
-      spans[1].style.opacity = '';
-      spans[2].style.transform = '';
-    }
-  });
-
-  // ───── NEURAL CAPSULE MENU INTERACTION ─────
   const navIndicator = document.getElementById('navIndicator');
-  const navItems = navLinks.querySelectorAll('a');
+  const contactForm = document.getElementById('contactForm');
+  const formSubmit = document.getElementById('formSubmit');
 
-  function moveIndicator(element) {
-    if (!element) return;
-    const rect = element.getBoundingClientRect();
-    const parentRect = navLinks.getBoundingClientRect();
-    
-    navIndicator.style.width = `${rect.width}px`;
-    navIndicator.style.left = `${rect.left - parentRect.left}px`;
-    navIndicator.style.top = `${rect.top - parentRect.top}px`;
-    navIndicator.style.opacity = '1';
+  // URL del Webhook de n8n
+  const N8N_WEBHOOK_URL = 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
+
+  // === GESTIÓN DEL MENÚ MÓVIL ===
+  const toggleMenu = () => {
+    state.isMenuOpen = !state.isMenuOpen;
+    mobileToggle.classList.toggle('active', state.isMenuOpen);
+    navLinks.classList.toggle('active', state.isMenuOpen);
+    document.body.style.overflow = state.isMenuOpen ? 'hidden' : '';
+  };
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', toggleMenu);
   }
 
-  navItems.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      moveIndicator(item);
-    });
-
-    item.addEventListener('click', (e) => {
-      navItems.forEach(nav => nav.classList.remove('active'));
-      item.classList.add('active');
+  // Cerrar menú al hacer clic en un enlace
+  const allNavLinks = document.querySelectorAll('.nav-links a');
+  allNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (state.isMenuOpen) toggleMenu();
     });
   });
 
-  navLinks.addEventListener('mouseleave', () => {
-    const activeItem = navLinks.querySelector('a.active');
-    if (activeItem) {
-      moveIndicator(activeItem);
-    } else {
+  // === INDICADOR DE NAVEGACIÓN ACTIVA ===
+  const updateNavIndicator = (activeElement) => {
+    if (!activeElement || !navIndicator) return;
+    
+    const { offsetLeft, offsetWidth } = activeElement;
+    navIndicator.style.left = `${offsetLeft}px`;
+    navIndicator.style.width = `${offsetWidth}px`;
+    navIndicator.style.opacity = '1';
+  };
+
+  allNavLinks.forEach(link => {
+    link.addEventListener('mouseenter', (e) => updateNavIndicator(e.target));
+  });
+
+  navLinks?.addEventListener('mouseleave', () => {
+    const activeLink = document.querySelector('.nav-links a.active');
+    if (activeLink) {
+      updateNavIndicator(activeLink);
+    } else if (navIndicator) {
       navIndicator.style.opacity = '0';
     }
   });
 
-  // Initial position for active section (default to first or based on hash)
-  setTimeout(() => {
-    const hash = window.location.hash;
-    const initialActive = hash ? navLinks.querySelector(`a[href="${hash}"]`) : navItems[0];
-    if (initialActive) {
-      initialActive.classList.add('active');
-      moveIndicator(initialActive);
+  // === SCROLL EFFECTS ===
+  const handleScroll = () => {
+    const scrolled = window.scrollY > 50;
+    if (scrolled !== state.isScrolled) {
+      state.isScrolled = scrolled;
+      navbar?.classList.toggle('scrolled', scrolled);
     }
-  }, 500);
 
-  // ───── SECTION SCROLL DETECTION (Sync Active Menu) ─────
-  const sections = document.querySelectorAll('section[id]');
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        const activeLink = navLinks.querySelector(`a[href="#${id}"]`);
-        if (activeLink) {
-          navItems.forEach(nav => nav.classList.remove('active'));
-          activeLink.classList.add('active');
-          moveIndicator(activeLink);
-        }
-      }
-    });
-  }, { threshold: 0.5, rootMargin: '-10% 0px -80% 0px' });
+    // Update active section based on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const scrollPosition = window.scrollY + 100;
 
-  sections.forEach(section => navObserver.observe(section));
-
-  // Close mobile menu on link click
-  navItems.forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      document.body.classList.remove('nav-open');
-      const spans = mobileToggle.querySelectorAll('span');
-      spans[0].style.transform = '';
-      spans[1].style.opacity = '';
-      spans[2].style.transform = '';
-    });
-  });
-
-  // ───── SCROLL REVEAL (Intersection Observer) ─────
-  const revealElements = document.querySelectorAll('.reveal');
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  revealElements.forEach(el => revealObserver.observe(el));
-  
-  // ───── DYNAMIC HERO STATS ─────
-  async function updateHeroStats() {
-    try {
-      // Small delay to ensure Supabase is ready
-      const response = await fetch(`${CONFIG.supabase.url}/rest/v1/leads?select=id`, {
-        method: 'GET',
-        headers: { 
-          'apikey': CONFIG.supabase.anonKey,
-          'Authorization': `Bearer ${CONFIG.supabase.anonKey}`,
-          'Prefer': 'count=exact'
-        }
-      });
-      const contentRange = response.headers.get('content-range');
-      const count = contentRange?.split('/')[1] || "0";
-      
-      const leadCountStat = document.getElementById('hero-leads-count');
-      if (leadCountStat) {
-        // We set 1200 as a base if it's very low for demo effect but use real if higher
-        // Or just use real if they want 'real' info
-        leadCountStat.dataset.target = count;
-      }
-    } catch (e) {
-      console.warn('Error fetching hero stats:', e);
-    }
-  }
-  updateHeroStats();
-
-  // ───── ANIMATED COUNTERS (Expert Animation) ─────
-  const counters = document.querySelectorAll('[data-target]');
-  const countObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const counter = entry.target;
-        const target = parseFloat(counter.dataset.target);
-        const suffix = counter.dataset.suffix || '';
-        let current = 0;
-        const duration = 2000;
-        const stepTime = 16;
-        const increment = target / (duration / stepTime);
-
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            counter.textContent = target + suffix;
-            clearInterval(timer);
-          } else {
-            // Check if it's an integer target or float
-            counter.textContent = (target % 1 === 0 ? Math.floor(current) : current.toFixed(1)) + suffix;
+    sections.forEach(section => {
+      const { offsetTop, offsetHeight, id } = section;
+      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        allNavLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+            updateNavIndicator(link);
           }
-        }, stepTime);
-        countObserver.unobserve(counter);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach(counter => countObserver.observe(counter));
-
-  // ───── DEMO CHAT ANIMATION ─────
-  const demoChat = document.getElementById('demoChat');
-  let demoStarted = false;
-
-  const demoMessages = [
-    { type: 'user', text: 'Hola, necesito automatizar la atención al cliente de mi e-commerce' },
-    { type: 'bot', text: '¡Perfecto! Puedo ayudarte con eso. ¿Cuántas consultas recibes al día aproximadamente?' },
-    { type: 'user', text: 'Unas 200 consultas diarias, sobre pedidos, devoluciones y preguntas frecuentes' },
-    { type: 'bot', text: 'Excelente. Con un agente IA podemos resolver automáticamente el 85% de esas consultas. Te propongo:\n\n✅ Agente conversacional 24/7\n✅ Integración con tu CRM\n✅ Escalado inteligente a agentes humanos\n✅ Dashboard de métricas en tiempo real' },
-    { type: 'user', text: '¿Y cuánto tiempo tardaría en estar funcionando?' },
-    { type: 'bot', text: '¡En 2 semanas lo tendríamos operativo! El primer sprint incluye el agente base y en el segundo optimizamos con tus datos reales. ¿Agendamos una llamada para definir el alcance? 🚀' },
-  ];
-
-  const demoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !demoStarted) {
-        demoStarted = true;
-        startDemoChat();
-      }
-    });
-  }, { threshold: 0.3 });
-
-  if (demoChat) {
-    demoObserver.observe(demoChat);
-  }
-
-  function startDemoChat() {
-    demoChat.innerHTML = '';
-    let delay = 500;
-
-    demoMessages.forEach((msg, i) => {
-      delay += 800; // Pause before each message
-
-      // Show typing indicator for bot messages
-      if (msg.type === 'bot') {
-        setTimeout(() => {
-          const typing = createTypingIndicator();
-          demoChat.appendChild(typing);
-          demoChat.scrollTop = demoChat.scrollHeight;
-        }, delay);
-        delay += 1200;
-      }
-
-      setTimeout(() => {
-        // Remove typing indicator
-        const existingTyping = demoChat.querySelector('.demo-typing-wrapper');
-        if (existingTyping) existingTyping.remove();
-
-        const messageEl = document.createElement('div');
-        messageEl.className = `demo-message ${msg.type}`;
-        messageEl.style.opacity = '1';
-        messageEl.style.transform = 'none';
-        messageEl.innerHTML = `
-          <div class="demo-message-avatar">${msg.type === 'bot' ? '⚡' : '👤'}</div>
-          <div class="demo-message-content">${msg.text.replace(/\n/g, '<br>')}</div>
-        `;
-        demoChat.appendChild(messageEl);
-        
-        // Use requestAnimationFrame for smoother scrolling
-        requestAnimationFrame(() => {
-          demoChat.scrollTo({
-            top: demoChat.scrollHeight,
-            behavior: 'smooth'
-          });
         });
-      }, delay);
-
-      delay += 600;
-    });
-  }
-
-  function createTypingIndicator() {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'demo-message bot demo-typing-wrapper';
-    wrapper.style.opacity = '1';
-    wrapper.style.transform = 'none';
-    wrapper.innerHTML = `
-      <div class="demo-message-avatar">⚡</div>
-      <div class="demo-typing">
-        <span></span><span></span><span></span>
-      </div>
-    `;
-    return wrapper;
-  }
-
-  // ───── FAQ ACCORDION ─────
-  const faqItems = document.querySelectorAll('.faq-item');
-
-  faqItems.forEach(item => {
-    const btn = item.querySelector('.faq-question');
-    btn.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      
-      // Close all others
-      faqItems.forEach(otherItem => {
-        otherItem.classList.remove('active');
-      });
-
-      // Toggle current
-      if (!isActive) {
-        item.classList.add('active');
       }
     });
-  });
+  };
 
-  // ───── CHAT WIDGET ─────
-  const chatToggle = document.getElementById('chatToggle');
-  const chatWindow = document.getElementById('chatWindow');
-  const chatInput = document.getElementById('chatInput');
-  const chatSend = document.getElementById('chatSend');
-  const chatMessages = document.getElementById('chatMessages');
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); // Initial check
 
-  const botResponses = [
-    '¡Buena pregunta! Nuestros agentes de IA se personalizan completamente para cada negocio. ¿Te gustaría agendar una demo?',
-    'Trabajamos con empresas de todos los tamaños. El primer paso es una consulta gratuita donde analizamos tus necesidades específicas.',
-    'La implementación típica tarda entre 2 y 4 semanas. Siempre mostramos resultados desde la primera semana. 🚀',
-    'Nuestras soluciones se integran con las herramientas que ya usas: CRM, email, Slack, bases de datos y más. Sin disrupciones.',
-    '¡Por supuesto! Puedo ayudarte a entender mejor nuestros servicios. ¿Qué área de tu negocio te gustaría automatizar?',
-    'La inversión depende del alcance, pero siempre ofrecemos un ROI medible. La consulta inicial es 100% gratuita para poder darte un presupuesto exacto.'
-  ];
-
-  let responseIndex = 0;
-
-  chatToggle.addEventListener('click', () => {
-    chatWindow.classList.toggle('open');
-    chatToggle.textContent = chatWindow.classList.contains('open') ? '✕' : '💬';
-    
-    if (chatWindow.classList.contains('open')) {
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      setTimeout(() => chatInput.focus(), 400);
-    }
-  });
-
-  function sendChatMessage() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    // Add user message
-    addChatMessage('user', text);
-    chatInput.value = '';
-
-    // Simulate bot typing
-    setTimeout(() => {
-      const response = botResponses[responseIndex % botResponses.length];
-      responseIndex++;
-      addChatMessage('bot', response);
-    }, 1000 + Math.random() * 1000);
-  }
-
-  function addChatMessage(type, text) {
-    const msg = document.createElement('div');
-    msg.className = `demo-message ${type}`;
-    msg.style.opacity = '1';
-    msg.style.transform = 'none';
-    msg.innerHTML = `
-      <div class="demo-message-avatar">${type === 'bot' ? '⚡' : '👤'}</div>
-      <div class="demo-message-content">${text}</div>
-    `;
-    chatMessages.appendChild(msg);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  chatSend.addEventListener('click', sendChatMessage);
-  chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') sendChatMessage();
-  });
-
-  // ───── CURSOR AURA (Ultra-Elite) ─────
-  const aura = document.createElement('div');
-  aura.className = 'cursor-aura';
-  document.body.appendChild(aura);
-
-  let mouseX = 0, mouseY = 0;
-  let auraX = 0, auraY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  function animateAura() {
-    // Smooth easing for the aura
-    const dx = mouseX - auraX;
-    const dy = mouseY - auraY;
-    auraX += dx * 0.1;
-    auraY += dy * 0.1;
-
-    aura.style.transform = `translate(${auraX - 150}px, ${auraY - 150}px)`;
-    requestAnimationFrame(animateAura);
-  }
-  animateAura();
-
-  // ───── MAGNETIC BUTTONS ─────
-  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-logo');
-  
-  magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      
-      // Pull strength (adjust for subtlety)
-      const strength = 15;
-      const moveX = (x / rect.width) * strength;
-      const moveY = (y / rect.height) * strength;
-      
-      btn.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
-    });
-  });
-
-  // ───── MICRO-NOISE OVERLAY ─────
-  const noise = document.createElement('div');
-  noise.className = 'micro-noise';
-  document.body.appendChild(noise);
-
-  // ───── CONTACT FORM & WEBHOOK INTEGRATION (Professionalized) ─────
-  const contactForm = document.getElementById('contactForm');
-  const formSubmit = document.getElementById('formSubmit');
-
-  if (contactForm && formSubmit) {
+  // === GESTIÓN DEL FORMULARIO DE CONTACTO ===
+  if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const name = document.getElementById('formName')?.value?.trim();
-      const email = document.getElementById('formEmail')?.value?.trim();
-      const company = document.getElementById('formCompany')?.value?.trim() || 'N/A';
-      const service = document.getElementById('formService')?.value || 'No especificado';
-      const msg = document.getElementById('formMessage')?.value?.trim() || '';
-
-      // 1. Better Validation
-      if (!name || !email) {
-        showFormStatus('Por favor, completa los campos requeridos.', 'error');
-        return;
-      }
-      if (!CONFIG.validation.emailRegex.test(email)) {
-        showFormStatus('Por favor, introduce un email válido.', 'error');
-        return;
-      }
-
-      // 2. Loading State
-      const originalText = formSubmit.innerHTML;
-      formSubmit.innerHTML = 'Enviando lead... <span class="btn-icon">⏳</span>';
-      formSubmit.style.opacity = '0.7';
+      const originalBtnText = formSubmit.innerHTML;
       formSubmit.disabled = true;
-
-      const payload = {
-        name,
-        email,
-        company_name: company,
-        message: `[Interés: ${service}] - ${msg}`
+      formSubmit.innerHTML = 'Enviando Protocolo... <span class="spinner"></span>';
+      
+      // Obtener datos del formulario
+      const formData = {
+        name: document.getElementById('formName')?.value,
+        email: document.getElementById('formEmail')?.value,
+        service: document.getElementById('formService')?.value,
+        message: document.getElementById('formMessage')?.value,
+        timestamp: new Date().toISOString(),
+        source: window.location.href
       };
 
       try {
-        const response = await fetch('/api/lead', {
+        // 1. Enviar a n8n Webhook
+        const response = await fetch(N8N_WEBHOOK_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
         });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Error al procesar el lead');
+        if (response.ok) {
+          // Éxito
+          showMessage('success', 'Protocolo enviado con éxito. Nuestro agente se contactará pronto.');
+          contactForm.reset();
+        } else {
+          throw new Error('Error en el servidor');
         }
-
-        // 4. Success State
-        formSubmit.innerHTML = '¡Lead Recibido! <span class="btn-icon">✅</span>';
-        formSubmit.style.backgroundColor = '#10B981'; 
-        formSubmit.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.5)';
-        contactForm.reset();
-
       } catch (error) {
-        console.error('Submission error:', error);
-        formSubmit.innerHTML = '✕ Error de red. ¿Reintentar?';
-        formSubmit.style.backgroundColor = '#EF4444';
-        formSubmit.style.boxShadow = '0 0 30px rgba(239, 68, 68, 0.4)';
-        formSubmit.disabled = false;
+        console.error('Error al enviar formulario:', error);
+        // Fallback or Error message
+        showMessage('error', 'Error en la conexión. Por favor reintenta o contáctanos por email.');
       } finally {
-        setTimeout(() => {
-          formSubmit.innerHTML = originalText;
-          formSubmit.style.opacity = '1';
-          formSubmit.style.backgroundColor = '';
-          formSubmit.style.boxShadow = '';
-          formSubmit.disabled = false;
-        }, 6000);
+        formSubmit.disabled = false;
+        formSubmit.innerHTML = originalBtnText;
       }
     });
   }
 
-  function showFormStatus(message, type) {
-    // Elegant toast or simple alert for now, but let's make it a professional alert
-    const statusEl = document.createElement('div');
-    statusEl.style.cssText = `
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      border-radius: 99px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      z-index: 10000;
-      color: white;
-      background: ${type === 'error' ? '#EF4444' : '#10B981'};
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: message-in 0.4s ease forwards;
-    `;
-    statusEl.textContent = message;
-    document.body.appendChild(statusEl);
+  function showMessage(type, text) {
+    const msgElement = document.createElement('div');
+    msgElement.className = `form-message ${type}`;
+    msgElement.textContent = text;
+    
+    contactForm.appendChild(msgElement);
+    
     setTimeout(() => {
-      statusEl.style.animation = 'fade-up 0.4s ease reverse forwards';
-      setTimeout(() => statusEl.remove(), 400);
-    }, 4000);
+      msgElement.classList.add('fade-out');
+      setTimeout(() => msgElement.remove(), 500);
+    }, 5000);
   }
+
+  // === ANIMACIONES GSAP / REVEAL ===
+  // Nota: Estas animaciones requieren ScrollReveal o similar si se desea usar el atributo data-reveal
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  
+  const revealOnScroll = () => {
+    revealElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const isVisible = rect.top <= (window.innerHeight * 0.85);
+      if (isVisible) {
+        el.classList.add('revealed');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll(); // Check once at start
 });

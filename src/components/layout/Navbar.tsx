@@ -35,10 +35,11 @@ export const Navbar = () => {
         >
             <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center neon-blue group-hover:rotate-12 transition-transform duration-500">
-                        <span className="text-base font-black italic tracking-tighter text-white">Z</span>
-                    </div>
-                    <span className="text-2xl font-black italic tracking-tighter uppercase">ZYNDRIX <span className="text-primary font-black">AI</span></span>
+                    <img 
+                        src="/img/zyndrix-logo-v13.png?v=3" 
+                        alt="Zyndrix AI" 
+                        className="h-10 w-auto group-hover:scale-105 transition-transform duration-500"
+                    />
                 </Link>
 
                 {/* Desktop Nav */}

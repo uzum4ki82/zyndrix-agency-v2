@@ -67,14 +67,15 @@ export default function LoginPage() {
         <div className="flex flex-col items-center mb-10">
           <motion.div 
             whileHover={{ scale: 1.05, rotate: 5 }}
-            className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/30 mb-6 border border-white/10"
+            className="rounded-2xl bg-white/[0.03] backdrop-blur-xl flex items-center justify-center shadow-2xl shadow-blue-500/10 mb-6 border border-white/10 p-4"
           >
-            <ShieldCheck className="text-white" size={32} />
+            <img 
+              src="/img/zyndrix-logo-v13.png" 
+              alt="Zyndrix AI" 
+              className="w-48 h-auto object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            />
           </motion.div>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white tracking-tighter uppercase flex items-center gap-3 justify-center mb-1">
-              ZYNDRIX <span className="text-blue-500 font-mono italic">OS</span>
-            </h1>
             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
               Control Center • Acceso Restringido
             </p>
