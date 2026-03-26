@@ -25,10 +25,9 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnalysisModal from '@/components/dashboard/AnalysisModal';
+import { cn } from '@/lib/utils';
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+
 
 // Mock logs if n8n is not reachable
 const DEFAULT_LOGS = [

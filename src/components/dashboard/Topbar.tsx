@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CommandPalette from './CommandPalette';
+import { cn } from '@/lib/utils';
 
 interface TopbarProps {
   onMenuClick?: () => void;
@@ -142,8 +143,4 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
       <CommandPalette isOpen={isCommandOpen} onClose={() => setIsCommandOpen(false)} />
     </header>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

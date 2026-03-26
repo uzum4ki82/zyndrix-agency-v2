@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import AuthGuard from '@/components/dashboard/AuthGuard';
-import Sidebar from '@/components/dashboard/Sidebar';
+import { Sidebar } from '@/components/dashboard/Sidebar';
 import Topbar from '@/components/dashboard/Topbar';
 import '@/styles/dashboard.css';
 

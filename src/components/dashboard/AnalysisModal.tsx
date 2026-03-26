@@ -10,17 +10,13 @@ import {
   CheckCircle2, 
   AlertCircle,
   ArrowUpRight,
+  ArrowRight,
   TrendingUp,
   Cpu,
   Sparkles
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '@/lib/utils';
 
 interface AnalysisModalProps {
   isOpen: boolean;
@@ -205,22 +201,4 @@ export default function AnalysisModal({ isOpen, onClose, prospect }: AnalysisMod
   );
 }
 
-// Sub-component Helper
-function ArrowRight({ size, className }: { size: number, className: string }) {
-  return (
-    <svg 
-      width={size} 
-      height={size} 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="3" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      className={className}
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  );
-}
+

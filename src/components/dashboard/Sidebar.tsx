@@ -12,9 +12,7 @@ import {
   Activity,
   Box,
   LayoutDashboard
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-
+} from 'lucide-react';import { cn } from '@/lib/utils';
 const menuItems = [
   { icon: LayoutDashboard, label: 'Resumen', href: '/dashboard' },
   { icon: Users, label: 'Prospectos', href: '/dashboard/leads' },
@@ -25,7 +23,11 @@ const menuItems = [
   { icon: Settings, label: 'Configuración', href: '/dashboard/settings' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname();
 
   const handleLogout = () => {
@@ -38,7 +40,7 @@ export function Sidebar() {
       <div className="sidebar-logo">
         <div className="w-full flex items-center justify-center py-2">
           <img 
-            src="/img/zyndrix-logo-v13.png" 
+            src="/img/zyndrix-logo-v14.png" 
             alt="Zyndrix Logo" 
             className="w-auto h-12 object-contain brightness-110 active:scale-95 transition-all"
           />
