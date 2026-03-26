@@ -36,9 +36,9 @@ export const Navbar = () => {
             <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2 group">
                     <img 
-                        src="/img/zyndrix-logo-v14.png" 
+                        src="/img/zyndrix-logo-v15.png" 
                         alt="Zyndrix AI" 
-                        className="h-32 w-auto group-hover:scale-105 transition-transform duration-500"
+                        className="h-40 w-auto group-hover:scale-105 transition-transform duration-500"
                     />
                 </Link>
 
