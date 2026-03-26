@@ -38,7 +38,7 @@ export const Navbar = () => {
                     <img 
                         src="/img/zyndrix-logo-v14.png" 
                         alt="Zyndrix AI" 
-                        className="h-10 w-auto group-hover:scale-105 transition-transform duration-500"
+                        className="h-32 w-auto group-hover:scale-105 transition-transform duration-500"
                     />
                 </Link>
 

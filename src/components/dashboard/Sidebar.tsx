@@ -42,7 +42,7 @@ export function Sidebar({ onClose }: SidebarProps) {
           <img 
             src="/img/zyndrix-logo-v14.png" 
             alt="Zyndrix Logo" 
-            className="w-auto h-12 object-contain brightness-110 active:scale-95 transition-all"
+            className="w-auto h-36 object-contain brightness-110 active:scale-95 transition-all"
           />
         </div>
       </div>
