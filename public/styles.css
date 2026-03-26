@@ -768,35 +768,55 @@ h3 {
 }
 
 .marquee-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-lg);
-  backdrop-filter: none;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+  white-space: nowrap;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
-  box-shadow: none;
   flex-shrink: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .marquee-item:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: var(--cyan);
-  transform: translateY(-8px) scale(1.1) rotate(3deg);
-  box-shadow: 0 15px 40px rgba(0, 245, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.marquee-item span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a1a1aa; /* Text muted */
+  text-transform: none;
+  letter-spacing: normal;
+  transition: color 0.3s ease;
+}
+
+.marquee-item:hover span {
+  color: #ffffff;
+}
+
+
 .marquee-item img {
-  width: 80%;
-  height: 80%;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
-  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+  filter: grayscale(1) brightness(2);
+  opacity: 0.7;
   transition: all 0.4s ease;
+}
+
+.marquee-item:hover img {
+  filter: grayscale(0) brightness(1);
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .marquee-item:hover img {

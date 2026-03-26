@@ -45,20 +45,28 @@
   }
   </script>
 
-  <!-- Google Analytics / Tag Manager (Placeholder) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-60FX6KBH7Q"></script>
   <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    // Previous scripts...
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-60FX6KBH7Q');
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=22.0">
+  <link rel="stylesheet" href="styles.css?v=23.0">
   <link rel="icon" type="image/png" href="img/zyndrix-logo-v15.png">
   <style>
     body { background-color: #04040A !important; overflow-x: hidden; }
     .hero { background: transparent !important; position: relative; z-index: 10; }
+    .service-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 245, 255, 0.1); margin-bottom: 20px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--cyan); }
+    .nav-logo-img { max-height: 200px !important; width: auto; }
+    .logos-marquee { opacity: 1 !important; visibility: visible !important; }
   </style>
 </head>
 <body>
@@ -149,62 +157,96 @@
     <div class="tech-marquee-v2">
       <div class="marquee-track">
         <!-- ChatGPT -->
-        <div class="marquee-item brand-chatgpt" title="OpenAI ChatGPT 4o">
-          <img src="img/chatgpt-logo-clean.png" alt="ChatGPT">
+        <div class="marquee-item" title="OpenAI ChatGPT">
+          <img src="https://cdn.simpleicons.org/openai/ffffff" alt="ChatGPT">
+          <span>ChatGPT (OpenAI)</span>
         </div>
         <!-- Claude -->
-        <div class="marquee-item brand-claude" title="Anthropic Claude 3.5">
-          <img src="img/claude-logo-clean.png" alt="Claude">
+        <div class="marquee-item" title="Anthropic Claude">
+          <img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Claude">
+          <span>Claude (Anthropic)</span>
         </div>
-        <!-- Mistral -->
-        <div class="marquee-item brand-mistral" title="Mistral Large">
-          <img src="img/mistral-logo-clean.png" alt="Mistral AI">
-        </div>
-        <!-- Grok -->
-        <div class="marquee-item brand-grok" title="xAI Grok-1.5">
-          <img src="img/grok-logo-clean.png" alt="Grok">
-        </div>
-        <!-- Llama -->
-        <div class="marquee-item brand-llama" title="Meta Llama 3">
-          <img src="img/llama-logo-clean.png" alt="Llama 3">
-        </div>
-        <!-- Perplexity -->
-        <div class="marquee-item brand-perplexity" title="Perplexity AI">
-          <img src="img/perplexity-logo-clean.png" alt="Perplexity">
+        <!-- Gemini -->
+        <div class="marquee-item" title="Google Gemini">
+          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini">
+          <span>Gemini (Google)</span>
         </div>
         <!-- n8n -->
-        <div class="marquee-item brand-n8n" title="n8n.io">
-          <img src="img/icon-n8n.png" alt="n8n">
+        <div class="marquee-item" title="n8n.io">
+          <img src="https://cdn.simpleicons.org/n8n" alt="n8n">
+          <span>n8n</span>
         </div>
-        <!-- Google -->
-        <div class="marquee-item brand-gemini" title="Google Gemini Pro">
-          <img src="img/veo-logo-clean.png" alt="Gemini">
+        <!-- LangChain -->
+        <div class="marquee-item" title="LangChain">
+          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain">
+          <span>LangChain</span>
         </div>
-        
+        <!-- Python -->
+        <div class="marquee-item" title="Python">
+          <img src="https://cdn.simpleicons.org/python" alt="Python">
+          <span>Python</span>
+        </div>
+        <!-- React/Next.js -->
+        <div class="marquee-item" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js">
+          <span>React / Next.js</span>
+        </div>
+        <!-- PostgreSQL -->
+        <div class="marquee-item" title="PostgreSQL">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL">
+          <span>PostgreSQL</span>
+        </div>
+        <!-- Vercel -->
+        <div class="marquee-item" title="Vercel">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel">
+          <span>Vercel</span>
+        </div>
+        <!-- AWS/GCP -->
+        <div class="marquee-item" title="Cloud Infra">
+          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP">
+          <span>AWS / GCP</span>
+        </div>
+
         <!-- DUPLICATE FOR INFINITE EFFECT -->
-        <div class="marquee-item brand-chatgpt" title="OpenAI ChatGPT 4o">
-          <img src="img/chatgpt-logo-clean.png" alt="ChatGPT">
+        <div class="marquee-item" title="OpenAI ChatGPT">
+          <img src="https://cdn.simpleicons.org/openai/ffffff" alt="ChatGPT">
+          <span>ChatGPT (OpenAI)</span>
         </div>
-        <div class="marquee-item brand-claude" title="Anthropic Claude 3.5">
-          <img src="img/claude-logo-clean.png" alt="Claude">
+        <div class="marquee-item" title="Anthropic Claude">
+          <img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Claude">
+          <span>Claude (Anthropic)</span>
         </div>
-        <div class="marquee-item brand-mistral" title="Mistral Large">
-          <img src="img/mistral-logo-clean.png" alt="Mistral AI">
+        <div class="marquee-item" title="Google Gemini">
+          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini">
+          <span>Gemini (Google)</span>
         </div>
-        <div class="marquee-item brand-grok" title="xAI Grok-1.5">
-          <img src="img/grok-logo-clean.png" alt="Grok">
+        <div class="marquee-item" title="n8n.io">
+          <img src="https://cdn.simpleicons.org/n8n" alt="n8n">
+          <span>n8n</span>
         </div>
-        <div class="marquee-item brand-llama" title="Meta Llama 3">
-          <img src="img/llama-logo-clean.png" alt="Llama 3">
+        <div class="marquee-item" title="LangChain">
+          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain">
+          <span>LangChain</span>
         </div>
-        <div class="marquee-item brand-perplexity" title="Perplexity AI">
-          <img src="img/perplexity-logo-clean.png" alt="Perplexity">
+        <div class="marquee-item" title="Python">
+          <img src="https://cdn.simpleicons.org/python" alt="Python">
+          <span>Python</span>
         </div>
-        <div class="marquee-item brand-n8n" title="n8n.io">
-          <img src="img/icon-n8n.png" alt="n8n">
+        <div class="marquee-item" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js">
+          <span>React / Next.js</span>
         </div>
-        <div class="marquee-item brand-gemini" title="Google Gemini Pro">
-          <img src="img/veo-logo-clean.png" alt="Gemini">
+        <div class="marquee-item" title="PostgreSQL">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL">
+          <span>PostgreSQL</span>
+        </div>
+        <div class="marquee-item" title="Vercel">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel">
+          <span>Vercel</span>
+        </div>
+        <div class="marquee-item" title="Cloud Infra">
+          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP">
+          <span>AWS / GCP</span>
         </div>
       </div>
     </div>
@@ -317,7 +359,7 @@
       <div class="bento-grid services-bento">
         <!-- Card 1: Agentes Inteligentes (Featured) -->
         <div class="glass-card bento-item bento-featured reveal">
-          <div class="service-icon"><img src="img/icon-agents.png" alt="Agentes Inteligentes"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
           <div class="bento-content">
             <div class="bento-tag">Enterprise Tier</div>
             <h3>Agentes Inteligentes Autónomos</h3>
@@ -336,7 +378,7 @@
 
         <!-- Card 2: Flujos Inteligentes -->
         <div class="glass-card bento-item reveal reveal-delay-1">
-          <div class="service-icon"><img src="img/icon-automation.png" alt="Automatización IA"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
           <h3>Flujos Inteligentes</h3>
           <p>Eliminamos el trabajo repetitivo con arquitecturas reactivas.</p>
           <ul class="service-features">
@@ -347,7 +389,7 @@
 
         <!-- Card 3: n8n -->
         <div class="glass-card bento-item reveal reveal-delay-2">
-          <div class="service-icon"><img src="img/icon-n8n.png" alt="n8n"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
           <h3>Ecosistema n8n</h3>
           <p>Conectamos todo tu stack con potencia de IA.</p>
           <ul class="service-features">
@@ -358,7 +400,7 @@
 
         <!-- Card 4: Enterprise (Wide) -->
         <div class="glass-card bento-item bento-wide reveal reveal-delay-3">
-          <div class="service-icon"><img src="img/icon-enterprise.png" alt="Enterprise"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg></div>
           <div class="bento-content">
             <h3>Soluciones Enterprise Native</h3>
             <p>Integración profunda de modelos en sistemas corporativos sin fricciones.</p>
@@ -372,7 +414,7 @@
 
         <!-- Card 5: Marketing -->
         <div class="glass-card bento-item reveal reveal-delay-4">
-          <div class="service-icon"><img src="img/icon-marketing.png" alt="Marketing"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
           <h3>Marketing IA</h3>
           <p>Optimización de conversión algorítmica.</p>
           <ul class="service-features">
@@ -383,7 +425,7 @@
 
         <!-- Card 6: Contenido -->
         <div class="glass-card bento-item reveal reveal-delay-5">
-          <div class="service-icon"><img src="img/icon-content.png" alt="Contenido"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
           <h3>Generación High-Fi</h3>
           <p>Textos y visuales con alma de marca.</p>
           <ul class="service-features">
@@ -394,7 +436,7 @@
 
         <!-- Card 7: RAG -->
         <div class="glass-card bento-item reveal reveal-delay-6">
-          <div class="service-icon"><img src="img/icon-rag.png" alt="Sistemas RAG"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
           <h3>Knowledge Base RAG</h3>
           <p>IA conectada a tus documentos internos.</p>
           <ul class="service-features">
@@ -405,7 +447,7 @@
 
         <!-- Card 8: Sales -->
         <div class="glass-card bento-item reveal reveal-delay-7">
-          <div class="service-icon"><img src="img/icon-sales.png" alt="Ventas Autónomas"></div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <h3>Ventas Autónomas</h3>
           <p>Agentes optimizados para cualificar y cerrar.</p>
           <ul class="service-features">
@@ -767,35 +809,35 @@
     </div>
     <div class="tech-marquee reveal">
       <div class="tech-track">
-        <div class="tech-item"><span class="tech-item-icon">🧠</span> OpenAI GPT-4</div>
-        <div class="tech-item"><span class="tech-item-icon">⚛️</span> Claude (Anthropic)</div>
-        <div class="tech-item"><span class="tech-item-icon">💎</span> Gemini (Google)</div>
-        <div class="tech-item"><span class="tech-item-icon">🔗</span> n8n</div>
-        <div class="tech-item"><span class="tech-item-icon">🐍</span> Python</div>
-        <div class="tech-item"><span class="tech-item-icon">⚛️</span> React / Next.js</div>
-        <div class="tech-item"><span class="tech-item-icon">🗄️</span> PostgreSQL</div>
-        <div class="tech-item"><span class="tech-item-icon">🔥</span> Firebase</div>
-        <div class="tech-item"><span class="tech-item-icon">📈</span> LangChain</div>
-        <div class="tech-item"><span class="tech-item-icon">🚀</span> Vercel</div>
-        <div class="tech-item"><span class="tech-item-icon">☁️</span> AWS / GCP</div>
-        <div class="tech-item"><span class="tech-item-icon">🐳</span> Docker</div>
-        <div class="tech-item"><span class="tech-item-icon">📱</span> API REST / GraphQL</div>
-        <div class="tech-item"><span class="tech-item-icon">🔒</span> Auth0</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/openai/ffffff" alt="OpenAI" style="width:16px; height:16px;"> OpenAI GPT-4o</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Anthropic" style="width:16px; height:16px;"> Claude (Anthropic)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" style="width:16px; height:16px;"> Gemini (Google)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/n8n" alt="n8n" style="width:16px; height:16px;"> n8n</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/python" alt="Python" style="width:16px; height:16px;"> Python</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" style="width:16px; height:16px;"> React / Next.js</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" style="width:16px; height:16px;"> PostgreSQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/firebase" alt="Firebase" style="width:16px; height:16px;"> Firebase</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" style="width:16px; height:16px;"> LangChain</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" style="width:16px; height:16px;"> Vercel</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" style="width:16px; height:16px;"> AWS / GCP</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker" style="width:16px; height:16px;"> Docker</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL" style="width:16px; height:16px;"> API REST / GraphQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0" style="width:16px; height:16px;"> Auth0</div>
         <!-- Duplicate for infinite scroll -->
-        <div class="tech-item"><span class="tech-item-icon">🧠</span> OpenAI GPT-4</div>
-        <div class="tech-item"><span class="tech-item-icon">⚛️</span> Claude (Anthropic)</div>
-        <div class="tech-item"><span class="tech-item-icon">💎</span> Gemini (Google)</div>
-        <div class="tech-item"><span class="tech-item-icon">🔗</span> n8n</div>
-        <div class="tech-item"><span class="tech-item-icon">🐍</span> Python</div>
-        <div class="tech-item"><span class="tech-item-icon">⚛️</span> React / Next.js</div>
-        <div class="tech-item"><span class="tech-item-icon">🗄️</span> PostgreSQL</div>
-        <div class="tech-item"><span class="tech-item-icon">🔥</span> Firebase</div>
-        <div class="tech-item"><span class="tech-item-icon">📈</span> LangChain</div>
-        <div class="tech-item"><span class="tech-item-icon">🚀</span> Vercel</div>
-        <div class="tech-item"><span class="tech-item-icon">☁️</span> AWS / GCP</div>
-        <div class="tech-item"><span class="tech-item-icon">🐳</span> Docker</div>
-        <div class="tech-item"><span class="tech-item-icon">📱</span> API REST / GraphQL</div>
-        <div class="tech-item"><span class="tech-item-icon">🔒</span> Auth0</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/openai/ffffff" alt="OpenAI" style="width:16px; height:16px;"> OpenAI GPT-4o</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Anthropic" style="width:16px; height:16px;"> Claude (Anthropic)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" style="width:16px; height:16px;"> Gemini (Google)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/n8n" alt="n8n" style="width:16px; height:16px;"> n8n</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/python" alt="Python" style="width:16px; height:16px;"> Python</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" style="width:16px; height:16px;"> React / Next.js</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" style="width:16px; height:16px;"> PostgreSQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/firebase" alt="Firebase" style="width:16px; height:16px;"> Firebase</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" style="width:16px; height:16px;"> LangChain</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" style="width:16px; height:16px;"> Vercel</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" style="width:16px; height:16px;"> AWS / GCP</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker" style="width:16px; height:16px;"> Docker</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL" style="width:16px; height:16px;"> API REST / GraphQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0" style="width:16px; height:16px;"> Auth0</div>
       </div>
     </div>
   </section>
