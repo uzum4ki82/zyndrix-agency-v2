@@ -455,6 +455,10 @@ h3 {
   font-size: 0.85rem !important;
 }
 
+.nav-cta-mobile {
+  display: none;
+}
+
 .mobile-toggle {
   display: none;
   flex-direction: column;
@@ -2223,6 +2227,28 @@ textarea.cta-input {
   .nav-links a {
     font-size: 1.5rem !important;
     color: white !important;
+  }
+
+  .nav-cta-mobile {
+    display: flex;
+    align-items: center;
+    background: var(--gradient-aurora);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 12px;
+    box-shadow: 0 4px 15px var(--primary-glow);
+    z-index: 1001;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .nav-cta-mobile:active {
+    transform: scale(0.95);
   }
 
   .mobile-toggle {
