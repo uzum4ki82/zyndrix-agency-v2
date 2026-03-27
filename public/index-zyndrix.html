@@ -23,6 +23,9 @@
   <meta property="twitter:image" content="img/zyndrix-logo-v15.png">
   <meta name="twitter:site" content="@zyndrix">
 
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#04040A">
+  <link rel="canonical" href="https://zyndrix.dev/">
   <title>Zyndrix — Agencia de Inteligencia Artificial</title>
   
   <!-- Schema.org Markup -->
@@ -33,10 +36,18 @@
     "name": "Zyndrix",
     "image": "https://zyndrix.dev/img/zyndrix-logo-v15.png",
     "url": "https://zyndrix.dev",
-    "description": "Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.",
+    "description": "Zyndrix es una agencia líder en soluciones de Inteligencia Artificial de alto rendimiento, especializada en Agentes Autónomos y automatización con n8n.",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "ES"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de IA",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Agentes Inteligentes" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatización n8n" } }
+      ]
     },
     "sameAs": [
       "https://twitter.com/zyndrix",
@@ -65,7 +76,7 @@
     .hero { background: transparent !important; position: relative; z-index: 10; }
     .service-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 245, 255, 0.1); margin-bottom: 20px; }
     .service-icon svg { width: 24px; height: 24px; color: var(--cyan); }
-    .nav-logo-img { max-height: 200px !important; width: auto; }
+    .nav-logo-img { max-height: 54px !important; width: auto; }
     .logos-marquee { opacity: 1 !important; visibility: visible !important; }
   </style>
 </head>
@@ -111,7 +122,7 @@
         ARQUITECTURA IA <span class="tag-divider">|</span> CLASE-ENTERPRISE 
       </div>
       <h1 class="hero-title reveal">
-        SOLUCIONES IA DE <span class="gradient-text">ALTO RENDIMIENTO</span>
+        ZYNDRIX: SOLUCIONES IA DE <span class="gradient-text">ALTO RENDIMIENTO</span>
       </h1>
       <p class="hero-subtitle reveal">
         Creamos ecosistemas autónomos que escalan tu negocio mientras duermes.
@@ -332,7 +343,7 @@
             <div class="diagram-arrow">↓</div>
             <div class="diagram-node highlight">⚡ Motor Zyndrix</div>
             <div class="diagram-arrow">↓</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <div class="diagram-nodes-row">
               <div class="diagram-node">🤖 Agentes</div>
               <div class="diagram-node">📧 Marketing</div>
               <div class="diagram-node">📈 Analytics</div>

@@ -72,7 +72,7 @@ export default function LoginPage() {
             <img 
               src="/img/zyndrix-logo-v15.png" 
               alt="Zyndrix AI" 
-              className="w-[550px] h-auto object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              className="w-[280px] h-auto object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
             />
           </motion.div>
           <div className="text-center">

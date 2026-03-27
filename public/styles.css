@@ -384,7 +384,7 @@ h3 {
 }
 
 .nav-logo-img {
-  height: 160px;
+  height: 50px;
   width: auto;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -986,6 +986,12 @@ h3 {
   color: var(--primary);
   font-size: 1.2rem;
   margin: 8px 0;
+}
+
+.diagram-nodes-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
 }
 
 .service-icon {
@@ -2291,7 +2297,29 @@ textarea.cta-input {
     gap: 16px;
   }
 
-  .problems-grid {
+  .problems-grid, .solution-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .solution-grid {
+    gap: 48px;
+  }
+
+  .solution-visual {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .solution-diagram {
+    padding: 24px 16px;
+  }
+
+  .diagram-node {
+    padding: 12px 16px;
+    font-size: 0.75rem;
+  }
+
+  .diagram-nodes-row {
     grid-template-columns: 1fr !important;
   }
 

@@ -38,11 +38,11 @@ export function Sidebar({ onClose }: SidebarProps) {
   return (
     <aside className="h-full flex flex-col">
       <div className="sidebar-logo">
-        <div className="w-full flex items-center justify-center py-2">
+        <div className="w-full flex items-center justify-center py-1">
           <img 
             src="/img/zyndrix-logo-v15.png" 
             alt="Zyndrix Logo" 
-            className="w-auto h-48 object-contain brightness-110 active:scale-95 transition-all"
+            className="w-auto h-6 object-contain brightness-110 active:scale-95 transition-all"
           />
         </div>
       </div>
