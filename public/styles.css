@@ -1391,9 +1391,9 @@ h3 {
 }
 
 .case-author-img {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px; /* Estilo más moderno que circular total */
+  width: 80px;
+  height: 80px;
+  border-radius: 20px; /* Estilo más moderno que circular total */
   border: 1px solid var(--border-glow);
   object-fit: cover;
 }

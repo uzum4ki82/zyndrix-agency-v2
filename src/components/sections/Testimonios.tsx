@@ -20,7 +20,7 @@ export const Testimonios = () => (
             <div className="flex items-center gap-10 mb-16">
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/40 blur-2xl rounded-full opacity-0 group-hover:opacity-60 transition-opacity" />
-                <img src="/img/test_1.png" alt="Marc Soler" className="w-28 h-28 rounded-[2.5rem] object-cover grayscale brightness-110 border-2 border-white/10 relative z-10" />
+                <img src="/img/test_1.png" alt="Marc Soler" className="w-32 h-32 rounded-[3rem] object-cover grayscale brightness-110 border-2 border-white/10 relative z-10" />
               </div>
               <div>
                 <h4 className="text-3xl font-heading font-black uppercase italic tracking-tighter mb-1">Marc Soler</h4>
@@ -42,7 +42,7 @@ export const Testimonios = () => (
             <div className="flex items-center gap-10 mb-16">
               <div className="relative">
                 <div className="absolute inset-0 bg-secondary/40 blur-2xl rounded-full opacity-0 group-hover:opacity-60 transition-opacity" />
-                <img src="/img/test_2.png" alt="Elena Vance" className="w-28 h-28 rounded-[2.5rem] object-cover grayscale brightness-110 border-2 border-white/10 relative z-10" />
+                <img src="/img/test_2.png" alt="Elena Vance" className="w-32 h-32 rounded-[3rem] object-cover grayscale brightness-110 border-2 border-white/10 relative z-10" />
               </div>
               <div>
                 <h4 className="text-3xl font-heading font-black uppercase italic tracking-tighter mb-1">Elena Vance</h4>
