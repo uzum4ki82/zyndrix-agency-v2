@@ -366,6 +366,52 @@ h3 {
   color: var(--text-muted);
 }
 
+/* ---------- Light Mode Overlay (Optional for Sections) ---------- */
+.section-light-overlay {
+  background: linear-gradient(to bottom, #f8fafc, #f1f5f9) !important;
+  color: #0f172a !important;
+  position: relative;
+  z-index: 5;
+}
+
+.section-light-overlay .section-title {
+  color: #0f172a !important;
+}
+
+.section-light-overlay .section-subtitle {
+  color: #475569 !important;
+}
+
+/* Glass 3.0 - Light Crystal (For Pricing Cards) */
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  border: 1px solid rgba(45, 212, 191, 0.2) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03), inset 0 0 20px rgba(255, 255, 255, 0.1) !important;
+  color: #1e293b !important;
+}
+
+.glass-card-light h3 {
+  color: #0f172a !important;
+}
+
+.glass-card-light .price {
+  color: #06b6d4 !important; /* Vibrant Cyan */
+}
+
+.glass-card-light .price-setup {
+  color: #0d9488 !important; /* Teal */
+}
+
+.glass-card-light .pricing-features li {
+  color: #475569 !important;
+}
+
+.glass-card-light .pricing-features li::before {
+  color: #06b6d4 !important;
+}
+
 /* ---------- Existing Buttons ---------- */
 .btn {
   display: inline-flex;
