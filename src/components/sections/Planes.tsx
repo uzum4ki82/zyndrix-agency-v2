@@ -15,15 +15,25 @@ export const Planes = () => (
 
         {[
           { 
-            n: 'CORE Foundations', p: 'A Medida', d: 'Fase de integración de cimientos operativos de alta fidelidad.', 
-            f: ['3 Workflows Nucleares', 'Agente IA Soporte L1', 'Auditoría Técnica Total'] 
+            n: 'CORE Foundations', 
+            s: '499', 
+            p: '199', 
+            d: 'Puesta en marcha estratégica + Mantenimiento mensual para PYMES.', 
+            f: ['1 Workflow Nuclear', 'Soporte Técnico L1', 'Auditoría Técnica Mensual'] 
           },
           { 
-            n: 'SCALE Protocol', p: 'Consultar', d: 'Escalado masivo mediante automatización industrial total.', 
-            f: ['Agentes Autónomos Ilimitados', 'Córtex RAG Corporativo', 'Mantenimiento Mensual'], m: true 
+            n: 'SCALE Protocol', 
+            s: '950', 
+            p: '450', 
+            d: 'Escalado inteligente con Agentes IA y automatización avanzada.', 
+            f: ['3 Workflows Complejos', 'Agente IA Personalizado', 'Base de Conocimiento (RAG)'], 
+            m: true 
           },
           { 
-            n: 'INDUSTRIAL OS', p: 'Personalizado', d: 'Infraestructura propietaria de alto rendimiento y latencia cero.', 
+            n: 'INDUSTRIAL OS', 
+            s: 'A MEDIDA', 
+            p: 'CONSULTAR', 
+            d: 'Infraestructura propietaria de alto rendimiento y latencia cero.', 
             f: ['Entrenamiento LLM Privado', 'Arquitecto Dedicado 24/7', 'SLA Garantizado 99.9%'] 
           },
         ].map((plan, i) => (
@@ -36,13 +46,26 @@ export const Planes = () => (
               {plan.m && (
                 <div className="flex items-center gap-2 mb-10 bg-primary/20 w-fit px-4 py-1 rounded-full border border-primary/30">
                   <Zap className="w-3 h-3 text-primary" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">ELITE_DIAMANTE</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">RECOMENDADO</span>
                 </div>
               )}
               <h4 className="text-4xl font-heading font-black uppercase italic mb-2 tracking-tighter leading-none">{plan.n}</h4>
-              <div className="text-3xl font-black italic text-white/30 mb-10 flex items-baseline gap-2">
-                <span className="text-white font-medium">$</span> {plan.p}
+              
+              <div className="mb-10 space-y-1">
+                <div className="text-sm font-black italic text-white/40 uppercase tracking-widest leading-none">
+                  Puesta en marcha: {plan.s !== 'A MEDIDA' ? `${plan.s}€` : plan.s}
+                </div>
+                <div className="text-4xl font-black italic text-white flex items-baseline gap-2 leading-none">
+                  {plan.p !== 'CONSULTAR' ? (
+                    <>
+                      {plan.p}<span className="text-sm font-medium text-white/40 uppercase tracking-tighter not-italic">€/mes</span>
+                    </>
+                  ) : (
+                    <span className="text-2xl">{plan.p}</span>
+                  )}
+                </div>
               </div>
+
               <p className="text-xs text-white/30 lowercase italic mb-12 font-medium leading-relaxed">{plan.d}</p>
               <ul className="space-y-8 mb-20 text-shadow">
                 {plan.f.map(feat => (
