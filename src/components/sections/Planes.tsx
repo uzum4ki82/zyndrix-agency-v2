@@ -76,7 +76,10 @@ export const Planes = () => (
                 ))}
               </ul>
             </div>
-            <a href="#contacto" className={`w-full py-8 text-center rounded-3xl font-black uppercase italic tracking-[0.4em] text-[12px] transition-all ${plan.m ? 'bg-white text-black neon-blue shadow-[0_0_40px_rgba(56,189,248,0.2)]' : 'bg-white/5 hover:bg-primary hover:text-base border border-white/10'}`}>
+            <a 
+              href="#contacto" 
+              className="w-full py-8 text-center rounded-3xl font-black uppercase italic tracking-[0.4em] text-[12px] transition-all bg-black text-white border border-primary/40 shadow-[0_0_40px_rgba(56,189,248,0.1)] hover:border-primary hover:shadow-[0_0_60px_rgba(56,189,248,0.3)] hover:scale-[1.02]"
+            >
               INICIAR PROTOCOLO
             </a>
           </motion.div>
