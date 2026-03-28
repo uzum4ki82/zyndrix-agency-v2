@@ -482,6 +482,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ───── VIDEO SHOWCASE HOVER PLAY ─────
+  const showcaseCards = document.querySelectorAll('.showcase-card');
+  showcaseCards.forEach(card => {
+    const video = card.querySelector('video.showcase-video-player');
+    if (video) {
+      card.addEventListener('mouseenter', () => {
+        video.play().catch(() => {}); // Ignore interaction blocking
+      });
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+      });
+    }
+  });
+
   function showFormStatus(message, type) {
     // Elegant toast or simple alert for now, but let's make it a professional alert
     const statusEl = document.createElement('div');
