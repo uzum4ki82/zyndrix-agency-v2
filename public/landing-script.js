@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
   animateAura();
 
   // ───── MAGNETIC BUTTONS ─────
-  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-logo');
+  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-primary-elite, .btn-secondary-elite, .nav-logo');
   
   magneticBtns.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {

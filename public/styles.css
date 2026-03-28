@@ -262,7 +262,111 @@ h3 {
   margin-bottom: 12px;
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons Elite (Novel Design) ---------- */
+.btn-primary-elite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 48px;
+  background: black;
+  color: white;
+  border-radius: 12px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.1);
+}
+
+.btn-primary-elite:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--cyan);
+  box-shadow: 0 15px 40px rgba(45, 212, 191, 0.3), 0 0 20px rgba(45, 212, 191, 0.2);
+  color: #fff;
+}
+
+.btn-primary-elite .btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.btn-primary-elite:hover .btn-shine {
+  animation: shine-sweep 1.5s infinite;
+}
+
+@keyframes shine-sweep {
+  0% { left: -120%; }
+  100% { left: 220%; }
+}
+
+.btn-secondary-elite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 48px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-elite:hover {
+  background: rgba(45, 212, 191, 0.05);
+  border-color: rgba(45, 212, 191, 0.3);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ---------- Pricing Typography Update ---------- */
+.price-setup {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.pricing-card .price {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.pricing-card .price span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ---------- Existing Buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -274,40 +378,6 @@ h3 {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
-}
-
-.btn-primary {
-  background: var(--gradient-aurora);
-  color: white;
-  box-shadow: 0 0 30px var(--primary-glow);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 50px var(--primary-glow), 0 10px 40px rgba(0,0,0,0.4);
-  filter: brightness(1.1);
-}
-
-.btn-secondary {
-  background: var(--bg-glass);
-  color: var(--text-primary);
-  border: 1px solid var(--border-glass);
-  backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-  border-color: var(--primary);
-  background: rgba(45, 212, 191, 0.1);
-  transform: translateY(-2px);
-}
-
-.btn-icon {
-  font-size: 1.1em;
-  transition: transform var(--transition-fast);
-}
-
-.btn:hover .btn-icon {
-  transform: translateX(4px);
 }
 
 /* ---------- Cards / Spatial Glass ---------- */
