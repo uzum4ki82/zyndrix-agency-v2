@@ -435,6 +435,19 @@ h3 {
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-full);
   backdrop-filter: blur(12px);
+  transition: gap 0.3s ease;
+}
+
+@media (max-width: 1300px) {
+  .nav-links {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .status-indicator {
+    display: none !important;
+  }
 }
 
 .nav-indicator {
