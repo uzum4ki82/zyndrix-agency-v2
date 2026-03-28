@@ -69,7 +69,7 @@
     gtag('config', 'G-60FX6KBH7Q');
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=28.0">
+  <link rel="stylesheet" href="styles.css?v=29.0">
   <link rel="icon" type="image/png" href="img/favicon-zyndrix.png">
   <link rel="apple-touch-icon" href="img/favicon-zyndrix.png">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -827,8 +827,9 @@
           <div class="pricing-header">
             <h3>Starter</h3>
             <div class="price-setup">Setup: 499€</div>
+            <div class="setup-note">Pago único inicial por arquitectura e implementación</div>
             <div class="price">199€<span>/mes</span></div>
-            <p>Ideal para negocios que quieren probar la IA sin riesgo.</p>
+            <p>Elimina tareas manuales y libera +20h/semana de tu equipo operativo.</p>
           </div>
           <ul class="pricing-features">
             <li>1 Workflow Nuclear</li>
@@ -849,8 +850,9 @@
           <div class="pricing-header">
             <h3>Scale</h3>
             <div class="price-setup">Setup: 950€</div>
+            <div class="setup-note">Pago único inicial por arquitectura e implementación</div>
             <div class="price">450€<span>/mes</span></div>
-            <p>La solución perfecta para PYMES en crecimiento.</p>
+            <p>Multiplica tu capacidad de captación x3 sin añadir un solo empleado.</p>
           </div>
           <ul class="pricing-features">
             <li>3 Flujos de trabajo avanzados</li>
@@ -870,8 +872,9 @@
           <div class="pricing-header">
             <h3>Enterprise</h3>
             <div class="price-setup">Setup: Custom</div>
+            <div class="setup-note">Arquitectura de grado industrial</div>
             <div class="price">A medida</div>
-            <p>Soluciones industriales para alta demanda.</p>
+            <p>Dominio absoluto del mercado con agentes privados y latencia cero.</p>
           </div>
           <ul class="pricing-features">
             <li>Agentes Autónomos Ilimitados</li>
@@ -888,8 +891,45 @@
       </div>
       
       <p class="pricing-note reveal">
-        * Todos los planes requieren un <strong>Fee de Configuración inicial</strong> único basado en la complejidad del proyecto.
+        * Todos los planes requieren un <strong>Fee de Configuración inicial</strong> único basado en la arquitectura personalizada.
       </p>
+    </div>
+  </section>
+
+  <!-- ============ ROI CALCULATOR SECTION ============ -->
+  <section class="section roi-calculator" id="roi">
+    <div class="container">
+      <div class="glass-card roi-card reveal">
+        <div class="roi-grid">
+          <div class="roi-content">
+            <div class="section-badge">ROI Estimado</div>
+            <h2 class="section-title">¿Cuánto te cuesta NO tener IA?</h2>
+            <p>Descubre el capital que recuperas al automatizar procesos manuales con arquitectura Zyndrix.</p>
+            
+            <div class="roi-inputs">
+              <div class="input-group">
+                <label>Empleados en tareas operativas</label>
+                <input type="number" id="roi-employees" value="5" min="1" max="500">
+              </div>
+              <div class="input-group">
+                <label>Coste medio mensual / empleado (€)</label>
+                <input type="number" id="roi-cost" value="1800" step="100">
+              </div>
+            </div>
+          </div>
+          
+          <div class="roi-results">
+            <div class="result-item">
+              <span class="result-label">Recuperación anual proyectada</span>
+              <span class="result-value" id="roi-savings">0€</span>
+            </div>
+            <div class="result-bar-container">
+              <div class="result-bar" id="roi-bar"></div>
+            </div>
+            <p class="roi-note">Basado en un incremento de eficiencia neta del 40%.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -617,4 +617,39 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => statusEl.remove(), 400);
     }, 4000);
   }
+    }
+  }
 });
+
+// ============ ROI CALCULATOR LOGIC ============
+(function() {
+    const roiEmployees = document.getElementById('roi-employees');
+    const roiCost = document.getElementById('roi-cost');
+    const roiSavings = document.getElementById('roi-savings');
+    const roiBar = document.getElementById('roi-bar');
+
+    function updateROI() {
+        if (!roiEmployees || !roiCost || !roiSavings || !roiBar) return;
+        
+        const employees = parseInt(roiEmployees.value) || 0;
+        const cost = parseInt(roiCost.value) || 0;
+        
+        const monthlySavings = (employees * cost) * 0.4;
+        const annualSavings = monthlySavings * 12;
+        
+        const formatter = new Intl.NumberFormat('es-ES', {
+            style: 'currency',
+            currency: 'EUR',
+            maximumFractionDigits: 0
+        });
+        
+        if (roiSavings) roiSavings.innerText = formatter.format(annualSavings);
+        if (roiBar) roiBar.style.width = Math.min((annualSavings / 500000) * 100, 100) + '%';
+    }
+
+    if (roiEmployees && roiCost) {
+        roiEmployees.addEventListener('input', updateROI);
+        roiCost.addEventListener('input', updateROI);
+        setTimeout(updateROI, 1000);
+    }
+})();
