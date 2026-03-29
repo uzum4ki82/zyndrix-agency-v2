@@ -508,14 +508,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ───── AI NETWORK PARTICLES (Hero) ─────
   const canvas = document.getElementById('aiNetworkCanvas');
-  if (canvas) {
+  const heroSection = document.getElementById('hero');
+  if (canvas && heroSection) {
     const ctx = canvas.getContext('2d');
     let particles = [];
     const particleCount = 80;
     const connectionDistance = 160;
     let mouse = { x: null, y: null };
+    let isCanvasVisible = false;
+
+    const canvasObserver = new IntersectionObserver((entries) => {
+      isCanvasVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    canvasObserver.observe(heroSection);
 
     window.addEventListener('mousemove', (e) => {
+      if (!isCanvasVisible) return;
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
@@ -546,6 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initParticles() {
       const parent = canvas.parentElement;
+      if (!parent) return;
       canvas.width = parent.offsetWidth;
       canvas.height = parent.offsetHeight;
       particles = [];
@@ -555,40 +564,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, index) => {
-        p.update();
-        p.draw();
-        for (let j = index + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < connectionDistance) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(45, 212, 191, ${0.1 * (1 - dist / connectionDistance)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+      if (isCanvasVisible) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, index) => {
+          p.update();
+          p.draw();
+          for (let j = index + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (dist < connectionDistance) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(45, 212, 191, ${0.1 * (1 - dist / connectionDistance)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
           }
-        }
-        // Interaction with mouse
-        if (mouse.x && mouse.y) {
-          const distM = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-          if (distM < 100) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(45, 212, 191, ${0.1 * (1 - distM / 100)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+          if (mouse.x && mouse.y) {
+            const distM = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+            if (distM < 100) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.strokeStyle = `rgba(45, 212, 191, ${0.1 * (1 - distM / 100)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
           }
-        }
-      });
+        });
+      }
       requestAnimationFrame(animateParticles);
     }
 
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      initParticles();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initParticles, 250);
     });
     initParticles();
     animateParticles();
