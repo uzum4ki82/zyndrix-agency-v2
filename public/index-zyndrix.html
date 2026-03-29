@@ -15,6 +15,9 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://unpkg.com">
   
+  <!-- Preload Optimized Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  
   <!-- Preload Critical Assets -->
   <link rel="preload" href="img/zyndrix-logo-v15.png" as="image" fetchpriority="high">
   
@@ -72,7 +75,7 @@
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-60FX6KBH7Q"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   <script>
     // Configuration and Analytics...
     window.dataLayer = window.dataLayer || [];
@@ -81,7 +84,7 @@
     gtag('config', 'G-60FX6KBH7Q');
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=29.0">
+  <link rel="stylesheet" href="styles.css?v=29.3">
   <link rel="icon" type="image/png" href="img/favicon-zyndrix.png">
   <link rel="apple-touch-icon" href="img/favicon-zyndrix.png">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -191,52 +194,52 @@
       <div class="marquee-track">
         <!-- ChatGPT -->
         <div class="marquee-item" title="OpenAI ChatGPT">
-          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT">
+          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT" width="32" height="32" loading="lazy">
           <span>ChatGPT (OpenAI)</span>
         </div>
         <!-- Claude -->
         <div class="marquee-item" title="Anthropic Claude">
-          <img src="https://cdn.simpleicons.org/anthropic/white" alt="Claude">
+          <img src="https://cdn.simpleicons.org/anthropic/white" alt="Claude" width="32" height="32" loading="lazy">
           <span>Claude (Anthropic)</span>
         </div>
         <!-- Gemini -->
         <div class="marquee-item" title="Google Gemini">
-          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini">
+          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="32" height="32" loading="lazy">
           <span>Gemini (Google)</span>
         </div>
         <!-- n8n -->
         <div class="marquee-item" title="n8n.io">
-          <img src="https://cdn.simpleicons.org/n8n" alt="n8n">
+          <img src="https://cdn.simpleicons.org/n8n" alt="n8n" width="32" height="32" loading="lazy">
           <span>n8n</span>
         </div>
         <!-- LangChain -->
         <div class="marquee-item" title="LangChain">
-          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain">
+          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" width="32" height="32" loading="lazy">
           <span>LangChain</span>
         </div>
         <!-- Python -->
         <div class="marquee-item" title="Python">
-          <img src="https://cdn.simpleicons.org/python" alt="Python">
+          <img src="https://cdn.simpleicons.org/python" alt="Python" width="32" height="32" loading="lazy">
           <span>Python</span>
         </div>
         <!-- React/Next.js -->
         <div class="marquee-item" title="Next.js">
-          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" width="32" height="32" loading="lazy">
           <span>React / Next.js</span>
         </div>
         <!-- PostgreSQL -->
         <div class="marquee-item" title="PostgreSQL">
-          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" width="32" height="32" loading="lazy">
           <span>PostgreSQL</span>
         </div>
         <!-- Vercel -->
         <div class="marquee-item" title="Vercel">
-          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" width="32" height="32" loading="lazy">
           <span>Vercel</span>
         </div>
         <!-- AWS/GCP -->
         <div class="marquee-item" title="Cloud Infra">
-          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP">
+          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" width="32" height="32" loading="lazy">
           <span>AWS / GCP</span>
         </div>
 
@@ -725,10 +728,10 @@
         <!-- Demo 1: Chat Inteligente -->
         <div class="glass-card showcase-card reveal reveal-delay-1">
           <div class="video-container">
-            <video class="showcase-video-player" muted loop playsinline preload="auto">
-              <source src="assets/videos/soporte_ia.mp4" type="video/mp4">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/soporte_ia.mp4" type="video/mp4">
             </video>
-            <img src="img/poster-2.png" alt="Demostración de Chat IA" class="video-poster" width="340" height="191">
+            <img src="img/poster-2.png" alt="Demostración de Chat IA" class="video-poster" width="340" height="191" loading="lazy">
             <div class="video-overlay">
               <span class="video-tag">Agente de Soporte 24/7</span>
             </div>
@@ -745,10 +748,10 @@
         <!-- Demo 2: Automatización n8n -->
         <div class="glass-card showcase-card reveal reveal-delay-2">
           <div class="video-container">
-            <video class="showcase-video-player" muted loop playsinline preload="auto">
-              <source src="assets/videos/orquestacion_datos.mp4" type="video/mp4">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/orquestacion_datos.mp4" type="video/mp4">
             </video>
-            <img src="img/poster-1.png" alt="Demostración de Flujo" class="video-poster" width="340" height="191">
+            <img src="img/poster-1.png" alt="Demostración de Flujo" class="video-poster" width="340" height="191" loading="lazy">
             <div class="video-overlay">
               <span class="video-tag">Orquestación de Datos</span>
             </div>
@@ -765,10 +768,10 @@
         <!-- Demo 3: DASHBOARD DE IMPACTO -->
         <div class="glass-card showcase-card reveal reveal-delay-3">
           <div class="video-container">
-            <video class="showcase-video-player" muted loop playsinline preload="auto">
-              <source src="assets/videos/analitica_predictiva.mp4" type="video/mp4">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/analitica_predictiva.mp4" type="video/mp4">
             </video>
-            <img src="img/poster-3.png" alt="Demostración de Dashboard" class="video-poster" width="340" height="191">
+            <img src="img/poster-3.png" alt="Demostración de Dashboard" class="video-poster" width="340" height="191" loading="lazy">
             <div class="video-overlay">
               <span class="video-tag">Analítica Predictiva</span>
             </div>
@@ -1175,6 +1178,6 @@
     <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat">💬</button>
   </div>
 
-  <script src="landing-script.js?v=25.0" defer></script>
+  <script src="landing-script.js?v=31.0" defer></script>
 </body>
 </html>

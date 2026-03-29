@@ -17,19 +17,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // ───── THROTTLE HELPER ─────
+  const throttle = (fn, wait) => {
+    let last = 0;
+    return (...args) => {
+      const now = Date.now();
+      if (now - last >= wait) {
+        fn(...args);
+        last = now;
+      }
+    };
+  };
+
   // ───── NAVBAR SCROLL EFFECT ─────
   const navbar = document.getElementById('navbar');
-  let lastScroll = 0;
-
-  window.addEventListener('scroll', () => {
+  const updateNavbar = () => {
     const currentScroll = window.scrollY;
     if (currentScroll > 50) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
     }
-    lastScroll = currentScroll;
-  });
+  };
+  window.addEventListener('scroll', throttle(updateNavbar, 100));
 
   // ───── MOBILE MENU TOGGLE ─────
   const mobileToggle = document.getElementById('mobileToggle');
@@ -151,21 +161,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const counter = entry.target;
         const target = parseFloat(counter.dataset.target);
         const suffix = counter.dataset.suffix || '';
-        let current = 0;
         const duration = 2000;
-        const stepTime = 16;
-        const increment = target / (duration / stepTime);
-
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            counter.textContent = target + suffix;
-            clearInterval(timer);
+        const animate = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const currentVal = progress * target;
+          
+          counter.textContent = (target % 1 === 0 ? Math.floor(currentVal) : currentVal.toFixed(1)) + suffix;
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
           } else {
-            // Check if it's an integer target or float
-            counter.textContent = (target % 1 === 0 ? Math.floor(current) : current.toFixed(1)) + suffix;
+            counter.textContent = target + suffix;
           }
-        }, stepTime);
+        };
+
+        let startTime = null;
+        requestAnimationFrame(animate);
         countObserver.unobserve(counter);
       }
     });
@@ -500,11 +512,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ───── READING PROGRESS BAR ─────
   const readProgress = document.getElementById('readProgress');
-  window.addEventListener('scroll', () => {
+  const updateReadProgress = () => {
     const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (window.scrollY / totalHeight) * 100;
     if (readProgress) readProgress.style.width = `${progress}%`;
-  });
+  };
+  window.addEventListener('scroll', throttle(updateReadProgress, 50));
+
+  // ───── LAZY LOAD VIDEOS ─────
+  const videoPlayers = document.querySelectorAll('.showcase-video-player');
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        const source = video.querySelector('source');
+        if (source && !video.src) {
+          video.src = source.src;
+          video.load();
+        }
+        videoObserver.unobserve(video);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  videoPlayers.forEach(video => videoObserver.observe(video));
 
   // ───── AI NETWORK PARTICLES (Hero) ─────
   const canvas = document.getElementById('aiNetworkCanvas');
