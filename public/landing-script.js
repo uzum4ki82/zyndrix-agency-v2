@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'La implementación típica tarda entre 2 y 4 semanas. Siempre mostramos resultados desde la primera semana. 🚀',
     'Nuestras soluciones se integran con las herramientas que ya usas: CRM, email, Slack, bases de datos y más. Sin disrupciones.',
     '¡Por supuesto! Puedo ayudarte a entender mejor nuestros servicios. ¿Qué área de tu negocio te gustaría automatizar?',
-    'La inversión depende del alcance, pero siempre ofrecemos un ROI medible. La consulta inicial es 100% gratuita para poder darte un presupuesto exacto.'
+    'La inversión depende del alcance, pero siempre ofrecemos resultados medibles. La consulta inicial es 100% gratuita para poder darte un presupuesto exacto.'
   ];
 
   let responseIndex = 0;
@@ -397,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const formSubmit = document.getElementById('formSubmit');
 
   if (contactForm && formSubmit) {
+    console.log('Form integration active'); // Confirm in console
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -404,7 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('formEmail')?.value?.trim();
       const company = document.getElementById('formCompany')?.value?.trim() || 'N/A';
       const service = document.getElementById('formService')?.value || 'No especificado';
-      const budget = document.getElementById('formBudget')?.value || 'No especificado';
       const msg = document.getElementById('formMessage')?.value?.trim() || '';
 
       // 1. Better Validation
@@ -427,15 +427,16 @@ document.addEventListener('DOMContentLoaded', () => {
         name,
         email,
         company_name: company,
-        message: `[Interés: ${service}] [Presupuesto: ${budget}] - ${msg}`
+        message: `[Interés: ${service}] - ${msg}`
       };
 
       try {
+        console.log('Submitting lead to Supabase...');
         const response = await fetch(`${CONFIG.supabase.url}/rest/v1/leads`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
-            'apikey': CONFIG.supabase.anonKey,
+            'apikey': CONFIG.anonKey || CONFIG.supabase.anonKey, // Support both styles just in case
             'Authorization': `Bearer ${CONFIG.supabase.anonKey}`,
             'Prefer': 'return=minimal'
           },
@@ -443,11 +444,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Error al guardar en Supabase');
+          const errorText = await response.text();
+          throw new Error(`Error Supabase: ${response.status} - ${errorText}`);
         }
 
-        // 3. Parallel n8n Webhook Call (Fire and forget, don't block success)
+        // 3. Parallel n8n Webhook Call
         fetch(CONFIG.n8n.webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -470,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formSubmit.style.backgroundColor = '#EF4444';
         formSubmit.style.boxShadow = '0 0 30px rgba(239, 68, 68, 0.4)';
         formSubmit.disabled = false;
+        showFormStatus('Hubo un error al enviar el formulario. Por favor, reintenta.', 'error');
       } finally {
         setTimeout(() => {
           formSubmit.innerHTML = originalText;
@@ -617,39 +619,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => statusEl.remove(), 400);
     }, 4000);
   }
-    }
-  }
 });
 
-// ============ ROI CALCULATOR LOGIC ============
-(function() {
-    const roiEmployees = document.getElementById('roi-employees');
-    const roiCost = document.getElementById('roi-cost');
-    const roiSavings = document.getElementById('roi-savings');
-    const roiBar = document.getElementById('roi-bar');
 
-    function updateROI() {
-        if (!roiEmployees || !roiCost || !roiSavings || !roiBar) return;
-        
-        const employees = parseInt(roiEmployees.value) || 0;
-        const cost = parseInt(roiCost.value) || 0;
-        
-        const monthlySavings = (employees * cost) * 0.4;
-        const annualSavings = monthlySavings * 12;
-        
-        const formatter = new Intl.NumberFormat('es-ES', {
-            style: 'currency',
-            currency: 'EUR',
-            maximumFractionDigits: 0
-        });
-        
-        if (roiSavings) roiSavings.innerText = formatter.format(annualSavings);
-        if (roiBar) roiBar.style.width = Math.min((annualSavings / 500000) * 100, 100) + '%';
-    }
-
-    if (roiEmployees && roiCost) {
-        roiEmployees.addEventListener('input', updateROI);
-        roiCost.addEventListener('input', updateROI);
-        setTimeout(updateROI, 1000);
-    }
-})();

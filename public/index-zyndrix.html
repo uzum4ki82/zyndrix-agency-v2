@@ -58,11 +58,9 @@
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-60FX6KBH7Q"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-    
-    // Previous scripts...
+    // Configuration and Analytics...
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -577,7 +575,7 @@
           </div>
           <div class="case-body">
             <h3>Solución de Agentes IA</h3>
-            <p>"Implementaron un agente IA que ahora gestiona el 85% de nuestras consultas. El ROI fue visible desde el segundo mes."</p>
+            <p>"Implementaron un agente IA que ahora gestiona el 85% de nuestras consultas. El impacto fue visible desde el segundo mes."</p>
           </div>
         </div>
 
@@ -858,7 +856,7 @@
             <li>3 Flujos de trabajo avanzados</li>
             <li>Agente IA Personalizado (24/7)</li>
             <li>Base de Conocimiento (RAG)</li>
-            <li>Dashboard de ROI real-time</li>
+            <li>Dashboard de KPIs en tiempo real</li>
             <li>Soporte prioritario exclusivo</li>
           </ul>
           <a href="#contacto" class="btn-primary-elite pricing-btn">
@@ -893,43 +891,6 @@
       <p class="pricing-note reveal">
         * Todos los planes requieren un <strong>Fee de Configuración inicial</strong> único basado en la arquitectura personalizada.
       </p>
-    </div>
-  </section>
-
-  <!-- ============ ROI CALCULATOR SECTION ============ -->
-  <section class="section roi-calculator" id="roi">
-    <div class="container">
-      <div class="glass-card roi-card reveal">
-        <div class="roi-grid">
-          <div class="roi-content">
-            <div class="section-badge">ROI Estimado</div>
-            <h2 class="section-title">¿Cuánto te cuesta NO tener IA?</h2>
-            <p>Descubre el capital que recuperas al automatizar procesos manuales con arquitectura Zyndrix.</p>
-            
-            <div class="roi-inputs">
-              <div class="input-group">
-                <label>Empleados en tareas operativas</label>
-                <input type="number" id="roi-employees" value="5" min="1" max="500">
-              </div>
-              <div class="input-group">
-                <label>Coste medio mensual / empleado (€)</label>
-                <input type="number" id="roi-cost" value="1800" step="100">
-              </div>
-            </div>
-          </div>
-          
-          <div class="roi-results">
-            <div class="result-item">
-              <span class="result-label">Recuperación anual proyectada</span>
-              <span class="result-value" id="roi-savings">0€</span>
-            </div>
-            <div class="result-bar-container">
-              <div class="result-bar" id="roi-bar"></div>
-            </div>
-            <p class="roi-note">Basado en un incremento de eficiencia neta del 40%.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 

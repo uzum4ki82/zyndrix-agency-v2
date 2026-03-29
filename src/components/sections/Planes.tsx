@@ -17,7 +17,7 @@ export const Planes = () => {
       s: '950€', 
       p: '450', 
       d: 'Escalado inteligente con Agentes IA y automatización avanzada.', 
-      f: ['3 Flujos de trabajo avanzados', 'Agente IA Personalizado (24/7)', 'Base de Conocimiento (RAG)', 'Dashboard de ROI real-time', 'Soporte prioritario exclusivo'], 
+      f: ['3 Flujos de trabajo avanzados', 'Agente IA Personalizado (24/7)', 'Base de Conocimiento (RAG)', 'Soporte prioritario exclusivo', 'Escalabilidad Garantizada'], 
       m: true 
     },
     { 

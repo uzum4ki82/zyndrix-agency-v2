@@ -22,7 +22,7 @@ export const Metodo = () => {
     { s: '01', t: 'Auditoría Total', d: 'Mapeo masivo de ineficiencias y puntos de fuga en tu flujo operativo.', i: Search },
     { s: '02', t: 'Arquitectura IA', d: 'Diseño de blueprints técnicos de infraestructura autónoma.', i: Code },
     { s: '03', t: 'Inyección SPRINT', d: 'Despliegues técnicos de alto impacto en ráfagas de 2 semanas.', i: Zap },
-    { s: '04', t: 'Escalado Industrial', d: 'Monitoreo de latencia y ROI para crecimiento ilimitado.', i: TrendingUp },
+    { s: '04', t: 'Escalado Industrial', d: 'Monitoreo de latencia y KPI para crecimiento ilimitado.', i: TrendingUp },
   ];
 
   return (
