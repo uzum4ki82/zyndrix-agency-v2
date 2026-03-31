@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   description: "Autonomous Lead Generation Agency Hub",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico?v=2" },
+      { url: "/favicon.png?v=2", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "/apple-touch-icon.png?v=2",
   },
 };
 
