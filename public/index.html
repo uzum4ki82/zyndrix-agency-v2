@@ -998,9 +998,6 @@
               console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
                 // Fallback direct to Supabase REST with adaptive schema
-                const [firstName, ...lastNameParts] = (data.name || '').split(' ');
-                const lastName = lastNameParts.join(' ') || 'N/A';
-
                 const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads', {
                   method: 'POST',
                   headers: { 
@@ -1010,10 +1007,9 @@
                     'Prefer': 'return=minimal'
                   },
                   body: JSON.stringify({
-                    first_name: firstName || 'User',
-                    last_name: lastName,
+                    name: data.name,
                     email: data.email,
-                    reasoning: data.message || 'Emergency Recovery Form',
+                    message: data.message || 'Legacy Capture',
                     status: 'new'
                   })
                 });

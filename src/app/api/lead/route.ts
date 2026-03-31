@@ -18,37 +18,25 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    console.log('Ingesting Lead with Adaptive Schema:', body.email);
+    console.log('Ingesting Lead (RESTORING ORIGINAL SCHEMA):', body.email);
 
-    // Parsing name for the new first_name/last_name format
-    const [firstName, ...lastNameParts] = (body.name || 'Anonymous').split(' ');
-    const lastName = lastNameParts.join(' ') || 'N/A';
-
-    // Write to 'leads' using the actual columns found in your DB
+    // RESTORING TO ORIGINAL SCHEMA: name, email, phone, message, status
     const { error } = await supabase
       .from('leads')
       .upsert([{
-        first_name: firstName,
-        last_name: lastName,
+        name: body.name || 'Anonymous',
         email: body.email,
         phone: body.phone || null,
-        reasoning: body.message || 'No message', 
+        company_name: body.company_name || null,
+        message: body.message || 'Legacy Capture',
+        budget: body.budget || null,
+        service: body.service || null,
         status: 'new'
       }], { onConflict: 'email' });
 
     if (error) {
       console.error('Database rejection:', error);
-      // Try one last fallback with 'name' if 'first_name' fails (Double insurance)
-      if (error.code === 'PGRST204') {
-         await supabase.from('leads').upsert([{
-           name: body.name,
-           email: body.email,
-           message: body.message,
-           status: 'new'
-         }], { onConflict: 'email' });
-      } else {
-        throw error;
-      }
+      throw error;
     }
 
     // n8n Relay
@@ -60,7 +48,7 @@ export async function POST(req: Request) {
       }).catch(e => console.error('n8n error:', e));
     }
 
-    return NextResponse.json({ success: true, message: 'Lead captured' }, { 
+    return NextResponse.json({ success: true, message: 'Lead captured in original schema' }, { 
       status: 201, 
       headers: corsHeaders 
     });
