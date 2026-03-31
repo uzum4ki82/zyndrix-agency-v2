@@ -3,168 +3,196 @@
 import React, { useState } from 'react';
 import { 
   Settings, 
-  Webhook, 
-  Key, 
   User, 
   Shield, 
-  Moon, 
-  Sun, 
+  Zap, 
+  Globe, 
+  Mail, 
+  Database, 
+  Lock, 
+  ChevronRight, 
   Save, 
-  ExternalLink, 
-  CheckCircle2, 
-  Lock,
-  Eye,
-  EyeOff,
-  Trash2,
-  Plus,
-  Cpu,
-  Monitor,
-  Database
+  Bell, 
+  Monitor, 
+  Laptop, 
+  Palette,
+  CreditCard,
+  Key,
+  ShieldCheck,
+  Activity,
+  Sparkles,
+  DollarSign
 } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export default function SettingsPage() {
-  const [showKey, setShowKey] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [activeSegment, setActiveSegment] = useState('agencia');
+
+  const settingsSegments = [
+    { id: 'perfil', label: 'Mi Perfil', icon: User },
+    { id: 'agencia', label: 'Agencia & Marca', icon: Globe },
+    { id: 'ia', label: 'Configuración AI', icon: Zap },
+    { id: 'facturacion', label: 'Facturación y Pagos', icon: CreditCard },
+    { id: 'avanzado', label: 'Avanzado', icon: Database },
+  ];
 
   return (
-    <div className="flex flex-col gap-8 opacity-0 translate-y-4 animate-in fill-mode-forwards duration-700 ease-out-quint">
-      <header className="flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest">
-             <Settings size={14} className="text-blue-500" /> System Preferences
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Configuración</h1>
-        </div>
-        <button className="ds-button primary shadow-lg shadow-blue-500/20">
-           <Save className="w-4 h-4" />
-           <span>Guardar Cambios</span>
-        </button>
-      </header>
+    <div className="animate-in space-y-8">
+      {/* PAGE HEADER */}
+      <div className="flex items-center justify-between mb-2">
+         <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">Configuración del Sistema</h1>
+            <div className="px-2 py-0.5 rounded bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest border border-slate-200">Panel Central</div>
+         </div>
+         <button className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2 rounded-xl text-[11px] font-bold shadow-md shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95 group">
+            <Save size={14} className="group-hover:scale-110 transition-transform" />
+            <span>Guardar Cambios</span>
+         </button>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* NAV SECTION */}
-        <div className="lg:col-span-1 flex flex-col gap-2">
-           <nav className="flex flex-col gap-1">
-              {[
-                { name: 'General', icon: Monitor, active: true },
-                { name: 'Webhooks & n8n', icon: Webhook, active: false },
-                { name: 'API Keys', icon: Key, active: false },
-                { name: 'Neural Engine', icon: Cpu, active: false },
-                { name: 'Seguridad', icon: Shield, active: false },
-                { name: 'Base de Datos', icon: Database, active: false },
-              ].map((item, i) => (
-                <button key={i} className={cn(
-                  "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all",
-                  item.active ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20" : "text-slate-500 hover:bg-white/[0.05] hover:text-white"
-                )}>
-                   <item.icon className="w-4 h-4" />
-                   <span>{item.name}</span>
-                </button>
-              ))}
-           </nav>
-        </div>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+         {/* Navigation Sidebar (Left) */}
+         <div className="xl:col-span-3 space-y-2">
+            {settingsSegments.map((seg) => (
+               <button 
+                  key={seg.id}
+                  onClick={() => setActiveSegment(seg.id)}
+                  className={cn(
+                     "w-full flex items-center justify-between p-4 rounded-xl transition-all group",
+                     activeSegment === seg.id ? "bg-white shadow-xl shadow-slate-200/50 border border-slate-100 text-slate-900" : "text-slate-400 hover:bg-slate-50 hover:text-slate-600"
+                  )}
+               >
+                  <div className="flex items-center gap-3">
+                     <div className={cn(
+                        "w-8 h-8 rounded-lg flex items-center justify-center transition-all",
+                        activeSegment === seg.id ? "bg-indigo-50 text-indigo-600" : "bg-slate-50 text-slate-300"
+                     )}>
+                        <seg.icon size={18} />
+                     </div>
+                     <span className="text-xs font-bold">{seg.label}</span>
+                  </div>
+                  <ChevronRight size={14} className={cn(activeSegment === seg.id ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 transition-all")} />
+               </button>
+            ))}
+         </div>
 
-        {/* CONTENT SECTION */}
-        <div className="lg:col-span-3 flex flex-col gap-8">
-           {/* WEBHOOKS */}
-           <section className="ds-card flex flex-col gap-6 bg-white/[0.01]">
-              <div className="flex items-center gap-3">
-                 <Webhook className="w-5 h-5 text-blue-500" />
-                 <h3 className="font-bold text-white text-lg tracking-tight uppercase font-mono">Webhooks & n8n Integration</h3>
-              </div>
-              <div className="flex flex-col gap-4">
-                 <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">n8n Lead Scoring Webhook</label>
-                    <div className="flex gap-2">
-                       <input 
-                         className="bg-white/[0.03] border border-white/[0.1] rounded-xl p-3 text-xs font-mono font-medium text-blue-400 flex-1 outline-none focus:border-blue-500/50 transition-all"
-                         value="https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring"
-                         readOnly
-                       />
-                       <button className="ds-button ghost p-3 bg-white/[0.05]"><ExternalLink size={16} /></button>
-                    </div>
-                 </div>
-              </div>
-           </section>
+         {/* Main Settings Content (Right) */}
+         <div className="xl:col-span-9 space-y-8 min-h-[600px]">
+            <AnimatePresence mode="wait">
+               {activeSegment === 'agencia' && (
+                  <motion.div 
+                     key="agencia"
+                     initial={{ opacity: 0, x: 20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: -20 }}
+                     className="space-y-8"
+                  >
+                     <div className="ds-card p-8 bg-white border-slate-100 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-8 transform rotate-12 opacity-5 translate-x-12 -translate-y-12 transition-transform">
+                           <Globe size={160} />
+                        </div>
+                        <h3 className="text-sm font-black text-slate-900 mb-8 border-b border-slate-50 pb-4 uppercase tracking-widest flex items-center gap-3">
+                           <Palette size={18} className="text-indigo-600" />
+                           Marca e Identidad Visual
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                           <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Nombre Agencia</label>
+                              <input defaultValue="Zyndrix Intelligence AI" className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:border-indigo-500 transition-all font-display" />
+                           </div>
+                           <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Dominio Principal</label>
+                              <input defaultValue="zyndrix.ai" className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:border-indigo-500 transition-all font-display" />
+                           </div>
+                        </div>
+                     </div>
+                  </motion.div>
+               )}
 
-           {/* API KEYS */}
-           <section className="ds-card flex flex-col gap-6 bg-white/[0.01]">
-              <div className="flex items-center justify-between">
-                 <div className="flex items-center gap-3">
-                    <Key className="w-5 h-5 text-purple-500" />
-                    <h3 className="font-bold text-white text-lg tracking-tight uppercase font-mono">API Keys & Authentication</h3>
-                 </div>
-                 <button className="ds-button primary text-xs gap-2 py-1.5 shadow-sm">
-                    <Plus size={14} /> Nueva Key
-                 </button>
-              </div>
-              <div className="space-y-4">
-                 {[
-                   { name: 'X-ZYNDRIX-API-KEY', val: 'sk-zyndrix-4a29-b883', lastUsed: 'Hoy, 10:42' },
-                   { name: 'N8N_AUTHORIZATION', val: 'Bearer q78S2...2j3L', lastUsed: 'Hace 4h' },
-                 ].map((key, i) => (
-                   <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.15] transition-all">
-                      <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-500">
-                         <Shield className="w-4 h-4" />
-                      </div>
-                      <div className="flex flex-col flex-1">
-                         <span className="text-xs font-black text-slate-500 uppercase tracking-widest">{key.name}</span>
-                         <span className="text-sm font-bold font-mono text-white tracking-widest leading-none mt-1">
-                            {showKey ? key.val : '••••••••••••••••'}
-                         </span>
-                      </div>
-                      <div className="flex flex-col items-end gap-1 px-4">
-                         <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Last Run</span>
-                         <span className="text-xs font-bold text-slate-400">{key.lastUsed}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                         <button 
-                           onClick={() => setShowKey(!showKey)}
-                           className="p-2.5 rounded-lg hover:bg-white/[0.05] text-slate-500 hover:text-white transition-all"
-                         >
-                           {showKey ? <EyeOff size={16} /> : <Eye size={16} />}
-                         </button>
-                         <button className="p-2.5 rounded-lg hover:bg-rose-500/10 text-slate-500 hover:text-rose-500 transition-all">
-                            <Trash2 size={16} />
-                         </button>
-                      </div>
-                   </div>
-                 ))}
-              </div>
-           </section>
+               {activeSegment === 'facturacion' && (
+                  <motion.div 
+                     key="facturacion"
+                     initial={{ opacity: 0, x: 20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: -20 }}
+                     className="space-y-8"
+                  >
+                     <div className="ds-card p-8 bg-slate-900 text-white relative overflow-hidden group border-none shadow-2xl shadow-indigo-900/20">
+                        <div className="absolute top-0 right-0 p-10 transform rotate-12 opacity-10 transition-transform">
+                           <CreditCard size={180} />
+                        </div>
+                        <h3 className="text-sm font-black mb-8 border-b border-white/5 pb-4 uppercase tracking-widest flex items-center gap-3 text-indigo-400">
+                           <Zap size={18} />
+                           Configuración de Pasarela (Stripe)
+                        </h3>
+                        <div className="space-y-8">
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                              <div className="space-y-2">
+                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
+                                    <Key size={12} className="text-indigo-400" />
+                                    Stripe Publishable Key
+                                 </label>
+                                 <input placeholder="pk_live_..." className="w-full p-4 bg-white/5 border border-white/10 rounded-2xl text-xs font-bold text-white outline-none focus:border-indigo-500 transition-all" />
+                              </div>
+                              <div className="space-y-2">
+                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
+                                    <Lock size={12} className="text-indigo-400" />
+                                    Stripe Secret Key
+                                 </label>
+                                 <input type="password" placeholder="sk_live_..." className="w-full p-4 bg-white/5 border border-white/10 rounded-2xl text-xs font-bold text-white outline-none focus:border-indigo-500 transition-all" />
+                              </div>
+                           </div>
+                           <div className="p-6 bg-white/5 rounded-2xl border border-white/5 flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                                    <ShieldCheck size={20} />
+                                 </div>
+                                 <div className="flex flex-col">
+                                    <span className="text-xs font-bold">Estado de la Conexión</span>
+                                    <span className="text-[10px] text-slate-400 uppercase font-black">Simulado / Pendiente de Claves</span>
+                                 </div>
+                              </div>
+                              <div className="flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                 <span className="text-[9px] font-black uppercase text-emerald-400">Sandbox Ready</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
 
-           {/* AI ENGINE SETTINGS */}
-           <section className="ds-card flex flex-col gap-6 bg-white/[0.01]">
-              <div className="flex items-center gap-3">
-                 <Cpu className="w-5 h-5 text-amber-500" />
-                 <h3 className="font-bold text-white text-lg tracking-tight uppercase font-mono">AI Engine Parameters</h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">Temperatura (Inferencia)</label>
-                    <input type="range" className="w-full accent-amber-500 bg-white/[0.05] h-1.5 rounded-full" min="0" max="1" step="0.1" defaultValue="0.7" />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-600 uppercase tracking-widest">
-                       <span>Precisión (0.0)</span>
-                       <span>Creatividad (1.0)</span>
-                    </div>
-                 </div>
-                 <div className="flex flex-col gap-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-1">Max Tokens Limit</label>
-                    <select className="bg-white/[0.03] border border-white/[0.1] rounded-xl p-3 text-xs font-bold font-mono text-white outline-none focus:border-amber-500/50">
-                       <option>2,048 Tokens</option>
-                       <option>4,096 Tokens</option>
-                       <option>8,192 Tokens (Max Capability)</option>
-                    </select>
-                 </div>
-              </div>
-           </section>
-        </div>
+                     <div className="ds-card p-8 bg-white border-slate-100">
+                        <h3 className="text-sm font-black text-slate-900 mb-8 border-b border-slate-50 pb-4 uppercase tracking-widest flex items-center gap-3">
+                           <DollarSign size={18} className="text-emerald-600" />
+                           Impuestos y Moneda Operativa
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                           <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Moneda del Sistema</label>
+                              <select className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:border-indigo-500 transition-all">
+                                 <option>Euro (€) - EUR</option>
+                                 <option>Dólar ($) - USD</option>
+                              </select>
+                           </div>
+                           <div className="space-y-2">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">IVA / Tax (%)</label>
+                              <input defaultValue="21" className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                           </div>
+                        </div>
+                     </div>
+                  </motion.div>
+               )}
+               
+               {activeSegment === 'perfil' && (
+                  <motion.div key="perfil" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="ds-card p-12 bg-white flex flex-col items-center justify-center text-center">
+                     <div className="w-24 h-24 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center border-4 border-white shadow-2xl mb-6 font-black text-3xl">AD</div>
+                     <h3 className="text-xl font-bold text-slate-900 mb-1">Zyndrix Admin</h3>
+                     <p className="text-sm text-slate-400 mb-8">Gestión de cuenta maestra de la plataforma.</p>
+                     <button className="bg-slate-50 border border-slate-200 text-slate-600 px-8 py-3 rounded-2xl text-xs font-bold hover:bg-white hover:shadow-lg transition-all">Editar Información Privada</button>
+                  </motion.div>
+               )}
+            </AnimatePresence>
+         </div>
       </div>
     </div>
   );
