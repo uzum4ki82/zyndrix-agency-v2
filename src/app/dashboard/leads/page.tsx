@@ -196,10 +196,10 @@ export default function LeadsPage() {
                             <td className="py-5">
                                <div className="flex items-center gap-4">
                                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-xs shadow-lg uppercase">
-                                     {lead.name?.charAt(0) || 'U'}
+                                     {(lead.first_name || lead.name || 'U').charAt(0)}
                                   </div>
                                   <div className="flex flex-col">
-                                     <span className="font-bold text-sm tracking-tight">{lead.name}</span>
+                                     <span className="font-bold text-sm tracking-tight">{lead.first_name} {lead.last_name || lead.name}</span>
                                      <span className="text-[10px] text-slate-500 font-medium uppercase tracking-widest">{lead.companies?.name || lead.company_name || 'Individual'}</span>
                                   </div>
                                </div>
