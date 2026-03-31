@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { type: 'user', text: 'Unas 200 consultas diarias, sobre pedidos, devoluciones y preguntas frecuentes' },
     { type: 'bot', text: 'Excelente. Con un agente IA podemos resolver automáticamente el 85% de esas consultas. Te propongo:\n\n✅ Agente conversacional 24/7\n✅ Integración con tu CRM\n✅ Escalado inteligente a agentes humanos\n✅ Dashboard de métricas en tiempo real' },
     { type: 'user', text: '¿Y cuánto tiempo tardaría en estar funcionando?' },
-    { type: 'bot', text: '¡En 2 semanas lo tendríamos operativo! El primer sprint incluye el agente base y en el segundo optimizamos con tus datos reales. ¿Agendamos una llamada para definir el alcance? 🚀' },
+    { type: 'bot', text: '¡En 2 semanas lo tendríamos operativo! El primer sprint incluye el agente base y en el segundo optimizamos con tus datos reales. ¿Agendamos una llamada para definir el alcance? ✨' },
   ];
 
   const demoObserver = new IntersectionObserver((entries) => {
