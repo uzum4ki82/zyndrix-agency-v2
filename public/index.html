@@ -961,21 +961,21 @@
         </form>
 
         <script>
-          // DIAGNOSTIC SYSTEM v101
-          console.log("DIAGNOSTIC SYSTEM ONLINE");
-          
+          // MASTER LEAD CAPTURE v2.0
           window.handleLeadSubmit = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('formSubmit');
-            const originalText = btn.innerHTML;
-            
             btn.innerHTML = 'Enviando...';
             btn.disabled = true;
 
             const data = {
               name: document.getElementById('formName').value,
               email: document.getElementById('formEmail').value,
-              message: document.getElementById('formMessage').value
+              phone: document.getElementById('formPhone').value || '',
+              budget: document.getElementById('formBudget').value || '',
+              company_name: document.getElementById('formCompany').value || '',
+              service: document.getElementById('formService').value || '',
+              message: document.getElementById('formMessage').value || ''
             };
 
             try {
@@ -985,15 +985,12 @@
                 body: JSON.stringify(data)
               });
               
-              if (!res.ok) {
-                throw new Error('API failed');
-              }
+              if (!res.ok) throw new Error('API Rejection');
 
               btn.innerHTML = '¡Enviado! ✅';
               btn.style.backgroundColor = '#10B981';
               document.getElementById('form-v100').reset();
             } catch (err) {
-              console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
                 const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email', {
                   method: 'POST',
@@ -1006,20 +1003,23 @@
                   body: JSON.stringify({
                     name: data.name,
                     email: data.email,
-                    message: data.message || 'Legacy Capture',
+                    phone: data.phone,
+                    budget: data.budget,
+                    company_name: data.company_name,
+                    service: data.service,
+                    message: data.message,
                     status: 'new'
                   })
                 });
 
-                if (!sRes.ok) {
-                   throw new Error('Fallback failed');
+                if (sRes.ok) {
+                   btn.innerHTML = '¡Recibido! ✅';
+                   btn.style.backgroundColor = '#10B981';
+                   document.getElementById('form-v100').reset();
+                } else {
+                   throw new Error();
                 }
-
-                btn.innerHTML = '¡Recibido! ✅';
-                btn.style.backgroundColor = '#10B981';
-                document.getElementById('form-v100').reset();
               } catch (f) {
-                alert('FALLO TOTAL: ' + JSON.stringify(err.message));
                 btn.innerHTML = '✕ Error';
                 btn.style.backgroundColor = '#EF4444';
               }
