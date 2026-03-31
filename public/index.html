@@ -997,7 +997,7 @@
             } catch (err) {
               console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
-                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/prospects', {
+                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads', {
                   method: 'POST',
                   headers: { 
                     'Content-Type': 'application/json',
@@ -1006,9 +1006,9 @@
                     'Prefer': 'return=minimal'
                   },
                   body: JSON.stringify({
-                    first_name: data.name,
+                    name: data.name,
                     email: data.email,
-                    status: 'New'
+                    status: 'new'
                   })
                 });
 
