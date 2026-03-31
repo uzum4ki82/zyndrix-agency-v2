@@ -40,9 +40,9 @@ export function Sidebar({ onClose }: SidebarProps) {
       <div className="sidebar-logo">
         <div className="w-full flex items-center justify-center py-1">
           <img 
-            src="/img/zyndrix-logo-v15.png" 
+            src="/img/zyndrix-ultimate.png?v=horizontal" 
             alt="Zyndrix Logo" 
-            className="w-auto h-6 object-contain brightness-110 active:scale-95 transition-all"
+            className="max-w-[90%] h-16 object-contain brightness-110 active:scale-95 transition-all"
           />
         </div>
       </div>
