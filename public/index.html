@@ -997,6 +997,10 @@
             } catch (err) {
               console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
+                // Fallback direct to Supabase REST with adaptive schema
+                const [firstName, ...lastNameParts] = (data.name || '').split(' ');
+                const lastName = lastNameParts.join(' ') || 'N/A';
+
                 const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads', {
                   method: 'POST',
                   headers: { 
@@ -1006,8 +1010,10 @@
                     'Prefer': 'return=minimal'
                   },
                   body: JSON.stringify({
-                    name: data.name,
+                    first_name: firstName || 'User',
+                    last_name: lastName,
                     email: data.email,
+                    reasoning: data.message || 'Emergency Recovery Form',
                     status: 'new'
                   })
                 });
@@ -1022,7 +1028,7 @@
                 btn.style.backgroundColor = '#10B981';
                 document.getElementById('form-v100').reset();
               } catch (f) {
-                alert('FALLO TOTAL: ' + err.message);
+                alert('FALLO TOTAL: ' + JSON.stringify(err.message));
                 btn.innerHTML = '✕ Error';
                 btn.style.backgroundColor = '#EF4444';
               }

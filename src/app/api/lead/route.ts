@@ -18,23 +18,37 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    console.log('Ingesting Lead:', body.email);
+    console.log('Ingesting Lead with Adaptive Schema:', body.email);
 
-    // Write ONLY to the 'leads' table
+    // Parsing name for the new first_name/last_name format
+    const [firstName, ...lastNameParts] = (body.name || 'Anonymous').split(' ');
+    const lastName = lastNameParts.join(' ') || 'N/A';
+
+    // Write to 'leads' using the actual columns found in your DB
     const { error } = await supabase
       .from('leads')
       .upsert([{
-        name: body.name || 'Anonymous',
+        first_name: firstName,
+        last_name: lastName,
         email: body.email,
         phone: body.phone || null,
-        message: body.message || '',
-        status: 'new',
-        created_at: new Date().toISOString()
+        reasoning: body.message || 'No message', 
+        status: 'new'
       }], { onConflict: 'email' });
 
     if (error) {
-      console.error('Database Ingestion Failure:', error);
-      throw error;
+      console.error('Database rejection:', error);
+      // Try one last fallback with 'name' if 'first_name' fails (Double insurance)
+      if (error.code === 'PGRST204') {
+         await supabase.from('leads').upsert([{
+           name: body.name,
+           email: body.email,
+           message: body.message,
+           status: 'new'
+         }], { onConflict: 'email' });
+      } else {
+        throw error;
+      }
     }
 
     // n8n Relay
@@ -46,13 +60,13 @@ export async function POST(req: Request) {
       }).catch(e => console.error('n8n error:', e));
     }
 
-    return NextResponse.json({ success: true, message: 'Lead captured in leads table' }, { 
+    return NextResponse.json({ success: true, message: 'Lead captured' }, { 
       status: 201, 
       headers: corsHeaders 
     });
 
   } catch (err: any) {
-    console.error('API critical error:', err.message);
+    console.error('API Error:', err.message);
     return NextResponse.json({ error: 'Failed to process lead', details: err.message }, { 
       status: 500,
       headers: corsHeaders
