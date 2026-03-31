@@ -415,6 +415,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const name = document.getElementById('formName')?.value?.trim();
       const email = document.getElementById('formEmail')?.value?.trim();
+      const phone = document.getElementById('formPhone')?.value?.trim() || '';
+      const budget = document.getElementById('formBudget')?.value || '';
       const company = document.getElementById('formCompany')?.value?.trim() || 'N/A';
       const service = document.getElementById('formService')?.value || 'No especificado';
       const msg = document.getElementById('formMessage')?.value?.trim() || '';
@@ -438,6 +440,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const payload = {
         name,
         email,
+        phone,
+        budget,
+        user: name, // Custom requirement: "campo usuario que podría ser el mismo que el nombre"
         company_name: company,
         message: `[Interés: ${service}] - ${msg}`
       };

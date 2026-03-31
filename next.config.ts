@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/index-zyndrix.html',
+        destination: '/index.html',
       },
       {
         source: '/privacidad',

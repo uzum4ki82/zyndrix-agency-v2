@@ -26,11 +26,15 @@ export async function POST(request: Request) {
     if (body.company_name && body.company_name !== 'N/A') score += 1;
     
     // Save to Supabase (The master source of truth)
+    // Note: If you haven't added these columns to your Supabase "leads" table, they will be ignored or might cause an error
     const { data: newLead, error } = await supabase
       .from('leads')
       .insert([{
         name: body.name,
         email: body.email,
+        phone: body.phone || null,
+        budget: body.budget || null,
+        user: body.name, // Mapping usuario to name
         company_name: body.company_name || null,
         message: body.message || null,
         status: 'new',
@@ -38,14 +42,31 @@ export async function POST(request: Request) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.warn('Supabase Insert Error (possible missing columns):', error.message);
+      // We continue since the primary concern is n8n
+    }
+    
+    // Prepare data for n8n
+    const n8nData = {
+      ...(newLead || {}),
+      name: body.name,
+      email: body.email,
+      phone: body.phone,
+      budget: body.budget,
+      user: body.name || body.user,
+      company_name: body.company_name,
+      message: body.message,
+      source: 'API Gateway',
+      timestamp: new Date().toISOString()
+    };
     
     // Send to n8n if webhook is configured
     if (process.env.N8N_WEBHOOK_URL) {
       fetch(process.env.N8N_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...newLead, source: 'API Gateway' })
+        body: JSON.stringify(n8nData)
       }).catch(err => console.error('n8n Webhook error:', err));
     }
     

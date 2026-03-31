@@ -29,17 +29,35 @@ export const Contacto = () => (
                     <div className="absolute top-0 right-10 opacity-5">
                       <Send className="w-64 h-64 text-primary" />
                     </div>
-                    <div>
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">IDENTIDAD_AGENTE</label>
-                        <input className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="NOMBRE COMPLETO" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">IDENTIDAD_AGENTE</label>
+                            <input className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="NOMBRE COMPLETO" name="name" />
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">CANAL_COMUNICACION</label>
+                            <input className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="EMAIL DE EMPRESA" name="email" />
+                        </div>
                     </div>
-                    <div>
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">CANAL_COMUNICACION</label>
-                        <input className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="EMAIL DE EMPRESA" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">TELEFONO_CONTACTO</label>
+                            <input className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="+34 000 000 000" name="phone" />
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">NIVEL_INVERSION</label>
+                            <select className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 appearance-none" name="budget">
+                                <option value="" disabled selected className="bg-black text-white">PRESUPUESTO</option>
+                                <option value="<1k" className="bg-black text-white">MENOS DE 1.000€</option>
+                                <option value="1k-3k" className="bg-black text-white">1.000€ - 3.000€</option>
+                                <option value="3k-5k" className="bg-black text-white">3.000€ - 5.000€</option>
+                                <option value=">5k" className="bg-black text-white">MÁS DE 5.000€</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
                         <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 block">MATRIZ_CONSULTA</label>
-                        <textarea className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic min-h-[150px] focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="¿QUÉ NECESITAS AUTOMATIZAR?" />
+                        <textarea className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-lg font-black italic min-h-[150px] focus:border-primary outline-none transition-all hover:bg-white/10" placeholder="¿QUÉ NECESITAS AUTOMATIZAR?" name="message" />
                     </div>
                     <button className="w-full py-8 bg-white text-black rounded-3xl font-heading font-black uppercase italic tracking-[0.6em] text-[14px] hover:bg-primary hover:text-white transition-all duration-500 shadow-[0_40px_80px_rgba(0,0,0,0.4)] hover:shadow-primary/30">
                         ENVIAR_PROTOCOLO
