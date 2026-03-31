@@ -15,43 +15,54 @@ export async function POST(req: Request) {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://vrvfftftnlspajplqjye.supabase.co';
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE';
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
+    
+    // MASTER FIX: Try direct fetch if the client fails
     const body = await req.json();
-    console.log('Ingesting Lead:', body.email);
+    console.log('Final Lead Ingestion Attempt:', body.email);
 
-    // Simple INSERT - If email exists it may fail due to unique constraint, so we use upsert
-    const { data, error } = await supabase
-      .from('leads')
-      .upsert({
-        name: body.name || 'Anonymous',
+    // 1. Try Supabase Client (Standard)
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const { error: clientError } = await supabase.from('leads').upsert({
+      name: body.name || 'Anonymous',
+      email: body.email,
+      phone: body.phone || null,
+      company_name: body.company_name || null,
+      message: body.message || 'Legacy Capture',
+      budget: body.budget || null,
+      service: body.service || null,
+      status: 'new'
+    }, { onConflict: 'email' });
+
+    if (!clientError) {
+      return NextResponse.json({ success: true, method: 'client' }, { status: 201, headers: corsHeaders });
+    }
+
+    // 2. Fallback: Direct REST fetch WITHOUT Bearer (Avoid JWT error)
+    const restRes = await fetch(`${supabaseUrl}/rest/v1/leads?on_conflict=email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey,
+        'Prefer': 'resolution=merge-duplicates, return=minimal'
+      },
+      body: JSON.stringify({
+        name: body.name,
         email: body.email,
-        phone: body.phone || null,
-        company_name: body.company_name || null,
-        message: body.message || 'Legacy Capture',
-        budget: body.budget || null,
-        service: body.service || null,
+        phone: body.phone,
+        message: body.message,
         status: 'new'
-      }, { onConflict: 'email' });
+      })
+    });
 
-    if (error) {
-      console.error('Supabase Error:', error);
-      return NextResponse.json({ error: error.message }, { status: 400, headers: corsHeaders });
+    if (restRes.ok) {
+       return NextResponse.json({ success: true, method: 'direct' }, { status: 201, headers: corsHeaders });
     }
 
-    // Optional: n8n Relay
-    if (process.env.N8N_WEBHOOK_URL) {
-      fetch(process.env.N8N_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      }).catch(e => console.error('n8n error:', e));
-    }
-
-    return NextResponse.json({ success: true, data }, { status: 201, headers: corsHeaders });
+    const restErr = await restRes.json();
+    console.error('Final failure:', restErr);
+    return NextResponse.json({ error: 'Auth/Database block', details: restErr }, { status: 400, headers: corsHeaders });
 
   } catch (err: any) {
-    console.error('Critical Failure:', err.message);
-    return NextResponse.json({ error: 'Critical failure', details: err.message }, { status: 500, headers: corsHeaders });
+    return NextResponse.json({ error: 'System crash', details: err.message }, { status: 500, headers: corsHeaders });
   }
 }
