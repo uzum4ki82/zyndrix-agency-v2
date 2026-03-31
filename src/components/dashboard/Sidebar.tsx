@@ -13,7 +13,6 @@ import {
   Plus, 
   ChevronRight, 
   LogOut,
-  Brain,
   ChevronLeft
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -43,12 +42,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     <aside className="w-full h-full bg-white flex flex-col border-r border-slate-100 shadow-sm relative overflow-hidden">
       {/* Brand Logo */}
       <div className="h-16 flex items-center px-6 border-b border-slate-50">
-         <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-100/50">
-               <Brain size={22} fill="white" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-indigo-100/50">
+               <img 
+                 src="/favicon.png" 
+                 alt="Zyndrix Logo" 
+                 className="w-full h-full object-cover"
+               />
             </div>
             <span className="font-black text-slate-900 text-lg tracking-tight uppercase">Zyndrix <span className="text-indigo-600 italic">AI</span></span>
-         </div>
+          </div>
       </div>
 
       {/* Navigation */}
