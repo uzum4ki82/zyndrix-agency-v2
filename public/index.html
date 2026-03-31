@@ -985,12 +985,19 @@
                 body: JSON.stringify(data)
               });
               
-              if (!res.ok) throw new Error('API Rejection');
+              const resBody = await res.json();
+              console.log("DEBUG VERCEL:", resBody);
+
+              if (!res.ok) {
+                alert('ERROR VERCEL API: ' + JSON.stringify(resBody));
+                throw new Error('API failed');
+              }
 
               btn.innerHTML = '¡Enviado! ✅';
               btn.style.backgroundColor = '#10B981';
               document.getElementById('form-v100').reset();
             } catch (err) {
+              console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
                 const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email', {
                   method: 'POST',
@@ -1017,9 +1024,12 @@
                    btn.style.backgroundColor = '#10B981';
                    document.getElementById('form-v100').reset();
                 } else {
+                   const sErr = await sRes.json();
+                   alert('ERROR SUPABASE DIRECTO: ' + JSON.stringify(sErr));
                    throw new Error();
                 }
               } catch (f) {
+                alert('CRASH: ' + err.message);
                 btn.innerHTML = '✕ Error';
                 btn.style.backgroundColor = '#EF4444';
               }
