@@ -26,25 +26,30 @@ export async function POST(request: Request) {
     if (body.company_name && body.company_name !== 'N/A') score += 1;
     
     // Save to Supabase (The master source of truth)
-    // Note: If you haven't added these columns to your Supabase "leads" table, they will be ignored or might cause an error
+    // Sync with Claude's new 'prospects' schema
+    const fullName = body.name || 'User';
+    const [firstName, ...lastNameParts] = fullName.split(' ');
+    const lastName = lastNameParts.join(' ') || 'N/A';
+
     const { data: newLead, error } = await supabase
-      .from('leads')
-      .insert([{
-        name: body.name,
+      .from('prospects')
+      .upsert([{
+        first_name: firstName,
+        last_name: lastName,
         email: body.email,
         phone: body.phone || null,
-        budget: body.budget || null,
-        user: body.name, // Mapping usuario to name
-        company_name: body.company_name || null,
-        message: body.message || null,
-        status: 'new',
-      }])
+        lead_score: score, 
+        priority: score >= 8 ? 'High' : 'Medium',
+        status: 'New',
+        source: 'API Gateway',
+        reasoning: `Presupuesto: ${body.budget || 'No esp.'} | Servicio: ${body.service || 'No esp.'} | Nota: ${body.message || ''}`
+      }], { onConflict: 'email' })
       .select()
       .single();
 
     if (error) {
-      console.warn('Supabase Insert Error (possible missing columns):', error.message);
-      // We continue since the primary concern is n8n
+      console.error('Supabase Ingestion Error:', error);
+      // We still want to send to n8n if Supabase fails locally 
     }
     
     // Prepare data for n8n

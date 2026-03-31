@@ -911,6 +911,134 @@
     </div>
   </section>
 
+  <!-- ============ CTA SECTION ============ -->
+  <section class="section cta-section" id="contacto">
+    <div class="cta-orb" style="width: 400px; height: 400px; background: var(--violet); top: -200px; left: -100px; filter: blur(120px);"></div>
+    <div class="cta-orb" style="width: 300px; height: 300px; background: var(--cyan); bottom: -150px; right: -100px; filter: blur(120px);"></div>
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="section-badge">Empezar ahora</div>
+        <h2 class="section-title">¿Listo para transformar tu negocio con IA?</h2>
+        <p class="section-subtitle" style="margin: 0 auto 16px;">
+          Agenda una consulta gratuita de 30 minutos y descubre cómo la Inteligencia Artificial 
+          puede multiplicar los resultados de tu empresa.
+        </p>
+        <p style="font-size: 0.9rem; color: var(--cyan-light); margin-bottom: 8px;">
+          🎉 Sin compromiso · Análisis personalizado · Propuesta en 48h
+        </p>
+        <form class="cta-form" id="form-v100" onsubmit="handleLeadSubmit(event)">
+          <div class="cta-form-row">
+            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName" aria-required="true" aria-label="Nombre completo">
+            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail" aria-required="true" aria-label="Correo electrónico profesional">
+          </div>
+          <div class="cta-form-row">
+            <input type="tel" class="cta-input" placeholder="Teléfono" id="formPhone" aria-label="Número de teléfono">
+            <select class="cta-input" id="formBudget" aria-label="Presupuesto aproximado">
+              <option value="" disabled selected>Presupuesto mensual aproximado</option>
+              <option value="<1k">&lt; 1.000€</option>
+              <option value="1k-3k">1.000€ - 3.000€</option>
+              <option value="3k-5k">3.000€ - 5.000€</option>
+              <option value=">5k">&gt; 5.000€</option>
+            </select>
+          </div>
+          <input type="text" class="cta-input" placeholder="Nombre de tu empresa" id="formCompany" aria-label="Nombre de la empresa">
+          <select class="cta-input" id="formService" aria-label="Servicio de interés">
+            <option value="" disabled selected>¿Qué servicio te interesa?</option>
+            <option value="agentes">Agentes Inteligentes</option>
+            <option value="automatizacion">Automatización con IA</option>
+            <option value="n8n">Automatizaciones n8n</option>
+            <option value="integracion">Integración de IA Empresarial</option>
+            <option value="marketing">Marketing con IA</option>
+            <option value="contenido">Generación de Contenido</option>
+            <option value="otro">Otro</option>
+          </select>
+          <textarea class="cta-input" placeholder="Cuéntanos brevemente tu proyecto o necesidad..." id="formMessage" aria-label="Descripción del proyecto"></textarea>
+          <button type="submit" class="btn btn-primary" id="formSubmit" aria-label="Enviar solicitud de consulta gratuita">
+            Agenda tu consulta gratuita
+            <span class="btn-icon">→</span>
+          </button>
+          <p class="cta-form-note">🔒 Tu información está segura. No compartimos tus datos con terceros.</p>
+        </form>
+
+        <script>
+          // DIAGNOSTIC SYSTEM v101
+          console.log("DIAGNOSTIC SYSTEM ONLINE");
+          
+          window.handleLeadSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('formSubmit');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = 'Enviando...';
+            btn.disabled = true;
+
+            const data = {
+              name: document.getElementById('formName').value,
+              email: document.getElementById('formEmail').value
+            };
+
+            try {
+              const res = await fetch(`${window.location.origin}/api/lead`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+              });
+              
+              if (!res.ok) {
+                const errData = await res.json();
+                console.error("API Error Trace:", errData);
+                throw new Error(JSON.stringify(errData));
+              }
+
+              btn.innerHTML = '¡Enviado! ✅';
+              btn.style.backgroundColor = '#10B981';
+              alert('¡Lead recibido correctamente!');
+              document.getElementById('form-v100').reset();
+            } catch (err) {
+              console.warn('CRITICAL REDUNDANCY INVOKED');
+              try {
+                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/prospects', {
+                  method: 'POST',
+                  headers: { 
+                    'Content-Type': 'application/json',
+                    'apikey': 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
+                    'Authorization': 'Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
+                    'Prefer': 'return=minimal'
+                  },
+                  body: JSON.stringify({
+                    first_name: data.name,
+                    email: data.email,
+                    status: 'New'
+                  })
+                });
+
+                if (!sRes.ok) {
+                   const sErr = await sRes.json();
+                   alert('ERROR SUPABASE: ' + JSON.stringify(sErr));
+                   throw new Error('Fallback failed');
+                }
+
+                btn.innerHTML = '¡Recibido! ✅';
+                btn.style.backgroundColor = '#10B981';
+                document.getElementById('form-v100').reset();
+              } catch (f) {
+                alert('FALLO TOTAL: ' + err.message);
+                btn.innerHTML = '✕ Error';
+                btn.style.backgroundColor = '#EF4444';
+              }
+            } finally {
+              setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.style.backgroundColor = '';
+              }, 5000);
+            }
+          }
+        </script>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ DEMO SECTION ============ -->
   <section class="section" id="demo">
     <div class="container">
@@ -986,65 +1114,6 @@
         <div class="tech-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL" width="16" height="16" loading="lazy"> API REST / GraphQL</div>
         <div class="tech-item"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0" width="16" height="16" loading="lazy"> Auth0</div>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA SECTION ============ -->
-  <section class="section cta-section" id="contacto">
-    <div class="cta-orb" style="width: 400px; height: 400px; background: var(--violet); top: -200px; left: -100px; filter: blur(120px);"></div>
-    <div class="cta-orb" style="width: 300px; height: 300px; background: var(--cyan); bottom: -150px; right: -100px; filter: blur(120px);"></div>
-    <div class="container">
-      <div class="cta-content reveal">
-        <div class="section-badge">Empezar ahora</div>
-        <h2 class="section-title">¿Listo para transformar tu negocio con IA?</h2>
-        <p class="section-subtitle" style="margin: 0 auto 16px;">
-          Agenda una consulta gratuita de 30 minutos y descubre cómo la Inteligencia Artificial 
-          puede multiplicar los resultados de tu empresa.
-        </p>
-        <p style="font-size: 0.9rem; color: var(--cyan-light); margin-bottom: 8px;">
-          🎉 Sin compromiso · Análisis personalizado · Propuesta en 48h
-        </p>
-        <form class="cta-form" id="contactForm">
-          <div class="cta-form-row">
-            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName" aria-required="true" aria-label="Nombre completo">
-            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail" aria-required="true" aria-label="Correo electrónico profesional">
-          </div>
-          <div class="cta-form-row">
-            <input type="tel" class="cta-input" placeholder="Teléfono" id="formPhone" aria-label="Número de teléfono">
-            <select class="cta-input" id="formBudget" aria-label="Presupuesto aproximado">
-              <option value="" disabled selected>Presupuesto mensual aproximado</option>
-              <option value="<1k">&lt; 1.000€</option>
-              <option value="1k-3k">1.000€ - 3.000€</option>
-              <option value="3k-5k">3.000€ - 5.000€</option>
-              <option value=">5k">&gt; 5.000€</option>
-            </select>
-          </div>
-          <input type="text" class="cta-input" placeholder="Nombre de tu empresa" id="formCompany" aria-label="Nombre de la empresa">
-          <select class="cta-input" id="formService" aria-label="Servicio de interés">
-            <option value="" disabled selected>¿Qué servicio te interesa?</option>
-            <option value="agentes">Agentes Inteligentes</option>
-            <option value="automatizacion">Automatización con IA</option>
-            <option value="n8n">Automatizaciones n8n</option>
-            <option value="integracion">Integración de IA Empresarial</option>
-            <option value="marketing">Marketing con IA</option>
-            <option value="contenido">Generación de Contenido</option>
-            <option value="otro">Otro</option>
-          </select>
-          <textarea class="cta-input" placeholder="Cuéntanos brevemente tu proyecto o necesidad..." id="formMessage" aria-label="Descripción del proyecto"></textarea>
-          <button type="submit" class="btn btn-primary" id="formSubmit" aria-label="Enviar solicitud de consulta gratuita">
-            Agenda tu consulta gratuita
-            <span class="btn-icon">→</span>
-          </button>
-          <p class="cta-form-note">🔒 Tu información está segura. No compartimos tus datos con terceros.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FAQ SECTION ============ -->
-  <section class="section faq" id="faq">
-    <div class="container">
-      <div class="section-header reveal">
         <div class="section-badge">FAQ</div>
         <h2 class="section-title">Preguntas frecuentes</h2>
         <p class="section-subtitle">
@@ -1188,6 +1257,6 @@
     <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat">💬</button>
   </div>
 
-  <script src="landing-script.js?v=31.0" defer></script>
+  <script src="landing-script.js?v=MASTER_FIX_99"></script>
 </body>
 </html>
