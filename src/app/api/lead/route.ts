@@ -1,10 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 export async function POST(req: Request) {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -17,13 +13,17 @@ export async function POST(req: Request) {
   }
 
   try {
-    const body = await req.json();
-    console.log('Ingesting Lead (RESTORING ORIGINAL SCHEMA):', body.email);
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://vrvfftftnlspajplqjye.supabase.co';
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // RESTORING TO ORIGINAL SCHEMA: name, email, phone, message, status
-    const { error } = await supabase
+    const body = await req.json();
+    console.log('Ingesting Lead:', body.email);
+
+    // Simple INSERT - If email exists it may fail due to unique constraint, so we use upsert
+    const { data, error } = await supabase
       .from('leads')
-      .upsert([{
+      .upsert({
         name: body.name || 'Anonymous',
         email: body.email,
         phone: body.phone || null,
@@ -32,14 +32,14 @@ export async function POST(req: Request) {
         budget: body.budget || null,
         service: body.service || null,
         status: 'new'
-      }], { onConflict: 'email' });
+      }, { onConflict: 'email' });
 
     if (error) {
-      console.error('Database rejection:', error);
-      throw error;
+      console.error('Supabase Error:', error);
+      return NextResponse.json({ error: error.message }, { status: 400, headers: corsHeaders });
     }
 
-    // n8n Relay
+    // Optional: n8n Relay
     if (process.env.N8N_WEBHOOK_URL) {
       fetch(process.env.N8N_WEBHOOK_URL, {
         method: 'POST',
@@ -48,16 +48,10 @@ export async function POST(req: Request) {
       }).catch(e => console.error('n8n error:', e));
     }
 
-    return NextResponse.json({ success: true, message: 'Lead captured in original schema' }, { 
-      status: 201, 
-      headers: corsHeaders 
-    });
+    return NextResponse.json({ success: true, data }, { status: 201, headers: corsHeaders });
 
   } catch (err: any) {
-    console.error('API Error:', err.message);
-    return NextResponse.json({ error: 'Failed to process lead', details: err.message }, { 
-      status: 500,
-      headers: corsHeaders
-    });
+    console.error('Critical Failure:', err.message);
+    return NextResponse.json({ error: 'Critical failure', details: err.message }, { status: 500, headers: corsHeaders });
   }
 }
