@@ -974,7 +974,8 @@
 
             const data = {
               name: document.getElementById('formName').value,
-              email: document.getElementById('formEmail').value
+              email: document.getElementById('formEmail').value,
+              message: document.getElementById('formMessage').value
             };
 
             try {
@@ -985,26 +986,22 @@
               });
               
               if (!res.ok) {
-                const errData = await res.json();
-                console.error("API Error Trace:", errData);
-                throw new Error(JSON.stringify(errData));
+                throw new Error('API failed');
               }
 
               btn.innerHTML = '¡Enviado! ✅';
               btn.style.backgroundColor = '#10B981';
-              alert('¡Lead recibido correctamente!');
               document.getElementById('form-v100').reset();
             } catch (err) {
               console.warn('CRITICAL REDUNDANCY INVOKED');
               try {
-                // Fallback direct to Supabase REST with adaptive schema
-                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads', {
+                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email', {
                   method: 'POST',
                   headers: { 
                     'Content-Type': 'application/json',
                     'apikey': 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
                     'Authorization': 'Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
-                    'Prefer': 'return=minimal'
+                    'Prefer': 'resolution=merge-duplicates, return=minimal'
                   },
                   body: JSON.stringify({
                     name: data.name,
@@ -1015,8 +1012,6 @@
                 });
 
                 if (!sRes.ok) {
-                   const sErr = await sRes.json();
-                   alert('ERROR SUPABASE: ' + JSON.stringify(sErr));
                    throw new Error('Fallback failed');
                 }
 
