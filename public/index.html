@@ -961,11 +961,12 @@
         </form>
 
         <script>
-          // MASTER LEAD CAPTURE v2.0
+          // ZYNDRIX LEAD CAPTURE v2.1 [PRODUCTION]
           window.handleLeadSubmit = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('formSubmit');
-            btn.innerHTML = 'Enviando...';
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = 'Enviando... <span class="btn-shine"></span>';
             btn.disabled = true;
 
             const data = {
@@ -985,26 +986,19 @@
                 body: JSON.stringify(data)
               });
               
-              const resBody = await res.json();
-              console.log("DEBUG VERCEL:", resBody);
-
-              if (!res.ok) {
-                alert('ERROR VERCEL API: ' + JSON.stringify(resBody));
-                throw new Error('API failed');
-              }
+              if (!res.ok) throw new Error('Ingestion failed');
 
               btn.innerHTML = '¡Enviado! ✅';
               btn.style.backgroundColor = '#10B981';
               document.getElementById('form-v100').reset();
             } catch (err) {
-              console.warn('CRITICAL REDUNDANCY INVOKED');
+              console.warn('INVOKING REDUNDANCY');
               try {
                 const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email', {
                   method: 'POST',
                   headers: { 
                     'Content-Type': 'application/json',
                     'apikey': 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
-                    'Authorization': 'Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
                     'Prefer': 'resolution=merge-duplicates, return=minimal'
                   },
                   body: JSON.stringify({
@@ -1024,13 +1018,10 @@
                    btn.style.backgroundColor = '#10B981';
                    document.getElementById('form-v100').reset();
                 } else {
-                   const sErr = await sRes.json();
-                   alert('ERROR SUPABASE DIRECTO: ' + JSON.stringify(sErr));
                    throw new Error();
                 }
               } catch (f) {
-                alert('CRASH: ' + err.message);
-                btn.innerHTML = '✕ Error';
+                btn.innerHTML = '✕ Error de Red';
                 btn.style.backgroundColor = '#EF4444';
               }
             } finally {
