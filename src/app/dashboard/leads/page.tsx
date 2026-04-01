@@ -28,14 +28,51 @@ import { cn } from '@/lib/utils';
 import AnalysisModal from '@/components/dashboard/AnalysisModal';
 import AddLeadModal from '@/components/dashboard/AddLeadModal';
 
-// Sample Leads Data
+import { supabase } from '@/lib/supabase';
+
+// Sample Leads Data (Now dynamic)
 const initialLeads: any[] = [];
 
 export default function LeadsPage() {
-  const [leads, setLeads] = useState(initialLeads);
+  const [leads, setLeads] = useState<any[]>(initialLeads);
+  const [loading, setLoading] = useState(true);
   const [isAnalysisOpen, setIsAnalysisOpen] = useState(false);
   const [isAddLeadOpen, setIsAddLeadOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<any>(null);
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  const fetchLeads = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('leads')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) throw error;
+
+      if (data) {
+        const mappedLeads = data.map(l => ({
+          id: l.id,
+          name: l.name || 'Sin Nombre',
+          email: l.email,
+          company: l.company_name || 'Negocio Privado',
+          value: l.budget || 'Bajo Estudio',
+          type: l.service || 'Prospecto Web',
+          status: l.status || 'prospecto',
+          days: new Date(l.created_at || Date.now()).toLocaleDateString(),
+          message: l.message
+        }));
+        setLeads(mappedLeads);
+      }
+    } catch (err) {
+      console.error('Error fetching leads:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openAnalysis = (lead: any) => {
     setSelectedLead(lead);
