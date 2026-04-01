@@ -49,7 +49,9 @@ export async function POST(req: Request) {
         name: body.name,
         email: body.email,
         phone: body.phone,
+        company_name: body.company_name,
         message: body.message,
+        service: body.service,
         status: 'new'
       })
     });
