@@ -56,13 +56,27 @@ export async function POST(req: Request) {
       })
     });
 
-    if (restRes.ok) {
-       return NextResponse.json({ success: true, method: 'direct' }, { status: 201, headers: corsHeaders });
+    // 3. TRIGGER N8N AUTOMATION (Sale Funnel Brain)
+    const n8nWebhook = process.env.N8N_WEBHOOK_URL;
+    if (n8nWebhook) {
+      fetch(n8nWebhook, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'Lead Magnet V12',
+          timestamp: new Date().toISOString(),
+          lead: {
+            name: body.name,
+            email: body.email,
+            company: body.company_name,
+            intelligence: body.message,
+            service: body.service
+          }
+        })
+      }).catch(err => console.error('n8n Webhook failed (silently):', err));
     }
 
-    const restErr = await restRes.json();
-    console.error('Final failure:', restErr);
-    return NextResponse.json({ error: 'Auth/Database block', details: restErr }, { status: 400, headers: corsHeaders });
+    return NextResponse.json({ success: true, method: 'hybrid' }, { status: 201, headers: corsHeaders });
 
   } catch (err: any) {
     return NextResponse.json({ error: 'System crash', details: err.message }, { status: 500, headers: corsHeaders });
