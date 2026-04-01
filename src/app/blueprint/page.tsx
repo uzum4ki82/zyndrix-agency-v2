@@ -218,11 +218,14 @@ export default function BlueprintPageV12() {
 
                          <div className="pt-6 border-t border-white/5 flex flex-col items-center text-center space-y-3 opacity-60 grayscale hover:grayscale-0 transition-all duration-1000">
                             <div className="flex -space-x-1.5">
-                               {[1,2,3,4].map(i => (
-                                 <div key={i} className="w-6 h-6 rounded-full border border-black bg-slate-800 overflow-hidden ring-1 ring-white/10">
-                                    <Image src={`/img/user-${i}.png`} alt="Client" width={24} height={24} />
+                               {[1,2,3].map(i => (
+                                 <div key={i} className="w-6 h-6 rounded-full border border-black bg-slate-800 overflow-hidden ring-1 ring-white/10 text-[6px] flex items-center justify-center font-bold text-slate-500">
+                                    <Image src={`/img/user-${i}.png`} alt="Client" width={24} height={24} className="w-full h-full object-cover" />
                                  </div>
                                ))}
+                               <div className="w-6 h-6 rounded-full border border-black bg-slate-900 overflow-hidden ring-1 ring-white/10 flex items-center justify-center text-[7px] font-black text-primary italic">
+                                  +
+                               </div>
                             </div>
                             <p className="text-[7px] text-slate-500 font-bold uppercase tracking-widest leading-none italic italic">Sincronización de Procesos Zyndrix ©</p>
                          </div>
@@ -242,21 +245,57 @@ export default function BlueprintPageV12() {
                          </div>
                       </motion.div>
                     ) : (
-                      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="py-20 text-center space-y-8">
-                         <div className="w-16 h-16 bg-[#38bdf8]/10 rounded-xl flex items-center justify-center mx-auto border border-[#38bdf8]/20">
-                            <CheckCircle2 size={32} className="text-[#38bdf8]" />
+                      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="py-16 text-center space-y-8">
+                         {/* Elite Success Visual */}
+                         <div className="relative w-24 h-24 mx-auto mb-10">
+                            <motion.div 
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", damping: 10 }}
+                              className="absolute inset-0 bg-[#38bdf8] rounded-[32px] blur-2xl opacity-20"
+                            />
+                            <div className="relative w-full h-full bg-[#030712] rounded-[32px] border border-[#38bdf8]/30 flex items-center justify-center text-[#38bdf8] shadow-2xl shadow-black">
+                               <motion.div 
+                                 initial={{ pathLength: 0, opacity: 0 }}
+                                 animate={{ pathLength: 1, opacity: 1 }}
+                                 transition={{ duration: 0.8, delay: 0.2 }}
+                               >
+                                  <CheckCircle2 size={42} strokeWidth={1.5} />
+                               </motion.div>
+                               
+                               {/* Rotating light ray */}
+                               <motion.div 
+                                 animate={{ rotate: 360 }}
+                                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                                 className="absolute inset-0 border-t-2 border-r-2 border-[#38bdf8]/20 rounded-[32px]"
+                               />
+                            </div>
                          </div>
-                         <div className="space-y-2">
-                            <h3 className="text-2xl font-legacy text-white italic tracking-tighter uppercase leading-none">Acceso Validado</h3>
-                            <p className="text-slate-500 text-[8px] font-black uppercase tracking-widest leading-relaxed">Documento de arquitectura listo para descarga.</p>
+
+                         <div className="space-y-3">
+                            <div className="text-[8px] font-black text-[#38bdf8] tracking-[0.6em] uppercase">Vínculo Seguro Establecido</div>
+                            <h3 className="text-3xl font-legacy text-white italic tracking-tighter uppercase leading-none">Acceso Validado</h3>
+                            <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-[220px] mx-auto">Su blueprint de ingeniería ya está disponible para revisión técnica.</p>
                          </div>
-                         <a 
-                           href="/pdf/zyndrix-blueprint-2026.pdf" 
-                           download 
-                           className="inline-flex items-center gap-3 bg-[#38bdf8] text-white px-8 py-4.5 font-black uppercase text-[10px] tracking-[0.4em] hover:scale-105 active:scale-95 transition-all shadow-xl"
-                         >
-                           DESCARGAR AHORA <Download size={20} />
-                         </a>
+
+                         <div className="pt-4">
+                            <a 
+                              href="/pdf/zyndrix-blueprint-2026.pdf" 
+                              download 
+                              className="w-full inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 font-black uppercase text-[11px] tracking-[0.4em] hover:bg-[#38bdf8] transition-all duration-500 shadow-2xl shadow-[#38bdf8]/10 group overflow-hidden relative"
+                            >
+                              <div className="relative z-10 flex items-center gap-3">
+                                DESCARGAR AHORA <Download size={20} className="group-hover:translate-y-0.5 transition-transform" />
+                              </div>
+                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#38bdf8]/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                            </a>
+                         </div>
+
+                         <div className="flex items-center justify-center gap-2 opacity-30 mt-6 group cursor-default">
+                           <div className="h-0.5 w-4 bg-slate-700" />
+                           <span className="text-[7px] font-bold text-slate-500 uppercase tracking-[0.2em] group-hover:text-[#38bdf8] transition-colors">Zyndrix Strategic Asset</span>
+                           <div className="h-0.5 w-4 bg-slate-700" />
+                         </div>
                       </motion.div>
                     )}
                  </AnimatePresence>
@@ -264,6 +303,74 @@ export default function BlueprintPageV12() {
             </div>
           </div>
         </div>
+
+        {/* 2. SUCCESS REPLICA: ARQUITECTURA DEL ÉXITO (BENTO GRID) */}
+        <section className="mt-40 mb-20">
+           <div className="text-center mb-16 space-y-3">
+              <h2 className="text-4xl md:text-5xl font-legacy text-white italic leading-none uppercase tracking-tighter">Arquitectura de la Réplica</h2>
+              <p className="text-[9px] font-black text-slate-500 tracking-[0.5em] uppercase">Ecosistema Autónomo Zyndrix v2.0</p>
+              <div className="h-0.5 w-16 bg-gradient-to-r from-[#38bdf8] to-[#818cf8] mx-auto rounded-full" />
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-6 gap-6 auto-rows-[280px]">
+              {/* Card 1: Core Engine */}
+              <div className="col-span-1 md:col-span-3 glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group overflow-hidden relative">
+                 <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#38bdf8]/5 rounded-full blur-[80px] group-hover:bg-[#38bdf8]/10 transition-all duration-1000" />
+                 <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/20 flex items-center justify-center mb-8 text-[#38bdf8]">
+                       <Cpu size={24} />
+                    </div>
+                    <h3 className="text-2xl font-legacy text-white italic mb-4">Córtex Operacional</h3>
+                    <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs italic opacity-80">Orquestación de modelos LLM propietarios con memoria persistente para toma de decisiones autónoma.</p>
+                 </div>
+                 <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.3em] text-[#38bdf8]/40 mt-4 group-hover:text-[#38bdf8] transition-colors">
+                    LATENCIA <span className="text-white">&lt;0.5ms</span> <span className="mx-2">•</span> ENTRÓPICA <span className="text-white">OPTIMIZADA</span>
+                 </div>
+              </div>
+
+              {/* Card 2: Lead Scoring (The "Qualification" key) */}
+              <div className="col-span-1 md:col-span-3 glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group relative border-white/10">
+                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#818cf8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                 <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-[#818cf8]/10 border border-[#818cf8]/20 flex items-center justify-center mb-8 text-[#818cf8]">
+                       <Target size={24} />
+                    </div>
+                    <h3 className="text-2xl font-legacy text-white italic mb-4">Ingeniería de Captación</h3>
+                    <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs italic opacity-80">Sistemas de cualificación de alta intensidad que ejecutan scoring en tiempo real para maximizar el ROI comercial.</p>
+                 </div>
+                 <div className="flex justify-between items-end relative z-10">
+                    <div className="flex gap-1">
+                       {[1,2,3,4,5].map(i => <div key={i} className="h-1 w-4 bg-[#818cf8]/20 rounded-full overflow-hidden"><motion.div animate={{ width: i*20 + "%" }} className="h-full bg-[#818cf8]" transition={{ delay: i*0.1 }} /></div>)}
+                    </div>
+                    <span className="text-[10px] font-black text-white italic font-legacy">Precision 99%</span>
+                 </div>
+              </div>
+
+              {/* Card 3: Deep Insights */}
+              <div className="col-span-1 md:col-span-2 glass-zyndrix rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center gap-4 group">
+                 <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 group-hover:text-[#38bdf8] group-hover:border-[#38bdf8]/30 transition-all">
+                    <Zap size={18} />
+                 </div>
+                 <h4 className="text-xs font-black uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-colors">Ejecución Reactiva</h4>
+                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Arquitecturas basadas en eventos que reaccionan al mercado en milisegundos.</p>
+              </div>
+
+              {/* Card 4: Future Scale (Big Feature) */}
+              <div className="col-span-1 md:col-span-4 bg-gradient-to-r from-[#0f172a] to-[#030712] rounded-[2.5rem] border border-white/5 p-10 flex flex-col md:flex-row items-center gap-10 group relative overflow-hidden">
+                 <div className="flex-1 space-y-6 relative z-10">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#38bdf8]/10 rounded-full text-[#38bdf8] text-[8px] font-black uppercase tracking-widest border border-[#38bdf8]/20">
+                       <ShieldCheck size={10} /> SECURITY_PROTOCOL_VERIFIED
+                    </div>
+                    <h3 className="text-3xl font-legacy text-white italic leading-none uppercase">Visión de Escalo <br /> <span className="text-[#38bdf8] not-italic font-heading">Nivel Enterprise</span></h3>
+                    <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-sm italic">La réplica no es un documento estático, es la base técnica para un despliegue industrial que soporta más de 1M de operaciones mensuales.</p>
+                 </div>
+                 <div className="w-40 h-40 relative group-hover:scale-110 transition-transform duration-1000 hidden md:block">
+                    <div className="absolute inset-0 bg-[#38bdf8]/20 rounded-full blur-3xl opacity-30 animate-pulse" />
+                    <Cpu size={160} className="text-white/5 relative z-10" />
+                 </div>
+              </div>
+           </div>
+        </section>
 
         {/* STATS FINALES: PALETA UNIFICADA */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
