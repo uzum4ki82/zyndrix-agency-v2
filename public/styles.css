@@ -3,12 +3,7 @@
 /* ============================================================
    AURORA TECH — AI Agency Design System
    ============================================================ */
-.reveal {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  visibility: visible !important;
-  display: block !important;
-}
+/* Animations handled by scripts and specific section styles */
 
 /* ---------- Google Fonts ---------- */
 

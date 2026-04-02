@@ -9,16 +9,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
-  <!-- LCP PRELOAD: EL LOGO ES SAGRADO (Mantenemos la velocidad de carga) -->
+  <!-- LCP PRELOAD (Para velocidad sin parpadeos) -->
   <link rel="preload" as="image" href="img/zyndrix-live.png" fetchpriority="high">
 
-  <!-- RESTAURAMOS EL CSS ORIGINAL SIN TRUCOS QUE CAUSEN SALTOS -->
-  <link rel="stylesheet" href="styles.css?v=29.5">
+  <!-- CARGA DE ESTILOS EXTERNOS (v40.0 MASTER CLEANSE) -->
+  <link rel="stylesheet" href="styles.css?v=40.0">
+  
   <link rel="icon" href="img/favicon-zyndrix.png">
 </head>
 <body>
 
-  <!-- NAVBAR ORIGINAL (ESTABLE) -->
+  <div class="read-progress-bar"></div>
+
+  <!-- NAVBAR ESTABLE -->
   <nav class="navbar reveal" id="navbar">
     <div class="container">
       <a href="/" class="nav-logo">
@@ -57,7 +60,7 @@
       <div class="hero-content">
         <div class="hero-tag-mini">
           <span class="dot"></span>
-          <span>SISTEMAS OPERATIVOS IA</span>
+          <span>AI OPERATOR SCALE</span>
         </div>
         <h1 class="reveal">
           Escala tu Agencia con <br>
@@ -77,10 +80,53 @@
       </div>
     </section>
 
-    <!-- EL RESTO SIGUE IGUAL (Sitemap e Indexación se mantienen) -->
+    <!-- Blueprint Bridge -->
+    <section class="section" id="blueprint" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">PRODUCTO ESTRELLA</span>
+          <h2 class="section-title">El <span class="gradient-text">Blueprint</span> de Éxito</h2>
+          <p class="section-subtitle">Nuestra metodología de implementación propietaria para llevar tu agencia al siguiente nivel.</p>
+          <br>
+          <a href="/blueprint" class="btn-primary-elite">SOLICITAR ACCESO AL BLUEPRINT</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto Original -->
+    <section class="section" id="contacto">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Inicia tu <span class="gradient-text">Evolución</span></h2>
+        </div>
+        <div class="contact-form-container" style="max-width: 600px; margin: 0 auto;">
+          <!-- Se cargan vía scripts originales -->
+          <form id="leadForm" class="contact-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+              <input type="text" name="name" placeholder="Nombre" required style="padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+              <input type="email" name="email" placeholder="Email" required style="padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
+            </div>
+            <textarea name="message" placeholder="¿Cómo te ayudamos?" required style="width: 100%; height: 120px; padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; margin-bottom: 20px;"></textarea>
+            <button type="submit" class="btn-primary-elite" style="width: 100%;">ENVIAR SOLICITUD</button>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- SCRIPTS ORIGINALES -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 Zyndrix AI. Todos los derechos reservados.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacidad</a>
+          <a href="/terms">Términos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CARGA DE SCRIPTS ORIGINALES -->
   <script src="landing-script.js" defer></script>
 </body>
 </html>
