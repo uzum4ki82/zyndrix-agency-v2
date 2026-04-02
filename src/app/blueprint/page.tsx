@@ -59,8 +59,10 @@ export default function BlueprintPage() {
           email: formData.email, 
           phone: formData.phone,
           company: formData.company,
+          problem: formData.challenge,
           message: `Staff: ${staffSize}, Sector: ${formData.teamSize}, Fuga: ${monthlyLeak}€, Desafío: ${formData.challenge}`,
-          service: 'Blueprint Diamond 3.0 Final'
+          service: 'Blueprint Diamond 3.0 Final',
+          source: 'Blueprint Page'
         })
       });
     } catch (error) { console.error(error); }
@@ -194,22 +196,22 @@ export default function BlueprintPage() {
 
                          <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <input required type="text" placeholder="Nombre y Apellidos" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-                               <input required type="text" placeholder="Empresa / Organización" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                               <input required type="text" name="name" placeholder="Nombre y Apellidos" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                               <input required type="text" name="company" placeholder="Empresa / Organización" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <input required type="email" placeholder="E-mail Corporativo" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                               <input required type="tel" placeholder="WhatsApp (Prefijo + N°)" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                               <input required type="email" name="email" placeholder="E-mail Corporativo" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                               <input required type="tel" name="phone" placeholder="WhatsApp (Prefijo + N°)" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
-                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
+                               <select required name="teamSize" className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
                                   <option value="" disabled>Sector Operativo</option>
                                   <option value="ecommerce">E-commerce / Retail</option>
                                   <option value="servicios">Servicios B2B</option>
                                   <option value="tech">Software / SaaS</option>
                                   <option value="realestate">Real Estate / Legal</option>
                                 </select>
-                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
+                               <select required name="challenge" className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
                                   <option value="" disabled>Prioridad de Mejora</option>
                                   <option value="leads">Captación AI 24/7</option>
                                   <option value="admin">Quitar Carga Operativa</option>

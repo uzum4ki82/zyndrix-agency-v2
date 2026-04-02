@@ -1,0 +1,179 @@
+{
+  "name": "ZYNDRIX | PRODUCTION_MASTER_2026",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "value": 8
+            }
+          ]
+        }
+      },
+      "id": "trigger_daily",
+      "name": "Daily Trigger (08:00)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.app.outscraper.com/google-maps/search-v2?query=dentistas%20en%20{{ $env.CITY }}&limit=50",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth"
+      },
+      "id": "outscraper_node",
+      "name": "Discovery Engine (Outscraper)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [200, 0]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "leads",
+          "mode": "id"
+        },
+        "columns": [
+          "business_name",
+          "site",
+          "phone"
+        ],
+        "options": {}
+      },
+      "id": "supabase_sync",
+      "name": "CRM Sync (Supabase)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [400, 0]
+    },
+    {
+      "parameters": {
+        "modelId": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Analyze the business niche and web presence. Output JSON { \"score\": 1-100, \"niche\": \"dentist|real_estate|etc\", \"targeted_pack\": \"string\" }"
+            }
+          ]
+        },
+        "responseFormat": {
+          "type": "json_object"
+        }
+      },
+      "id": "ai_auditor",
+      "name": "AI Intelligence Core",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [600, 0]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "value1": "={{ $json.niche }}",
+              "value2": "dentist"
+            }
+          ]
+        }
+      },
+      "id": "niche_switch",
+      "name": "Niche Outreach Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [800, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.WHATSAPP_URL }}/message/sendText",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.phone }}"
+            }
+          ]
+        }
+      },
+      "id": "whatsapp_node",
+      "name": "Outreach Engine (WhatsApp)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1000, 0]
+    }
+  ],
+  "connections": {
+    "Daily Trigger (08:00)": {
+      "main": [
+        [
+          {
+            "node": "Discovery Engine (Outscraper)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discovery Engine (Outscraper)": {
+      "main": [
+        [
+          {
+            "node": "CRM Sync (Supabase)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CRM Sync (Supabase)": {
+      "main": [
+        [
+          {
+            "node": "AI Intelligence Core",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Intelligence Core": {
+      "main": [
+        [
+          {
+            "node": "Niche Outreach Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Niche Outreach Switch": {
+      "main": [
+        [
+          {
+            "node": "Outreach Engine (WhatsApp)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

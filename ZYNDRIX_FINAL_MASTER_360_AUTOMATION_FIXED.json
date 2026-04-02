@@ -58,6 +58,19 @@
               "value": "={{ $json.body?.record?.message || '' }}"
             },
             {
+              "name": "lead_phone",
+              "value": "={{ $json.body?.record?.phone || '' }}"
+            },
+            {
+              "name": "lead_problem",
+              "value": "={{ $json.body?.record?.problem || '' }}"
+            },
+            {
+              "name": "website",
+              "value": "={{ $json.body?.record?.website || '' }}"
+            },
+            {
+
               "name": "service",
               "value": "={{ $json.body?.record?.service || 'General' }}"
             },
@@ -160,6 +173,19 @@
               "value": "={{ $json.message }}"
             },
             {
+              "name": "phone",
+              "value": "={{ $json.lead_phone }}"
+            },
+            {
+              "name": "problem",
+              "value": "={{ $json.lead_problem }}"
+            },
+            {
+              "name": "website",
+              "value": "={{ $json.website }}"
+            },
+            {
+
               "name": "source",
               "value": "={{ $json.source }}"
             },

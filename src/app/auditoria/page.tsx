@@ -49,8 +49,10 @@ export default function AuditoriaPage() {
           phone: formData.phone,
           company: formData.businessName,
           website: formData.website,
+          problem: formData.problem,
           message: `AUDITORÍA SOLICITADA. Web: ${formData.website}. Problema: ${formData.problem}`,
-          service: 'Auditoría IA'
+          service: 'Auditoría IA',
+          source: 'Landing Page Auditoria'
         })
       });
 
@@ -177,6 +179,7 @@ export default function AuditoriaPage() {
                           <input 
                             required 
                             type="text" 
+                            name="businessName"
                             placeholder="Empresa S.L." 
                             className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
                             value={formData.businessName}
@@ -188,6 +191,7 @@ export default function AuditoriaPage() {
                           <input 
                             required 
                             type="text" 
+                            name="personName"
                             placeholder="John Doe" 
                             className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
                             value={formData.personName}
@@ -202,6 +206,7 @@ export default function AuditoriaPage() {
                           <input 
                             required 
                             type="tel" 
+                            name="phone"
                             placeholder="+34 600 000 000" 
                             className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
                             value={formData.phone}
@@ -213,6 +218,7 @@ export default function AuditoriaPage() {
                           <input 
                             required 
                             type="email" 
+                            name="email"
                             placeholder="ejemplo@web.com" 
                             className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
                             value={formData.email}
@@ -226,6 +232,7 @@ export default function AuditoriaPage() {
                         <input 
                           required 
                           type="url" 
+                          name="website"
                           placeholder="https://www.tuweb.com" 
                           className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
                           value={formData.website}
@@ -237,10 +244,12 @@ export default function AuditoriaPage() {
                         <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Problema Principal</label>
                         <select 
                           required 
+                          name="problem"
                           className="w-full bg-[#030612] border border-white/10 p-5 rounded-[1.8rem] text-xs font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer appearance-none px-8 shadow-xl"
                           value={formData.problem}
                           onChange={(e) => setFormData({...formData, problem: e.target.value})}
                         >
+
                           <option value="" disabled>Selecciona una opción</option>
                           <option value="No tengo web">No tengo web</option>
                           <option value="No tengo clientes">No tengo clientes</option>
