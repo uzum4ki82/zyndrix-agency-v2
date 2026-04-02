@@ -6,103 +6,81 @@
   <title>Zyndrix | Agencia de IA & Automatización — Soluciones de Élite</title>
   <meta name="description" content="Agencia líder en inteligencia artificial y automatización para empresas. Optimizamos procesos y escalamos resultados con tecnología de vanguardia.">
   
-  <!-- REGLA DE ORO: PRE-CONEXIÓN PARA VELOCIDAD EXTREMA -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
-  <!-- LCP PRELOAD: EL LOGO ES SAGRADO (Corregido a img/zyndrix-live.png) -->
   <link rel="preload" as="image" href="img/zyndrix-live.png" fetchpriority="high">
 
   <!-- ==============================================
-       CSS CRÍTICO (99% PageSpeed Optimization)
+       CSS ATÓMICO v33.0 (Zero-Shift Performance)
        ============================================== -->
   <style>
-    /* Variables de Élite */
     :root {
-      --bg-primary: #020b0d;
-      --bg-secondary: #04161a;
-      --primary: #2DD4BF;
-      --primary-glow: rgba(45, 212, 191, 0.2);
-      --cyan: #2DD4BF;
-      --violet: #A855F7;
-      --text-primary: #F8FAFC;
-      --text-secondary: #94A3B8;
-      --font-heading: 'Outfit', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --transition-base: 0.3s ease;
-      --radius-full: 9999px;
+      --bg-primary: #020b0d; --bg-secondary: #04161a; --primary: #2DD4BF;
+      --cyan: #2DD4BF; --violet: #A855F7; --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8; --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif; --radius-full: 9999px;
     }
 
-    /* Reset Crítico para evitar Saltos de Diseño (CLS) */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { 
-      width: 100%; 
-      max-width: 100vw; 
-      overflow-x: hidden; 
-      background: var(--bg-primary); 
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      -webkit-font-smoothing: antialiased;
+      width: 100%; max-width: 100vw; overflow-x: hidden; 
+      background: var(--bg-primary); color: var(--text-primary);
+      font-family: var(--font-body); -webkit-font-smoothing: antialiased;
     }
 
-    /* Estructura Base del Hero para Pintado Instantáneo (FCP) */
     .container { max-width: 1240px; margin: 0 auto; padding: 0 40px; width: 100%; }
     @media (max-width: 768px) { .container { padding: 0 20px; } }
 
+    /* NAVBAR ORIGINAL E INMUTABLE */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 15px 0; background: transparent; width: 100%;
+      padding: 15px 0; background: transparent; width: 100%; transition: all 0.3s ease;
     }
     .navbar .container { 
-      display: flex; align-items: center; justify-content: space-between; 
-      gap: 24px; 
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; 
     }
+    .nav-logo { display: flex; align-items: center; z-index: 1001; flex: 1; }
     .nav-logo-img { height: 68px !important; width: auto; object-fit: contain; }
     
-    /* Responsive Navbar simple fix */
+    .nav-links {
+      display: flex; align-items: center; gap: 28px; margin: 0 auto;
+      padding: 8px 24px; background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-full);
+      backdrop-filter: blur(12px);
+    }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; }
+    
+    .nav-actions { display: flex; align-items: center; gap: 16px; z-index: 1001; flex: 1; justify-content: flex-end; }
+    .btn-primary-elite {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 30px; background: black; color: white; border-radius: 12px;
+      font-weight: 800; font-size: 0.9rem; border: 1px solid rgba(45, 212, 191, 0.4);
+      text-decoration: none; text-transform: uppercase;
+    }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding-top: 80px; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; color: #fff; }
+    .gradient-text { background: linear-gradient(135deg, #2DD4BF 0%, #3B82F6 50%, #A855F7 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+
+    /* MOBILE TOGGLE (Evitar que desaparezca) */
+    .mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; }
+    .mobile-toggle span { width: 24px; height: 2px; background: #fff; }
+
     @media (max-width: 991px) {
       .nav-links { display: none !important; }
-      .navbar .container { justify-content: space-between; }
+      .mobile-toggle { display: flex !important; }
+      .nav-logo-img { height: 50px !important; }
     }
-    
-    .hero {
-      min-height: 100vh; display: flex; align-items: center; 
-      justify-content: center; text-align: center; position: relative;
-    }
-    .hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 24px; }
-    
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
-      line-height: 1.1; margin-bottom: 24px; color: #fff;
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #2DD4BF 0%, #3B82F6 50%, #A855F7 100%);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-subtitle { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); margin-bottom: 40px; }
-    
-    /* Reveal forzar visibilidad inmediata de los elementos críticos */
-    .reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
-    
-    /* Placeholder para evitar CLS en el canvas */
-    #aiNetworkCanvas { position: absolute; inset: 0; height: 100vh; width: 100%; z-index: 1; pointer-events: none; opacity: 0.3; }
-
-    /* Animación mínima para el Hero */
-    @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .hero-tag-mini, .hero h1, .hero-subtitle, .hero-ctas { animation: fade-up 0.8s ease both; }
   </style>
 
-  <!-- CARGA DIFERIDA DE FUENTES & CSS (Anti-Blocking) -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css?v=31.0" media="print" onload="this.media='all'">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles.css?v=33.0" media="print" onload="this.media='all'">
   
-  <link rel="icon" href="zyndrix-logo.png">
+  <link rel="icon" href="img/favicon-zyndrix.png">
 </head>
 <body>
 
-  <div class="read-progress-bar"></div>
-
-  <!-- NAVBAR -->
   <nav class="navbar reveal">
     <div class="container">
       <a href="/" class="nav-logo">
@@ -110,22 +88,17 @@
       </a>
       
       <div class="nav-links">
-        <div class="nav-indicator"></div>
-        <a href="#soluciones" class="active">Soluciones</a>
+        <a href="#soluciones">Soluciones</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#blueprint">Blueprint</a>
         <a href="#contacto">Contacto</a>
       </div>
 
       <div class="nav-actions">
-        <a href="/dashboard" class="status-indicator">
-          <span class="status-dot"></span>
-          <span class="status-text">Panel Online</span>
-        </a>
-        <a href="#contacto" class="btn-primary-elite nav-cta">
+        <a href="#contacto" class="btn-primary-elite">
           <span>CONSULTA GRATIS</span>
         </a>
-        <button class="mobile-toggle" aria-label="Menu">
+        <button class="mobile-toggle">
           <span></span>
           <span></span>
           <span></span>
@@ -134,141 +107,32 @@
     </div>
   </nav>
 
-  <!-- MAIN HERO -->
   <main>
     <section class="hero" id="home">
-      <div class="hero-bg">
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
-      </div>
-      
+      <div class="hero-bg"></div>
       <canvas id="aiNetworkCanvas"></canvas>
-      
       <div class="hero-content">
         <div class="hero-tag-mini">
           <span class="dot"></span>
-          <span>SISTEMAS OPERATIVOS DE IA v2.8</span>
+          <span>SISTEMAS DE IA v2.8</span>
           <span class="tag-divider">|</span>
           <span class="gradient-text">ULTRA FAST</span>
         </div>
-        
         <h1 class="reveal">
           Escala tu Agencia con <br>
           <span class="gradient-text">Inteligencia Radical</span>
         </h1>
-        
         <p class="hero-subtitle reveal">
-          Diseñamos, implementamos y operamos ecosistemas de IA que sustituyen procesos manuales por eficiencia pura. Crecimiento sin límites técnicos.
+          Diseñamos y operamos ecosistemas de IA que sustituyen procesos manuales por eficiencia pura.
         </p>
-        
         <div class="hero-ctas reveal">
-          <a href="/blueprint" class="btn-primary-elite">
-            <span>VER BLUEPRINT</span>
-            <div class="btn-shine"></div>
-          </a>
-          <a href="#contacto" class="btn-secondary-elite">
-            <span>HABLAR CON EXPERTO</span>
-          </a>
-        </div>
-        
-        <div class="hero-stats reveal">
-          <div class="hero-stat">
-            <div class="hero-stat-number">+85%</div>
-            <div class="hero-stat-label">Eficiencia Operativa</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-number">24/7</div>
-            <div class="hero-stat-label">Autogestión</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-scroll">
-        <span>SABER MÁS</span>
-        <div class="hero-scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- LOGOS MARQUEE -->
-    <div class="logos-marquee">
-      <div class="marquee-header">
-        <span class="logos-strip-title">INTEGRACIONES DE VANGUARDIA</span>
-      </div>
-      <div class="tech-marquee-v2">
-        <div class="marquee-fade-left"></div>
-        <div class="marquee-track">
-          <!-- Se repiten para el scroll infinito -->
-          <div class="tech-card"><span>OpenAI</span></div>
-          <div class="tech-card"><span>Claude 3</span></div>
-          <div class="tech-card"><span>n8n</span></div>
-          <div class="tech-card"><span>Make</span></div>
-          <div class="tech-card"><span>Supabase</span></div>
-          <div class="tech-card"><span>Vercel</span></div>
-          <div class="tech-card"><span>PyTorch</span></div>
-          <div class="tech-card"><span>OpenAI</span></div>
-          <div class="tech-card"><span>Claude 3</span></div>
-          <div class="tech-card"><span>n8n</span></div>
-          <div class="tech-card"><span>Make</span></div>
-          <div class="tech-card"><span>Supabase</span></div>
-        </div>
-        <div class="marquee-fade-right"></div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN DE CONTACTO EXCLUSIVA -->
-    <section class="section" id="contacto">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-badge">ACCESO PRIORITARIO</span>
-          <h2 class="section-title">Inicia tu <span class="gradient-text">Evolución</span></h2>
-          <p class="section-subtitle">Solo aceptamos 3 nuevos socios tecnológicos por mes para garantizar la excelencia operativa.</p>
-        </div>
-        
-        <div class="contact-grid">
-          <div class="contact-form-container">
-            <form id="leadForm" class="contact-form">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="name">Nombre Completo</label>
-                  <input type="text" id="name" name="name" placeholder="Tu nombre..." required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email Corporativo</label>
-                  <input type="email" id="email" name="email" placeholder="email@empresa.com" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="company">Empresa / Organización</label>
-                <input type="text" id="company" name="company" placeholder="Nombre de tu empresa..." required>
-              </div>
-              <div class="form-group">
-                <label for="message">¿En qué área necesitas automatizar?</label>
-                <textarea id="message" name="message" placeholder="Cuéntanos brevemente tu cuello de botella..." required></textarea>
-              </div>
-              <button type="submit" class="btn-primary-elite w-full">
-                <span>ENVIAR SOLICITUD</span>
-                <div class="btn-shine"></div>
-              </button>
-            </form>
-          </div>
+          <a href="/blueprint" class="btn-primary-elite"><span>VER BLUEPRINT</span></a>
+          <a href="#contacto" class="btn-primary-elite" style="background: transparent;"><span>HABLAR CON EXPERTO</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <p>© 2026 Zyndrix. Todos los derechos reservados.</p>
-        <div class="footer-links">
-          <a href="/privacy">Privacidad</a>
-          <a href="/terms">Términos</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- SCRIPTS AL FINAL PARA NO BLOQUEAR -->
-  <script src="landing-script.js?v=31.0" defer></script>
+  <script src="landing-script.js?v=33.0" defer></script>
 </body>
 </html>
