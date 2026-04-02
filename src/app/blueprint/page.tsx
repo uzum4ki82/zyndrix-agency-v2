@@ -85,7 +85,15 @@ export default function BlueprintPage() {
       <nav className="w-full border-b border-white/5 bg-[#030610]/95 sticky top-0 z-[100] backdrop-blur-4xl px-8">
         <div className="max-w-7xl mx-auto flex justify-between items-center h-24 md:h-[120px]">
           <a href="/" className="transition-transform active:scale-95">
-             <Image src="/img/zyndrix-live.png" alt="Zyndrix" width={320} height={120} className="h-16 md:h-[120px] w-auto object-contain brightness-110 drop-shadow-[0_0_30px_rgba(56,189,248,0.2)]" priority />
+             <Image 
+                src="/img/zyndrix-live.png" 
+                alt="Zyndrix" 
+                width={320} 
+                height={120} 
+                priority={true}
+                sizes="(max-width: 768px) 160px, 320px"
+                className="h-16 md:h-[120px] w-auto object-contain brightness-110 drop-shadow-[0_0_30px_rgba(56,189,248,0.2)]"
+             />
           </a>
           <div className="hidden lg:flex items-center gap-12">
             {['Servicios', 'Casos', 'Proceso'].map((item) => (
@@ -148,8 +156,16 @@ export default function BlueprintPage() {
                        </motion.div>
                     </div>
                  </div>
-                 <div className="relative aspect-[16/10] rounded-[3.5rem] overflow-hidden border border-white/10 shadow-2xl">
-                    <video src="/videos/blueprint-bg.mp4" autoPlay loop muted playsInline className="p-2 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000 scale-105" />
+                 <div className="relative aspect-[16/10] rounded-[3.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#030712]">
+                    <video 
+                      src="/videos/blueprint-bg.mp4" 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      preload="metadata"
+                      className="p-2 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000 scale-105" 
+                    />
                     <div className="absolute top-10 left-10 z-20"><Scan className="text-[#38bdf8] animate-pulse" size={32} /></div>
                  </div>
               </div>
@@ -225,8 +241,16 @@ export default function BlueprintPage() {
                  </AnimatePresence>
 
                  {/* VÍDEO DERECHA SIMÉTRICO */}
-                 <div className="absolute bottom-16 left-16 right-16 aspect-[16/10] rounded-[4rem] overflow-hidden border-2 border-white/5 shadow-2xl z-10 opacity-50 hover:opacity-100 transition-opacity">
-                    <video src="/videos/Futuristic_AI_Automation_Control_Room (1).mp4" autoPlay loop muted playsInline className="p-4 w-full h-full object-cover scale-110 opacity-60" />
+                 <div className="absolute bottom-16 left-16 right-16 aspect-[16/10] rounded-[4rem] overflow-hidden border-2 border-white/5 shadow-2xl z-10 opacity-50 hover:opacity-100 transition-opacity bg-[#030712]">
+                    <video 
+                      src="/videos/Futuristic_AI_Automation_Control_Room (1).mp4" 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      preload="metadata"
+                      className="p-4 w-full h-full object-cover scale-110 opacity-60" 
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#020610] via-transparent to-transparent" />
                     <div className="absolute top-10 left-10"><ShieldCheck className="text-emerald-500" size={24} /></div>
                  </div>
