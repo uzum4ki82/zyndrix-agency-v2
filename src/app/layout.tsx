@@ -1,20 +1,33 @@
 import type { Metadata } from "next";
+import { Outfit, Space_Grotesk } from "next/font/google";
 import { Background } from "@/components/common/Background";
 import "./globals.css";
+
+// FUENTES DE GRADO EJECUTIVO
+const outfit = Outfit({ 
+  subsets: ["latin"], 
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ["latin"], 
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
 
 /**
  * ZYNDRIX SEO INFRASTRUCTURE - ENTERPRISE LEVEL
  * Optimizado para indexación de Google Search Console 2024.
- * Incluye configuración OpenGraph, Twitter Cards y metadatos dinámicos.
  */
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://zyndrix.dev'),
   title: {
-    default: "ZYNDRIX | Ingeniería de Automatización de IA y Captación de Leads",
+    default: "ZYNDRIX | Arquitectura de Automatización de IA",
     template: "%s | ZYNDRIX"
   },
-  description: "Optimiza tu escala con sistemas de IA autónomos. Agencia de ingeniería de procesos que elimina la dependencia operativa y maximiza el ROI de tus leads.",
+  description: "Líderes en ingeniería de automatización IA para organizaciones que exigen eficiencia absoluta. Privatiza tu margen operativo con el Blueprint Zyndrix.",
   keywords: ["IA para empresas", "Automatización de leads", "Ingeniería de procesos IA", "Agencia de automatización Madrid", "Captación de leads autónoma"],
   authors: [{ name: "Zyndrix Team" }],
   creator: "Zyndrix Agency",
@@ -42,8 +55,8 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: "https://zyndrix.dev",
     siteName: "ZYNDRIX",
-    title: "ZYNDRIX | La Estructura de la Autonomía Operativa",
-    description: "Sistemas de IA de alto rendimiento para organizaciones que exigen eficiencia absoluta.",
+    title: "ZYNDRIX | Arquitectura de Sistemas de IA",
+    description: "La estructura de la autonomía operativa para PYMES y Grandes organizaciones.",
     images: [
       {
         url: "/img/zyndrix-live.png",
@@ -53,13 +66,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "ZYNDRIX | AI System Architecture",
-    description: "Liderando la vanguardia de la eficiencia operativa con IA.",
-    images: ["/img/zyndrix-live.png"],
-    creator: "@zyndrix",
-  },
 };
 
 export default function RootLayout({
@@ -68,11 +74,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className="antialiased min-h-screen selection:bg-primary/30">
+    <html lang="es" className={`${outfit.variable} ${spaceGrotesk.variable}`}>
+      <body className="antialiased min-h-screen selection:bg-[#38bdf8]/30">
         <Background />
         {children}
       </body>
     </html>
   );
 }
+

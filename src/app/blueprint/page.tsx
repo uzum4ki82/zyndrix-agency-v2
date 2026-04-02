@@ -69,7 +69,7 @@ export default function BlueprintPage() {
   return (
     <div className="relative min-h-screen text-slate-300 overflow-x-hidden font-sans selection:bg-[#38bdf8] selection:text-black" 
          style={{ 
-           fontFamily: '"Outfit", sans-serif',
+           fontFamily: 'var(--font-outfit)',
            background: 'radial-gradient(circle at 50% 50%, #0c112b 0%, #03040a 100%)' 
          }}>
       
@@ -113,7 +113,7 @@ export default function BlueprintPage() {
            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[10px] font-bold uppercase tracking-[0.8em] backdrop-blur-xl">
               <Network size={14} className="animate-spin-slow" /> INFRAESTRUCTURA DE ALTA DISPONIBILIDAD
            </div>
-           <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
+           <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
              Tu Fuga <br /> 
              es <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-white italic">Escalable.</span>
            </h1>
@@ -144,7 +144,7 @@ export default function BlueprintPage() {
                           <AnimatePresence>{isScanning && <motion.div initial={{ top: "-5%" }} animate={{ top: "105%" }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="absolute left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_40px_#38bdf8] z-30" />}</AnimatePresence>
                           <TrendingDown size={42} className="text-rose-500 opacity-60 mb-2 animate-bounce" />
                           <span className="text-[15px] font-black text-[#818cf8] uppercase tracking-[1em] relative z-20">INEFICIENCIA_MENSUAL</span>
-                          <span className="text-8xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>{monthlyLeak.toLocaleString()}€</span>
+                          <span className="text-8xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]" style={{ fontFamily: 'var(--font-space-grotesk)' }}>{monthlyLeak.toLocaleString()}€</span>
                        </motion.div>
                     </div>
                  </div>
@@ -172,34 +172,37 @@ export default function BlueprintPage() {
                                <div className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_15px_#38bdf8]" />
                                <span className="text-[#38bdf8] text-[13px] font-black tracking-[1.2em] uppercase">Protocolo de Acceso</span>
                             </div>
-                            <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>Privatizar <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#a78bfa] to-[#f472b6] animate-gradient-x">Escala.</span></h2>
+                            <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase" style={{ fontFamily: 'var(--font-space-grotesk)' }}>Privatizar <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#a78bfa] to-[#f472b6] animate-gradient-x">Escala.</span></h2>
                             <p className="text-[15px] font-medium text-slate-500 leading-relaxed max-w-sm">Completa el registro corporativo para adquirir hoy los sistemas que permitirán delegar al 100% tus tareas operativas.</p>
                          </div>
 
-                         <form onSubmit={handleSubmit} className="space-y-5">
-                            <input required type="text" placeholder="Director / Cargo de Alta Responsabilidad" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none focus:border-[#38bdf8]/40 transition-all text-base text-white placeholder:text-slate-600 font-black px-10 shadow-inner" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <input required type="email" placeholder="E-mail Corporativo" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none font-black px-10 text-white placeholder:text-slate-600" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                               <input required type="tel" placeholder="Nº WhatsApp" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none font-black px-10 text-white placeholder:text-slate-600" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                               <input required type="text" placeholder="Nombre y Apellidos" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                               <input required type="text" placeholder="Empresa / Organización" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none focus:border-[#38bdf8]/40 transition-all text-sm text-white placeholder:text-slate-600 font-black px-8 shadow-inner" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <input required type="email" placeholder="E-mail Corporativo" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                               <input required type="tel" placeholder="WhatsApp (Prefijo + N°)" className="w-full bg-white/[0.03] border border-white/5 p-5 rounded-[2.2rem] outline-none font-black px-8 text-sm text-white placeholder:text-slate-600" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
-                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.5rem] text-[11px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-400 cursor-pointer shadow-xl appearance-none text-center" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
+                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
                                   <option value="" disabled>Sector Operativo</option>
                                   <option value="ecommerce">E-commerce / Retail</option>
                                   <option value="servicios">Servicios B2B</option>
                                   <option value="tech">Software / SaaS</option>
                                   <option value="realestate">Real Estate / Legal</option>
                                 </select>
-                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.5rem] text-[11px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-400 cursor-pointer shadow-xl appearance-none text-center" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
+                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.2rem] text-[10px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer shadow-xl appearance-none text-center" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
                                   <option value="" disabled>Prioridad de Mejora</option>
                                   <option value="leads">Captación AI 24/7</option>
                                   <option value="admin">Quitar Carga Operativa</option>
                                   <option value="scale">Escalar sin Contratar</option>
                                </select>
                             </div>
-                            <motion.button whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(56,189,248,0.5)" }} whileTap={{ scale: 0.98 }} type="submit" className="w-full py-8 bg-[#38bdf8] text-black font-black uppercase text-lg tracking-[0.8em] transition-all duration-700 flex items-center justify-center gap-6 mt-8 rounded-[3rem] group relative shadow-2xl">
+                            <motion.button whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(56,189,248,0.5)" }} whileTap={{ scale: 0.98 }} type="submit" className="w-full py-7 bg-[#38bdf8] text-black font-black uppercase text-base tracking-[0.7em] transition-all duration-700 flex items-center justify-center gap-6 mt-4 rounded-[2.5rem] group relative shadow-2xl">
                                <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12" />
-                               GENERAR BLUEPRINT <ArrowRight size={32} className="group-hover:translate-x-4 transition-transform duration-500" />
+                               GENERAR BLUEPRINT <ArrowRight size={28} className="group-hover:translate-x-4 transition-transform duration-500" />
                             </motion.button>
                          </form>
                       </motion.div>
@@ -215,7 +218,7 @@ export default function BlueprintPage() {
                     ) : (
                       <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="py-20 text-center space-y-16 relative z-20">
                          <div className="w-48 h-48 bg-gradient-to-br from-[#38bdf8] to-[#c084fc] rounded-[4.5rem] mx-auto flex items-center justify-center text-black shadow-massive animate-pulse"><CheckCircle2 size={100} strokeWidth={2.5} /></div>
-                         <h3 className="text-8xl font-black text-white tracking-tighter uppercase leading-none" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>ACCESO <br/><span className="text-[#38bdf8]">LIBERADO</span></h3>
+                         <h3 className="text-8xl font-black text-white tracking-tighter uppercase leading-none" style={{ fontFamily: 'var(--font-space-grotesk)' }}>ACCESO <br/><span className="text-[#38bdf8]">LIBERADO</span></h3>
                          <motion.a whileHover={{ x: 20 }} href="/pdf/zyndrix-blueprint-2026.pdf" download className="flex items-center justify-between bg-white text-black px-16 py-8 font-black uppercase text-[16px] tracking-[0.6em] hover:bg-[#38bdf8] transition-all rounded-[3.5rem] shadow-heavy">DESCARGAR MANUAL <Download size={36} /></motion.a>
                       </motion.div>
                     )}
