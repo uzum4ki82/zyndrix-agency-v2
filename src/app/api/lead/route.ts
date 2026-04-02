@@ -91,7 +91,11 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Protocolo de registro completado. Iniciando auditoría.' 
+      message: 'Protocolo de registro completado. Iniciando auditoría.',
+      debug: {
+        routedTo: targetWebhook,
+        isAudit: isAuditLead
+      }
     }, { status: 200 });
 
   } catch (error) {

@@ -40,9 +40,10 @@ export default function AuditoriaPage() {
     }, 50);
 
     try {
-      const response = await fetch('/api/lead', {
+      const response = await fetch('/api/audit-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+
         body: JSON.stringify({
           name: formData.personName,
           email: formData.email,
