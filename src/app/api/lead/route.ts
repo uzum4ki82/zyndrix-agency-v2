@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       processed: true 
     }, { status: 201, headers: corsHeaders });
 
-    // 4. DISPARO DE WEBHOOKS (En paralelo/fondo)
+    // 4. DISPARO DE WEBHOOKS (En paralelo y ESPERANDO confirmación)
     const isMagnet = body.service?.toLowerCase().includes('blueprint');
     const n8nUrl = isMagnet 
       ? 'https://n8n.zyndrix.dev/webhook/leadmagnet'
@@ -64,8 +64,8 @@ export async function POST(req: Request) {
       name: body.name || 'Anónimo',
       email: body.email,
       phone: body.phone || null,
-      company_name: body.company_name || null,
-      message: body.message || 'Lead v24',
+      company_name: body.company_name || body.company || null,
+      message: body.message || 'Lead v25',
       budget: body.budget || null,
       service: body.service || 'General',
       status: 'new',
@@ -75,15 +75,19 @@ export async function POST(req: Request) {
     const payload = { source: body.service || 'landing', record: recordPayload };
     const webhooks = [n8nUrl, n8nUrl.replace('/webhook/', '/webhook-test/')];
     
-    // No esperamos con await para que el return ocurra ya, pero Next.js mantendrá 
-    // la ejecución un momento si la promesa sigue viva.
-    Promise.all(webhooks.map(url => 
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(e => console.error('E:', url))
-    )).then(() => console.log('Webhooks terminados')).catch(() => {});
+    // AHORA SÍ: Esperamos a que las peticiones se ENVIEN correctamente
+    try {
+      await Promise.all(webhooks.map(url => 
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => console.log(`OK: ${url.includes('test') ? 'TEST' : 'LIVE'} [${r.status}]`))
+          .catch(e => console.error(`ERR: ${url}`, e.message))
+      ));
+    } catch (e) {
+      console.warn('Fallo parcial en webhooks, pero el lead ya está en Supabase.');
+    }
 
     return response;
 
