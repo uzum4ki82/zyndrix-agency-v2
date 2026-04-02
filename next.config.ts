@@ -1,26 +1,13 @@
 import type { NextConfig } from "next";
 
+/**
+ * ZYNDRIX NEXT.JS INFRASTRUCTURE CORE
+ * Optimized for Vercel & Turbo Engine
+ */
+
 const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/',
-        destination: '/index.html',
-      },
-      {
-        source: '/privacidad',
-        destination: '/privacidad.html',
-      },
-      {
-        source: '/terminos',
-        destination: '/terminos.html',
-      },
-      {
-        source: '/seguridad',
-        destination: '/seguridad.html',
-      },
-    ];
-  },
+  // Configuración limpia para el nuevo App Router de Next.js
+  // Eliminando rewrites obsoletos hacia /index.html y otros archivos estáticos
 };
 
 export default nextConfig;
