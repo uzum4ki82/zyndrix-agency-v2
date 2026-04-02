@@ -1,0 +1,74 @@
+{
+  "name": "ZYNDRIX_ULTIMATE_AGENCY_V21_PRO_GOLD",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadmagnet",
+        "options": {}
+      },
+      "name": "Webhook (Lead Magnet)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "webhookId": "98a0c2-zyndrix-magnet"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "options": {}
+      },
+      "name": "Webhook (Contact Form)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 500],
+      "webhookId": "98a0c2-zyndrix-form"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "message": [
+            {
+              "role": "system",
+              "content": "Eres el Lead Optimizer de Zyndrix AI. Analiza los datos del lead y asígnale un TIER (VIP, HIGH, MEDIUM, LOW) y un razonamiento técnico."
+            },
+            {
+              "role": "user",
+              "content": "=Nombre: {{ $json.record.name }}\nEmail: {{ $json.record.email }}\nTeléfono: {{ $json.record.phone || 'N/A' }}\nPresupuesto: {{ $json.record.budget || 'N/A' }}\nEmpresa: {{ $json.record.company_name }}\nMensaje: {{ $json.record.message }}\nServicio: {{ $json.record.service }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "name": "AI Intelligence Core",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [450, 400]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "leads",
+        "updateKey": "id",
+        "data": {
+          "id": "={{ $json.record.id }}",
+          "lead_score": "={{ $node[\"AI Intelligence Core\"].json[\"tier\"] }}",
+          "reasoning": "={{ $node[\"AI Intelligence Core\"].json[\"reasoning\"] }}",
+          "status": "qualified"
+        }
+      },
+      "name": "Supabase Persistence (Fixed Id)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [700, 400]
+    }
+  ],
+  "connections": {
+    "Webhook (Lead Magnet)": { "main": [[{ "node": "AI Intelligence Core", "type": "main", "index": 0 }]] },
+    "Webhook (Contact Form)": { "main": [[{ "node": "AI Intelligence Core", "type": "main", "index": 0 }]] },
+    "AI Intelligence Core": { "main": [[{ "node": "Supabase Persistence (Fixed Id)", "type": "main", "index": 0 }]] }
+  }
+}

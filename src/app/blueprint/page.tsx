@@ -6,7 +6,8 @@ import { Background } from "@/components/common/Background";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle2, ArrowRight, ShieldCheck, Download, 
-  Target, Cpu, Zap, Loader2, Award, ChevronRight
+  Target, Cpu, Zap, Loader2, Award, ChevronRight, DollarSign,
+  FileSearch, BookOpen, Layout, Rocket
 } from "lucide-react";
 
 /**
@@ -19,9 +20,14 @@ import {
  */
 
 export default function BlueprintPageV12() {
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', teamSize: '', challenge: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', company: '', teamSize: '', challenge: '' });
   const [step, setStep] = useState<'idle' | 'processing' | 'success'>('idle');
   const [progress, setProgress] = useState(0);
+  
+  // PAIN CALCULATOR STATE
+  const [staffSize, setStaffSize] = useState(10);
+  const hourlyRate = 35; // Average hourly cost per employee
+  const monthlyLeak = Math.round(staffSize * hourlyRate * 4.3 * 8 * 0.4); // 40% efficiency leak estimation
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,9 +40,9 @@ export default function BlueprintPageV12() {
           setTimeout(() => setStep('success'), 400);
           return 100;
         }
-        return prev + 20;
+        return prev + 10;
       });
-    }, 50);
+    }, 150);
 
     try {
       await fetch('/api/lead', {
@@ -45,9 +51,10 @@ export default function BlueprintPageV12() {
         body: JSON.stringify({
           name: formData.name, 
           email: formData.email, 
+          phone: formData.phone,
           company_name: formData.company,
-          message: `V12 BRAND - Team: ${formData.teamSize}, Challenge: ${formData.challenge}`,
-          service: 'Blueprint V12 Final'
+          message: `V2.5 HYBRID - Staff: ${staffSize}, Efficiency Leak: ${monthlyLeak}€, Challenge: ${formData.challenge}`,
+          service: 'Hybrid Audit & Blueprint v2.5'
         })
       });
     } catch (error) { console.error(error); }
@@ -55,7 +62,7 @@ export default function BlueprintPageV12() {
 
   return (
     <div className="relative min-h-screen text-slate-200 bg-[#030712] overflow-x-hidden font-sans selection:bg-[#38bdf8] selection:text-black">
-      {/* INTEGRACIÓN DE DISEÑO ZYNDRIX */}
+      {/* ... styles remain ... */}
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap');
         
@@ -107,7 +114,7 @@ export default function BlueprintPageV12() {
 
       <Background />
       
-      {/* 1. HEADER: BRAND UNIFIED */}
+      {/* 1. HEADER */}
       <header className="py-4 border-b border-white/5 bg-[#030712]/80 sticky top-0 z-50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
           <Image 
@@ -122,7 +129,7 @@ export default function BlueprintPageV12() {
              <div className="text-right">
                 <p className="text-[8px] font-black tracking-[0.4em] text-slate-500 uppercase mb-0.5">ESTABLISHED 2024</p>
                 <div className="flex items-center gap-2">
-                   <div className="h-1 w-1 rounded-full bg-primary animate-pulse" />
+                   <div className="h-1 w-1 rounded-full bg-[#38bdf8] animate-pulse" />
                    <p className="text-[10px] font-bold text-white tracking-widest uppercase italic font-legacy">Consultoría Sénior</p>
                 </div>
              </div>
@@ -142,39 +149,43 @@ export default function BlueprintPageV12() {
           
           <div className="space-y-6 pt-4">
             <div className="space-y-4">
-               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 text-slate-500 text-[8px] font-black uppercase tracking-[0.5em]">
-                 <Award size={10} /> RECURSO ESTRATÉGICO OFICIAL
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 text-[#38bdf8] text-[8px] font-black uppercase tracking-[0.5em]">
+                 <Zap size={10} className="fill-[#38bdf8]" /> AUDITORÍA OPERATIVA EN TIEMPO REAL
                </div>
 
-               <h1 className="text-5xl md:text-6xl lg:text-7xl font-legacy leading-none tracking-tight text-white italic">
-                 La Estructura <br /> 
-                 <span className="text-gradient-zyndrix not-italic font-heading">de la</span> <br />
-                 Autonomía.
+               <h1 className="text-5xl md:text-6xl lg:text-7xl font-legacy leading-[1.1] tracking-tight text-white italic">
+                 Detén las <br /> 
+                 <span className="text-gradient-zyndrix not-italic font-heading">Fugas de</span> <br />
+                 Capital.
                </h1>
 
                <p className="text-lg text-slate-400 leading-relaxed max-w-sm font-medium border-l border-[#38bdf8]/20 pl-6">
-                 Documento maestro de ingeniería para CEOs que exigen <span className="text-white italic">eficiencia absoluta</span>.
+                 Calculamos tu ineficiencia operativa y te entregamos la <span className="text-white italic">Hoja de Ruta de IA</span> para eliminarla.
                </p>
             </div>
 
-            {/* PRODUCT MOCKUP: ZYNDRIX STYLE */}
-            <div className="relative group max-w-[280px]">
-               <div className="absolute -inset-16 bg-[#38bdf8]/20 blur-[100px] rounded-full opacity-10 group-hover:opacity-20 transition-all duration-1000" />
-               <div className="relative rounded-lg overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] border border-white/5 animate-float-subtle transform rotate-1">
-                  <Image 
-                    src="/img/blueprint-cover.png" 
-                    alt="Blueprint" 
-                    width={320} 
-                    height={400} 
-                    className="w-full h-auto object-cover brightness-105"
+            {/* PAIN CALCULATOR WIDGET */}
+            <div className="glass-zyndrix rounded-3xl p-8 max-w-sm space-y-6 border-[#38bdf8]/10 relative group overflow-hidden">
+               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity"><DollarSign size={80} /></div>
+               <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">¿Cuántos empleados dependen de procesos manuales?</span>
+                  </div>
+                  <input 
+                    type="range" min="1" max="100" value={staffSize} 
+                    onChange={(e) => setStaffSize(parseInt(e.target.value))}
+                    className="w-full accent-[#38bdf8]"
                   />
-                  {/* Glare effect */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+                  <div className="flex justify-between text-[11px] font-black uppercase">
+                     <span className="text-[#38bdf8]">{staffSize} Personas</span>
+                     <span className="text-rose-500">~{monthlyLeak.toLocaleString()}€ / mes de "fuga"</span>
+                  </div>
                </div>
+               <p className="text-[9px] text-slate-500 italic leading-snug">Estimación basada en un 40% de tareas administrativas automatizables mediante agentes de IA Zyndrix.</p>
             </div>
           </div>
 
-          {/* FORMULARIO ZYNDRIX: BRAND COLORS */}
+          {/* FORMULARIO ZYNDRIX */}
           <div className="sticky top-24 z-20">
             <div className="glass-zyndrix rounded-[2rem] p-0.5 relative overflow-hidden">
                <div className="absolute top-0 right-0 w-32 h-32 bg-[#818cf8]/10 blur-[60px]" />
@@ -183,36 +194,38 @@ export default function BlueprintPageV12() {
                  <AnimatePresence mode="wait">
                     {step === 'idle' ? (
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                         <div className="space-y-2 text-center">
-                            <h2 className="text-3xl font-legacy text-white italic leading-tight uppercase tracking-tighter">Solicitar Auditoría</h2>
-                            <p className="text-[9px] font-black text-slate-500 tracking-[0.4em] uppercase">Documentación Técnica v2.4</p>
-                            <div className="h-0.5 w-12 bg-gradient-to-r from-[#38bdf8] to-[#818cf8] mx-auto rounded-full" />
+                         <div className="space-y-2 text-center border-b border-white/5 pb-6">
+                            <h2 className="text-3xl font-legacy text-white italic leading-tight uppercase tracking-tighter">Iniciar Auditoría IA</h2>
+                            <p className="text-[9px] font-black text-[#38bdf8] tracking-[0.4em] uppercase">Pack: Auditoría + Blueprint + Toolkit</p>
                          </div>
 
                          <form onSubmit={handleSubmit} className="space-y-3">
                             <div className="space-y-3">
-                               <input required type="text" placeholder="Nombre Completo" className="input-zyndrix" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-                               <input required type="email" placeholder="Email Corporativo" className="input-zyndrix" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                               <input required type="text" placeholder="Entidad / Organización" className="input-zyndrix" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                               <input required type="text" placeholder="Nombre y Apellido" className="input-zyndrix" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                  <input required type="email" placeholder="Email Corporativo" className="input-zyndrix" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                                  <input required type="tel" placeholder="WhatsApp / Móvil (+34...)" className="input-zyndrix" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                               </div>
+                               <input required type="text" placeholder="Empresa / Dominio Web" className="input-zyndrix" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
                             </div>
                             
                             <div className="grid grid-cols-2 gap-3">
                                <select required className="input-zyndrix text-[8px] uppercase font-black tracking-widest bg-[#0f172a] appearance-none" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
-                                  <option value="" disabled>Equipo</option>
-                                  <option value="1-10">1-10 Pax</option>
-                                  <option value="10-50">10-50 Pax</option>
-                                  <option value="50+">50+ Corp</option>
-                               </select>
+                                  <option value="" disabled>Sector</option>
+                                  <option value="ecommerce">E-commerce</option>
+                                  <option value="servicios">Servicios B2B</option>
+                                  <option value="industrial">Industrial</option>
+                                </select>
                                <select required className="input-zyndrix text-[8px] uppercase font-black tracking-widest bg-[#0f172a] appearance-none" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
                                   <option value="" disabled>Prioridad</option>
-                                  <option value="leads">Ventas</option>
-                                  <option value="ops">Ops IA</option>
-                                  <option value="ia">Escalar</option>
+                                  <option value="leads">Captar Leads</option>
+                                  <option value="admin">Quitar Admin</option>
+                                  <option value="scaling">Escalar Ops</option>
                                </select>
                             </div>
 
-                            <button type="submit" className="w-full py-4.5 bg-white text-black font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#38bdf8] transition-all duration-500 flex items-center justify-center gap-3 mt-4 group h-14">
-                               DESCARGAR BLUEPRINT <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            <button type="submit" className="w-full py-4.5 bg-[#38bdf8] text-black font-black uppercase text-[10px] tracking-[0.4em] hover:bg-white transition-all duration-500 flex items-center justify-center gap-3 mt-4 group h-14 shadow-2xl shadow-[#38bdf8]/20">
+                               OBTENER RECURSOS <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                             </button>
                          </form>
 
@@ -245,55 +258,44 @@ export default function BlueprintPageV12() {
                          </div>
                       </motion.div>
                     ) : (
-                      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="py-16 text-center space-y-8">
-                         {/* Elite Success Visual */}
-                         <div className="relative w-24 h-24 mx-auto mb-10">
+                      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="py-12 text-center space-y-8">
+                         <div className="relative w-20 h-20 mx-auto mb-6">
                             <motion.div 
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ type: "spring", damping: 10 }}
-                              className="absolute inset-0 bg-[#38bdf8] rounded-[32px] blur-2xl opacity-20"
+                              initial={{ scale: 0 }} animate={{ scale: 1 }}
+                              className="absolute inset-0 bg-[#38bdf8] rounded-[24px] blur-2xl opacity-20"
                             />
-                            <div className="relative w-full h-full bg-[#030712] rounded-[32px] border border-[#38bdf8]/30 flex items-center justify-center text-[#38bdf8] shadow-2xl shadow-black">
-                               <motion.div 
-                                 initial={{ pathLength: 0, opacity: 0 }}
-                                 animate={{ pathLength: 1, opacity: 1 }}
-                                 transition={{ duration: 0.8, delay: 0.2 }}
-                               >
-                                  <CheckCircle2 size={42} strokeWidth={1.5} />
-                               </motion.div>
-                               
-                               {/* Rotating light ray */}
-                               <motion.div 
-                                 animate={{ rotate: 360 }}
-                                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                                 className="absolute inset-0 border-t-2 border-r-2 border-[#38bdf8]/20 rounded-[32px]"
-                               />
+                            <div className="relative w-full h-full bg-[#030712] rounded-[24px] border border-[#38bdf8]/30 flex items-center justify-center text-[#38bdf8] shadow-2xl shadow-black">
+                               <CheckCircle2 size={32} strokeWidth={1.5} />
                             </div>
                          </div>
 
                          <div className="space-y-3">
-                            <div className="text-[8px] font-black text-[#38bdf8] tracking-[0.6em] uppercase">Vínculo Seguro Establecido</div>
+                            <div className="text-[8px] font-black text-[#38bdf8] tracking-[0.6em] uppercase">Auditoría Iniciada con Éxito</div>
                             <h3 className="text-3xl font-legacy text-white italic tracking-tighter uppercase leading-none">Acceso Validado</h3>
-                            <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-[220px] mx-auto">Su blueprint de ingeniería ya está disponible para revisión técnica.</p>
+                            <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-[240px] mx-auto">
+                              Tu informe de auditoría se está procesando. Mientras tanto, descarga tu pack de bienvenida:
+                            </p>
                          </div>
 
-                         <div className="pt-4">
+                         <div className="flex flex-col gap-3 pt-4">
                             <a 
                               href="/pdf/zyndrix-blueprint-2026.pdf" 
                               download 
-                              className="w-full inline-flex items-center justify-center gap-3 bg-white text-black px-10 py-5 font-black uppercase text-[11px] tracking-[0.4em] hover:bg-[#38bdf8] transition-all duration-500 shadow-2xl shadow-[#38bdf8]/10 group overflow-hidden relative"
+                              className="w-full flex items-center justify-between bg-white text-black px-6 py-4 font-black uppercase text-[9px] tracking-[0.3em] hover:bg-[#38bdf8] transition-all group"
                             >
-                              <div className="relative z-10 flex items-center gap-3">
-                                DESCARGAR AHORA <Download size={20} className="group-hover:translate-y-0.5 transition-transform" />
-                              </div>
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#38bdf8]/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                              1. EL BLUEPRINT MAESTRO <Download size={16} />
+                            </a>
+                            <a 
+                              href="#" 
+                              className="w-full flex items-center justify-between bg-white/5 border border-white/10 text-white px-6 py-4 font-black uppercase text-[9px] tracking-[0.3em] hover:bg-white/10 transition-all group"
+                            >
+                              2. TOOLKIT DE PROMPTS <ArrowRight size={16} />
                             </a>
                          </div>
 
                          <div className="flex items-center justify-center gap-2 opacity-30 mt-6 group cursor-default">
                            <div className="h-0.5 w-4 bg-slate-700" />
-                           <span className="text-[7px] font-bold text-slate-500 uppercase tracking-[0.2em] group-hover:text-[#38bdf8] transition-colors">Zyndrix Strategic Asset</span>
+                           <span className="text-[7px] font-bold text-slate-500 uppercase tracking-[0.2em] group-hover:text-[#38bdf8] transition-colors">Zyndrix Hybrid Asset</span>
                            <div className="h-0.5 w-4 bg-slate-700" />
                          </div>
                       </motion.div>
@@ -307,72 +309,54 @@ export default function BlueprintPageV12() {
         {/* 2. SUCCESS REPLICA: ARQUITECTURA DEL ÉXITO (BENTO GRID) */}
         <section className="mt-40 mb-20">
            <div className="text-center mb-16 space-y-3">
-              <h2 className="text-4xl md:text-5xl font-legacy text-white italic leading-none uppercase tracking-tighter">Arquitectura de la Réplica</h2>
-              <p className="text-[9px] font-black text-slate-500 tracking-[0.5em] uppercase">Ecosistema Autónomo Zyndrix v2.0</p>
+              <h2 className="text-4xl md:text-5xl font-legacy text-white italic leading-none uppercase tracking-tighter">Tu Ecosistema de Automatización</h2>
+              <p className="text-[9px] font-black text-slate-500 tracking-[0.5em] uppercase">Los 3 pilares del Pack Híbrido</p>
               <div className="h-0.5 w-16 bg-gradient-to-r from-[#38bdf8] to-[#818cf8] mx-auto rounded-full" />
            </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-6 gap-6 auto-rows-[280px]">
-              {/* Card 1: Core Engine */}
-              <div className="col-span-1 md:col-span-3 glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group overflow-hidden relative">
-                 <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#38bdf8]/5 rounded-full blur-[80px] group-hover:bg-[#38bdf8]/10 transition-all duration-1000" />
-                 <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/20 flex items-center justify-center mb-8 text-[#38bdf8]">
-                       <Cpu size={24} />
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Asset 1: The Audit */}
+              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-[#38bdf8]/10">
+                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#38bdf8]/5 rounded-full blur-3xl" />
+                 <div className="relative z-10 space-y-6">
+                    <div className="w-12 h-12 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
+                       <FileSearch size={24} />
                     </div>
-                    <h3 className="text-2xl font-legacy text-white italic mb-4">Córtex Operacional</h3>
-                    <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs italic opacity-80">Orquestación de modelos LLM propietarios con memoria persistente para toma de decisiones autónoma.</p>
+                    <h3 className="text-2xl font-legacy text-white italic">Auditoría Operativa</h3>
+                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">Informe detallado detectando fugas de rendimiento en tu embudo de ventas y atención al cliente.</p>
                  </div>
-                 <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.3em] text-[#38bdf8]/40 mt-4 group-hover:text-[#38bdf8] transition-colors">
-                    LATENCIA <span className="text-white">&lt;0.5ms</span> <span className="mx-2">•</span> ENTRÓPICA <span className="text-white">OPTIMIZADA</span>
-                 </div>
+                 <div className="text-[8px] font-black uppercase text-[#38bdf8] tracking-widest">INFORME PERSONALIZADO</div>
               </div>
 
-              {/* Card 2: Lead Scoring (The "Qualification" key) */}
-              <div className="col-span-1 md:col-span-3 glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group relative border-white/10">
-                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#818cf8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                 <div className="relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-[#818cf8]/10 border border-[#818cf8]/20 flex items-center justify-center mb-8 text-[#818cf8]">
-                       <Target size={24} />
+              {/* Asset 2: The Blueprint */}
+              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-[#818cf8]/10">
+                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#818cf8]/5 rounded-full blur-3xl" />
+                 <div className="relative z-10 space-y-6">
+                    <div className="w-12 h-12 rounded-xl bg-[#818cf8]/10 border border-[#818cf8]/20 flex items-center justify-center text-[#818cf8]">
+                       <Layout size={24} />
                     </div>
-                    <h3 className="text-2xl font-legacy text-white italic mb-4">Ingeniería de Captación</h3>
-                    <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-xs italic opacity-80">Sistemas de cualificación de alta intensidad que ejecutan scoring en tiempo real para maximizar el ROI comercial.</p>
+                    <h3 className="text-2xl font-legacy text-white italic">Blueprint Estratégico</h3>
+                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">El manual de ingeniería de agentes IA para escalar tu infraestructura sin aumentar el headcount.</p>
                  </div>
-                 <div className="flex justify-between items-end relative z-10">
-                    <div className="flex gap-1">
-                       {[1,2,3,4,5].map(i => <div key={i} className="h-1 w-4 bg-[#818cf8]/20 rounded-full overflow-hidden"><motion.div animate={{ width: i*20 + "%" }} className="h-full bg-[#818cf8]" transition={{ delay: i*0.1 }} /></div>)}
-                    </div>
-                    <span className="text-[10px] font-black text-white italic font-legacy">Precision 99%</span>
-                 </div>
+                 <div className="text-[8px] font-black uppercase text-[#818cf8] tracking-widest">MAPA DE ESCALADO</div>
               </div>
 
-              {/* Card 3: Deep Insights */}
-              <div className="col-span-1 md:col-span-2 glass-zyndrix rounded-[2.5rem] p-8 flex flex-col justify-center items-center text-center gap-4 group">
-                 <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 group-hover:text-[#38bdf8] group-hover:border-[#38bdf8]/30 transition-all">
-                    <Zap size={18} />
-                 </div>
-                 <h4 className="text-xs font-black uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-colors">Ejecución Reactiva</h4>
-                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Arquitecturas basadas en eventos que reaccionan al mercado en milisegundos.</p>
-              </div>
-
-              {/* Card 4: Future Scale (Big Feature) */}
-              <div className="col-span-1 md:col-span-4 bg-gradient-to-r from-[#0f172a] to-[#030712] rounded-[2.5rem] border border-white/5 p-10 flex flex-col md:flex-row items-center gap-10 group relative overflow-hidden">
-                 <div className="flex-1 space-y-6 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#38bdf8]/10 rounded-full text-[#38bdf8] text-[8px] font-black uppercase tracking-widest border border-[#38bdf8]/20">
-                       <ShieldCheck size={10} /> SECURITY_PROTOCOL_VERIFIED
+              {/* Asset 3: The Toolkit */}
+              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-white/5">
+                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
+                 <div className="relative z-10 space-y-6">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+                       <Rocket size={24} />
                     </div>
-                    <h3 className="text-3xl font-legacy text-white italic leading-none uppercase">Visión de Escalo <br /> <span className="text-[#38bdf8] not-italic font-heading">Nivel Enterprise</span></h3>
-                    <p className="text-xs text-slate-400 font-medium leading-relaxed max-w-sm italic">La réplica no es un documento estático, es la base técnica para un despliegue industrial que soporta más de 1M de operaciones mensuales.</p>
+                    <h3 className="text-2xl font-legacy text-white italic">Niche Toolkit</h3>
+                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">Biblioteca de prompts de alta fidelidad y plantillas de Make.com listas para desplegar.</p>
                  </div>
-                 <div className="w-40 h-40 relative group-hover:scale-110 transition-transform duration-1000 hidden md:block">
-                    <div className="absolute inset-0 bg-[#38bdf8]/20 rounded-full blur-3xl opacity-30 animate-pulse" />
-                    <Cpu size={160} className="text-white/5 relative z-10" />
-                 </div>
+                 <div className="text-[8px] font-black uppercase text-slate-500 tracking-widest">ACTIVOS DE DESPLIEGUE</div>
               </div>
            </div>
         </section>
 
-        {/* STATS FINALES: PALETA UNIFICADA */}
+        {/* STATS FINALES */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
            {[
              { t: "EFICIENCIA IA", v: "98.2%", d: "Precisión de respuesta" },
