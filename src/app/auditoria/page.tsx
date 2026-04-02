@@ -82,8 +82,8 @@ export default function AuditoriaPage() {
         <div className="absolute inset-0" style={{ backgroundImage: `linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)`, backgroundSize: '60px 60px' }} />
       </div>
 
-      <nav className="w-full border-b border-white/5 bg-[#030610]/95 sticky top-0 z-[100] backdrop-blur-4xl px-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center h-24 md:h-[120px]">
+      <nav className="w-full border-b border-white/5 bg-[#030610]/95 sticky top-0 z-[100] backdrop-blur-4xl px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-center h-20 md:h-[120px]">
           <a href="/" className="transition-transform active:scale-95">
              <Image 
                 src="/img/zyndrix-ultimate.png" 
@@ -110,8 +110,8 @@ export default function AuditoriaPage() {
         </div>
       </nav>
 
-      <main className="max-w-[1200px] mx-auto px-8 pt-20 pb-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
+      <main className="max-w-[1200px] mx-auto px-4 md:px-8 pt-12 md:pt-20 pb-20 md:pb-32 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:grid-cols-20 items-start">
           
           {/* Text Content */}
           <motion.div 
@@ -124,12 +124,12 @@ export default function AuditoriaPage() {
               <Activity size={14} className="animate-pulse" /> Auditoría de Sistemas IA
             </div>
             
-            <div className="space-y-6">
-              <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter text-white uppercase italic" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
+            <div className="space-y-4 md:space-y-6 text-center lg:text-left">
+              <h1 className="text-5xl md:text-8xl font-black leading-tight tracking-tighter text-white uppercase italic" style={{ fontFamily: 'var(--font-space-grotesk)' }}>
                 Escala tu <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-[#818cf8]">Operativa.</span>
               </h1>
-              <p className="text-xl md:text-2xl text-slate-500 max-w-lg font-medium leading-relaxed">
+              <p className="text-lg md:text-2xl text-slate-500 max-w-lg font-medium leading-relaxed mx-auto lg:mx-0">
                 Analizamos tu negocio para detectar puntos de fuga y oportunidades de automatización de élite.
               </p>
             </div>
@@ -145,14 +145,14 @@ export default function AuditoriaPage() {
               </div>
             </div>
 
-            <div className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 space-y-4">
+            <div className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] bg-white/[0.02] border border-white/5 space-y-4">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/20">
                   <ShieldCheck size={20} />
                 </div>
-                <div className="text-[11px] font-black uppercase tracking-[0.3em] text-white">Confidencialidad Garantizada</div>
+                <div className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-white text-center lg:text-left">Confidencialidad Garantizada</div>
               </div>
-              <p className="text-xs text-slate-500">Sus datos están protegidos por cifrado de extremo a extremo y protocolos de seguridad de grado militar.</p>
+              <p className="text-xs text-slate-500 text-center lg:text-left px-2 md:px-0">Sus datos están protegidos por cifrado de extremo a extremo y protocolos de seguridad de grado militar.</p>
             </div>
           </motion.div>
 
@@ -163,65 +163,65 @@ export default function AuditoriaPage() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="relative p-12 bg-[#030610]/80 border border-white/10 rounded-[3.5rem] backdrop-blur-4xl shadow-massive overflow-hidden"
+              className="relative p-6 md:p-12 bg-[#030610]/80 border border-white/10 rounded-[2rem] md:rounded-[3.5rem] backdrop-blur-4xl shadow-massive overflow-hidden"
             >
               <AnimatePresence mode="wait">
                 {step === 'form' ? (
-                  <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-10">
-                    <div className="space-y-2">
-                      <h3 className="text-4xl font-black text-white italic tracking-tighter uppercase">Protocolo de Acceso</h3>
-                      <p className="text-xs font-medium text-slate-600 uppercase tracking-[0.3em]">Completa los campos para iniciar el escaneo</p>
+                  <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8 md:space-y-10">
+                    <div className="space-y-2 text-center md:text-left">
+                      <h3 className="text-3xl md:text-4xl font-black text-white italic tracking-tighter uppercase">Protocolo de Acceso</h3>
+                      <p className="text-[10px] font-medium text-slate-600 uppercase tracking-[0.2em] md:tracking-[0.3em]">Completa los campos para iniciar el escaneo</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Nombre Negocio</label>
+                          <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Nombre Negocio</label>
                           <input 
                             required 
                             type="text" 
                             name="businessName"
                             placeholder="Empresa S.L." 
-                            className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
+                            className="w-full bg-white/[0.03] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-6 md:px-8 transition-all"
                             value={formData.businessName}
                             onChange={(e) => setFormData({...formData, businessName: e.target.value})}
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Nombre Persona</label>
+                          <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Nombre Persona</label>
                           <input 
                             required 
                             type="text" 
                             name="personName"
                             placeholder="John Doe" 
-                            className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
+                            className="w-full bg-white/[0.03] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-6 md:px-8 transition-all"
                             value={formData.personName}
                             onChange={(e) => setFormData({...formData, personName: e.target.value})}
                           />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Teléfono</label>
+                          <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Teléfono</label>
                           <input 
                             required 
                             type="tel" 
                             name="phone"
                             placeholder="+34 600 000 000" 
-                            className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
+                            className="w-full bg-white/[0.03] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-6 md:px-8 transition-all"
                             value={formData.phone}
                             onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Email</label>
+                          <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Email</label>
                           <input 
                             required 
                             type="email" 
                             name="email"
                             placeholder="ejemplo@web.com" 
-                            className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
+                            className="w-full bg-white/[0.03] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-6 md:px-8 transition-all"
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
                           />
@@ -229,24 +229,24 @@ export default function AuditoriaPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Web</label>
+                        <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Web</label>
                         <input 
                           required 
                           type="url" 
                           name="website"
                           placeholder="https://www.tuweb.com" 
-                          className="w-full bg-white/[0.03] border border-white/10 p-5 rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-8 transition-all"
+                          className="w-full bg-white/[0.03] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] outline-none focus:border-[#38bdf8]/40 text-sm text-white placeholder:text-slate-700 font-bold px-6 md:px-8 transition-all"
                           value={formData.website}
                           onChange={(e) => setFormData({...formData, website: e.target.value})}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Problema Principal</label>
+                        <label className="text-[8px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] ml-4">Problema Principal</label>
                         <select 
                           required 
                           name="problem"
-                          className="w-full bg-[#030612] border border-white/10 p-5 rounded-[1.8rem] text-xs font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer appearance-none px-8 shadow-xl"
+                          className="w-full bg-[#030612] border border-white/10 p-4 md:p-5 rounded-[1.2rem] md:rounded-[1.8rem] text-[10px] md:text-xs font-black uppercase tracking-[0.1em] md:tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-500 cursor-pointer appearance-none px-6 md:px-8 shadow-xl"
                           value={formData.problem}
                           onChange={(e) => setFormData({...formData, problem: e.target.value})}
                         >
@@ -264,7 +264,7 @@ export default function AuditoriaPage() {
                         whileHover={{ scale: 1.02, boxShadow: "0 0 40px rgba(56,189,248,0.3)" }}
                         whileTap={{ scale: 0.98 }}
                         type="submit" 
-                        className="w-full py-6 bg-white text-black font-black uppercase text-[11px] tracking-[0.5em] transition-all flex items-center justify-center gap-4 mt-6 rounded-[1.8rem] shadow-massive"
+                        className="w-full py-5 md:py-6 bg-white text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] md:tracking-[0.5em] transition-all flex items-center justify-center gap-4 mt-6 rounded-[1.2rem] md:rounded-[1.8rem] shadow-massive"
                       >
                         RECLAMAR AUDITORÍA <Send size={18} />
                       </motion.button>
