@@ -11,7 +11,7 @@
   <link rel="preload" as="image" href="img/zyndrix-live.png" fetchpriority="high">
 
   <!-- ==============================================
-       CSS HÍBRIDO v34.0 (Performance + Stability)
+       CSS ESTÁTICO v35.0 (Zero-Drop Stability)
        ============================================== -->
   <style>
     :root {
@@ -21,18 +21,17 @@
       --font-body: 'Plus Jakarta Sans', sans-serif; --radius-full: 9999px;
     }
 
-    /* Base Reset */
+    /* Base Reset y Bloqueo de Scroll Involuntario */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { 
       width: 100%; max-width: 100vw; overflow-x: hidden; 
       background: var(--bg-primary); color: var(--text-primary);
       font-family: var(--font-body); -webkit-font-smoothing: antialiased;
-      scroll-behavior: smooth;
     }
 
     .container { max-width: 1240px; margin: 0 auto; padding: 0 40px; width: 100%; }
     
-    /* NAVBAR MASTER (Restored Ids mapping) */
+    /* NAVBAR MASTER */
     .navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       padding: 15px 0; background: transparent; width: 100%; transition: all 0.4s ease;
@@ -43,7 +42,6 @@
     }
     .navbar .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     
-    .nav-logo { display: flex; align-items: center; z-index: 1001; text-decoration: none; }
     .nav-logo-img { height: 68px !important; width: auto; object-fit: contain; }
     
     .nav-links {
@@ -52,8 +50,7 @@
       border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-full);
       backdrop-filter: blur(12px); position: relative;
     }
-    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
-    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-decoration: none; }
 
     #navIndicator {
       position: absolute; height: calc(100% - 12px); background: rgba(0, 245, 255, 0.1);
@@ -66,20 +63,23 @@
       display: inline-flex; align-items: center; justify-content: center;
       padding: 12px 30px; background: black; color: white; border-radius: 12px;
       font-weight: 800; font-size: 0.9rem; border: 1px solid rgba(45, 212, 191, 0.4);
-      text-decoration: none; text-transform: uppercase; transition: 0.3s;
+      text-decoration: none; text-transform: uppercase;
     }
-    .btn-primary-elite:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2); }
 
-    /* HERO STABILITY */
+    /* HERO SIN CAÍDA (Zero transform jump) */
     .hero { 
       min-height: 100vh; display: flex; align-items: center; 
       justify-content: center; text-align: center; position: relative; 
-      padding-top: 60px; /* Reduced to avoid the jump */
+      padding-top: 40px; /* Ajuste milimétrico */
     }
     .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 24px; color: #fff; }
     .gradient-text { background: linear-gradient(135deg, #2DD4BF 0%, #3B82F6 50%, #A855F7 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     
     .reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+
+    /* Estabilización de Animación (Sin translateY para evitar el "salto") */
+    @keyframes fade-stable { from { opacity: 0; } to { opacity: 1; } }
+    .hero-tag-mini, .hero h1, .hero-subtitle, .hero-ctas { animation: fade-stable 0.8s ease both; }
 
     /* MOBILE REGLAS */
     .mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; z-index: 1002; }
@@ -89,21 +89,20 @@
       .container { padding: 0 20px; }
       .nav-links { display: none !important; }
       .mobile-toggle { display: flex !important; }
-      .nav-logo-img { height: 48px !important; }
+      .nav-logo-img { height: 44px !important; }
+      .hero { padding-top: 20px; }
     }
   </style>
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css?v=34.0" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles.css?v=35.0" media="print" onload="this.media='all'">
   
   <link rel="icon" href="img/favicon-zyndrix.png">
 </head>
-<body>
+<body onload="window.scrollTo(0, 0);"> <!-- FORCE TOP POSITION ON LOAD -->
 
-  <!-- PROGRESO -->
   <div class="read-progress-bar"></div>
 
-  <!-- NAVBAR CON IDS RESTAURADOS -->
   <nav class="navbar reveal" id="navbar">
     <div class="container">
       <a href="/" class="nav-logo">
@@ -114,7 +113,6 @@
         <div id="navIndicator"></div>
         <a href="#soluciones" class="active">Soluciones</a>
         <a href="#nosotros">Nosotros</a>
-        <a href="#showcase">Casos</a>
         <a href="#contacto">Contacto</a>
       </div>
 
@@ -136,9 +134,10 @@
       <div class="hero-bg"></div>
       <canvas id="aiNetworkCanvas"></canvas>
       <div class="hero-content">
+        <br><br>
         <div class="hero-tag-mini">
           <span class="dot"></span>
-          <span>SISTEMAS OPERATIVOS IA v2.8</span>
+          <span>SYSTEMS IA v2.8</span>
           <span class="tag-divider">|</span>
           <span class="gradient-text">ULTRA FAST</span>
         </div>
@@ -147,7 +146,7 @@
           <span class="gradient-text">Inteligencia Radical</span>
         </h1>
         <p class="hero-subtitle reveal">
-          Diseñamos y operamos ecosistemas de IA que sustituyen procesos manuales por eficiencia pura.
+          Diseñamos ecosistemas de IA que sustituyen procesos manuales por eficiencia pura.
         </p>
         <div class="hero-ctas reveal">
           <a href="/blueprint" class="btn-primary-elite">
@@ -160,14 +159,14 @@
       </div>
     </section>
 
-    <!-- SECCIÓN DE CONTACTO EXCLUSIVA -->
+    <!-- FORMULARIO SEGURO -->
     <section class="section" id="contacto" style="padding: 100px 0;">
       <div class="container">
         <div class="section-header" style="text-align: center; margin-bottom: 50px;">
           <h2 class="section-title">Inicia tu <span class="gradient-text">Evolución</span></h2>
         </div>
         <div class="contact-form-container" style="max-width: 600px; margin: 0 auto;">
-          <form id="leadForm" class="contact-form">
+          <form id="leadForm">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
               <input type="text" name="name" placeholder="Nombre" required style="padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
               <input type="email" name="email" placeholder="Email" required style="padding: 15px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff;">
@@ -180,6 +179,6 @@
     </section>
   </main>
 
-  <script src="landing-script.js?v=34.0" defer></script>
+  <script src="landing-script.js?v=35.0" defer></script>
 </body>
 </html>
