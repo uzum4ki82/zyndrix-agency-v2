@@ -81,7 +81,10 @@ body {
   background: var(--ds-surface);
   border: 1px solid var(--ds-border);
   border-radius: var(--radius-pro);
-  padding: 24px;
+  padding: 16px;
+  @media (min-width: 640px) {
+    padding: 24px;
+  }
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
 }
@@ -194,9 +197,19 @@ body {
   .mobile-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
     z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 }
 

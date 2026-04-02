@@ -1,0 +1,138 @@
+{
+  "name": "ZYNDRIX_FINAL_MASTER_360_AUTOMATION",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadmagnet",
+        "options": {}
+      },
+      "name": "Webhook (Lead Magnet)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 400],
+      "webhookId": "master-magnet-id"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "options": {}
+      },
+      "name": "Webhook (Contact Form)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 600],
+      "webhookId": "master-form-id"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "message": [
+            {
+              "role": "system",
+              "content": "Eres el Lead Optimizer de Zyndrix AI. Analiza los datos del lead y asígnale un TIER (VIP, HIGH, MEDIUM, LOW) y un razonamiento técnico. Redacta también un saludo breve y profesional para un email en HTML Dark Mode."
+            },
+            {
+              "role": "user",
+              "content": "=Nombre: {{ $json.record.name }}\nEmail: {{ $json.record.email }}\nEmpresa: {{ $json.record.company_name }}\nMensaje: {{ $json.record.message }}\nServicio: {{ $json.record.service }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "name": "AI Intelligence Core",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [250, 500]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "leads",
+        "updateKey": "id",
+        "data": {
+          "id": "={{ $json.record.id }}",
+          "lead_score": "={{ $node[\"AI Intelligence Core\"].json[\"tier\"] }}",
+          "reasoning": "={{ $node[\"AI Intelligence Core\"].json[\"reasoning\"] }}",
+          "status": "qualified"
+        }
+      },
+      "name": "Supabase Core Update (Fix $4)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [500, 400]
+    },
+    {
+      "parameters": {
+        "chatId": "TU_CHAT_ID",
+        "text": "=🚀 NUEVO LEAD ZYNDRIX\n\n👤 Nombre: {{ $json.record.name }}\n💼 Empresa: {{ $json.record.company_name }}\n🏆 Tier IA: {{ $node[\"AI Intelligence Core\"].json[\"tier\"] }}\n\n🧠 Razonamiento: {{ $node[\"AI Intelligence Core\"].json[\"reasoning\"] }}"
+      },
+      "name": "Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [750, 200]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "fromEmail": "hola@zyndrix.dev",
+        "toEmail": "={{ $json.record.email }}",
+        "subject": "Protocolo de Automatización Zyndrix: Confirmación de Acceso",
+        "html": "=<div style='background:#030712; color:white; padding:40px; font-family:sans-serif;'>\n  <h1 style='color:#38bdf8;'>ZYNDRIX AI</h1>\n  <p>Hola {{ $json.record.name }},</p>\n  <p>Hemos recibido tu solicitud para el servicio: {{ $json.record.service }}.</p>\n  <p>Un agente de nuestro Córtex Operacional revisará tu caso en breve.</p>\n  <hr style='border-color:#38bdf8; opacity:0.1;' />\n  <p style='font-size:10px; color:#38bdf8/50;'>PROTOCOLO DE SEGURIDAD ACTIVADO © 2026</p>\n</div>"
+      },
+      "name": "Email Client Follow-up",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [750, 400]
+    },
+    {
+      "parameters": {
+        "url": "https://n8n.zyndrix.dev/webhook/dashboard-data",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "type", "value": "ingestion_success" },
+            { "name": "lead_id", "value": "={{ $json.record.id }}" }
+          ]
+        }
+      },
+      "name": "Dashboard Real-time Sync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [750, 600]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "tasks",
+        "data": {
+          "title": "=Contactar Lead: {{ $json.record.name }}",
+          "description": "={{ $node[\"AI Intelligence Core\"].json[\"reasoning\"] }}",
+          "status": "pending",
+          "priority": "high"
+        }
+      },
+      "name": "CRM Task Creation",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1000, 500]
+    }
+  ],
+  "connections": {
+    "Webhook (Lead Magnet)": { "main": [[{ "node": "AI Intelligence Core", "type": "main", "index": 0 }]] },
+    "Webhook (Contact Form)": { "main": [[{ "node": "AI Intelligence Core", "type": "main", "index": 0 }]] },
+    "AI Intelligence Core": { "main": [[{ "node": "Supabase Core Update (Fix $4)", "type": "main", "index": 0 }]] },
+    "Supabase Core Update (Fix $4)": {
+      "main": [
+        [{ "node": "Telegram Alert", "type": "main", "index": 0 }],
+        [{ "node": "Email Client Follow-up", "type": "main", "index": 0 }],
+        [{ "node": "Dashboard Real-time Sync", "type": "main", "index": 0 }]
+      ]
+    },
+    "Email Client Follow-up": { "main": [[{ "node": "CRM Task Creation", "type": "main", "index": 0 }]] }
+  }
+}

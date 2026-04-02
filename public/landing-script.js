@@ -406,16 +406,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Form handling move to inline in index.html for zero-fail reliability.
 
-  // ───── VIDEO SHOWCASE HOVER PLAY ─────
+  // ───── VIDEO SHOWCASE INTERACTION (Hover & Click) ─────
   const showcaseCards = document.querySelectorAll('.showcase-card');
   showcaseCards.forEach(card => {
     const video = card.querySelector('video.showcase-video-player');
+    const poster = card.querySelector('.video-poster');
+
     if (video) {
+      // HOVER: Play preview
       card.addEventListener('mouseenter', () => {
-        video.play().catch(() => {}); // Ignore interaction blocking
+        video.play().catch(() => {});
       });
       card.addEventListener('mouseleave', () => {
-        video.pause();
+        if (!card.classList.contains('active-play')) {
+          video.pause();
+        }
+      });
+
+      // CLICK: Toggle Play & Animation
+      card.addEventListener('click', () => {
+        const isActive = card.classList.toggle('active-play');
+        if (isActive) {
+          video.play().catch(() => {});
+          card.style.transform = 'scale(1.02) translateY(-5px)';
+          card.style.borderColor = 'var(--primary)';
+          card.setAttribute('data-clicked', 'true');
+        } else {
+          video.pause();
+          card.style.transform = '';
+          card.style.borderColor = '';
+          card.removeAttribute('data-clicked');
+        }
       });
     }
   });
@@ -437,7 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const video = entry.target;
         const source = video.querySelector('source');
         if (source && !video.src) {
-          video.src = source.src;
+          // Use dataset.src since we use data-src in HTML for lazy load
+          video.src = source.dataset.src || source.src;
           video.load();
         }
         videoObserver.unobserve(video);

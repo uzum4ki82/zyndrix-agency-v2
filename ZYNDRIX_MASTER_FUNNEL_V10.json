@@ -1,0 +1,166 @@
+{
+  "name": "ZYNDRIX | MASTER_SALES_FUNNEL_V10",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook (Home Contact)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 300],
+      "webhookId": "web-contact-id"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadmagnet",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Webhook (Lead Magnet)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 500],
+      "webhookId": "lead-magnet-id"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.body.record.id }}"
+            },
+            {
+              "name": "lead_name",
+              "value": "={{ $json.body.record.name }}"
+            },
+            {
+              "name": "lead_email",
+              "value": "={{ $json.body.record.email }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $json.body.record.company_name }}"
+            },
+            {
+              "name": "intelligence",
+              "value": "={{ $json.body.record.message }}"
+            },
+            {
+              "name": "service_type",
+              "value": "={{ $json.body.record.service || 'General' }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $node[\"Webhook (Home Contact)\"] ? 'HOME' : 'BLUEPRINT' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [250, 400]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Eres el Agente Inteligente Comercial de ZYNDRIX. Tu misión es calificar leads de alto valor.\n\nAnaliza los datos y devuelve un JSON estricto:\n1. 'lead_score' (int 1-10): Valoración de potencial.\n2. 'reasoning' (string): Por qué este puntaje.\n3. 'category' (string): [VIP, HIGH, MEDIUM, LOW]\n4. 'suggested_pitch' (string): Un párrafo corto de apertura que conecte con su problema.\n5. 'is_blueprint' (bool): Si es una solicitud de magnet.\n\nDatos:\n- Nombre: {{ $json.lead_name }}\n- Empresa: {{ $json.company_name }}\n- Contexto: {{ $json.intelligence }}"
+            }
+          ]
+        },
+        "responseFormat": { "type": "json_object" }
+      },
+      "id": "4",
+      "name": "AI Lead Analyzer",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [450, 400],
+      "credentials": { "openAiApi": { "id": "YOUR_OPENAI_ID" } }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE leads SET lead_score = $1, reasoning = $2, status = $3 WHERE id = $4",
+        "queryParams": "={{ [ JSON.parse($json.message.content).lead_score, JSON.parse($json.message.content).reasoning, JSON.parse($json.message.content).lead_score >= 8 ? 'VIP' : 'prospecto', $('Normalize Data').first().json.lead_id ] }}"
+      },
+      "id": "5",
+      "name": "Sync Supabase Leads",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [650, 250],
+      "credentials": { "postgres": { "id": "YOUR_SUPABASE_ID" } }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "tableName": "tasks",
+        "columns": {
+          "mappingMode": "defineCanally",
+          "value": {
+            "title": "={{ 'Seguimiento ' + JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).category + ': ' + $('Normalize Data').first().json.company_name }}",
+            "description": "={{ JSON.parse($node[\"AI Analyzer\"].json.message.content).reasoning }}",
+            "priority": "={{ JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).lead_score >= 8 ? 'high' : 'medium' }}",
+            "status": "pending",
+            "due_date": "={{ $now.plus({days: 1}).toISO() }}"
+          }
+        }
+      },
+      "id": "6",
+      "name": "Create CRM Task",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.1,
+      "position": [850, 250],
+      "credentials": { "postgres": { "id": "YOUR_SUPABASE_ID" } }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "={{ '🚨 *NUEVO LEAD DETECTADO: ' + JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).category + '*\\n\\n👤 ' + $('Normalize Data').first().json.lead_name + ' (' + $('Normalize Data').first().json.company_name + ')\\n🔝 *Score: ' + JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).lead_score + '/10*\\n🧠 *IA Reason:* ' + JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).reasoning + '\\n\\n👉 ¡Revisa el dashboard de Zyndrix ahora!' }}",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "id": "7",
+      "name": "Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [850, 450],
+      "credentials": { "telegramApi": { "id": "YOUR_TELEGRAM_ID" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Normalize Data').first().json.lead_email }}",
+        "subject": "Tu Estrategia IA en ZYNDRIX personalizada",
+        "message": "={{ 'Hola ' + $('Normalize Data').first().json.lead_name + ',\\n\\n' + JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).suggested_pitch + '\\n\\nHe analizado tu reto en ' + $('Normalize Data').first().json.company_name + ' y veo un potencial de escalo del ' + (JSON.parse($node[\"AI Lead Analyzer\"].json.message.content).lead_score * 10) + '%.\\n\\nAdjunto tu Blueprint Estratégico 2026.\\n\\nSaludos,\\nIA Alpha @ Zyndrix' }}"
+      },
+      "id": "8",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1050, 400],
+      "credentials": { "gmailOAuth2": { "id": "YOUR_GMAIL_ID" } }
+    }
+  ],
+  "connections": {
+    "Webhook (Home Contact)": { "main": [ [ { "node": "Normalize Data", "type": "main", "index": 0 } ] ] },
+    "Webhook (Lead Magnet)": { "main": [ [ { "node": "Normalize Data", "type": "main", "index": 0 } ] ] },
+    "Normalize Data": { "main": [ [ { "node": "AI Lead Analyzer", "type": "main", "index": 0 } ] ] },
+    "AI Lead Analyzer": { "main": [ [ { "node": "Sync Supabase Leads", "type": "main", "index": 0 }, { "node": "Telegram Alert", "type": "main", "index": 0 } ] ] },
+    "Sync Supabase Leads": { "main": [ [ { "node": "Create CRM Task", "type": "main", "index": 0 } ] ] },
+    "Create CRM Task": { "main": [ [ { "node": "Send Email", "type": "main", "index": 0 } ] ] }
+  }
+}

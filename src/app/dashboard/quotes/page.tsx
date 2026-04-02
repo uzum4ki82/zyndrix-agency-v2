@@ -50,28 +50,28 @@ export default function QuotesPage() {
   return (
     <div className="animate-in space-y-8 pb-10">
       {/* FINANCIAL TOP BAR */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
+         <div>
+            <div className="flex items-center gap-2 text-emerald-600 mb-1">
+               <ShieldCheck size={14} className="fill-emerald-600/10" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Gestión de Ingresos Proyectados</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Presupuestos y Cotizaciones</h1>
+         </div>
+         
+         <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setIsAddQuoteOpen(true)}
+              className="w-full sm:w-auto bg-slate-900 text-white px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2 group"
+            >
+               <Plus size={16} className="group-hover:rotate-90 transition-transform" />
+               Crear Presupuesto
+            </button>
+         </div>
+      </div>
+
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
          <div className="xl:col-span-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-               <div>
-                  <div className="flex items-center gap-2 text-emerald-600 mb-1">
-                     <ShieldCheck size={14} className="fill-emerald-600/10" />
-                     <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Gestión de Ingresos Proyectados</span>
-                  </div>
-                  <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Presupuestos y Cotizaciones</h1>
-               </div>
-               
-               <div className="flex items-center gap-3">
-                  <button 
-                    onClick={() => setIsAddQuoteOpen(true)}
-                    className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95 flex items-center gap-2 group"
-                  >
-                     <Plus size={16} className="group-hover:rotate-90 transition-transform" />
-                     Crear Presupuesto
-                  </button>
-               </div>
-            </div>
-
             {/* QUOTES LIST */}
             <div className="ds-card p-0 bg-white overflow-hidden border-slate-100 shadow-xl shadow-slate-200/50">
                <div className="p-6 border-b border-slate-50 flex items-center justify-between bg-slate-50/20">
@@ -85,6 +85,7 @@ export default function QuotesPage() {
                   </div>
                </div>
                <div className="overflow-x-auto">
+                  {/* ... table content remains ... */}
                   <table className="w-full text-left border-collapse">
                      <thead>
                         <tr className="bg-slate-50/50 border-b border-slate-50">

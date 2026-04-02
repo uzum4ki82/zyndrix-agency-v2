@@ -1,0 +1,508 @@
+{
+  "name": "ZYNDRIX | FINAL_MASTER_360_AUTOMATION [FIXED]",
+  "description": "Fixed version: Supabase REST API, validation, error handling",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadmagnet",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook (Lead Magnet)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Webhook (Contact Form)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        0,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.body?.record?.id || $uuid() }}"
+            },
+            {
+              "name": "lead_name",
+              "value": "={{ $json.body?.record?.name || 'Unknown' }}"
+            },
+            {
+              "name": "lead_email",
+              "value": "={{ $json.body?.record?.email || '' }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $json.body?.record?.company_name || 'Not provided' }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.body?.record?.message || '' }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.body?.record?.service || 'General' }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.body?.source || 'contact_form' }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        250,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "condition": "regex",
+              "value1": "={{ $json.lead_email }}",
+              "value2": "/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "validate_email",
+      "name": "Validate Email Format",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        380,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Eres el Lead Optimizer de Zyndrix AI. Analiza los datos del lead y proporciona un JSON estricto con: 1. 'score' (1-10), 2. 'tier' (VIP, HIGH, MEDIUM, LOW), 3. 'reasoning' (diagnóstico), 4. 'hook' (pitch personalizado)."
+            },
+            {
+              "role": "user",
+              "content": "=Nombre: {{ $json.lead_name }}\nEmpresa: {{ $json.company_name }}\nContexto: {{ $json.message }}\nServicio: {{ $json.service }}"
+            }
+          ]
+        },
+        "responseFormat": {
+          "type": "json_object"
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "AI Intelligence Core",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        510,
+        400
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.lead_name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.lead_email }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $json.company_name }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.message }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.source }}"
+            },
+            {
+              "name": "status",
+              "value": "new"
+            },
+            {
+              "name": "created_at",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Prefer",
+                "value": "return=representation"
+              }
+            ]
+          }
+        }
+      },
+      "id": "5",
+      "name": "Sync Supabase Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        660,
+        250
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?id=eq.{{ $json.lead_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_score",
+              "value": "={{ JSON.parse($node['AI Intelligence Core'].json.message.content).score || 5 }}"
+            },
+            {
+              "name": "reasoning",
+              "value": "={{ JSON.parse($node['AI Intelligence Core'].json.message.content).reasoning || 'Analyzed by AI' }}"
+            },
+            {
+              "name": "category",
+              "value": "={{ JSON.parse($node['AI Intelligence Core'].json.message.content).tier || 'MEDIUM' }}"
+            },
+            {
+              "name": "status",
+              "value": "qualified"
+            },
+            {
+              "name": "updated_at",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.SUPABASE_KEY }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "5b",
+      "name": "Update Lead Score",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        810,
+        250
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "={{ '🚀 *NUEVO LEAD ZYNDRIX*\\n\\n👤 ' + $json.lead_name + ' [' + $json.company_name + ']\\n🏆 *Tier:* ' + (JSON.parse($node['AI Intelligence Core'].json.message.content).tier || 'MEDIUM') + '\\n⭐ *Score:* ' + (JSON.parse($node['AI Intelligence Core'].json.message.content).score || 'N/A') + '/10\\n🧠 *Razonamiento:* ' + (JSON.parse($node['AI Intelligence Core'].json.message.content).reasoning || 'Analizado') + '\\n⏰ *Hora:* ' + $json.timestamp }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        },
+        "options": {}
+      },
+      "id": "6",
+      "name": "Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        200
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "fromEmail": "no-reply@zyndrix.dev",
+        "toEmail": "={{ $json.lead_email }}",
+        "subject": "=Estrategia IA ZYNDRIX personalizada - {{ $json.company_name }}",
+        "html": "={{ '<html><body style=\"background:#030712; color:white; padding:40px; font-family:sans-serif;\">' + '<h1 style=\"color:#38bdf8;\">ZYNDRIX AI</h1>' + '<p>Hola ' + $json.lead_name + ',</p>' + '<p>' + (JSON.parse($node['AI Intelligence Core'].json.message.content).hook || 'Hemos recibido tu solicitud.') + '</p>' + '<p><strong>Score IA:</strong> ' + (JSON.parse($node['AI Intelligence Core'].json.message.content).score || 5) + '/10</p>' + '<p><strong>Tier:</strong> ' + (JSON.parse($node['AI Intelligence Core'].json.message.content).tier || 'MEDIUM') + '</p>' + '<hr style=\"border-color:#38bdf8; opacity:0.1;\" />' + '<p style=\"font-size:10px; color:#38bdf8;\">© 2026 ZYNDRIX</p>' + '</body></html>' }}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Email Client Follow-up",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        400
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/email_sequences",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id }}"
+            },
+            {
+              "name": "email_number",
+              "value": "1"
+            },
+            {
+              "name": "email_type",
+              "value": "welcome"
+            },
+            {
+              "name": "status",
+              "value": "sent"
+            },
+            {
+              "name": "sent_at",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.SUPABASE_KEY }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "8",
+      "name": "Log Email Sequence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        960,
+        600
+      ],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/error_logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.lead_id || 'unknown' }}"
+            },
+            {
+              "name": "error_message",
+              "value": "={{ $error.message || 'Unknown error' }}"
+            },
+            {
+              "name": "error_node",
+              "value": "={{ $execution.lastNodeExecuted }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.SUPABASE_KEY }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "error_logger",
+      "name": "Error Logger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1200,
+        750
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (Lead Magnet)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (Contact Form)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Data": {
+      "main": [
+        [
+          {
+            "node": "Validate Email Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Email Format": {
+      "main": [
+        [
+          {
+            "node": "AI Intelligence Core",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Logger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Intelligence Core": {
+      "main": [
+        [
+          {
+            "node": "Sync Supabase Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync Supabase Leads": {
+      "main": [
+        [
+          {
+            "node": "Update Lead Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Lead Score": {
+      "main": [
+        [
+          {
+            "node": "Telegram Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email Client Follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Email Sequence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}

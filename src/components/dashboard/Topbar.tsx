@@ -38,19 +38,19 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                        pageTitle === 'dashboard' ? 'Panel Control' : 'General';
 
   return (
-    <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-8 sticky top-0 z-[100] shadow-sm shadow-slate-200/20">
+    <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-[100] shadow-sm shadow-slate-200/20">
       {/* Mobile Menu Button */}
       <button 
         onClick={onMenuClick}
-        className="lg:hidden p-2 -ml-2 mr-4 text-slate-500 hover:text-indigo-600 border border-slate-100 rounded-lg hover:bg-slate-50 transition-all"
+        className="lg:hidden p-2 -ml-2 mr-2 text-slate-500 hover:text-indigo-600 border border-slate-100 rounded-lg hover:bg-slate-50 transition-all"
       >
         <Menu size={20} />
       </button>
 
       {/* SEARCH AND NAVIGATION */}
-      <div className="flex items-center gap-10 flex-1">
+      <div className="flex items-center gap-4 lg:gap-10 flex-1 min-w-0">
         <div className="hidden xl:flex flex-col">
-           <h1 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-2">
+           <h1 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-2 text-nowrap">
               {displayTitle}
               <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest pl-2 border-l border-slate-100">Control Zyndrix</span>
            </h1>
@@ -58,11 +58,11 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
 
         <button 
           onClick={() => setIsCommandOpen(true)}
-          className="flex items-center gap-4 bg-slate-50 border border-slate-100 rounded-lg px-4 py-2 hover:bg-slate-100 transition-all max-w-sm w-full group cursor-text"
+          className="flex items-center gap-2 lg:gap-4 bg-slate-50 border border-slate-100 rounded-lg px-3 lg:px-4 py-2 hover:bg-slate-100 transition-all max-w-[40px] sm:max-w-sm w-full group cursor-text overflow-hidden"
         >
-          <Search className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors" />
-          <span className="text-[11px] font-bold text-slate-400 flex-1 text-left group-hover:text-slate-600">Búsqueda rápida... (Pulsa '/' para buscar)</span>
-          <div className="flex items-center gap-1.5 px-1.5 py-1 bg-white rounded border border-slate-100 text-[9px] font-bold text-slate-400 group-hover:text-indigo-600 transition-all uppercase tracking-widest">
+          <Search className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors flex-shrink-0" />
+          <span className="hidden sm:block text-[11px] font-bold text-slate-400 flex-1 text-left group-hover:text-slate-600 truncate">Búsqueda rápida...</span>
+          <div className="hidden lg:flex items-center gap-1.5 px-1.5 py-1 bg-white rounded border border-slate-100 text-[9px] font-bold text-slate-400 group-hover:text-indigo-600 transition-all uppercase tracking-widest">
             <Command size={10} /> K
           </div>
         </button>
@@ -84,7 +84,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
            <span>Añadir al Panel</span>
         </div>
 
-        <div className="flex items-center gap-2 border-x border-slate-100 px-6 mx-2 h-8">
+        <div className="flex items-center gap-1 sm:gap-2 border-x border-slate-100 px-2 sm:px-4 mx-1 sm:mx-2 h-8">
            <button 
              onClick={() => setIsNotifOpen(!isNotifOpen)}
              className="p-2.5 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-indigo-600 transition-all relative group"

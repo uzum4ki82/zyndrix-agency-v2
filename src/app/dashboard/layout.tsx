@@ -35,7 +35,7 @@ export default function DashboardLayout({
 
           <main className="main-wrapper flex flex-col min-w-0 flex-1 h-screen overflow-hidden">
             <Topbar onMenuClick={() => setIsOpen(true)} />
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10">
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 lg:p-10">
               <div className="max-w-[1600px] mx-auto animate-in">
                 {children}
               </div>

@@ -1,0 +1,127 @@
+{
+  "name": "ZYNDRIX | STEP 2 - With AI Analysis",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-test",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook Test",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "name",
+              "value": "={{ $json.name || 'Unknown' }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email || '' }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "modelId": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Analiza brevemente este lead. Responde en JSON con: score (1-10), tier (VIP/HIGH/MEDIUM/LOW), reasoning (frase corta)."
+            },
+            {
+              "role": "user",
+              "content": "=Nombre: {{ $json.name }}\nEmail: {{ $json.email }}"
+            }
+          ]
+        },
+        "responseFormat": {
+          "type": "json_object"
+        }
+      },
+      "id": "3",
+      "name": "AI Analysis",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [500, 300],
+      "onError": "continueRegardless"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "source",
+              "value": "test"
+            },
+            {
+              "name": "created_at",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "={{ $env.SUPABASE_KEY }}"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer {{ $env.SUPABASE_KEY }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "4",
+      "name": "Save to Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [750, 300],
+      "onError": "continueRegardless"
+    }
+  ],
+  "connections": {
+    "Webhook Test": {
+      "main": [[{ "node": "Normalize Data", "type": "main", "index": 0 }]]
+    },
+    "Normalize Data": {
+      "main": [[{ "node": "AI Analysis", "type": "main", "index": 0 }]]
+    },
+    "AI Analysis": {
+      "main": [[{ "node": "Save to Supabase", "type": "main", "index": 0 }]]
+    }
+  }
+}

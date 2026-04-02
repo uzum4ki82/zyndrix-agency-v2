@@ -37,26 +37,26 @@ export default function CustomersPage() {
   return (
     <div className="animate-in space-y-8 pb-10">
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
            <div className="flex items-center gap-2 text-indigo-600 mb-1">
               <ShieldCheck size={14} className="fill-indigo-600/10" />
               <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Cartera Global de Clientes</span>
            </div>
-           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Directorio Corporativo</h1>
+           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Directorio Corporativo</h1>
         </div>
         
-        <div className="flex items-center gap-3">
-           <div className="relative">
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+           <div className="relative w-full sm:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
               <input 
                 placeholder="Buscar cliente..." 
-                className="bg-white border border-slate-100 rounded-xl py-2.5 pl-10 pr-4 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all w-64 shadow-sm"
+                className="bg-white border border-slate-100 rounded-xl py-2.5 pl-10 pr-4 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all w-full shadow-sm"
               />
            </div>
            <button 
              onClick={() => setIsAddCustomerOpen(true)}
-             className="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95 flex items-center gap-2.5 group"
+             className="w-full sm:w-auto bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2.5 group"
            >
               <Plus size={16} className="group-hover:rotate-90 transition-transform" />
               Añadir Cliente

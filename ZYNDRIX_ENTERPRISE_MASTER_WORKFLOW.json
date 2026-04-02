@@ -1,0 +1,451 @@
+{
+  "name": "ZYNDRIX | ENTERPRISE MASTER AUTOMATION V1.0",
+  "description": "Sistema de automatización integral para agencias - Lead Magnet → Email Sequences → WhatsApp → Telegram → CRM",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-home",
+        "options": {}
+      },
+      "id": "webhook_home",
+      "name": "Webhook: Contact Form (Home)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-magnet",
+        "options": {}
+      },
+      "id": "webhook_magnet",
+      "name": "Webhook: Lead Magnet",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-whatsapp-inbound",
+        "options": {}
+      },
+      "id": "webhook_whatsapp",
+      "name": "Webhook: WhatsApp Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 600]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "lead_id",
+              "value": "={{ $json.body?.record?.id || $json.body?.lead_id || $uuid() }}"
+            },
+            {
+              "name": "lead_name",
+              "value": "={{ $json.body?.record?.name || $json.body?.name || 'Unknown' }}"
+            },
+            {
+              "name": "lead_email",
+              "value": "={{ $json.body?.record?.email || $json.body?.email || '' }}"
+            },
+            {
+              "name": "phone_number",
+              "value": "={{ $json.body?.record?.phone || $json.body?.phone || '' }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $json.body?.record?.company_name || $json.body?.company || 'Not provided' }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.body?.record?.message || $json.body?.message || '' }}"
+            },
+            {
+              "name": "service_type",
+              "value": "={{ $json.body?.record?.service || $json.body?.service || 'General' }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $json.body?.source || 'contact_form' }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "normalize_data",
+      "name": "Step 1: Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [200, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $('normalize_data').first().json.lead_name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $('normalize_data').first().json.lead_email }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $('normalize_data').first().json.phone_number }}"
+            },
+            {
+              "name": "company_name",
+              "value": "={{ $('normalize_data').first().json.company_name }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $('normalize_data').first().json.message }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $('normalize_data').first().json.service_type }}"
+            },
+            {
+              "name": "source",
+              "value": "={{ $('normalize_data').first().json.source }}"
+            },
+            {
+              "name": "status",
+              "value": "new"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "=sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Prefer",
+                "value": "return=representation"
+              }
+            ]
+          }
+        }
+      },
+      "id": "persist_lead",
+      "name": "Step 2: Persist Lead to Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [400, 400]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Eres el Agente Comercial IA de ZYNDRIX. Tu rol es analizar leads con precisión y generar respuestas personalizadas.\n\nAnaliza el lead y devuelve SIEMPRE un JSON válido con estos campos exactos:\n1. 'score' (int 1-10): Potencial comercial\n2. 'tier' (string): VIP|HIGH|MEDIUM|LOW\n3. 'reasoning' (string): Diagnóstico corto\n4. 'hook' (string): Apertura personalizada para email\n5. 'whatsapp_message' (string): Mensaje WhatsApp casual\n6. 'sentiment' (string): positive|neutral|negative\n7. 'pain_points' (array): Máximo 3 problemas identificados\n8. 'suggested_cta' (string): BOOK_CALL|READ_PDF|SCHEDULE_DEMO"
+            },
+            {
+              "role": "user",
+              "content": "Nombre: {{ $('normalize_data').first().json.lead_name }}\nEmpresa: {{ $('normalize_data').first().json.company_name }}\nServicio: {{ $('normalize_data').first().json.service_type }}\nMensaje: {{ $('normalize_data').first().json.message }}\nFuente: {{ $('normalize_data').first().json.source }}\n\nGenera un análisis profesional y JSON válido."
+            }
+          ]
+        },
+        "responseFormat": {
+          "type": "json_object"
+        }
+      },
+      "id": "ai_analysis",
+      "name": "Step 3: AI Strategic Analysis (GPT-4o)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [600, 400]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?id=eq.{{ $json.body?.record?.id || $json.body?.lead_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_score",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).score }}"
+            },
+            {
+              "name": "reasoning",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).reasoning }}"
+            },
+            {
+              "name": "tier",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).tier }}"
+            },
+            {
+              "name": "status",
+              "value": "qualified"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "=sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Prefer",
+                "value": "return=representation"
+              }
+            ]
+          }
+        }
+      },
+      "id": "update_lead_score",
+      "name": "Step 4: Update Lead Score in Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "fromEmail": "hola@zyndrix.dev",
+        "toEmail": "={{ $('normalize_data').first().json.lead_email }}",
+        "subject": "🚀 Tu Estrategia IA Personalizada - ZYNDRIX {{ $('normalize_data').first().json.company_name }}",
+        "html": "=<div style=\"background: linear-gradient(135deg, #030712 0%, #0f172a 100%); color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 40px 20px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 40px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px);\">\n    <h1 style=\"color: #38bdf8; margin-bottom: 30px; font-size: 28px;\">ZYNDRIX AI</h1>\n    \n    <p style=\"font-size: 16px; line-height: 1.6; margin-bottom: 20px;\">\n      Hola <strong>{{ $('normalize_data').first().json.lead_name }}</strong>,\n    </p>\n    \n    <div style=\"background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 20px; margin: 30px 0; border-radius: 8px;\">\n      <p style=\"font-size: 15px; line-height: 1.7; margin: 0; font-style: italic;\">\n        {{ JSON.parse($node['ai_analysis'].json.message.content).hook }}\n      </p>\n    </div>\n    \n    <h2 style=\"color: #38bdf8; font-size: 18px; margin-top: 30px; margin-bottom: 15px;\">📊 Análisis IA</h2>\n    <p style=\"background: rgba(30, 41, 59, 0.6); padding: 15px; border-radius: 8px; margin-bottom: 20px;\">\n      <strong>Score:</strong> {{ JSON.parse($node['ai_analysis'].json.message.content).score }}/10 | \n      <strong>Tier:</strong> {{ JSON.parse($node['ai_analysis'].json.message.content).tier }}\n    </p>\n    \n    <p style=\"font-size: 14px; color: #cbd5e1; margin-bottom: 30px;\">\n      {{ JSON.parse($node['ai_analysis'].json.message.content).reasoning }}\n    </p>\n    \n    <a href=\"https://zyndrix.dev/audit?lead={{ $json.body?.record?.id || $json.body?.lead_id }}\" style=\"display: inline-block; background: #38bdf8; color: #030712; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 30px 0;\">\n      Reservar Auditoría Estratégica →\n    </a>\n    \n    <hr style=\"border: none; border-top: 1px solid rgba(56, 189, 248, 0.1); margin: 40px 0;\" />\n    \n    <p style=\"font-size: 12px; color: #64748b; margin: 0;\">\n      © 2026 ZYNDRIX AI. Automatización Integral para Agencias.\n    </p>\n  </div>\n</div>"
+      },
+      "id": "send_email",
+      "name": "Step 5: Send Welcome Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [800, 600]
+    },
+    {
+      "parameters": {
+        "chatId": "TU_TELEGRAM_CHAT_ID",
+        "text": "=🚀 *NUEVO LEAD CALIFICADO*\n\n👤 *Nombre:* {{ $('normalize_data').first().json.lead_name }}\n🏢 *Empresa:* {{ $('normalize_data').first().json.company_name }}\n📧 *Email:* `{{ $('normalize_data').first().json.lead_email }}`\n📱 *Teléfono:* {{ $('normalize_data').first().json.phone_number || 'N/A' }}\n\n🎯 *Score IA:* {{ JSON.parse($node['ai_analysis'].json.message.content).score }}/10\n🏆 *Tier:* {{ JSON.parse($node['ai_analysis'].json.message.content).tier }}\n\n💡 *Razonamiento:*\n{{ JSON.parse($node['ai_analysis'].json.message.content).reasoning }}\n\n👉 [Revisar en Dashboard](https://zyndrix.dev/dashboard?lead={{ $json.body?.record?.id || $json.body?.lead_id }})",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram_ops_alert",
+      "name": "Step 6: Telegram Operations Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [800, 800]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/email_sequences",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $('normalize_data').first().json.lead_id }}"
+            },
+            {
+              "name": "email_number",
+              "value": "1"
+            },
+            {
+              "name": "email_type",
+              "value": "welcome"
+            },
+            {
+              "name": "subject",
+              "value": "🚀 Tu Estrategia IA Personalizada - ZYNDRIX"
+            },
+            {
+              "name": "status",
+              "value": "sent"
+            },
+            {
+              "name": "sent_at",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "=sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              }
+            ]
+          }
+        }
+      },
+      "id": "log_email_sequence",
+      "name": "Step 7: Log Email Sequence",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1000, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://vrvfftftnlspajplqjye.supabase.co/rest/v1/tasks",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "lead_id",
+              "value": "={{ $('normalize_data').first().json.lead_id }}"
+            },
+            {
+              "name": "title",
+              "value": "=Seguimiento {{ JSON.parse($node['ai_analysis'].json.message.content).tier }}: {{ $('normalize_data').first().json.lead_name }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).reasoning }}"
+            },
+            {
+              "name": "status",
+              "value": "pending"
+            },
+            {
+              "name": "priority",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).score >= 8 ? 'high' : 'medium' }}"
+            },
+            {
+              "name": "due_date",
+              "value": "={{ $now.plus({days: 2}).toISO() }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "headers": [
+              {
+                "name": "apikey",
+                "value": "=sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              },
+              {
+                "name": "Authorization",
+                "value": "=Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE"
+              }
+            ]
+          }
+        }
+      },
+      "id": "create_task",
+      "name": "Step 8: Create CRM Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1000, 600]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.zyndrix.dev/webhook/dashboard-sync",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "event",
+              "value": "lead_qualified"
+            },
+            {
+              "name": "lead_id",
+              "value": "={{ $('normalize_data').first().json.lead_id }}"
+            },
+            {
+              "name": "score",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).score }}"
+            },
+            {
+              "name": "tier",
+              "value": "={{ JSON.parse($node['ai_analysis'].json.message.content).tier }}"
+            }
+          ]
+        }
+      },
+      "id": "dashboard_sync",
+      "name": "Step 9: Dashboard Real-time Sync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1200, 400]
+    }
+  ],
+  "connections": {
+    "webhook_home": {
+      "main": [[{ "node": "normalize_data", "type": "main", "index": 0 }]]
+    },
+    "webhook_magnet": {
+      "main": [[{ "node": "normalize_data", "type": "main", "index": 0 }]]
+    },
+    "webhook_whatsapp": {
+      "main": [[{ "node": "normalize_data", "type": "main", "index": 0 }]]
+    },
+    "normalize_data": {
+      "main": [[{ "node": "persist_lead", "type": "main", "index": 0 }]]
+    },
+    "persist_lead": {
+      "main": [[{ "node": "ai_analysis", "type": "main", "index": 0 }]]
+    },
+    "ai_analysis": {
+      "main": [
+        [
+          { "node": "update_lead_score", "type": "main", "index": 0 },
+          { "node": "send_email", "type": "main", "index": 0 },
+          { "node": "telegram_ops_alert", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "update_lead_score": {
+      "main": [[{ "node": "log_email_sequence", "type": "main", "index": 0 }]]
+    },
+    "send_email": {
+      "main": [[{ "node": "create_task", "type": "main", "index": 0 }]]
+    },
+    "telegram_ops_alert": {
+      "main": [[{ "node": "create_task", "type": "main", "index": 0 }]]
+    },
+    "log_email_sequence": {
+      "main": [[{ "node": "dashboard_sync", "type": "main", "index": 0 }]]
+    },
+    "create_task": {
+      "main": [[{ "node": "dashboard_sync", "type": "main", "index": 0 }]]
+    }
+  }
+}

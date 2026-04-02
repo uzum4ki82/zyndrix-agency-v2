@@ -67,26 +67,27 @@ export default function AddCustomerModal({ isOpen, onClose, onAdd }: AddCustomer
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="relative w-full max-w-lg bg-white rounded-[40px] shadow-2xl overflow-hidden border border-slate-100"
           >
-            <div className="p-8 lg:p-12">
-               <div className="flex items-center justify-between mb-10">
-                  <div className="flex items-center gap-4">
-                     <div className="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-100">
-                        <Crown size={28} />
+            <div className="p-6 sm:p-8 lg:p-12">
+               <div className="flex items-center justify-between mb-8 sm:mb-10">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                     <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-2xl shadow-indigo-100 flex-shrink-0">
+                        <Crown size={22} className="sm:hidden" />
+                        <Crown size={28} className="hidden sm:block" />
                      </div>
                      <div>
-                        <h2 className="text-2xl font-bold text-slate-900 tracking-tight leading-none mb-1.5">Nuevo Cliente Especial</h2>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight leading-none mb-1.5">Nuevo Cliente</h2>
+                        <p className="hidden xs:flex text-[10px] font-black text-slate-400 uppercase tracking-widest items-center gap-1.5">
                            <ShieldCheck size={10} className="text-emerald-500" />
                            Cartera de Valor Zyndrix
                         </p>
                      </div>
                   </div>
-                  <button onClick={onClose} className="p-3 hover:bg-slate-50 text-slate-300 hover:text-slate-900 transition-all rounded-full border border-transparent hover:border-slate-100">
+                  <button onClick={onClose} className="p-3 hover:bg-slate-50 text-slate-300 hover:text-slate-900 transition-all rounded-full border border-transparent hover:border-slate-100 flex-shrink-0">
                      <X size={20} />
                   </button>
                </div>
 
-               <form onSubmit={handleSubmit} className="space-y-8">
+               <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
                   <div className="space-y-3">
                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                         <Building2 size={12} className="text-indigo-400" />
@@ -95,17 +96,17 @@ export default function AddCustomerModal({ isOpen, onClose, onAdd }: AddCustomer
                      <input 
                         required
                         placeholder="Ej: Multinacional Tech S.L."
-                        className="w-full p-5 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 transition-all placeholder:text-slate-200"
+                        className="w-full p-4 sm:p-5 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500 transition-all placeholder:text-slate-200"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                      />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
                      <div className="space-y-3">
                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1 flex items-center gap-2">
                            <Euro size={12} className="text-indigo-400" />
-                           LTV Estimado (Valor de Vida)
+                           LTV Estimado
                         </label>
                         <input 
                            placeholder="5.000"

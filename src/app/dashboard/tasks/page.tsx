@@ -24,14 +24,34 @@ import { cn } from '@/lib/utils';
 import AddTaskModal from '@/components/dashboard/AddTaskModal';
 
 // Sample Tasks Data
-const initialTasks: any[] = [];
+const initialTasks: any[] = [
+  { id: 1, title: 'Optimización de RAG para Base de Conocimientos', priority: 'Alta', deadline: '31 Mar, 2026', progress: 45, status: 'En Progreso' },
+  { id: 2, title: 'Integración Webhook n8n -> Supabase', priority: 'Media', deadline: '01 Abr, 2026', progress: 100, status: 'Completado' },
+  { id: 3, title: 'Audit de Seguridad: Endpoints de OpenAI', priority: 'Alta', deadline: '02 Abr, 2026', progress: 15, status: 'Estratégico' },
+  { id: 4, title: 'Despliegue de Agente de Ventas (Nicho E-commerce)', priority: 'Media', deadline: '05 Abr, 2026', progress: 60, status: 'En Progreso' },
+  { id: 5, title: 'Refactor de Prompt Engineering (Lead Scoring)', priority: 'Baja', deadline: '10 Abr, 2026', progress: 0, status: 'Pendiente' },
+];
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState(initialTasks);
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
 
+  const toggleTaskStatus = (id: number) => {
+    setTasks(prev => prev.map(t => {
+      if (t.id === id) {
+        const isCompleted = t.status === 'Completado';
+        return { 
+          ...t, 
+          status: isCompleted ? 'En Progreso' : 'Completado',
+          progress: isCompleted ? 45 : 100 
+        };
+      }
+      return t;
+    }));
+  };
+
   const handleAddTask = (newTask: any) => {
-    setTasks(prev => [newTask, ...prev]);
+    setTasks(prev => [{ ...newTask, id: Date.now() }, ...prev]);
   };
 
   return (
@@ -99,21 +119,24 @@ export default function TasksPage() {
                        key={task.id}
                        initial={{ opacity: 0, x: -10 }}
                        animate={{ opacity: 1, x: 0 }}
-                       className="p-6 hover:bg-slate-50/50 transition-all group flex items-center justify-between"
+                       className="p-4 sm:p-6 hover:bg-slate-50/50 transition-all group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                     >
-                       <div className="flex items-center gap-6 flex-1">
-                          <div className={cn(
-                             "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110",
-                             task.status === 'Completado' ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"
-                          )}>
+                       <div className="flex items-center gap-4 sm:gap-6 flex-1">
+                          <div 
+                             onClick={() => toggleTaskStatus(task.id)}
+                             className={cn(
+                                "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 cursor-pointer",
+                                task.status === 'Completado' ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500"
+                             )}
+                          >
                              <CheckCircle2 size={18} />
                           </div>
-                          <div className="space-y-1 content-center">
+                          <div className="space-y-1 content-center flex-1">
                              <h4 className={cn(
                                 "text-sm font-bold tracking-tight",
                                 task.status === 'Completado' ? "text-slate-300 line-through" : "text-slate-900"
                              )}>{task.title}</h4>
-                             <div className="flex items-center gap-4">
+                             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                                 <div className="flex items-center gap-1.5">
                                    <Flag size={10} className={cn(
                                       task.priority === 'Alta' ? "text-rose-500" : 
@@ -129,13 +152,13 @@ export default function TasksPage() {
                           </div>
                        </div>
                        
-                       <div className="flex items-center gap-10">
-                          <div className="flex flex-col items-end gap-1.5">
-                             <div className="flex items-center justify-between w-32">
+                       <div className="flex items-center justify-between sm:justify-end gap-6 sm:gap-10 border-t sm:border-0 pt-3 sm:pt-0 border-slate-50">
+                          <div className="flex flex-col items-start sm:items-end gap-1.5">
+                             <div className="flex items-center justify-between w-28 sm:w-32">
                                 <span className="text-[9px] font-black text-slate-300 uppercase leading-none">Progreso</span>
                                 <span className="text-[9px] font-black text-slate-900 leading-none">{task.progress}%</span>
                              </div>
-                             <div className="w-32 h-1.5 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
+                             <div className="w-28 sm:w-32 h-1.5 bg-slate-50 rounded-full overflow-hidden border border-slate-100">
                                 <motion.div 
                                    initial={{ width: 0 }}
                                    animate={{ width: `${task.progress}%` }}

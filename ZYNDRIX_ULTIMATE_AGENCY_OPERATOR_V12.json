@@ -1,0 +1,50 @@
+{
+  "name": "ZYNDRIX | ULTIMATE_AGENCY_OPERATOR_V12",
+  "nodes": [
+    { "parameters": { "path": "zyndrix-lead-scoring", "options": {} }, "id": "1", "name": "Webhook (Home)", "type": "n8n-nodes-base.webhook", "typeVersion": 1, "position": [0, 300] },
+    { "parameters": { "path": "leadmagnet", "options": {} }, "id": "2", "name": "Webhook (Lead Magnet)", "type": "n8n-nodes-base.webhook", "typeVersion": 1, "position": [0, 500] },
+    { "parameters": { "keepOnlySet": true, "values": { "string": [ { "name": "lead_id", "value": "={{ $json.body.record.id }}" }, { "name": "name", "value": "={{ $json.body.record.name }}" }, { "name": "email", "value": "={{ $json.body.record.email }}" }, { "name": "company", "value": "={{ $json.body.record.company_name }}" }, { "name": "message", "value": "={{ $json.body.record.message }}" }, { "name": "source", "value": "={{ $node[\"Webhook (Home)\"] ? 'HOME' : 'BLUEPRINT' }}" } ] } }, "id": "3", "name": "Data Normalizer", "type": "n8n-nodes-base.set", "typeVersion": 2, "position": [250, 400] },
+    { 
+      "parameters": { 
+        "modelId": "gpt-4o", 
+        "messages": { 
+          "values": [ { "content": "Eres el Agente Comercial Senior de ZYNDRIX AI. Analiza este lead y genera un informe estratégico comercial.\n\nFormato JSON Estricto:\n1. 'score': (0-10)\n2. 'tier': (VIP, HIGH, MEDIUM, LOW)\n3. 'reasoning': Diagnóstico corto.\n4. 'hook': Pitch de apertura ultra-personalizado conectando con su problema.\n5. 'cta_type': (BOOK_CALL, READ_PDF, CALL_US)" } ] 
+        },
+        "responseFormat": { "type": "json_object" }
+      }, 
+      "id": "4", "name": "Strategic AI Analysis", "type": "@n8n/n8n-nodes-langchain.openAi", "typeVersion": 1, "position": [450, 400], "credentials": { "openAiApi": { "id": "YOUR_OPENAI_ID" } } 
+    },
+    { 
+      "parameters": { 
+        "operation": "executeQuery", 
+        "query": "UPDATE leads SET lead_score = $1, reasoning = $2, status = $3 WHERE id = $4", 
+        "queryParams": "={{ [ JSON.parse($json.message.content).score, JSON.parse($json.message.content).reasoning, JSON.parse($json.message.content).tier, $('Data Normalizer').first().json.lead_id ] }}" 
+      }, 
+      "id": "5", "name": "Supabase Persistence", "type": "n8n-nodes-base.postgres", "typeVersion": 2.1, "position": [650, 250], "credentials": { "postgres": { "id": "YOUR_SUPABASE_ID" } } 
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "={{ '🚀 *SISTEMA OPERATIVO ZYNDRIX:* Nuevo Lead ' + JSON.parse($node[\"Strategic AI Analysis\"].json.message.content).tier + '\\n\\n👤 ' + $('Data Normalizer').first().json.name + ' [' + $('Data Normalizer').first().json.company + ']\\n💰 *Score:* ' + JSON.parse($node[\"Strategic AI Analysis\"].json.message.content).score + '/10\\n🧠 *Diagnóstico:* ' + JSON.parse($node[\"Strategic AI Analysis\"].json.message.content).reasoning + '\\n📬 *Fuente:* ' + $('Data Normalizer').first().json.source }}",
+        "additionalFields": { "parse_mode": "Markdown" }
+      },
+      "id": "6", "name": "Telegram Ops Alert", "type": "n8n-nodes-base.telegram", "typeVersion": 1.1, "position": [650, 550], "credentials": { "telegramApi": { "id": "YOUR_TELEGRAM_ID" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Data Normalizer').first().json.email }}",
+        "subject": "Hoja de Ruta IA: Diagnóstico para {{ $('Data Normalizer').first().json.company }}",
+        "message": "={{ '<!DOCTYPE html><html><head><style>body { background-color: #030712; color: #ffffff; font-family: sans-serif; padding: 40px; } .card { max-width: 600px; margin: 0 auto; border: 1px solid #1f2937; border-radius: 24px; padding: 40px; background: #080c18; } .highlight { color: #38bdf8; font-weight: 900; } .btn { display: inline-block; background: #38bdf8; color: #030712; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 900; margin-top: 30px; }</style></head><body><div class=\"card\"><h1>Estrategia <span class=\"highlight\">ZYNDRIX</span></h1><p>Hola ' + $('Data Normalizer').first().json.name + ',</p><div style=\"border-left: 4px solid #38bdf8; padding-left: 20px; font-style: italic;\">' + JSON.parse($node[\"Strategic AI Analysis\"].json.message.content).hook + '</div><p>He analizado tu reto en ' + $('Data Normalizer').first().json.company + ' y veo una oportunidad técnica clara.</p><a href=\"https://calendly.com/zyndrix/audit\" class=\"btn\">Reservar Auditoría</a></div></body></html>' }}",
+        "appendAttachements": [],
+        "options": { "appendAttachements": [] }
+      },
+      "id": "7", "name": "Email Elite Delivery", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [900, 400], "credentials": { "gmailOAuth2": { "id": "YOUR_GMAIL_ID" } }
+    }
+  ],
+  "connections": {
+    "Webhook (Home)": { "main": [ [ { "node": "Data Normalizer", "type": "main", "index": 0 } ] ] },
+    "Webhook (Lead Magnet)": { "main": [ [ { "node": "Data Normalizer", "type": "main", "index": 0 } ] ] },
+    "Data Normalizer": { "main": [ [ { "node": "Strategic AI Analysis", "type": "main", "index": 0 } ] ] },
+    "Strategic AI Analysis": { "main": [ [ { "node": "Supabase Persistence", "type": "main", "index": 0 }, { "node": "Telegram Ops Alert", "type": "main", "index": 0 }, { "node": "Email Elite Delivery", "type": "main", "index": 0 } ] ] }
+  }
+}

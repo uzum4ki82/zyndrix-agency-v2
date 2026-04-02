@@ -35,25 +35,25 @@ export default function DashboardOverview() {
   return (
     <div className="animate-in space-y-8">
       {/* PAGE HEADER */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
            <div className="flex items-center gap-2 text-indigo-600 mb-1">
               <Calendar size={14} className="animate-pulse" />
               <span className="text-[10px] font-black uppercase tracking-widest">{currentDate || 'Cargando fecha operativa...'}</span>
            </div>
-           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Resumen General de Operaciones</h1>
+           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Resumen General de Operaciones</h1>
         </div>
         
-        <div className="flex items-center gap-3 bg-white p-1.5 rounded-xl border border-slate-100 shadow-sm shadow-slate-200/50">
+        <div className="flex items-center gap-2 sm:gap-3 bg-white p-1.5 rounded-xl border border-slate-100 shadow-sm shadow-slate-200/50 w-fit overflow-x-auto no-scrollbar">
            <button 
              onClick={() => setActiveTab('resumen')}
-             className={cn("px-6 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all", activeTab === 'resumen' ? "bg-slate-900 text-white shadow-xl shadow-slate-200" : "text-slate-400 hover:text-slate-600")}
+             className={cn("px-4 sm:px-6 py-2 rounded-lg text-[10px] sm:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap", activeTab === 'resumen' ? "bg-slate-900 text-white shadow-xl shadow-slate-200" : "text-slate-400 hover:text-slate-600")}
            >
               Resumen
            </button>
            <button 
              onClick={() => setActiveTab('detalles')}
-             className={cn("px-6 py-2 rounded-lg text-[11px] font-black uppercase tracking-widest transition-all", activeTab === 'detalles' ? "bg-slate-900 text-white shadow-xl shadow-slate-200" : "text-slate-400 hover:text-slate-600")}
+             className={cn("px-4 sm:px-6 py-2 rounded-lg text-[10px] sm:text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap", activeTab === 'detalles' ? "bg-slate-900 text-white shadow-xl shadow-slate-200" : "text-slate-400 hover:text-slate-600")}
            >
               Detalles
            </button>
@@ -73,10 +73,10 @@ export default function DashboardOverview() {
             {/* KPI GRID */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { label: 'Ingresos Mensuales', value: '0,00 €', trend: '0%', isUp: true, icon: DollarSign, color: 'indigo' },
-                { label: 'Pipeline CRM', value: '0,00 €', trend: '0%', isUp: true, icon: Target, color: 'emerald' },
-                { label: 'Nuevos Leads', value: '0', trend: '0', isUp: true, icon: Users, color: 'amber' },
-                { label: 'Tasa Conversión', value: '0%', trend: '0%', isUp: true, icon: Activity, color: 'rose' }
+                { label: 'Ingresos Mensuales', value: '14.250,00 €', trend: '+12.5%', isUp: true, icon: DollarSign, color: 'indigo' },
+                { label: 'Pipeline CRM', value: '45.800,00 €', trend: '+5.2%', isUp: true, icon: Target, color: 'emerald' },
+                { label: 'Nuevos Leads', value: '24', trend: '+8', isUp: true, icon: Users, color: 'amber' },
+                { label: 'Tasa Conversión', value: '18.4%', trend: '+2.1%', isUp: true, icon: Activity, color: 'rose' }
               ].map((kpi, i) => (
                 <div key={i} className="ds-card p-6 bg-white hover:border-indigo-100 group transition-all">
                   <div className="flex items-center justify-between mb-4">
@@ -120,21 +120,21 @@ export default function DashboardOverview() {
                   </div>
 
                   <div className="h-64 flex items-end justify-between gap-4 relative pb-10 z-10">
-                    {[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((h, i) => (
+                    {[45, 52, 48, 65, 72, 85, 78, 92, 100, 88, 95, 110].map((h, i) => (
                       <div key={i} className="flex-1 flex flex-col items-center gap-2 group relative h-full justify-end">
                         <div className="w-full flex items-end h-full gap-1">
                           <motion.div 
                              initial={{ height: 0 }} 
-                             animate={{ height: `1px` }} 
+                             animate={{ height: `${h}%` }} 
                              className="w-1/2 bg-indigo-600 rounded-sm group-hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100/50"
                           />
                           <motion.div 
                              initial={{ height: 0 }} 
-                             animate={{ height: `1px` }} 
+                             animate={{ height: `${h * 0.7}%` }} 
                              className="w-1/2 bg-slate-100 rounded-sm"
                           />
                         </div>
-                        <span className="text-[9px] font-black text-slate-300 uppercase tracking-tighter absolute -bottom-6">
+                        <span className="hidden sm:block text-[9px] font-black text-slate-300 uppercase tracking-tighter absolute -bottom-6">
                            {[ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ][i]}
                         </span>
                       </div>
@@ -149,8 +149,10 @@ export default function DashboardOverview() {
                   </h3>
                   <div className="space-y-6">
                     {[
-                      { icon: ShieldCheck, label: 'Sistema Operativo', desc: 'Panel de control de Zyndrix listo para iniciar operaciones.', time: 'Recién', color: 'text-indigo-600', bg: 'bg-indigo-50' },
-                      { icon: Zap, label: 'Modo Producción', desc: 'Sincronización manual de datos demo completada con éxito.', time: 'Hace 1m', color: 'text-amber-600', bg: 'bg-amber-50' }
+                      { icon: Users, label: 'Nuevo Lead Entrante', desc: 'Carlos Martinez ha iniciado Auditoría IA desde el Lead Magnet.', time: 'Recién', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                      { icon: Target, label: 'Pipeline Actualizado', desc: 'Oportunidad "Vortex Retail" movida a Negociación.', time: 'Hace 12m', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                      { icon: Zap, label: 'Optimización IA', desc: 'Se ha completado el entrenamiento del RAG operativo.', time: 'Hace 45m', color: 'text-amber-600', bg: 'bg-amber-50' },
+                      { icon: ShieldCheck, label: 'Seguridad Sync', desc: 'Protocolo de cifrado activado para el CRM.', time: 'Hace 2h', color: 'text-slate-600', bg: 'bg-slate-50' }
                     ].map((act, i) => (
                       <div key={i} className="flex gap-4 group cursor-pointer hover:translate-x-1 transition-transform">
                         <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center border border-transparent shadow-sm flex-shrink-0 group-hover:scale-105", act.bg, act.color)}>

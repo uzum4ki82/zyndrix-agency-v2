@@ -1547,7 +1547,8 @@ h3 {
   pointer-events: none;
 }
 
-.showcase-card:hover .showcase-video-player {
+.showcase-card:hover .showcase-video-player,
+.showcase-card.active-play .showcase-video-player {
   opacity: 1;
 }
 
