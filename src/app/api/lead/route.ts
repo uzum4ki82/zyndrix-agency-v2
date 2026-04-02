@@ -52,8 +52,8 @@ export async function POST(req: Request) {
       ? 'https://n8n.zyndrix.dev/webhook/leadmagnet'
       : 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
 
-    // Usamos el registro real de Supabase si existe, si no, caemos al body original
-    const recordPayload = leadData?.[0] || {
+    // Construimos un record robusto
+    const recordPayload = {
       id: leadId,
       name: body.name || 'Anónimo',
       email: body.email,
@@ -62,27 +62,38 @@ export async function POST(req: Request) {
       message: body.message || 'Lead v23',
       budget: body.budget || null,
       service: body.service || 'General',
-      status: 'new'
+      status: 'new',
+      ...(leadData?.[0] || {}) // Mezclamos con datos reales de Supabase si existen
     };
 
-    // Payload final unificado
     const payload = {
-      source: body.service,
+      source: body.service || 'landing',
       record: recordPayload
     };
 
-    // Intentamos el oficial y el de test por si acaso
+    console.log('--- ENVIANDO A WEBHOOKS ---', n8nUrl);
+    
+    // Intentamos el oficial y el de test en paralelo y ESPERAMOS a que terminen
     const webhooks = [n8nUrl, n8nUrl.replace('/webhook/', '/webhook-test/')];
     
-    for (const url of webhooks) {
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(e => console.log('Omitiendo error de webhook:', url));
+    try {
+      await Promise.all(webhooks.map(async (url) => {
+        try {
+          const wRes = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          console.log(`Webhook Resp [${url.includes('test') ? 'TEST' : 'LIVE'}]:`, wRes.status);
+        } catch (e) {
+          console.error('Error en fetch individual:', url, e);
+        }
+      }));
+    } catch (e) {
+      console.error('Error general en promesas de webhooks:', e);
     }
 
-    // 3. SEÑAL AL DASHBOARD
+    // 3. SEÑAL AL DASHBOARD (Opcional, no bloqueante)
     fetch('https://n8n.zyndrix.dev/webhook/dashboard-data', {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' },
