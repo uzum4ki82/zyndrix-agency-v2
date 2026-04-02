@@ -7,45 +7,105 @@
   <meta name="keywords" content="inteligencia artificial, automatización, agentes IA, n8n, marketing automation, IA empresarial, transformación digital">
   <meta name="author" content="Zyndrix">
   
+  <!-- Performance Optimization: Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://unpkg.com">
   
+  <!-- Preload Optimized Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
   
-  <!-- LCP PRELOAD -->
-  <link rel="preload" href="img/zyndrix-live.png" as="image" fetchpriority="high">
-
-  <link rel="stylesheet" href="styles.css?v=42.0">
-  <link rel="icon" type="image/png" href="img/favicon-zyndrix.png">
-  <link rel="apple-touch-icon" href="img/favicon-zyndrix.png">
+  <!-- Preload Critical Assets -->
+  <link rel="preload" href="img/zyndrix-ultimate.png" as="image" fetchpriority="high">
   
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zyndrix.dev/">
+  <meta property="og:title" content="Zyndrix — Agencia de Inteligencia Artificial">
+  <meta property="og:description" content="Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.">
+  <meta property="og:image" content="img/zyndrix-ultimate.png">
+  <meta property="og:site_name" content="Zyndrix">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://zyndrix.dev/">
+  <meta property="twitter:title" content="Zyndrix — Agencia de Inteligencia Artificial">
+  <meta property="twitter:description" content="Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.">
+  <meta name="twitter:image" content="img/zyndrix-ultimate.png">
+  <meta name="twitter:site" content="@zyndrix">
+
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#04040A">
+  <link rel="canonical" href="https://zyndrix.dev/">
   <title>Zyndrix — Agencia de Inteligencia Artificial</title>
   
-  <style>
-    body { background-color: #04040A !important; overflow-x: hidden; }
-    .hero { background: transparent !important; position: relative; z-index: 10; }
-    .nav-logo-img { height: 60px !important; width: auto !important; max-height: none !important; }
-  </style>
+  <!-- Schema.org Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Zyndrix",
+    "image": "https://zyndrix.dev/img/zyndrix-ultimate.png",
+    "url": "https://zyndrix.dev",
+    "description": "Zyndrix es una agencia líder en soluciones de Inteligencia Artificial de alto rendimiento, especializada en Agentes Autónomos y automatización con n8n.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "ES"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios de IA",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Agentes Inteligentes" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automatización n8n" } }
+      ]
+    },
+    "sameAs": [
+      "https://twitter.com/zyndrix",
+      "https://linkedin.com/company/zyndrix",
+      "https://www.instagram.com/zyndrix.ia/",
+      "https://www.tiktok.com/@zyndrixia3",
+      "https://www.youtube.com/@ZyndrixIA"
+    ]
+  }
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-60FX6KBH7Q"></script>
   <script src="https://unpkg.com/lucide@latest" defer></script>
   <script>
+    // Configuration and Analytics...
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-60FX6KBH7Q');
   </script>
+
+  <link rel="stylesheet" href="styles.css?v=29.3">
+  <link rel="icon" type="image/png" href="img/favicon-zyndrix.png">
+  <link rel="apple-touch-icon" href="img/favicon-zyndrix.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    body { background-color: #04040A !important; overflow-x: hidden; }
+    .hero { background: transparent !important; position: relative; z-index: 10; }
+    .service-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 245, 255, 0.1); margin-bottom: 20px; }
+    .service-icon svg { width: 24px; height: 24px; color: var(--cyan); }
+    .nav-logo-img { max-height: 54px !important; width: auto; }
+    .logos-marquee { opacity: 1 !important; visibility: visible !important; }
+  </style>
 </head>
 <body class="loading">
+  <!-- Scroll Progress Bar -->
   <div class="read-progress-bar" id="readProgress"></div>
 
-  <!-- NAVBAR -->
+  <!-- ============ NAVBAR ============ -->
   <nav class="navbar" id="navbar">
     <div class="container">
-      <a href="#" class="nav-logo">
-         <img src="img/zyndrix-live.png" alt="Zyndrix AI Logo" class="nav-logo-img" width="210" height="60">
+      <a href="#" class="nav-logo" aria-label="Zyndrix - Ir al inicio">
+         <img src="img/zyndrix-live.png?v=LIVE_FINAL" alt="Zyndrix AI Logo" class="nav-logo-img" width="525" height="150" style="height: 90px !important; width: auto !important; max-height: none !important;">
       </a>
       <div class="nav-links" id="navLinks">
         <div class="nav-indicator" id="navIndicator"></div>
@@ -54,11 +114,17 @@
         <a href="#proceso">Proceso</a>
         <a href="#precios">Inversión</a>
         <a href="#demo">Demo</a>
+        <a href="#faq">FAQ</a>
       </div>
       <div class="nav-actions">
-        <a href="#contacto" class="btn btn-primary nav-cta">Hablemos →</a>
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span class="status-text">Network: Optimized</span>
+        </div>
+        <a href="#contacto" class="btn btn-primary nav-cta">Hablemos <span class="btn-icon">→</span></a>
       </div>
-      <button class="mobile-toggle" id="mobileToggle">
+      <a href="#contacto" class="nav-cta-mobile">Contratar</a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">
         <span></span>
         <span></span>
         <span></span>
@@ -66,33 +132,1131 @@
     </div>
   </nav>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero" id="hero">
-      <div class="hero-bg">
-        <canvas id="aiNetworkCanvas"></canvas>
-      </div>
-      <div class="hero-content">
-        <div class="hero-tag-mini reveal">
-          <span class="dot"></span>
-          ARQUITECTURA IA CLASE-ENTERPRISE 
-        </div>
-        <h1 class="hero-title reveal">
-          ZYNDRIX: SOLUCIONES IA DE <span class="gradient-text">ALTO RENDIMIENTO</span>
-        </h1>
-        <p class="hero-subtitle reveal">
-          Creamos ecosistemas autónomos que escalan tu negocio mientras duermes.
-        </p>
-        <div class="hero-cta-group reveal">
-          <a href="#contacto" class="btn-primary-elite magnetism">
-            <span>Escalar Mi Negocio</span>
-          </a>
-          <a href="#precios" class="btn-secondary-elite">
-            <span>Ver Inversión</span>
-          </a>
-        </div>
-      </div>
-    </section>
+  <!-- ============ HERO SECTION ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <canvas id="aiNetworkCanvas"></canvas>
+    </div>
 
-    <!-- EL CONTENIDO COMPLETO SIGUE AQUÍ ABAJO (Restaurado 100%) -->
-    <!-- [Mantenemos las ~1200 líneas de servicios, casos, procesos, e inversión del f4936fc] -->
+    <div class="hero-content">
+      <div class="hero-tag-mini reveal">
+        <span class="dot"></span>
+        ARQUITECTURA IA <span class="tag-divider">|</span> CLASE-ENTERPRISE 
+      </div>
+      <h1 class="hero-title reveal">
+        ZYNDRIX: SOLUCIONES IA DE <span class="gradient-text">ALTO RENDIMIENTO</span>
+      </h1>
+      <p class="hero-subtitle reveal">
+        Creamos ecosistemas autónomos que escalan tu negocio mientras duermes.
+      </p>
+      <div class="hero-cta-group reveal">
+        <a href="#contacto" class="btn-primary-elite magnetic">
+          <span>Escalar Mi Negocio</span>
+          <div class="btn-shine"></div>
+        </a>
+        <a href="#precios" class="btn-secondary-elite magnetic">
+          <span>Ver Inversión</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-number" id="hero-leads-count" data-target="0" data-suffix="+">0</div>
+          <div class="hero-stat-label">Leads Generados</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="99" data-suffix=".9%">0</div>
+          <div class="hero-stat-label">Precisión Algorítmica</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="60" data-suffix="%">0</div>
+          <div class="hero-stat-label">Margen de Mejora Media</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+  
+  <!-- ============ AI INTEGRATIONS MARQUEE ============ -->
+  <div class="logos-marquee">
+    <div class="marquee-fade-left"></div>
+    <div class="marquee-fade-right"></div>
+    <div class="container marquee-header">
+      <p class="logos-strip-title">Potenciado por el Estado del Arte</p>
+    </div>
+    <div class="tech-marquee-v2">
+      <div class="marquee-track">
+        <!-- ChatGPT -->
+        <div class="marquee-item" title="OpenAI ChatGPT">
+          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT" width="32" height="32" loading="lazy">
+          <span>ChatGPT (OpenAI)</span>
+        </div>
+        <!-- Claude -->
+        <div class="marquee-item" title="Anthropic Claude">
+          <img src="https://cdn.simpleicons.org/anthropic/white" alt="Claude" width="32" height="32" loading="lazy">
+          <span>Claude (Anthropic)</span>
+        </div>
+        <!-- Gemini -->
+        <div class="marquee-item" title="Google Gemini">
+          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="32" height="32" loading="lazy">
+          <span>Gemini (Google)</span>
+        </div>
+        <!-- n8n -->
+        <div class="marquee-item" title="n8n.io">
+          <img src="https://cdn.simpleicons.org/n8n" alt="n8n" width="32" height="32" loading="lazy">
+          <span>n8n</span>
+        </div>
+        <!-- LangChain -->
+        <div class="marquee-item" title="LangChain">
+          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" width="32" height="32" loading="lazy">
+          <span>LangChain</span>
+        </div>
+        <!-- Python -->
+        <div class="marquee-item" title="Python">
+          <img src="https://cdn.simpleicons.org/python" alt="Python" width="32" height="32" loading="lazy">
+          <span>Python</span>
+        </div>
+        <!-- React/Next.js -->
+        <div class="marquee-item" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" width="32" height="32" loading="lazy">
+          <span>React / Next.js</span>
+        </div>
+        <!-- PostgreSQL -->
+        <div class="marquee-item" title="PostgreSQL">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" width="32" height="32" loading="lazy">
+          <span>PostgreSQL</span>
+        </div>
+        <!-- Vercel -->
+        <div class="marquee-item" title="Vercel">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" width="32" height="32" loading="lazy">
+          <span>Vercel</span>
+        </div>
+        <!-- AWS/GCP -->
+        <div class="marquee-item" title="Cloud Infra">
+          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" width="32" height="32" loading="lazy">
+          <span>AWS / GCP</span>
+        </div>
+
+        <!-- DUPLICATE FOR INFINITE EFFECT -->
+        <div class="marquee-item" title="OpenAI ChatGPT">
+          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT">
+          <span>ChatGPT (OpenAI)</span>
+        </div>
+        <div class="marquee-item" title="Anthropic Claude">
+          <img src="https://cdn.simpleicons.org/anthropic/white" alt="Claude">
+          <span>Claude (Anthropic)</span>
+        </div>
+        <div class="marquee-item" title="Google Gemini">
+          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini">
+          <span>Gemini (Google)</span>
+        </div>
+        <div class="marquee-item" title="n8n.io">
+          <img src="https://cdn.simpleicons.org/n8n" alt="n8n">
+          <span>n8n</span>
+        </div>
+        <div class="marquee-item" title="LangChain">
+          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain">
+          <span>LangChain</span>
+        </div>
+        <div class="marquee-item" title="Python">
+          <img src="https://cdn.simpleicons.org/python" alt="Python">
+          <span>Python</span>
+        </div>
+        <div class="marquee-item" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js">
+          <span>React / Next.js</span>
+        </div>
+        <div class="marquee-item" title="PostgreSQL">
+          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL">
+          <span>PostgreSQL</span>
+        </div>
+        <div class="marquee-item" title="Vercel">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel">
+          <span>Vercel</span>
+        </div>
+        <div class="marquee-item" title="Cloud Infra">
+          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP">
+          <span>AWS / GCP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROBLEMS SECTION ============ -->
+  <section class="section problems" id="problemas">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">El problema</div>
+        <h2 class="section-title">¿Tu empresa sigue operando en modo manual?</h2>
+        <p class="section-subtitle">
+          Mientras tu competencia automatiza y escala, los procesos manuales 
+          están frenando tu crecimiento y consumiendo tus recursos.
+        </p>
+      </div>
+      <div class="problems-grid">
+        <div class="glass-card problem-card reveal reveal-delay-1">
+          <div class="problem-icon">⏱️</div>
+          <div>
+            <h3>Procesos lentos y repetitivos</h3>
+            <p>Tu equipo pierde horas en tareas que una IA podría completar en segundos. Cada minuto manual es dinero perdido.</p>
+          </div>
+        </div>
+        <div class="glass-card problem-card reveal reveal-delay-2">
+          <div class="problem-icon">📉</div>
+          <div>
+            <h3>Datos sin explotar</h3>
+            <p>Tienes montañas de datos pero ninguna herramienta inteligente para convertirlos en decisiones de negocio rentables.</p>
+          </div>
+        </div>
+        <div class="glass-card problem-card reveal reveal-delay-3">
+          <div class="problem-icon">🔥</div>
+          <div>
+            <h3>Equipo sobrecargado</h3>
+            <p>Tus empleados están atrapados en tareas operativas cuando deberían estar generando valor estratégico para la empresa.</p>
+          </div>
+        </div>
+        <div class="glass-card problem-card reveal reveal-delay-4">
+          <div class="problem-icon">🏃</div>
+          <div>
+            <h3>Competencia más ágil</h3>
+            <p>Mientras deliberas, tu competencia ya implementó IA. Cada día sin automatizar es un día más de ventaja para ellos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION SECTION ============ -->
+  <section class="section solution" id="solucion">
+    <div class="container">
+      <div class="solution-grid">
+        <div class="solution-content reveal">
+          <div class="section-badge">La solución</div>
+          <h2 class="section-title">IA que trabaja para ti,<br>24 horas al día</h2>
+          <p class="section-subtitle">
+            No vendemos promesas. Construimos sistemas de Inteligencia Artificial 
+            que se integran en tu negocio y generan resultados medibles desde el primer mes.
+          </p>
+          <div class="solution-features">
+            <div class="solution-feature">
+              <div class="solution-feature-icon">🤖</div>
+              <p><strong>Agentes inteligentes</strong> que atienden, responden y ejecutan tareas</p>
+            </div>
+            <div class="solution-feature">
+              <div class="solution-feature-icon">⚡</div>
+              <p><strong>Automatizaciones</strong> que eliminan el trabajo repetitivo por completo</p>
+            </div>
+            <div class="solution-feature">
+              <div class="solution-feature-icon">📈</div>
+              <p><strong>Análisis predictivo</strong> que anticipa tendencias y oportunidades</p>
+            </div>
+            <div class="solution-feature">
+              <div class="solution-feature-icon">⚙️</div>
+              <p><strong>Integración total</strong> con tus herramientas y flujos actuales</p>
+            </div>
+          </div>
+        </div>
+        <div class="solution-visual reveal reveal-delay-2">
+          <div class="solution-diagram">
+            <div class="diagram-node active">🏢 Tu Empresa</div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-node highlight">⚡ Motor Zyndrix</div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-nodes-row">
+              <div class="diagram-node">🤖 Agentes</div>
+              <div class="diagram-node">📧 Marketing</div>
+              <div class="diagram-node">📈 Analytics</div>
+            </div>
+            <div class="diagram-arrow">↓</div>
+            <div class="diagram-node active">📊 Resultados x10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES SECTION ============ -->
+  <section class="section" id="servicios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Servicios</div>
+        <h2 class="section-title">Soluciones de IA a medida para tu negocio</h2>
+        <p class="section-subtitle">
+          Cada empresa es única. Por eso diseñamos soluciones personalizadas 
+          que se adaptan a tus objetivos y escalan contigo.
+        </p>
+      </div>
+      <div class="bento-grid services-bento">
+        <!-- Card 1: Agentes Inteligentes (Featured) -->
+        <div class="glass-card bento-item bento-featured reveal">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
+          <div class="bento-content">
+            <div class="bento-tag">Enterprise Tier</div>
+            <h3>Agentes Inteligentes Autónomos</h3>
+            <p>Orquestadores que ejecutan estrategias complejas y escalan operaciones sin límites.</p>
+            <ul class="service-features">
+              <li>Orquestación multi-modelo</li>
+              <li>Memoria persistente de largo plazo</li>
+              <li>Ejecución autónoma de tareas</li>
+              <li>Integración nativa con sistemas core</li>
+            </ul>
+          </div>
+          <div class="bento-visual">
+            <div class="ai-orb-mini"></div>
+          </div>
+        </div>
+
+        <!-- Card 2: Flujos Inteligentes -->
+        <div class="glass-card bento-item reveal reveal-delay-1">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <h3>Flujos Inteligentes</h3>
+          <p>Eliminamos el trabajo repetitivo con arquitecturas reactivas.</p>
+          <ul class="service-features">
+            <li>Lógica condicional avanzada</li>
+            <li>Procesamiento real-time</li>
+          </ul>
+        </div>
+
+        <!-- Card 3: n8n -->
+        <div class="glass-card bento-item reveal reveal-delay-2">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+          <h3>Ecosistema n8n</h3>
+          <p>Conectamos todo tu stack con potencia de IA.</p>
+          <ul class="service-features">
+            <li>+400 conectores nativos</li>
+            <li>Workflows escalables</li>
+          </ul>
+        </div>
+
+        <!-- Card 4: Enterprise (Wide) -->
+        <div class="glass-card bento-item bento-wide reveal reveal-delay-3">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg></div>
+          <div class="bento-content">
+            <h3>Soluciones Enterprise Native</h3>
+            <p>Integración profunda de modelos en sistemas corporativos sin fricciones.</p>
+            <ul class="service-features">
+              <li>Seguridad de grado bancario</li>
+              <li>Despliegue On-premise o Cloud</li>
+              <li>Compliance GDPR/ISO</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 5: Marketing -->
+        <div class="glass-card bento-item reveal reveal-delay-4">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+          <h3>Marketing IA</h3>
+          <p>Optimización de conversión algorítmica.</p>
+          <ul class="service-features">
+            <li>SEO de 3ª generación</li>
+            <li>Copywriting dinámico</li>
+          </ul>
+        </div>
+
+        <!-- Card 6: Contenido -->
+        <div class="glass-card bento-item reveal reveal-delay-5">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div>
+          <h3>Generación High-Fi</h3>
+          <p>Textos y visuales con alma de marca.</p>
+          <ul class="service-features">
+            <li>Video Marketing IA</li>
+            <li>Identidad visual coherente</li>
+          </ul>
+        </div>
+
+        <!-- Card 7: RAG -->
+        <div class="glass-card bento-item reveal reveal-delay-6">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+          <h3>Knowledge Base RAG</h3>
+          <p>IA conectada a tus documentos internos.</p>
+          <ul class="service-features">
+            <li>Búsqueda semántica</li>
+            <li>Bases de datos vectoriales</li>
+          </ul>
+        </div>
+
+        <!-- Card 8: Sales -->
+        <div class="glass-card bento-item reveal reveal-delay-7">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h3>Ventas Autónomas</h3>
+          <p>Agentes optimizados para cualificar y cerrar.</p>
+          <ul class="service-features">
+            <li>Outbound inteligente</li>
+            <li>Integración total con CRM</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPACT SECTION ============ -->
+  <section class="section impact" id="impacto">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Dashboard de Impacto</div>
+        <h2 class="section-title">Resultados Empresariales Cuantificables</h2>
+        <p class="section-subtitle">
+          Nuestra tecnología no solo innova, sino que transforma la cuenta de resultados 
+          mediante la optimización algorítmica y la automatización inteligente.
+        </p>
+      </div>
+      
+      <div class="impact-dashboard">
+        <!-- Métrica 1: Productividad -->
+        <div class="glass-card dashboard-item reveal reveal-delay-1">
+          <div class="item-header">
+            <span class="item-icon">⚡</span>
+            <h3>Productividad</h3>
+          </div>
+          <div class="item-main">
+            <div class="stat-large">+250%</div>
+            <div class="bar-chart-mini">
+              <div class="bar-track-mini"><div class="bar-fill-mini neon" data-width="90%"></div></div>
+            </div>
+          </div>
+          <div class="item-footer">
+            <p><strong>Impacto:</strong> Liberación de +160h mensuales por equipo mediante orquestación de Agentes Autónomos.</p>
+          </div>
+        </div>
+
+        <!-- Métrica 2: Eficiencia -->
+        <div class="glass-card dashboard-item reveal reveal-delay-2">
+          <div class="item-header">
+            <span class="item-icon">📉</span>
+            <h3>Eficiencia de Costes</h3>
+          </div>
+          <div class="item-main">
+            <div class="stat-large">-45%</div>
+            <div class="circular-mini">
+              <svg viewBox="0 0 36 36">
+                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path class="circle" stroke-dasharray="0, 100" data-percent="45" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+            </div>
+          </div>
+          <div class="item-footer">
+            <p><strong>Estrategia:</strong> Reducción de overhead operativo mediante la eliminación de cuellos de botella manuales.</p>
+          </div>
+        </div>
+
+        <!-- Métrica 3: Escalabilidad -->
+        <div class="glass-card dashboard-item reveal reveal-delay-3">
+          <div class="item-header">
+            <span class="item-icon">📈</span>
+            <h3>Escalabilidad</h3>
+          </div>
+          <div class="item-main">
+            <div class="stat-large">10x</div>
+            <div class="pulse-grid">
+              <div class="pulse-node"></div><div class="pulse-node"></div><div class="pulse-node"></div><div class="pulse-node"></div>
+            </div>
+          </div>
+          <div class="item-footer">
+            <p><strong>Resultado:</strong> Capacidad de procesamiento de datos multiplicada por 10 sin incrementar la plantilla fija.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cases" id="casos">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Impacto Real</div>
+        <h2 class="section-title">Nuestros Clientes lo Confirman</h2>
+        <p class="section-subtitle">
+          Resultados medibles y testimonios directos de empresas que han escalado sus operaciones con Zyndrix.
+        </p>
+      </div>
+      <div class="cases-grid">
+        <!-- Caso 1: E-commerce -->
+        <div class="glass-card case-card reveal reveal-delay-1">
+          <div class="case-header">
+            <div class="case-stat">
+              <div class="case-stat-number" data-target="85" data-suffix="%">0</div>
+              <div class="case-stat-label">Reducción Soporte</div>
+            </div>
+            <div class="case-testimonial-author">
+              <img src="img/user-1.png" alt="María Rodríguez" class="case-author-img" loading="lazy" width="48" height="48">
+              <div class="author-info">
+                <span class="author-name">María Rodríguez</span>
+                <span class="author-role">CEO, TechStore Pro</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-body">
+            <h3>Solución de Agentes IA</h3>
+            <p>"Implementaron un agente IA que ahora gestiona el 85% de nuestras consultas. El impacto fue visible desde el segundo mes."</p>
+          </div>
+        </div>
+
+        <!-- Caso 2: SaaS B2B -->
+        <div class="glass-card case-card reveal reveal-delay-2">
+          <div class="case-header">
+            <div class="case-stat">
+              <div class="case-stat-number" data-target="3" data-suffix="x">0</div>
+              <div class="case-stat-label">Más Leads</div>
+            </div>
+            <div class="case-testimonial-author">
+              <img src="img/user-2.png" alt="Carlos López" class="case-author-img" loading="lazy" width="48" height="48">
+              <div class="author-info">
+                <span class="author-name">Carlos López</span>
+                <span class="author-role">Director de Marketing</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-body">
+            <h3>Pipeline Inteligente</h3>
+            <p>"Automatizaron nuestro pipeline de contenido. Pasamos de crear 10 piezas al mes a más de 50 con la misma calidad."</p>
+          </div>
+        </div>
+
+        <!-- Caso 3: Consultora -->
+        <div class="glass-card case-card reveal reveal-delay-3">
+          <div class="case-header">
+            <div class="case-stat">
+              <div class="case-stat-number" data-target="40" data-suffix="h">0</div>
+              <div class="case-stat-label">Ahorradas/sem</div>
+            </div>
+            <div class="case-testimonial-author">
+              <img src="img/user-3.png" alt="Ana García" class="case-author-img" loading="lazy" width="48" height="48">
+              <div class="author-info">
+                <span class="author-name">Ana García</span>
+                <span class="author-role">COO, Innovatech</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-body">
+            <h3>Automatización de Informes</h3>
+            <p>"Hoy automatizamos procesos que antes requerían 3 personas a tiempo completo. Liberamos 40 horas semanales."</p>
+          </div>
+        </div>
+
+        <!-- Caso 4: Logística -->
+        <div class="glass-card case-card reveal reveal-delay-4">
+          <div class="case-header">
+            <div class="case-stat">
+              <div class="case-stat-number" data-target="95" data-suffix="%">0</div>
+              <div class="case-stat-label">Reducción Errores</div>
+            </div>
+            <div class="case-testimonial-author">
+              <img src="img/javier.png" alt="Avatar de Javier Ruiz" class="case-author-img" loading="lazy">
+              <div class="author-info">
+                <span class="author-name">Javier Ruiz</span>
+                <span class="author-role">CEO, LogisTrans</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-body">
+            <h3>Logística con IA</h3>
+            <p>"La automatización de almacenes redujo nuestros errores de inventario en un 95%. Una inversión que se paga sola."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENEFITS SECTION ============ -->
+  <section class="section" id="beneficios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Beneficios</div>
+        <h2 class="section-title">¿Por qué elegir Zyndrix?</h2>
+        <p class="section-subtitle">
+          No somos una consultoría genérica. Somos arquitectos de sistemas de IA 
+          que generan valor tangible para tu negocio.
+        </p>
+      </div>
+      <div class="benefits-grid">
+        <div class="glass-card benefit-card reveal reveal-delay-1">
+          <div class="benefit-icon"><i data-lucide="trending-up"></i></div>
+          <div class="benefit-number">10x</div>
+          <h3>Productividad multiplicada</h3>
+          <p>Nuestras soluciones de IA liberan a tu equipo de tareas repetitivas para que se enfoquen en lo que realmente importa.</p>
+        </div>
+        <div class="glass-card benefit-card reveal reveal-delay-2">
+          <div class="benefit-icon"><i data-lucide="clock"></i></div>
+          <div class="benefit-number">24/7</div>
+          <h3>Operación continua</h3>
+          <p>Los agentes IA no duermen. Tu negocio atiende, responde y ejecuta las 24 horas del día, los 365 días del año.</p>
+        </div>
+        <div class="glass-card benefit-card reveal reveal-delay-3">
+          <div class="benefit-icon"><i data-lucide="bar-chart-3"></i></div>
+          <div class="benefit-number">-40%</div>
+          <h3>Reducción de costes</h3>
+          <p>La automatización inteligente reduce costes operativos hasta un 40% desde los primeros 90 días de implementación.</p>
+        </div>
+        <div class="glass-card benefit-card reveal reveal-delay-4">
+          <div class="benefit-icon"><i data-lucide="zap"></i></div>
+          <div class="benefit-number">2sem</div>
+          <h3>Implementación rápida</h3>
+          <p>Del concepto a la producción en 2 semanas. No meses de consultoría, sino resultados inmediatos y escalables.</p>
+        </div>
+        <div class="glass-card benefit-card reveal reveal-delay-5">
+          <div class="benefit-icon"><i data-lucide="settings-2"></i></div>
+          <div class="benefit-number">100%</div>
+          <h3>Soluciones a medida</h3>
+          <p>Cada proyecto está diseñado específicamente para tu negocio. No usamos plantillas ni soluciones genéricas.</p>
+        </div>
+        <div class="glass-card benefit-card reveal reveal-delay-6">
+          <div class="benefit-icon"><i data-lucide="layers"></i></div>
+          <div class="benefit-number">∞</div>
+          <h3>Escalabilidad total</h3>
+          <p>Nuestras soluciones crecen contigo. Desde una automatización simple hasta un ecosistema completo de IA empresarial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOWCASE SECTION ============ -->
+  <section class="section showcase" id="showcase">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">IA en Acción</div>
+        <h2 class="section-title">Demostraciones en Tiempo Real</h2>
+        <p class="section-subtitle">
+          Mira cómo nuestra tecnología resuelve problemas reales. Automatización, inteligencia y escalabilidad en manos de Zyndrix.
+        </p>
+      </div>
+      <div class="showcase-grid">
+        <!-- Demo 1: Chat Inteligente -->
+        <div class="glass-card showcase-card reveal reveal-delay-1">
+          <div class="video-container">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/soporte_ia.mp4" type="video/mp4">
+            </video>
+            <img src="img/poster-2.png" alt="Demostración de Chat IA" class="video-poster" width="340" height="191" loading="lazy">
+            <div class="video-overlay">
+              <span class="video-tag">Agente de Soporte 24/7</span>
+            </div>
+            <div class="play-hint">
+               <i data-lucide="play-circle"></i> Preview
+            </div>
+          </div>
+          <div class="showcase-info">
+            <h3>Interacción Humana Natural</h3>
+            <p>Nuestros agentes captan el contexto y resuelven dudas complejas sin intervención humana.</p>
+          </div>
+        </div>
+
+        <!-- Demo 2: Automatización n8n -->
+        <div class="glass-card showcase-card reveal reveal-delay-2">
+          <div class="video-container">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/orquestacion_datos.mp4" type="video/mp4">
+            </video>
+            <img src="img/poster-1.png" alt="Demostración de Flujo" class="video-poster" width="340" height="191" loading="lazy">
+            <div class="video-overlay">
+              <span class="video-tag">Orquestación de Datos</span>
+            </div>
+            <div class="play-hint">
+               <i data-lucide="play-circle"></i> Preview
+            </div>
+          </div>
+          <div class="showcase-info">
+            <h3>Flujos n8n de Alto Nivel</h3>
+            <p>Conectamos miles de herramientas para que la información fluya sin fricciones.</p>
+          </div>
+        </div>
+
+        <!-- Demo 3: DASHBOARD DE IMPACTO -->
+        <div class="glass-card showcase-card reveal reveal-delay-3">
+          <div class="video-container">
+            <video class="showcase-video-player" muted loop playsinline preload="none">
+              <source data-src="assets/videos/analitica_predictiva.mp4" type="video/mp4">
+            </video>
+            <img src="img/poster-3.png" alt="Demostración de Dashboard" class="video-poster" width="340" height="191" loading="lazy">
+            <div class="video-overlay">
+              <span class="video-tag">Analítica Predictiva</span>
+            </div>
+            <div class="play-hint">
+               <i data-lucide="play-circle"></i> Preview
+            </div>
+          </div>
+          <div class="showcase-info">
+            <h3>Visualización de Resultados</h3>
+            <p>Monitoriza el impacto real de la IA en tu negocio con dashboards personalizados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS SECTION ============ -->
+  <section class="section process" id="proceso">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Proceso</div>
+        <h2 class="section-title">De la idea al resultado en 4 pasos</h2>
+        <p class="section-subtitle">
+          Un proceso claro, eficiente y transparente. Sin sorpresas, sin retrasos, 
+          con comunicación constante en cada fase.
+        </p>
+      </div>
+      <div class="process-timeline">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-step-number">01</div>
+          <h3>Diagnóstico</h3>
+          <p>Analizamos tus procesos, identificamos oportunidades de automatización y definimos el roadmap de IA para tu empresa.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-step-number">02</div>
+          <h3>Diseño</h3>
+          <p>Arquitectamos la solución técnica perfecta: flujos, agentes, integraciones y métricas de éxito claras y medibles.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="process-step-number">03</div>
+          <h3>Construcción</h3>
+          <p>Desarrollamos e implementamos la solución con sprints ágiles. Ves resultados parciales desde la primera semana.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-4">
+          <div class="process-step-number">04</div>
+          <h3>Optimización</h3>
+          <p>Monitorizamos, ajustamos y escalamos. La IA mejora con cada iteración. Te acompañamos en todo el proceso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING SECTION ============ -->
+  <section class="section pricing" id="precios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Inversión</div>
+        <h2 class="section-title">Planes diseñados para escalar</h2>
+        <p class="section-subtitle">
+          Soluciones de alto rendimiento con precios transparentes. 
+          Escoge el nivel que mejor se adapte a tu fase de crecimiento.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Plan Starter -->
+        <div class="glass-card pricing-card reveal reveal-delay-1">
+          <div class="pricing-header">
+            <h3>Starter</h3>
+            <div class="price-setup">Setup: 499€</div>
+            <div class="setup-note">Pago único inicial por arquitectura e implementación</div>
+            <div class="price">199€<span>/mes</span></div>
+            <p>Elimina tareas manuales y libera +20h/semana de tu equipo operativo.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>1 Workflow Nuclear</li>
+            <li>Soporte Técnico L1</li>
+            <li>Auditoría Técnica Mensual</li>
+            <li>Integración básica WhatsApp</li>
+            <li>Mantenimiento Preventivo</li>
+          </ul>
+          <a href="#contacto" class="btn-primary-elite pricing-btn">
+            <span>Empezar ahora</span>
+            <div class="btn-shine"></div>
+          </a>
+        </div>
+
+        <!-- Plan Scale (Popular) -->
+        <div class="glass-card pricing-card popular reveal reveal-delay-2">
+          <div class="popular-badge">Recomendado</div>
+          <div class="pricing-header">
+            <h3>Scale</h3>
+            <div class="price-setup">Setup: 950€</div>
+            <div class="setup-note">Pago único inicial por arquitectura e implementación</div>
+            <div class="price">450€<span>/mes</span></div>
+            <p>Multiplica tu capacidad de captación x3 sin añadir un solo empleado.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>3 Flujos de trabajo avanzados</li>
+            <li>Agente IA Personalizado (24/7)</li>
+            <li>Base de Conocimiento (RAG)</li>
+            <li>Dashboard de KPIs en tiempo real</li>
+            <li>Soporte prioritario exclusivo</li>
+          </ul>
+          <a href="#contacto" class="btn-primary-elite pricing-btn">
+            <span>Escalar mi negocio</span>
+            <div class="btn-shine"></div>
+          </a>
+        </div>
+
+        <!-- Plan Enterprise -->
+        <div class="glass-card pricing-card reveal reveal-delay-3">
+          <div class="pricing-header">
+            <h3>Enterprise</h3>
+            <div class="price-setup">Setup: Custom</div>
+            <div class="setup-note">Arquitectura de grado industrial</div>
+            <div class="price">A medida</div>
+            <p>Dominio absoluto del mercado con agentes privados y latencia cero.</p>
+          </div>
+          <ul class="pricing-features">
+            <li>Agentes Autónomos Ilimitados</li>
+            <li>Entrenamiento LLM Privado</li>
+            <li>Infraestructura de Alta Latencia</li>
+            <li>Consultoría estratégica 1-a-1</li>
+            <li>SLA Garantizado 99.9%</li>
+          </ul>
+          <a href="#contacto" class="btn-primary-elite pricing-btn">
+            <span>Contactar ventas</span>
+            <div class="btn-shine"></div>
+          </a>
+        </div>
+      </div>
+      
+      <p class="pricing-note reveal">
+        * Todos los planes requieren un <strong>Fee de Configuración inicial</strong> único basado en la arquitectura personalizada.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CTA SECTION ============ -->
+  <section class="section cta-section" id="contacto">
+    <div class="cta-orb" style="width: 400px; height: 400px; background: var(--violet); top: -200px; left: -100px; filter: blur(120px);"></div>
+    <div class="cta-orb" style="width: 300px; height: 300px; background: var(--cyan); bottom: -150px; right: -100px; filter: blur(120px);"></div>
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="section-badge">Empezar ahora</div>
+        <h2 class="section-title">¿Listo para transformar tu negocio con IA?</h2>
+        <p class="section-subtitle" style="margin: 0 auto 16px;">
+          Agenda una consulta gratuita de 30 minutos y descubre cómo la Inteligencia Artificial 
+          puede multiplicar los resultados de tu empresa.
+        </p>
+        <p style="font-size: 0.9rem; color: var(--cyan-light); margin-bottom: 8px;">
+          🎉 Sin compromiso · Análisis personalizado · Propuesta en 48h
+        </p>
+        <form class="cta-form" id="form-v100" onsubmit="handleLeadSubmit(event)">
+          <div class="cta-form-row">
+            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName" aria-required="true" aria-label="Nombre completo">
+            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail" aria-required="true" aria-label="Correo electrónico profesional">
+          </div>
+          <div class="cta-form-row">
+            <input type="tel" class="cta-input" placeholder="Teléfono" id="formPhone" aria-label="Número de teléfono">
+            <select class="cta-input" id="formBudget" aria-label="Presupuesto aproximado">
+              <option value="" disabled selected>Presupuesto mensual aproximado</option>
+              <option value="<1k">&lt; 1.000€</option>
+              <option value="1k-3k">1.000€ - 3.000€</option>
+              <option value="3k-5k">3.000€ - 5.000€</option>
+              <option value=">5k">&gt; 5.000€</option>
+            </select>
+          </div>
+          <input type="text" class="cta-input" placeholder="Nombre de tu empresa" id="formCompany" aria-label="Nombre de la empresa">
+          <select class="cta-input" id="formService" aria-label="Servicio de interés">
+            <option value="" disabled selected>¿Qué servicio te interesa?</option>
+            <option value="agentes">Agentes Inteligentes</option>
+            <option value="automatizacion">Automatización con IA</option>
+            <option value="n8n">Automatizaciones n8n</option>
+            <option value="integracion">Integración de IA Empresarial</option>
+            <option value="marketing">Marketing con IA</option>
+            <option value="contenido">Generación de Contenido</option>
+            <option value="otro">Otro</option>
+          </select>
+          <textarea class="cta-input" placeholder="Cuéntanos brevemente tu proyecto o necesidad..." id="formMessage" aria-label="Descripción del proyecto"></textarea>
+          <button type="submit" class="btn btn-primary" id="formSubmit" aria-label="Enviar solicitud de consulta gratuita">
+            Agenda tu consulta gratuita
+            <span class="btn-icon">→</span>
+          </button>
+          <p class="cta-form-note">🔒 Tu información está segura. No compartimos tus datos con terceros.</p>
+        </form>
+
+        <script>
+          // DIAGNOSTIC SYSTEM v101
+          console.log("DIAGNOSTIC SYSTEM ONLINE");
+          
+          window.handleLeadSubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('formSubmit');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = 'Enviando...';
+            btn.disabled = true;
+
+            const data = {
+              name: document.getElementById('formName').value,
+              email: document.getElementById('formEmail').value
+            };
+
+            try {
+              const res = await fetch(`${window.location.origin}/api/lead`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+              });
+              
+              if (!res.ok) {
+                const errData = await res.json();
+                console.error("API Error Trace:", errData);
+                throw new Error(JSON.stringify(errData));
+              }
+
+              btn.innerHTML = '¡Enviado! ✅';
+              btn.style.backgroundColor = '#10B981';
+              alert('¡Lead recibido correctamente!');
+              document.getElementById('form-v100').reset();
+            } catch (err) {
+              console.warn('CRITICAL REDUNDANCY INVOKED');
+              try {
+                const sRes = await fetch('https://vrvfftftnlspajplqjye.supabase.co/rest/v1/prospects', {
+                  method: 'POST',
+                  headers: { 
+                    'Content-Type': 'application/json',
+                    'apikey': 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
+                    'Authorization': 'Bearer sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE',
+                    'Prefer': 'return=minimal'
+                  },
+                  body: JSON.stringify({
+                    first_name: data.name,
+                    email: data.email,
+                    status: 'New'
+                  })
+                });
+
+                if (!sRes.ok) {
+                   const sErr = await sRes.json();
+                   alert('ERROR SUPABASE: ' + JSON.stringify(sErr));
+                   throw new Error('Fallback failed');
+                }
+
+                btn.innerHTML = '¡Recibido! ✅';
+                btn.style.backgroundColor = '#10B981';
+                document.getElementById('form-v100').reset();
+              } catch (f) {
+                alert('FALLO TOTAL: ' + err.message);
+                btn.innerHTML = '✕ Error';
+                btn.style.backgroundColor = '#EF4444';
+              }
+            } finally {
+              setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.style.backgroundColor = '';
+              }, 5000);
+            }
+          }
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO SECTION ============ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Demo en vivo</div>
+        <h2 class="section-title">Mira la IA en acción</h2>
+        <p class="section-subtitle">
+          Este es un ejemplo real de cómo nuestros agentes interactúan 
+          con los usuarios. Pruébalo tú mismo.
+        </p>
+      </div>
+      <div class="demo-container reveal">
+        <div class="demo-terminal">
+          <div class="demo-terminal-header">
+            <div class="demo-dot"></div>
+            <div class="demo-dot"></div>
+            <div class="demo-dot"></div>
+            <div class="demo-terminal-title">Zyndrix Agent — live demo</div>
+          </div>
+          <div class="demo-chat" id="demoChat">
+            <!-- Messages will be injected by JS -->
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
+          ✨ Demostración automática — Así trabajan nuestros agentes IA
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ TECH SECTION ============ -->
+  <section class="section" id="tecnologias">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge">Stack tecnológico</div>
+        <h2 class="section-title">Tecnologías que potencian nuestras soluciones</h2>
+        <p class="section-subtitle">
+          Trabajamos con las herramientas más avanzadas del mercado 
+          para construir soluciones robustas y escalables.
+        </p>
+      </div>
+    </div>
+    <div class="tech-marquee reveal">
+      <div class="tech-track">
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/openai/ffffff" alt="OpenAI" width="16" height="16" loading="lazy"> OpenAI GPT-4o</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Anthropic" width="16" height="16" loading="lazy"> Claude (Anthropic)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="16" height="16" loading="lazy"> Gemini (Google)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/n8n" alt="n8n" width="16" height="16" loading="lazy"> n8n</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/python" alt="Python" width="16" height="16" loading="lazy"> Python</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" width="16" height="16" loading="lazy"> React / Next.js</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" width="16" height="16" loading="lazy"> PostgreSQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/firebase" alt="Firebase" width="16" height="16" loading="lazy"> Firebase</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" width="16" height="16" loading="lazy"> LangChain</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" width="16" height="16" loading="lazy"> Vercel</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" width="16" height="16" loading="lazy"> AWS / GCP</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker" width="16" height="16" loading="lazy"> Docker</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL" width="16" height="16" loading="lazy"> API REST / GraphQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0" width="16" height="16" loading="lazy"> Auth0</div>
+        <!-- Duplicate for infinite scroll -->
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/openai/ffffff" alt="OpenAI" width="16" height="16" loading="lazy"> OpenAI GPT-4o</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/anthropic/ffffff" alt="Anthropic" width="16" height="16" loading="lazy"> Claude (Anthropic)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="16" height="16" loading="lazy"> Gemini (Google)</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/n8n" alt="n8n" width="16" height="16" loading="lazy"> n8n</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/python" alt="Python" width="16" height="16" loading="lazy"> Python</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" width="16" height="16" loading="lazy"> React / Next.js</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" width="16" height="16" loading="lazy"> PostgreSQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/firebase" alt="Firebase" width="16" height="16" loading="lazy"> Firebase</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" width="16" height="16" loading="lazy"> LangChain</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" width="16" height="16" loading="lazy"> Vercel</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" width="16" height="16" loading="lazy"> AWS / GCP</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker" width="16" height="16" loading="lazy"> Docker</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL" width="16" height="16" loading="lazy"> API REST / GraphQL</div>
+        <div class="tech-item"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0" width="16" height="16" loading="lazy"> Auth0</div>
+      </div>
+        <div class="section-badge">FAQ</div>
+        <h2 class="section-title">Preguntas frecuentes</h2>
+        <p class="section-subtitle">
+          Todo lo que necesitas saber antes de dar el paso 
+          hacia la transformación con Inteligencia Artificial.
+        </p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question">
+            ¿Qué tipo de empresas pueden beneficiarse de la IA?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Cualquier empresa que tenga procesos repetitivos, gestione datos o atienda clientes puede beneficiarse. Desde startups hasta grandes corporaciones. Trabajamos con e-commerce, SaaS, consultoría, marketing, inmobiliarias, clínicas y más.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question">
+            ¿Cuánto tiempo lleva implementar una solución de IA?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Depende de la complejidad. Una automatización simple puede estar lista en 1-2 semanas. Un sistema de agentes inteligentes completo, entre 4-8 semanas. Siempre mostramos resultados parciales desde la primera semana.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question">
+            ¿Necesito conocimientos técnicos para usar las soluciones?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutamente no. Diseñamos interfaces intuitivas que cualquier miembro de tu equipo puede usar. Además, incluimos formación completa y documentación. Nuestras soluciones funcionan de forma autónoma.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-4">
+          <button class="faq-question">
+            ¿Cuál es la inversión típica?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Cada proyecto es único y la inversión depende del alcance. Ofrecemos desde soluciones puntuales asequibles hasta proyectos empresariales completos. La consulta inicial es gratuita y sin compromiso para poder darte un presupuesto exacto.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-5">
+          <button class="faq-question">
+            ¿Qué pasa si la IA comete errores?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Implementamos sistemas de verificación y supervisión humana cuando es necesario. Los agentes tienen "guardarraíles" que previenen errores críticos. Además, la IA mejora con cada interacción durante el proceso de optimización.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal reveal-delay-6">
+          <button class="faq-question">
+            ¿Ofrecen soporte post-implementación?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, todos nuestros proyectos incluyen soporte técnico y un periodo de optimización para asegurar que las soluciones funcionan perfectamente y se adaptan a las necesidades cambiantes de tu negocio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ----- FOOTER (Institutional Elite) ----- -->
+        <footer class="footer">
+        <div class="container overflow-hidden">
+            <div class="footer-grid">
+                <div class="footer-brand" data-reveal="fade-up">
+                    <div class="nav-logo logo">
+                        <img src="img/zyndrix-logo-v16.png" alt="Zyndrix Logo" class="nav-logo-img" width="160" height="54" style="mix-blend-mode: lighten; filter: brightness(1.1);">
+                    </div>
+                    <p>Liderando la industrialización de la Inteligencia Artificial para corporaciones que exigen escalabilidad absoluta y precisión quirúrgica.</p>
+                </div>
+                
+                <div class="footer-column" data-reveal="fade-up" style="transition-delay: 0.1s">
+                    <h4 class="footer-title">Agencia</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">Misión</a></li>
+                        <li><a href="#services">Servicios Elite</a></li>
+                        <li><a href="#impact">Impacto Real</a></li>
+                        <li><a href="/dashboard">Control Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column" data-reveal="fade-up" style="transition-delay: 0.2s">
+                    <h4 class="footer-title">Tecnología</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Neural Core</a></li>
+                        <li><a href="#">Orquestación</a></li>
+                        <li><a href="#">Seguridad IA</a></li>
+                        <li><a href="#">Modelos Propietarios</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column" data-reveal="fade-up" style="transition-delay: 0.3s">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:zyndrixia@gmail.com">zyndrixia@gmail.com</a></li>
+                        <li><a href="https://www.instagram.com/zyndrix.ia/" target="_blank">Instagram</a></li>
+                        <li><a href="https://www.tiktok.com/@zyndrixia3" target="_blank">TikTok</a></li>
+                        <li><a href="https://www.youtube.com/@ZyndrixIA" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 zyndrix.dev AGENCY. Todos los derechos reservados.</p>
+                <div class="footer-legal-links">
+                    <a href="privacidad.html">Privacidad</a>
+                    <a href="terminos.html">Términos</a>
+                    <a href="#">Seguridad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- ============ CHAT WIDGET ============ -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-window-header">
+        <div class="chat-window-avatar">⚡</div>
+        <div class="chat-window-info">
+          <h3>Asistente Zyndrix</h3>
+          <span>● Online ahora</span>
+        </div>
+      </div>
+      <div class="chat-window-messages" id="chatMessages">
+        <div class="demo-message bot" style="opacity:1;transform:none;">
+          <div class="demo-message-avatar">⚡</div>
+          <div class="demo-message-content">¡Hola! 👋 Soy el asistente de Zyndrix. ¿En qué puedo ayudarte hoy?</div>
+        </div>
+      </div>
+      <div class="chat-window-input">
+        <input type="text" placeholder="Escribe tu pregunta..." id="chatInput">
+        <button id="chatSend" aria-label="Enviar mensaje">→</button>
+      </div>
+    </div>
+    <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat">💬</button>
+  </div>
+
+  <script src="landing-script.js?v=MASTER_FIX_99"></script>
+</body>
+</html>
