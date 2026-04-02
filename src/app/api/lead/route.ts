@@ -46,68 +46,49 @@ export async function POST(req: Request) {
       console.error('Supabase Fail:', leadData);
     }
 
-    // 2. DISPARO DE WEBHOOKS (n8n)
-    const isMagnet = body.service?.includes('Blueprint');
+    // 3. RESPUESTA INMEDIATA (Para evitar timeouts en el cliente)
+    const response = NextResponse.json({ 
+      success: true, 
+      id: leadId,
+      processed: true 
+    }, { status: 201, headers: corsHeaders });
+
+    // 4. DISPARO DE WEBHOOKS (En paralelo/fondo)
+    const isMagnet = body.service?.toLowerCase().includes('blueprint');
     const n8nUrl = isMagnet 
       ? 'https://n8n.zyndrix.dev/webhook/leadmagnet'
       : 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
 
-    // Construimos un record robusto
     const recordPayload = {
       id: leadId,
       name: body.name || 'Anónimo',
       email: body.email,
       phone: body.phone || null,
       company_name: body.company_name || null,
-      message: body.message || 'Lead v23',
+      message: body.message || 'Lead v24',
       budget: body.budget || null,
       service: body.service || 'General',
       status: 'new',
-      ...(leadData?.[0] || {}) // Mezclamos con datos reales de Supabase si existen
+      ...(leadData?.[0] || {})
     };
 
-    const payload = {
-      source: body.service || 'landing',
-      record: recordPayload
-    };
-
-    console.log('--- ENVIANDO A WEBHOOKS ---', n8nUrl);
-    
-    // Intentamos el oficial y el de test en paralelo y ESPERAMOS a que terminen
+    const payload = { source: body.service || 'landing', record: recordPayload };
     const webhooks = [n8nUrl, n8nUrl.replace('/webhook/', '/webhook-test/')];
     
-    try {
-      await Promise.all(webhooks.map(async (url) => {
-        try {
-          const wRes = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          console.log(`Webhook Resp [${url.includes('test') ? 'TEST' : 'LIVE'}]:`, wRes.status);
-        } catch (e) {
-          console.error('Error en fetch individual:', url, e);
-        }
-      }));
-    } catch (e) {
-      console.error('Error general en promesas de webhooks:', e);
-    }
+    // No esperamos con await para que el return ocurra ya, pero Next.js mantendrá 
+    // la ejecución un momento si la promesa sigue viva.
+    Promise.all(webhooks.map(url => 
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(e => console.error('E:', url))
+    )).then(() => console.log('Webhooks terminados')).catch(() => {});
 
-    // 3. SEÑAL AL DASHBOARD (Opcional, no bloqueante)
-    fetch('https://n8n.zyndrix.dev/webhook/dashboard-data', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ type: 'lead_in', id: leadId })
-    }).catch(() => {});
-
-    return NextResponse.json({ 
-      success: true, 
-      id: leadId,
-      processed: true 
-    }, { status: 201, headers: corsHeaders });
+    return response;
 
   } catch (err: any) {
-    console.error('CRITICAL ERROR v23:', err.message);
+    console.error('CRITICAL ERROR v24:', err.message);
     return NextResponse.json({ error: 'System error', details: err.message }, { status: 500, headers: corsHeaders });
   }
 }
