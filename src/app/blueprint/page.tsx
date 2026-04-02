@@ -1,48 +1,54 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from "next/image";
-import { Background } from "@/components/common/Background";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { 
   CheckCircle2, ArrowRight, ShieldCheck, Download, 
-  Target, Cpu, Zap, Loader2, Award, ChevronRight, DollarSign,
-  FileSearch, BookOpen, Layout, Rocket
+  Zap, Loader2, DollarSign, Rocket, Shield, Activity, Users, TrendingDown, Scan, Cpu, Radio, Network
 } from "lucide-react";
 
-/**
- * ZYNDRIX LEAD MAGNET V12: "BRAND UNIFY"
- * - Sincronización total con la paleta oficial (globals.css).
- * - Background: #030712 (Deep Obsidian).
- * - Primario: #38bdf8 (Sky Blue).
- * - Secundario: #818cf8 (Indigo).
- * - Glassmorphism Premium: Blur 20px, Saturated.
- */
-
-export default function BlueprintPageV12() {
+export default function BlueprintPage() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', company: '', teamSize: '', challenge: '' });
   const [step, setStep] = useState<'idle' | 'processing' | 'success'>('idle');
   const [progress, setProgress] = useState(0);
+  const [isScanning, setIsScanning] = useState(false);
   
-  // PAIN CALCULATOR STATE
   const [staffSize, setStaffSize] = useState(10);
-  const hourlyRate = 35; // Average hourly cost per employee
-  const monthlyLeak = Math.round(staffSize * hourlyRate * 4.3 * 8 * 0.4); // 40% efficiency leak estimation
+  const hourlyRate = 42; 
+  
+  const getMultiplier = (sector: string) => {
+    switch(sector) {
+      case 'ecommerce': return 1.55; 
+      case 'servicios': return 1.18; 
+      case 'tech': return 1.32;      
+      case 'realestate': return 1.68; 
+      default: return 1.0;
+    }
+  };
+
+  const multiplier = getMultiplier(formData.teamSize);
+  const monthlyLeak = Math.round(staffSize * hourlyRate * 4.3 * 8 * 0.48 * multiplier);
+
+  useEffect(() => {
+    setIsScanning(true);
+    const timer = setTimeout(() => setIsScanning(false), 900);
+    return () => clearTimeout(timer);
+  }, [staffSize, formData.teamSize]);
+
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, -200]);
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.4]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStep('processing');
-    
     const interval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setStep('success'), 400);
-          return 100;
-        }
-        return prev + 10;
+        if (prev >= 100) { clearInterval(interval); setTimeout(() => setStep('success'), 400); return 100; }
+        return prev + 4;
       });
-    }, 150);
+    }, 50);
 
     try {
       await fetch('/api/lead', {
@@ -52,340 +58,185 @@ export default function BlueprintPageV12() {
           name: formData.name, 
           email: formData.email, 
           phone: formData.phone,
-          company_name: formData.company,
-          message: `V2.5 HYBRID - Staff: ${staffSize}, Efficiency Leak: ${monthlyLeak}€, Challenge: ${formData.challenge}`,
-          service: 'Hybrid Audit & Blueprint v2.5'
+          company: formData.company,
+          message: `Staff: ${staffSize}, Sector: ${formData.teamSize}, Fuga: ${monthlyLeak}€, Desafío: ${formData.challenge}`,
+          service: 'Blueprint Diamond 3.0 Final'
         })
       });
     } catch (error) { console.error(error); }
   };
 
   return (
-    <div className="relative min-h-screen text-slate-200 bg-[#030712] overflow-x-hidden font-sans selection:bg-[#38bdf8] selection:text-black">
-      {/* ... styles remain ... */}
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap');
-        
-        :root {
-          --zyndrix-base: #030712;
-          --zyndrix-primary: #38bdf8;
-          --zyndrix-secondary: #818cf8;
-        }
-
-        .font-legacy { font-family: 'Playfair Display', serif; }
-        .font-heading { font-family: 'Space Grotesk', sans-serif; }
-        .font-sans { font-family: 'Inter', sans-serif; }
-        
-        .glass-zyndrix {
-          background: rgba(15, 23, 42, 0.4);
-          backdrop-filter: blur(20px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        }
-
-        .input-zyndrix {
-          width: 100%;
-          background: rgba(15, 23, 42, 0.6);
-          border: 1px solid rgba(56, 189, 248, 0.1);
-          padding: 0.9rem 1.25rem;
-          font-size: 0.85rem;
-          color: white;
-          transition: all 0.3s ease;
-          border-radius: 0.5rem;
-        }
-        .input-zyndrix:focus {
-          outline: none;
-          border-color: var(--zyndrix-primary);
-          box-shadow: 0 0 20px rgba(56, 189, 248, 0.05);
-        }
-        
-        .text-gradient-zyndrix {
-          background: linear-gradient(135deg, var(--zyndrix-primary) 0%, var(--zyndrix-secondary) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        @keyframes float-subtle {
-          0%, 100% { transform: translateY(0) rotate(1deg); }
-          50% { transform: translateY(-10px) rotate(2deg); }
-        }
-        .animate-float-subtle { animation: float-subtle 8s ease-in-out infinite; }
-      `}</style>
-
-      <Background />
+    <div className="relative min-h-screen text-slate-300 overflow-x-hidden font-sans selection:bg-[#38bdf8] selection:text-black" 
+         style={{ 
+           fontFamily: '"Outfit", sans-serif',
+           background: 'radial-gradient(circle at 50% 50%, #0c112b 0%, #03040a 100%)' 
+         }}>
       
-      {/* 1. HEADER */}
-      <header className="py-4 border-b border-white/5 bg-[#030712]/80 sticky top-0 z-50 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
-          <Image 
-            src="/img/zyndrix-live.png" 
-            alt="Zyndrix" 
-            width={240} 
-            height={70} 
-            className="h-16 sm:h-20 w-auto object-contain brightness-110"
-            priority
-          />
-          <div className="hidden lg:flex items-center gap-8">
-             <div className="text-right">
-                <p className="text-[8px] font-black tracking-[0.4em] text-slate-500 uppercase mb-0.5">ESTABLISHED 2024</p>
-                <div className="flex items-center gap-2">
-                   <div className="h-1 w-1 rounded-full bg-[#38bdf8] animate-pulse" />
-                   <p className="text-[10px] font-bold text-white tracking-widest uppercase italic font-legacy">Consultoría Sénior</p>
-                </div>
-             </div>
-             <div className="h-8 w-px bg-white/5" />
-             <div className="flex items-center gap-3 bg-[#38bdf8]/5 px-4 py-2 rounded-lg border border-[#38bdf8]/10">
-                <ShieldCheck size={16} className="text-[#38bdf8]" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-[#38bdf8]/80">Official Asset</span>
-             </div>
+      {/* CINE NOISE TEXTURE */}
+      <div className="fixed inset-0 pointer-events-none z-[60] opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+
+      {/* PARALLAX GRID */}
+      <motion.div style={{ y: backgroundY }} className="fixed inset-0 pointer-events-none z-0 opacity-20">
+        <div className="absolute inset-0" style={{ backgroundImage: `linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px)`, backgroundSize: '60px 60px', maskImage: 'radial-gradient(ellipse at center, black, transparent 90%)' }} />
+      </motion.div>
+
+      {/* HEADER SYNC (120px) */}
+      <nav className="w-full border-b border-white/5 bg-[#030610]/95 sticky top-0 z-[100] backdrop-blur-4xl px-8">
+        <div className="max-w-7xl mx-auto flex justify-between items-center h-24 md:h-[120px]">
+          <a href="/" className="transition-transform active:scale-95">
+             <Image src="/img/zyndrix-live.png" alt="Zyndrix" width={320} height={120} className="h-16 md:h-[120px] w-auto object-contain brightness-110 drop-shadow-[0_0_30px_rgba(56,189,248,0.2)]" priority />
+          </a>
+          <div className="hidden lg:flex items-center gap-12">
+            {['Servicios', 'Casos', 'Proceso'].map((item) => (
+              <a key={item} href={`/#${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-[#38bdf8] transition-all">{item}</a>
+            ))}
+            <a href="/blueprint" className="text-[12px] font-black uppercase tracking-[0.3em] px-8 py-3 bg-[#38bdf8] text-black rounded-full shadow-[0_0_40px_rgba(56,189,248,0.5)] scale-105">BLUEPRINT</a>
+            {['Inversión', 'Demo'].map((item) => (
+              <a key={item} href={`/#${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-[0.4em] text-slate-500 hover:text-white transition-all">{item}</a>
+            ))}
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="hidden xl:flex items-center gap-3 bg-white/5 px-6 py-2 rounded-full border border-white/10 backdrop-blur-xl">
+               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]" />
+               <span className="text-[9px] font-black uppercase tracking-[0.5em] text-emerald-500/80">LATENCY: 14MS</span>
+            </div>
+            <a href="/#contacto" className="bg-gradient-to-r from-[#38bdf8] to-[#818cf8] text-black px-8 py-4 rounded-full text-[11px] font-bold uppercase tracking-[0.3em] hover:shadow-[0_0_30px_rgba(56,189,248,0.4)] transition-all">Hablemos <span className="opacity-40 ml-2">→</span></a>
           </div>
         </div>
-      </header>
+      </nav>
 
-      <main className="max-w-7xl mx-auto px-8 pb-12 pt-6 relative z-10">
+      <main className="max-w-[1440px] mx-auto px-8 pb-32 pt-8 relative z-10">
         
-        {/* HERO ESTRUCTURA ZYNDRIX */}
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
-          
-          <div className="space-y-6 pt-4">
-            <div className="space-y-4">
-               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 text-[#38bdf8] text-[8px] font-black uppercase tracking-[0.5em]">
-                 <Zap size={10} className="fill-[#38bdf8]" /> AUDITORÍA OPERATIVA EN TIEMPO REAL
-               </div>
+        {/* HERO COMPACTO */}
+        <motion.div style={{ opacity: heroOpacity }} className="text-center mb-16 max-w-5xl mx-auto space-y-6">
+           <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[10px] font-bold uppercase tracking-[0.8em] backdrop-blur-xl">
+              <Network size={14} className="animate-spin-slow" /> INFRAESTRUCTURA DE ALTA DISPONIBILIDAD
+           </div>
+           <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
+             Tu Fuga <br /> 
+             es <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-white italic">Escalable.</span>
+           </h1>
+           <p className="text-lg md:text-2xl text-slate-500 max-w-2xl mx-auto font-medium">Diagnóstica, industrializa y privatiza tu margen operativo.</p>
+        </motion.div>
 
-               <h1 className="text-5xl md:text-6xl lg:text-7xl font-legacy leading-[1.1] tracking-tight text-white italic">
-                 Detén las <br /> 
-                 <span className="text-gradient-zyndrix not-italic font-heading">Fugas de</span> <br />
-                 Capital.
-               </h1>
+        {/* MASTER CAPSULE - SIMETRÍA MATEMÁTICA */}
+        <div className="relative group p-[1px] rounded-[4.5rem] overflow-hidden bg-white/10 shadow-massive-3xl">
+           <motion.div animate={{ rotate: 360 }} transition={{ duration: 25, repeat: Infinity, ease: "linear" }} className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_300deg,#38bdf8_360deg)] z-0 opacity-15" />
 
-               <p className="text-lg text-slate-400 leading-relaxed max-w-sm font-medium border-l border-[#38bdf8]/20 pl-6">
-                 Calculamos tu ineficiencia operativa y te entregamos la <span className="text-white italic">Hoja de Ruta de IA</span> para eliminarla.
-               </p>
-            </div>
+           <div className="w-full grid lg:grid-cols-2 gap-0 bg-[#030610]/98 rounded-[4.45rem] overflow-hidden relative z-10 ring-1 ring-white/10 backdrop-blur-4xl shadow-2xl">
+              
+              {/* IZQUIERDA: DIAGNÓSTICO */}
+              <div className="p-12 lg:p-20 space-y-12 border-r border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden">
+                 <div className="space-y-12 relative z-20">
+                    <div className="flex items-center gap-6">
+                       <div className="w-16 h-16 rounded-3xl bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] border border-[#38bdf8]/30 font-black text-2xl shadow-xl">01</div>
+                       <div className="flex flex-col"><h3 className="text-[13px] font-black uppercase tracking-[0.6em] text-white">Análisis de Fuga</h3><span className="text-[11px] text-[#818cf8] font-bold uppercase tracking-[0.4em] pt-1">Módulo: IA_OP_SCANNER_v4</span></div>
+                    </div>
+                    
+                    <div className="space-y-12">
+                       <div className="bg-slate-950/80 p-10 rounded-[4rem] border border-white/5 space-y-10 shadow-inner">
+                          <div className="flex justify-between items-center text-[11px] font-black text-slate-500 uppercase tracking-[0.6em]"><span>Cuerpo Operativo</span><span className="text-[#38bdf8] bg-[#38bdf8]/10 px-6 py-2 rounded-full border border-[#38bdf8]/40 shadow-glow-sm">{staffSize} Miembros</span></div>
+                          <input type="range" min="1" max="100" value={staffSize} onChange={(e) => setStaffSize(parseInt(e.target.value))} className="w-full h-3 bg-white/5 rounded-full appearance-none accent-[#38bdf8] cursor-pointer" />
+                       </div>
+                       
+                       <motion.div className="p-20 rounded-[5rem] bg-gradient-to-br from-[#38bdf8]/15 via-[#030712] to-transparent border border-[#38bdf8]/30 flex flex-col items-center text-center space-y-6 relative overflow-hidden group/box">
+                          <AnimatePresence>{isScanning && <motion.div initial={{ top: "-5%" }} animate={{ top: "105%" }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="absolute left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_40px_#38bdf8] z-30" />}</AnimatePresence>
+                          <TrendingDown size={42} className="text-rose-500 opacity-60 mb-2 animate-bounce" />
+                          <span className="text-[15px] font-black text-[#818cf8] uppercase tracking-[1em] relative z-20">INEFICIENCIA_MENSUAL</span>
+                          <span className="text-8xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>{monthlyLeak.toLocaleString()}€</span>
+                       </motion.div>
+                    </div>
+                 </div>
+                 <div className="relative aspect-[16/10] rounded-[3.5rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <video src="/videos/blueprint-bg.mp4" autoPlay loop muted playsInline className="p-2 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000 scale-105" />
+                    <div className="absolute top-10 left-10 z-20"><Scan className="text-[#38bdf8] animate-pulse" size={32} /></div>
+                 </div>
+              </div>
 
-            {/* PAIN CALCULATOR WIDGET */}
-            <div className="glass-zyndrix rounded-3xl p-8 max-w-sm space-y-6 border-[#38bdf8]/10 relative group overflow-hidden">
-               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity"><DollarSign size={80} /></div>
-               <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">¿Cuántos empleados dependen de procesos manuales?</span>
-                  </div>
-                  <input 
-                    type="range" min="1" max="100" value={staffSize} 
-                    onChange={(e) => setStaffSize(parseInt(e.target.value))}
-                    className="w-full accent-[#38bdf8]"
-                  />
-                  <div className="flex justify-between text-[11px] font-black uppercase">
-                     <span className="text-[#38bdf8]">{staffSize} Personas</span>
-                     <span className="text-rose-500">~{monthlyLeak.toLocaleString()}€ / mes de "fuga"</span>
-                  </div>
-               </div>
-               <p className="text-[9px] text-slate-500 italic leading-snug">Estimación basada en un 40% de tareas administrativas automatizables mediante agentes de IA Zyndrix.</p>
-            </div>
-          </div>
-
-          {/* FORMULARIO ZYNDRIX */}
-          <div className="sticky top-24 z-20">
-            <div className="glass-zyndrix rounded-[2rem] p-0.5 relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#818cf8]/10 blur-[60px]" />
-               <div className="bg-[#030712]/95 rounded-[1.9rem] p-10 relative z-10">
+              {/* DERECHA: FORMULARIO */}
+              <div className="p-12 lg:p-20 bg-gradient-to-tr from-[#38bdf8]/[0.05] via-[#020610] to-transparent flex flex-col justify-start pt-36 relative overflow-hidden">
+                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#38bdf8]/10 rounded-full blur-[180px] animate-pulse pointer-events-none" />
                  
+                 {/* CIFRAS VALIDADAS INTEGRADO */}
+                 <div className="absolute top-12 right-12 flex items-center gap-4 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-3xl opacity-60">
+                    <Users size={16} className="text-emerald-500 font-bold" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">94% Precision Rate</span>
+                 </div>
+
                  <AnimatePresence mode="wait">
                     {step === 'idle' ? (
-                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-                         <div className="space-y-2 text-center border-b border-white/5 pb-6">
-                            <h2 className="text-3xl font-legacy text-white italic leading-tight uppercase tracking-tighter">Iniciar Auditoría IA</h2>
-                            <p className="text-[9px] font-black text-[#38bdf8] tracking-[0.4em] uppercase">Pack: Auditoría + Blueprint + Toolkit</p>
+                      <motion.div key="form" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="space-y-12 relative z-20">
+                         <div className="space-y-6">
+                            <div className="flex items-center gap-4 justify-center lg:justify-start">
+                               <div className="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_15px_#38bdf8]" />
+                               <span className="text-[#38bdf8] text-[13px] font-black tracking-[1.2em] uppercase">Protocolo de Acceso</span>
+                            </div>
+                            <h2 className="text-6xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>Privatizar <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#a78bfa] to-[#f472b6] animate-gradient-x">Escala.</span></h2>
+                            <p className="text-[15px] font-medium text-slate-500 leading-relaxed max-w-sm">Completa el registro corporativo para adquirir hoy los sistemas que permitirán delegar al 100% tus tareas operativas.</p>
                          </div>
 
-                         <form onSubmit={handleSubmit} className="space-y-3">
-                            <div className="space-y-3">
-                               <input required type="text" placeholder="Nombre y Apellido" className="input-zyndrix" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                  <input required type="email" placeholder="Email Corporativo" className="input-zyndrix" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                                  <input required type="tel" placeholder="WhatsApp / Móvil (+34...)" className="input-zyndrix" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
-                               </div>
-                               <input required type="text" placeholder="Empresa / Dominio Web" className="input-zyndrix" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                         <form onSubmit={handleSubmit} className="space-y-5">
+                            <input required type="text" placeholder="Director / Cargo de Alta Responsabilidad" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none focus:border-[#38bdf8]/40 transition-all text-base text-white placeholder:text-slate-600 font-black px-10 shadow-inner" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <input required type="email" placeholder="E-mail Corporativo" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none font-black px-10 text-white placeholder:text-slate-600" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                               <input required type="tel" placeholder="Nº WhatsApp" className="w-full bg-white/[0.03] border border-white/5 p-6 rounded-[2.5rem] outline-none font-black px-10 text-white placeholder:text-slate-600" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
                             </div>
-                            
-                            <div className="grid grid-cols-2 gap-3">
-                               <select required className="input-zyndrix text-[8px] uppercase font-black tracking-widest bg-[#0f172a] appearance-none" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
-                                  <option value="" disabled>Sector</option>
-                                  <option value="ecommerce">E-commerce</option>
+                            <div className="grid grid-cols-2 gap-4">
+                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.5rem] text-[11px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-400 cursor-pointer shadow-xl appearance-none text-center" value={formData.teamSize} onChange={(e) => setFormData({...formData, teamSize: e.target.value})}>
+                                  <option value="" disabled>Sector Operativo</option>
+                                  <option value="ecommerce">E-commerce / Retail</option>
                                   <option value="servicios">Servicios B2B</option>
-                                  <option value="industrial">Industrial</option>
+                                  <option value="tech">Software / SaaS</option>
+                                  <option value="realestate">Real Estate / Legal</option>
                                 </select>
-                               <select required className="input-zyndrix text-[8px] uppercase font-black tracking-widest bg-[#0f172a] appearance-none" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
-                                  <option value="" disabled>Prioridad</option>
-                                  <option value="leads">Captar Leads</option>
-                                  <option value="admin">Quitar Admin</option>
-                                  <option value="scaling">Escalar Ops</option>
+                               <select required className="w-full bg-[#030612] border border-white/10 p-5 rounded-[2.5rem] text-[11px] font-black uppercase tracking-[0.2em] outline-none focus:border-[#38bdf8]/40 text-slate-400 cursor-pointer shadow-xl appearance-none text-center" value={formData.challenge} onChange={(e) => setFormData({...formData, challenge: e.target.value})}>
+                                  <option value="" disabled>Prioridad de Mejora</option>
+                                  <option value="leads">Captación AI 24/7</option>
+                                  <option value="admin">Quitar Carga Operativa</option>
+                                  <option value="scale">Escalar sin Contratar</option>
                                </select>
                             </div>
-
-                            <button type="submit" className="w-full py-4.5 bg-[#38bdf8] text-black font-black uppercase text-[10px] tracking-[0.4em] hover:bg-white transition-all duration-500 flex items-center justify-center gap-3 mt-4 group h-14 shadow-2xl shadow-[#38bdf8]/20">
-                               OBTENER RECURSOS <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
+                            <motion.button whileHover={{ scale: 1.02, boxShadow: "0 0 60px rgba(56,189,248,0.5)" }} whileTap={{ scale: 0.98 }} type="submit" className="w-full py-8 bg-[#38bdf8] text-black font-black uppercase text-lg tracking-[0.8em] transition-all duration-700 flex items-center justify-center gap-6 mt-8 rounded-[3rem] group relative shadow-2xl">
+                               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12" />
+                               GENERAR BLUEPRINT <ArrowRight size={32} className="group-hover:translate-x-4 transition-transform duration-500" />
+                            </motion.button>
                          </form>
-
-                         <div className="pt-6 border-t border-white/5 flex flex-col items-center text-center space-y-3 opacity-60 grayscale hover:grayscale-0 transition-all duration-1000">
-                            <div className="flex -space-x-1.5">
-                               {[1,2,3].map(i => (
-                                 <div key={i} className="w-6 h-6 rounded-full border border-black bg-slate-800 overflow-hidden ring-1 ring-white/10 text-[6px] flex items-center justify-center font-bold text-slate-500">
-                                    <Image src={`/img/user-${i}.png`} alt="Client" width={24} height={24} className="w-full h-full object-cover" />
-                                 </div>
-                               ))}
-                               <div className="w-6 h-6 rounded-full border border-black bg-slate-900 overflow-hidden ring-1 ring-white/10 flex items-center justify-center text-[7px] font-black text-primary italic">
-                                  +
-                               </div>
-                            </div>
-                            <p className="text-[7px] text-slate-500 font-bold uppercase tracking-widest leading-none italic italic">Sincronización de Procesos Zyndrix ©</p>
-                         </div>
                       </motion.div>
                     ) : step === 'processing' ? (
-                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-24 text-center space-y-8">
-                         <div className="relative w-16 h-16 mx-auto">
-                            <div className="absolute inset-0 border border-white/5 rounded-full" />
-                            <svg className="absolute inset-0 rotate-[-90deg] w-full h-full" viewBox="0 0 100 100">
-                               <circle cx="50" cy="50" r="48" fill="none" stroke="#38bdf8" strokeWidth="4" strokeDasharray="301" strokeDashoffset={301 - (3.01 * progress)} className="transition-all duration-300 ease-out" />
-                            </svg>
-                            <Loader2 className="animate-spin text-[#38bdf8] absolute inset-0 m-auto" size={20} />
+                      <motion.div key="processing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-24 text-center space-y-16 flex flex-col items-center justify-center relative z-20">
+                         <div className="relative w-48 h-48">
+                            <div className="absolute inset-0 border-[14px] border-[#38bdf8]/5 rounded-full" />
+                            <div className="absolute inset-0 border-[14px] border-t-[#38bdf8] rounded-full animate-spin shadow-[0_0_60px_rgba(56,189,248,0.5)]" />
+                            <Cpu className="absolute inset-0 m-auto text-[#38bdf8] animate-pulse" size={64} />
                          </div>
-                         <div className="space-y-1">
-                            <p className="text-white text-[9px] font-black uppercase tracking-[0.4em]">Auditando...</p>
-                            <p className="text-[#38bdf8] text-[8px] font-bold tracking-[0.2em]">{progress}%</p>
-                         </div>
+                         <p className="text-[#38bdf8] text-[20px] font-black uppercase tracking-[1.6em] animate-pulse">OPTIMIZANDO: {progress}%</p>
                       </motion.div>
                     ) : (
-                      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="py-12 text-center space-y-8">
-                         <div className="relative w-20 h-20 mx-auto mb-6">
-                            <motion.div 
-                              initial={{ scale: 0 }} animate={{ scale: 1 }}
-                              className="absolute inset-0 bg-[#38bdf8] rounded-[24px] blur-2xl opacity-20"
-                            />
-                            <div className="relative w-full h-full bg-[#030712] rounded-[24px] border border-[#38bdf8]/30 flex items-center justify-center text-[#38bdf8] shadow-2xl shadow-black">
-                               <CheckCircle2 size={32} strokeWidth={1.5} />
-                            </div>
-                         </div>
-
-                         <div className="space-y-3">
-                            <div className="text-[8px] font-black text-[#38bdf8] tracking-[0.6em] uppercase">Auditoría Iniciada con Éxito</div>
-                            <h3 className="text-3xl font-legacy text-white italic tracking-tighter uppercase leading-none">Acceso Validado</h3>
-                            <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-[240px] mx-auto">
-                              Tu informe de auditoría se está procesando. Mientras tanto, descarga tu pack de bienvenida:
-                            </p>
-                         </div>
-
-                         <div className="flex flex-col gap-3 pt-4">
-                            <a 
-                              href="/pdf/zyndrix-blueprint-2026.pdf" 
-                              download 
-                              className="w-full flex items-center justify-between bg-white text-black px-6 py-4 font-black uppercase text-[9px] tracking-[0.3em] hover:bg-[#38bdf8] transition-all group"
-                            >
-                              1. EL BLUEPRINT MAESTRO <Download size={16} />
-                            </a>
-                            <a 
-                              href="#" 
-                              className="w-full flex items-center justify-between bg-white/5 border border-white/10 text-white px-6 py-4 font-black uppercase text-[9px] tracking-[0.3em] hover:bg-white/10 transition-all group"
-                            >
-                              2. TOOLKIT DE PROMPTS <ArrowRight size={16} />
-                            </a>
-                         </div>
-
-                         <div className="flex items-center justify-center gap-2 opacity-30 mt-6 group cursor-default">
-                           <div className="h-0.5 w-4 bg-slate-700" />
-                           <span className="text-[7px] font-bold text-slate-500 uppercase tracking-[0.2em] group-hover:text-[#38bdf8] transition-colors">Zyndrix Hybrid Asset</span>
-                           <div className="h-0.5 w-4 bg-slate-700" />
-                         </div>
+                      <motion.div key="success" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="py-20 text-center space-y-16 relative z-20">
+                         <div className="w-48 h-48 bg-gradient-to-br from-[#38bdf8] to-[#c084fc] rounded-[4.5rem] mx-auto flex items-center justify-center text-black shadow-massive animate-pulse"><CheckCircle2 size={100} strokeWidth={2.5} /></div>
+                         <h3 className="text-8xl font-black text-white tracking-tighter uppercase leading-none" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>ACCESO <br/><span className="text-[#38bdf8]">LIBERADO</span></h3>
+                         <motion.a whileHover={{ x: 20 }} href="/pdf/zyndrix-blueprint-2026.pdf" download className="flex items-center justify-between bg-white text-black px-16 py-8 font-black uppercase text-[16px] tracking-[0.6em] hover:bg-[#38bdf8] transition-all rounded-[3.5rem] shadow-heavy">DESCARGAR MANUAL <Download size={36} /></motion.a>
                       </motion.div>
                     )}
                  </AnimatePresence>
-               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* 2. SUCCESS REPLICA: ARQUITECTURA DEL ÉXITO (BENTO GRID) */}
-        <section className="mt-40 mb-20">
-           <div className="text-center mb-16 space-y-3">
-              <h2 className="text-4xl md:text-5xl font-legacy text-white italic leading-none uppercase tracking-tighter">Tu Ecosistema de Automatización</h2>
-              <p className="text-[9px] font-black text-slate-500 tracking-[0.5em] uppercase">Los 3 pilares del Pack Híbrido</p>
-              <div className="h-0.5 w-16 bg-gradient-to-r from-[#38bdf8] to-[#818cf8] mx-auto rounded-full" />
-           </div>
-
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Asset 1: The Audit */}
-              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-[#38bdf8]/10">
-                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#38bdf8]/5 rounded-full blur-3xl" />
-                 <div className="relative z-10 space-y-6">
-                    <div className="w-12 h-12 rounded-xl bg-[#38bdf8]/10 border border-[#38bdf8]/20 flex items-center justify-center text-[#38bdf8]">
-                       <FileSearch size={24} />
-                    </div>
-                    <h3 className="text-2xl font-legacy text-white italic">Auditoría Operativa</h3>
-                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">Informe detallado detectando fugas de rendimiento en tu embudo de ventas y atención al cliente.</p>
+                 {/* VÍDEO DERECHA SIMÉTRICO */}
+                 <div className="absolute bottom-16 left-16 right-16 aspect-[16/10] rounded-[4rem] overflow-hidden border-2 border-white/5 shadow-2xl z-10 opacity-50 hover:opacity-100 transition-opacity">
+                    <video src="/videos/Futuristic_AI_Automation_Control_Room (1).mp4" autoPlay loop muted playsInline className="p-4 w-full h-full object-cover scale-110 opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020610] via-transparent to-transparent" />
+                    <div className="absolute top-10 left-10"><ShieldCheck className="text-emerald-500" size={24} /></div>
                  </div>
-                 <div className="text-[8px] font-black uppercase text-[#38bdf8] tracking-widest">INFORME PERSONALIZADO</div>
-              </div>
-
-              {/* Asset 2: The Blueprint */}
-              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-[#818cf8]/10">
-                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#818cf8]/5 rounded-full blur-3xl" />
-                 <div className="relative z-10 space-y-6">
-                    <div className="w-12 h-12 rounded-xl bg-[#818cf8]/10 border border-[#818cf8]/20 flex items-center justify-center text-[#818cf8]">
-                       <Layout size={24} />
-                    </div>
-                    <h3 className="text-2xl font-legacy text-white italic">Blueprint Estratégico</h3>
-                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">El manual de ingeniería de agentes IA para escalar tu infraestructura sin aumentar el headcount.</p>
-                 </div>
-                 <div className="text-[8px] font-black uppercase text-[#818cf8] tracking-widest">MAPA DE ESCALADO</div>
-              </div>
-
-              {/* Asset 3: The Toolkit */}
-              <div className="glass-zyndrix rounded-[2.5rem] p-10 flex flex-col justify-between group h-[340px] relative overflow-hidden border-white/5">
-                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full blur-3xl" />
-                 <div className="relative z-10 space-y-6">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
-                       <Rocket size={24} />
-                    </div>
-                    <h3 className="text-2xl font-legacy text-white italic">Niche Toolkit</h3>
-                    <p className="text-xs text-slate-400 font-medium leading-relaxed opacity-80">Biblioteca de prompts de alta fidelidad y plantillas de Make.com listas para desplegar.</p>
-                 </div>
-                 <div className="text-[8px] font-black uppercase text-slate-500 tracking-widest">ACTIVOS DE DESPLIEGUE</div>
               </div>
            </div>
-        </section>
-
-        {/* STATS FINALES */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3">
-           {[
-             { t: "EFICIENCIA IA", v: "98.2%", d: "Precisión de respuesta" },
-             { t: "PROYECTADO", v: "4.5x", d: "ROI del primer trimestre" },
-             { t: "AUTONOMÍA", v: "100%", d: "Flujos desatendidos" },
-           ].map((stat, i) => (
-             <div key={i} className="bg-white/[0.01] border border-white/5 p-5 rounded-lg text-center space-y-1 hover:bg-[#38bdf8]/5 transition-all group">
-                <p className="text-[7px] font-black text-slate-600 tracking-[0.3em] uppercase group-hover:text-[#38bdf8] transition-colors">{stat.t}</p>
-                <p className="text-3xl font-legacy italic text-white leading-none">{stat.v}</p>
-                <p className="text-[8px] font-bold text-slate-600 tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-500">{stat.d}</p>
-             </div>
-           ))}
         </div>
-
       </main>
 
-      <footer className="py-10 px-8 border-t border-white/5 bg-[#030712]">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
-          <Image src="/img/zyndrix-live.png" alt="Zyndrix" width={180} height={50} className="h-7 w-auto opacity-10 grayscale" />
-          <div className="flex flex-wrap justify-center gap-8 text-[7px] font-black text-slate-800 tracking-[0.5em] uppercase">
-             <span>Strategic Consulting</span>
-             <span className="w-1 h-1 rounded-full bg-slate-800" />
-             <span>Security Protocol</span>
-             <span className="w-1 h-1 rounded-full bg-slate-800" />
-             <span>Enterprise AI Solutions</span>
-          </div>
-          <p className="text-[7px] text-slate-900 font-bold tracking-[1em] uppercase">ZYNDRIX AGENCY • EST. 2024</p>
-        </div>
-      </footer>
+      <footer className="py-24 text-center border-t border-white/5 opacity-50"><p className="text-[13px] font-black text-slate-600 tracking-[3em] uppercase">ZYNDRIX • ARQUITECTURA DE AUTONOMÍA</p></footer>
+      <style jsx>{`
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 12s linear infinite; }
+      `}</style>
     </div>
   );
 }
