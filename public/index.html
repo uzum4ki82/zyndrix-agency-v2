@@ -2,455 +2,263 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zyndrix: Agencia líder en Inteligencia Artificial y automatización empresarial. Creamos agentes IA, automatizamos procesos y transformamos negocios con tecnología de vanguardia.">
-  <meta name="keywords" content="inteligencia artificial, automatización, agentes IA, n8n, marketing automation, IA empresarial, transformación digital">
-  <meta name="author" content="Zyndrix">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Zyndrix | Agencia de IA & Automatización — Soluciones de Élite</title>
+  <meta name="description" content="Agencia líder en inteligencia artificial y automatización para empresas. Optimizamos procesos y escalamos resultados con tecnología de vanguardia.">
   
-  <!-- Performance Optimization: Resource Hints -->
+  <!-- REGLA DE ORO: PRE-CONEXIÓN PARA VELOCIDAD EXTREMA -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   
-  <!-- Preload Optimized Fonts (LCP Speed Fix) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Space+Grotesk:wght@300;700&display=swap">
-  
-  <!-- Preload Critical Assets (RELIABLE LCP FIX) -->
-  <link rel="preload" href="img/zyndrix-live.png?v=LIVE_FINAL" as="image" fetchpriority="high">
-  
-  <!-- Open Graph / Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zyndrix.dev/">
-  <meta property="og:title" content="Zyndrix — Agencia de Inteligencia Artificial">
-  <meta property="og:description" content="Diseñamos el futuro de tu empresa con IA. Automatización inteligente y agentes autónomos para resultados exponenciales.">
-  <meta property="og:image" content="img/zyndrix-live.png">
-  <meta property="og:site_name" content="Zyndrix">
+  <!-- LCP PRELOAD: EL LOGO ES SAGRADO (Corregido a zyndrix-live.png) -->
+  <link rel="preload" as="image" href="zyndrix-live.png" fetchpriority="high">
 
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#04040A">
-  <link rel="canonical" href="https://zyndrix.dev/">
-  <title>Zyndrix — Agencia de Inteligencia Artificial</title>
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-60FX6KBH7Q"></script>
-  <script src="https://unpkg.com/lucide@latest" defer></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-60FX6KBH7Q');
-  </script>
-
-  <link rel="stylesheet" href="styles.css?v=29.5">
-  <link rel="icon" type="image/png" href="favicon.png?v=3">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
-  <link rel="shortcut icon" href="favicon.ico?v=3" type="image/x-icon">
+  <!-- ==============================================
+       CSS CRÍTICO (99% PageSpeed Optimization)
+       ============================================== -->
   <style>
-    body { background-color: #04040A !important; overflow-x: hidden; }
-    .hero { background: transparent !important; position: relative; z-index: 10; }
-    .nav-logo-img { max-height: 54px !important; width: 140px !important; height: auto !important; aspect-ratio: 3.5/1; }
-    /* Instant Content Override for PageSpeed 99% */
-    .hero-title, .hero-tag-mini, .hero-subtitle { opacity: 1 !important; transform: none !important; visibility: visible !important; }
-    .service-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 245, 255, 0.1); margin-bottom: 20px; }
-    .service-icon svg { width: 24px; height: 24px; color: var(--cyan); }
-    .logos-marquee { opacity: 1 !important; visibility: visible !important; }
-  </style>
-</head>
-<body class="loading">
-  <!-- Scroll Progress Bar -->
-  <div class="read-progress-bar" id="readProgress"></div>
+    /* Variables de Élite */
+    :root {
+      --bg-primary: #020b0d;
+      --bg-secondary: #04161a;
+      --primary: #2DD4BF;
+      --primary-glow: rgba(45, 212, 191, 0.2);
+      --cyan: #2DD4BF;
+      --violet: #A855F7;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --transition-base: 0.3s ease;
+      --radius-full: 9999px;
+    }
 
-  <!-- ============ NAVBAR ============ -->
-  <nav class="navbar" id="navbar">
+    /* Reset Crítico para evitar Saltos de Diseño (CLS) */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { 
+      width: 100%; 
+      max-width: 100vw; 
+      overflow-x: hidden; 
+      background: var(--bg-primary); 
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Estructura Base del Hero para Pintado Instantáneo (FCP) */
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 40px; width: 100%; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 15px 0; background: transparent; width: 100%;
+    }
+    .nav-logo-img { height: 68px; width: auto; object-fit: contain; }
+    
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; 
+      justify-content: center; text-align: center; position: relative;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 860px; padding: 0 24px; }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+      line-height: 1.1; margin-bottom: 24px; color: #fff;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #2DD4BF 0%, #3B82F6 50%, #A855F7 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); margin-bottom: 40px; }
+    
+    /* Reveal forzar visibilidad inmediata de los elementos críticos */
+    .reveal { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+    
+    /* Placeholder para evitar CLS en el canvas */
+    #aiNetworkCanvas { position: absolute; inset: 0; height: 100vh; width: 100%; z-index: 1; pointer-events: none; opacity: 0.3; }
+
+    /* Animación mínima para el Hero */
+    @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-tag-mini, .hero h1, .hero-subtitle, .hero-ctas { animation: fade-up 0.8s ease both; }
+  </style>
+
+  <!-- CARGA DIFERIDA DE FUENTES & CSS (Anti-Blocking) -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles.css?v=31.0" media="print" onload="this.media='all'">
+  
+  <link rel="icon" href="zyndrix-logo.png">
+</head>
+<body>
+
+  <div class="read-progress-bar"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar reveal">
     <div class="container">
-      <a href="#" class="nav-logo" aria-label="Zyndrix - Ir al inicio">
-         <img src="img/zyndrix-live.png?v=LIVE_FINAL" 
-              alt="Zyndrix AI Logo" 
-              class="nav-logo-img" 
-              width="240" 
-              height="68" 
-              fetchpriority="high" 
-              decoding="sync">
+      <a href="/" class="nav-logo">
+        <img src="zyndrix-live.png" alt="Zyndrix Logo" class="nav-logo-img" width="240" height="68" fetchpriority="high">
       </a>
-      <div class="nav-links" id="navLinks">
-        <div class="nav-indicator" id="navIndicator"></div>
-        <a href="#servicios">Servicios</a>
-        <a href="#casos">Casos</a>
-        <a href="#proceso">Proceso</a>
-        <a href="/blueprint" class="nav-highlight">BLUEPRINT</a>
-        <a href="#precios">Inversión</a>
-        <a href="#showcase">Demo</a>
-        <a href="#faq">FAQ</a>
+      
+      <div class="nav-links">
+        <div class="nav-indicator"></div>
+        <a href="#soluciones" class="active">Soluciones</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#blueprint">Blueprint</a>
+        <a href="#contacto">Contacto</a>
       </div>
+
       <div class="nav-actions">
-        <div class="status-indicator">
+        <a href="/dashboard" class="status-indicator">
           <span class="status-dot"></span>
-          <span class="status-text">Network: Ultra-Speed</span>
-        </div>
-        <a href="#contacto" class="btn btn-primary nav-cta">Hablemos <span class="btn-icon">→</span></a>
+          <span class="status-text">Panel Online</span>
+        </a>
+        <a href="#contacto" class="btn-primary-elite nav-cta">
+          <span>CONSULTA GRATIS</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      <a href="/blueprint" class="nav-cta-mobile" style="margin-right: 10px; background: rgba(56, 189, 248, 0.1); color: var(--cyan);">Blueprint</a>
-      <a href="#contacto" class="nav-cta-mobile">Contratar</a>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </nav>
 
-  <!-- ============ HERO SECTION ============ -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-orb hero-orb-3"></div>
+  <!-- MAIN HERO -->
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-bg">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+      </div>
+      
       <canvas id="aiNetworkCanvas"></canvas>
-    </div>
-
-    <div class="hero-content">
-      <div class="hero-tag-mini">
-        <span class="dot"></span>
-        ARQUITECTURA IA <span class="tag-divider">|</span> CLASE-ENTERPRISE 
-      </div>
-      <h1 class="hero-title">
-        ZYNDRIX: SOLUCIONES IA DE <span class="gradient-text">ALTO RENDIMIENTO</span>
-      </h1>
-      <p class="hero-subtitle">
-        Creamos ecosistemas autónomos que escalan tu negocio mientras duermes.
-      </p>
-      <div class="hero-cta-group">
-        <a href="#contacto" class="btn-primary-elite magnetic">
-          <span>Escalar Mi Negocio</span>
-          <div class="btn-shine"></div>
-        </a>
-        <a href="#precios" class="btn-secondary-elite magnetic">
-          <span>Ver Inversión</span>
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-number" id="hero-leads-count" data-target="0" data-suffix="+">0</div>
-          <div class="hero-stat-label">Leads Generados</div>
+      
+      <div class="hero-content">
+        <div class="hero-tag-mini">
+          <span class="dot"></span>
+          <span>SISTEMAS OPERATIVOS DE IA v2.8</span>
+          <span class="tag-divider">|</span>
+          <span class="gradient-text">ULTRA FAST</span>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-number" data-target="99" data-suffix=".9%">0</div>
-          <div class="hero-stat-label">Precisión Algorítmica</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-number" data-target="60" data-suffix="%">0</div>
-          <div class="hero-stat-label">Margen de Mejora Media</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="hero-scroll-line"></div>
-    </div>
-  </section>
-  
-  <!-- ============ AI INTEGRATIONS MARQUEE ============ -->
-  <div class="logos-marquee">
-    <div class="marquee-fade-left"></div>
-    <div class="marquee-fade-right"></div>
-    <div class="container marquee-header">
-      <p class="logos-strip-title">Potenciado por el Estado del Arte</p>
-    </div>
-    <div class="tech-marquee-v2">
-      <div class="marquee-track">
-        <div class="marquee-item" title="OpenAI ChatGPT">
-          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT" width="32" height="32" loading="lazy">
-          <span>ChatGPT (OpenAI)</span>
-        </div>
-        <div class="marquee-item" title="Anthropic Claude">
-          <img src="https://cdn.simpleicons.org/anthropic/white" alt="Claude" width="32" height="32" loading="lazy">
-          <span>Claude (Anthropic)</span>
-        </div>
-        <div class="marquee-item" title="Google Gemini">
-          <img src="https://cdn.simpleicons.org/googlegemini" alt="Gemini" width="32" height="32" loading="lazy">
-          <span>Gemini (Google)</span>
-        </div>
-        <div class="marquee-item" title="n8n.io">
-          <img src="https://cdn.simpleicons.org/n8n" alt="n8n" width="32" height="32" loading="lazy">
-          <span>n8n</span>
-        </div>
-        <div class="marquee-item" title="LangChain">
-          <img src="https://cdn.simpleicons.org/langchain/ffffff" alt="LangChain" width="32" height="32" loading="lazy">
-          <span>LangChain</span>
-        </div>
-        <div class="marquee-item" title="Python">
-          <img src="https://cdn.simpleicons.org/python" alt="Python" width="32" height="32" loading="lazy">
-          <span>Python</span>
-        </div>
-        <div class="marquee-item" title="Next.js">
-          <img src="https://cdn.simpleicons.org/nextdotjs/ffffff" alt="Next.js" width="32" height="32" loading="lazy">
-          <span>React / Next.js</span>
-        </div>
-        <div class="marquee-item" title="PostgreSQL">
-          <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" width="32" height="32" loading="lazy">
-          <span>PostgreSQL</span>
-        </div>
-        <div class="marquee-item" title="Vercel">
-          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel" width="32" height="32" loading="lazy">
-          <span>Vercel</span>
-        </div>
-        <div class="marquee-item" title="Cloud Infra">
-          <img src="https://cdn.simpleicons.org/googlecloud" alt="GCP" width="32" height="32" loading="lazy">
-          <span>AWS / GCP</span>
-        </div>
-        <!-- Infinite duplication -->
-        <div class="marquee-item" title="OpenAI ChatGPT">
-          <img src="https://cdn.simpleicons.org/openai/white" alt="ChatGPT">
-          <span>ChatGPT (OpenAI)</span>
-        </div>
-        <div class="marquee-item" title="n8n.io">
-          <img src="https://cdn.simpleicons.org/n8n" alt="n8n">
-          <span>n8n</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ PROBLEMS SECTION ============ -->
-  <section class="section problems" id="problemas">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-badge">El problema</div>
-        <h2 class="section-title">¿Tu empresa sigue operando en modo manual?</h2>
-        <p class="section-subtitle">
-          Mientras tu competencia automatiza y escala, los procesos manuales 
-          están frenando tu crecimiento y consumiendo tus recursos.
+        
+        <h1 class="reveal">
+          Escala tu Agencia con <br>
+          <span class="gradient-text">Inteligencia Radical</span>
+        </h1>
+        
+        <p class="hero-subtitle reveal">
+          Diseñamos, implementamos y operamos ecosistemas de IA que sustituyen procesos manuales por eficiencia pura. Crecimiento sin límites técnicos.
         </p>
-      </div>
-      <div class="problems-grid">
-        <div class="glass-card problem-card reveal">
-          <div class="problem-icon">⏱️</div>
-          <div>
-            <h3>Procesos lentos y repetitivos</h3>
-            <p>Tu equipo pierde horas en tareas que una IA podría completar en segundos.</p>
-          </div>
+        
+        <div class="hero-ctas reveal">
+          <a href="/blueprint" class="btn-primary-elite">
+            <span>VER BLUEPRINT</span>
+            <div class="btn-shine"></div>
+          </a>
+          <a href="#contacto" class="btn-secondary-elite">
+            <span>HABLAR CON EXPERTO</span>
+          </a>
         </div>
-        <div class="glass-card problem-card reveal">
-          <div class="problem-icon">📉</div>
-          <div>
-            <h3>Datos sin explotar</h3>
-            <p>Tienes montañas de datos pero ninguna herramienta inteligente para convertirlos en beneficio.</p>
+        
+        <div class="hero-stats reveal">
+          <div class="hero-stat">
+            <div class="hero-stat-number">+85%</div>
+            <div class="hero-stat-label">Eficiencia Operativa</div>
           </div>
-        </div>
-        <div class="glass-card problem-card reveal">
-          <div class="problem-icon">🔥</div>
-          <div>
-            <h3>Equipo sobrecargado</h3>
-            <p>Empleados atrapados en tareas operativas cuando deberían generar valor estratégico.</p>
-          </div>
-        </div>
-        <div class="glass-card problem-card reveal">
-          <div class="problem-icon">🏃</div>
-          <div>
-            <h3>Competencia más ágil</h3>
-            <p>Mientras esperas, tu competencia ya implementó IA. Cada día cuenta.</p>
+          <div class="hero-stat">
+            <div class="hero-stat-number">24/7</div>
+            <div class="hero-stat-label">Autogestión</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ============ SOLUTION SECTION ============ -->
-  <section class="section solution" id="solucion">
-    <div class="container">
-      <div class="solution-grid">
-        <div class="solution-content reveal">
-          <div class="section-badge">La solución</div>
-          <h2 class="section-title">IA que trabaja para ti,<br>24 horas al día</h2>
-          <p class="section-subtitle">
-            No vendemos promesas. Construimos sistemas de Inteligencia Artificial 
-            que generan resultados medibles desde el primer mes.
-          </p>
-          <div class="solution-features">
-            <div class="solution-feature"><div class="solution-feature-icon">🤖</div><p>Agentes inteligentes autónomos</p></div>
-            <div class="solution-feature"><div class="solution-feature-icon">⚡</div><p>Automatizaciones que eliminan el trabajo repetitivo</p></div>
-            <div class="solution-feature"><div class="solution-feature-icon">📈</div><p>Análisis predictivo de negocio</p></div>
+      <div class="hero-scroll">
+        <span>SABER MÁS</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- LOGOS MARQUEE -->
+    <div class="logos-marquee">
+      <div class="marquee-header">
+        <span class="logos-strip-title">INTEGRACIONES DE VANGUARDIA</span>
+      </div>
+      <div class="tech-marquee-v2">
+        <div class="marquee-fade-left"></div>
+        <div class="marquee-track">
+          <!-- Se repiten para el scroll infinito -->
+          <div class="tech-card"><span>OpenAI</span></div>
+          <div class="tech-card"><span>Claude 3</span></div>
+          <div class="tech-card"><span>n8n</span></div>
+          <div class="tech-card"><span>Make</span></div>
+          <div class="tech-card"><span>Supabase</span></div>
+          <div class="tech-card"><span>Vercel</span></div>
+          <div class="tech-card"><span>PyTorch</span></div>
+          <div class="tech-card"><span>OpenAI</span></div>
+          <div class="tech-card"><span>Claude 3</span></div>
+          <div class="tech-card"><span>n8n</span></div>
+          <div class="tech-card"><span>Make</span></div>
+          <div class="tech-card"><span>Supabase</span></div>
+        </div>
+        <div class="marquee-fade-right"></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE CONTACTO EXCLUSIVA -->
+    <section class="section" id="contacto">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">ACCESO PRIORITARIO</span>
+          <h2 class="section-title">Inicia tu <span class="gradient-text">Evolución</span></h2>
+          <p class="section-subtitle">Solo aceptamos 3 nuevos socios tecnológicos por mes para garantizar la excelencia operativa.</p>
+        </div>
+        
+        <div class="contact-grid">
+          <div class="contact-form-container">
+            <form id="leadForm" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Nombre Completo</label>
+                  <input type="text" id="name" name="name" placeholder="Tu nombre..." required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Corporativo</label>
+                  <input type="email" id="email" name="email" placeholder="email@empresa.com" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="company">Empresa / Organización</label>
+                <input type="text" id="company" name="company" placeholder="Nombre de tu empresa..." required>
+              </div>
+              <div class="form-group">
+                <label for="message">¿En qué área necesitas automatizar?</label>
+                <textarea id="message" name="message" placeholder="Cuéntanos brevemente tu cuello de botella..." required></textarea>
+              </div>
+              <button type="submit" class="btn-primary-elite w-full">
+                <span>ENVIAR SOLICITUD</span>
+                <div class="btn-shine"></div>
+              </button>
+            </form>
           </div>
         </div>
-        <div class="solution-visual reveal">
-          <div class="solution-diagram">
-            <div class="diagram-node active">🏢 Tu Empresa</div>
-            <div class="diagram-arrow">↓</div>
-            <div class="diagram-node highlight">⚡ Motor Zyndrix</div>
-            <div class="diagram-arrow">↓</div>
-            <div class="diagram-node active">📊 Resultados x10</div>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- ============ SERVICES SECTION ============ -->
-  <section class="section" id="servicios">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-badge">Servicios</div>
-        <h2 class="section-title">Soluciones de IA a medida</h2>
-      </div>
-      <div class="bento-grid services-bento">
-        <div class="glass-card bento-item bento-featured reveal">
-          <div class="service-icon">🤖</div>
-          <h3>Agentes Inteligentes Autónomos</h3>
-          <p>Orquestadores que ejecutan estrategias complejas sin límites.</p>
-        </div>
-        <div class="glass-card bento-item reveal">
-          <div class="service-icon">⚡</div>
-          <h3>Flujos Inteligentes</h3>
-          <p>Eliminamos el trabajo repetitivo con arquitecturas reactivas.</p>
-        </div>
-        <div class="glass-card bento-item reveal">
-          <div class="service-icon">⚙️</div>
-          <h3>Ecosistema n8n</h3>
-          <p>Conectamos todo tu stack con potencia de IA.</p>
-        </div>
-        <div class="glass-card bento-item bento-wide reveal">
-          <h3>Soluciones Enterprise Native</h3>
-          <p>Integración profunda de modelos en sistemas corporativos con seguridad bancaria.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ IMPACT SECTION ============ -->
-  <section class="section impact" id="impacto">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-badge">Dashboard</div>
-        <h2 class="section-title">Resultados Cuantificables</h2>
-      </div>
-      <div class="impact-dashboard">
-        <div class="glass-card dashboard-item reveal">
-          <div class="stat-large">+250%</div>
-          <p>Productividad Liberada</p>
-        </div>
-        <div class="glass-card dashboard-item reveal">
-          <div class="stat-large">-45%</div>
-          <p>Costes Operativos</p>
-        </div>
-        <div class="glass-card dashboard-item reveal">
-          <div class="stat-large">10x</div>
-          <p>Escalabilidad Operativa</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CASES SECTION ============ -->
-  <section class="section cases" id="casos">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Casos de Éxito</h2>
-      </div>
-      <div class="cases-grid">
-        <div class="glass-card case-card reveal">
-          <div class="case-stat"><div class="case-stat-number" data-target="85" data-suffix="%">0</div></div>
-          <h3>TechStore Pro</h3>
-          <p>"El impacto fue visible desde el segundo mes. Gestión autónoma del 85% de consultas."</p>
-        </div>
-        <div class="glass-card case-card reveal">
-          <div class="case-stat"><div class="case-stat-number" data-target="40" data-suffix="h">0</div></div>
-          <h3>Innovatech COO</h3>
-          <p>"Liberamos 40 horas semanales en procesos de informes críticos."</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PRICING SECTION ============ -->
-  <section class="section pricing" id="precios">
-    <div class="container">
-      <div class="section-header reveal">
-        <h2 class="section-title">Inversión para Escalar</h2>
-      </div>
-      <div class="pricing-grid">
-        <div class="glass-card pricing-card reveal">
-          <h3>Starter</h3>
-          <div class="price">199€<span>/mes</span></div>
-          <p>Setup: 499€ (Pago único)</p>
-          <a href="#contacto" class="btn-primary-elite pricing-btn"><span>Empezar</span></a>
-        </div>
-        <div class="glass-card pricing-card popular reveal">
-          <div class="popular-badge">Top</div>
-          <h3>Scale</h3>
-          <div class="price">450€<span>/mes</span></div>
-          <p>Setup: 950€ (Pago único)</p>
-          <a href="#contacto" class="btn-primary-elite pricing-btn"><span>Escalar</span></a>
-        </div>
-        <div class="glass-card pricing-card reveal">
-          <h3>Enterprise</h3>
-          <div class="price">Custom</div>
-          <p>Consultoría 1-a-1</p>
-          <a href="#contacto" class="btn-primary-elite pricing-btn"><span>Contactar</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA SECTION ============ -->
-  <section class="section cta-section" id="contacto">
-    <div class="container">
-      <div class="cta-content reveal">
-        <h2 class="section-title">¿Listo para el futuro?</h2>
-        <form class="cta-form" id="form-v100" onsubmit="handleLeadSubmit(event)">
-          <div class="cta-form-row">
-            <input type="text" class="cta-input" placeholder="Tu nombre" required id="formName">
-            <input type="email" class="cta-input" placeholder="Email profesional" required id="formEmail">
-          </div>
-          <input type="text" class="cta-input" placeholder="Empresa" id="formCompany">
-          <button type="submit" class="btn btn-primary" id="formSubmit">Agenda Consulta Gratis →</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="img/zyndrix-live.png?v=LIVE_FINAL" alt="Zyndrix Logo" class="nav-logo-img" width="160" height="45">
-          <p>Liderando la industrialización de la IA.</p>
-        </div>
-        <div class="footer-column">
-          <h4>Contacto</h4>
-          <a href="mailto:zyndrixia@gmail.com">zyndrixia@gmail.com</a>
-        </div>
-      </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 zyndrix.dev AGENCY.</p>
+        <p>© 2026 Zyndrix. Todos los derechos reservados.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacidad</a>
+          <a href="/terms">Términos</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="landing-script.js?v=MASTER_99"></script>
-  <script>
-    // Lead Capture Logic
-    window.handleLeadSubmit = async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('formSubmit');
-      btn.innerText = 'Enviando...';
-      const data = {
-        name: document.getElementById('formName').value,
-        email: document.getElementById('formEmail').value,
-        company: document.getElementById('formCompany').value
-      };
-      try {
-        await fetch(`${window.location.origin}/api/lead`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        btn.innerText = '¡Enviado! ✅';
-      } catch (err) {
-        btn.innerText = 'Reenviar';
-      }
-    }
-  </script>
+  <!-- SCRIPTS AL FINAL PARA NO BLOQUEAR -->
+  <script src="landing-script.js?v=31.0" defer></script>
 </body>
 </html>
