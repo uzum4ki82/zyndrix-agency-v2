@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const Casos = () => (
+export const CasosExito = () => (
   <section className="py-60 px-10">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title="Ingeniería Aplicada" subtitle="Casos de Éxito de Élite" />
