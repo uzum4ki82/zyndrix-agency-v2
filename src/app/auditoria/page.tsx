@@ -110,8 +110,8 @@ export default function AuditoriaPage() {
         </div>
       </nav>
 
-      <main className="max-w-[1200px] mx-auto px-4 md:px-8 pt-12 md:pt-20 pb-20 md:pb-32 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:grid-cols-20 items-start">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 pt-12 md:pt-20 pb-20 md:pb-32 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           {/* Text Content */}
           <motion.div 
