@@ -23,9 +23,9 @@ export const Hero = () => (
         Rendimiento IA Industrializado
       </motion.div>
 
-      <h1 className="text-[20vw] lg:text-[180px] font-heading font-black tracking-tighter leading-[0.8] uppercase italic mb-16 select-none">
-        <span className="text-white block">Industrializamos</span>
-        <span className="text-gradient-cyan block mt-2 drop-shadow-[0_0_30px_rgba(56,189,248,0.3)]">Tu Ventaja</span>
+      <h1 className="text-6xl md:text-8xl font-heading font-black tracking-tighter leading-[0.9] uppercase italic mb-10 select-none">
+        <span className="text-white block">ZYNDRIX:</span>
+        <span className="text-gradient-cyan block mt-2 drop-shadow-[0_0_30px_rgba(56,189,248,0.3)]">SOLUCIONES IA DE ALTO RENDIMIENTO</span>
       </h1>
 
       <p className="max-w-3xl mx-auto text-xl md:text-3xl text-white/40 mb-20 font-medium leading-[1.4] lowercase italic text-shadow-lg">

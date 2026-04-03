@@ -126,37 +126,6 @@
       transform: rotate(5deg) scale(1.1);
       color: #fff;
     }
-    /* Interactive Bento Glow (v48.0) */
-    .bento-item {
-      position: relative;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease-out;
-    }
-    
-    .bento-item::before {
-      content: '';
-      position: absolute;
-      top: var(--mouse-y, -100%);
-      left: var(--mouse-x, -100%);
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 75%);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .bento-item:hover::before {
-      opacity: 1;
-    }
-
-    .bento-item > * {
-      position: relative;
-      z-index: 1;
-    }
   </style>
 </head>
 <body class="loading">
@@ -1324,12 +1293,5 @@
   </div>
 
   <script src="landing-script.js?v=MASTER_FIX_99"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      }
-    });
-  </script>
 </body>
 </html>

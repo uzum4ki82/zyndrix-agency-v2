@@ -594,36 +594,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => statusEl.remove(), 400);
     }, 4000);
   }
-
-  // --- 3D TILT EFFECT FOR BENTO CARDS ---
-  const bentoItems = document.querySelectorAll('.bento-item');
-  bentoItems.forEach(item => {
-    item.addEventListener('mousemove', e => {
-      const rect = item.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const percentX = (x - centerX) / centerX;
-      const percentY = (y - centerY) / centerY;
-      
-      const rotateX = percentY * -10;
-      const rotateY = percentX * 10;
-      
-      item.style.setProperty('--mouse-x', `${x}px`);
-      item.style.setProperty('--mouse-y', `${y}px`);
-      
-      item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-      item.style.transition = 'transform 0.1s ease-out';
-    });
-    
-    item.addEventListener('mouseleave', () => {
-      item.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
-      item.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    });
-  });
 });
 
 
