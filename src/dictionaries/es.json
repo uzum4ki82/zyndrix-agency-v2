@@ -1,0 +1,238 @@
+{
+  "nav": {
+    "servicios": "SERVICIOS",
+    "muestras": "DEMOS",
+    "oferta": "OFERTA",
+    "proceso": "PROCESO",
+    "precios": "INVERSIÓN",
+    "faq": "FAQ",
+    "connect": "AUDITORÍA"
+  },
+  "hero": {
+    "badge": "ARQUITECTURA IA | CLASE-ENTERPRISE",
+    "title_main": "ZYNDRIX: SOLUCIONES IA",
+    "title_highlight": "DE ALTO RENDIMIENTO",
+    "subtitle": "Impulsamos empresas con sistemas autónomos y flujos de trabajo inteligentes.",
+    "cta_primary": "ESCALAR MI NEGOCIO",
+    "cta_secondary": "VER INVERSIÓN"
+  },
+  "roi": {
+    "badge": "DIAGNÓSTICO ECONÓMICO",
+    "title": "CUANTIFIQUE SU FUGA DE CAPITAL",
+    "subtitle": "El trabajo manual no solo es lento, es un drenaje constante de sus márgenes operativos.",
+    "labels": {
+      "hours": "HORAS MANUALES / SEMANA",
+      "cost": "COSTE HORA MEDIO (€)",
+      "employees": "EMPLEADOS AFECTADOS",
+      "monthly": "PÉRDIDA MENSUAL ESTIMADA",
+      "yearly": "COSTES DE OPORTUNIDAD ANUALES"
+    },
+    "warning": "Su infraestructura actual está quemando capital operativo de forma ineficiente.",
+    "cta": "SOLICITAR AUDITORÍA DE ESCALA"
+  },
+  "engine_room": {
+    "badge": "LOG DE SISTEMA",
+    "title": "EL CEREBRO DIGITAL",
+    "subtitle": "Abrimos la caja negra. Así es como orquestamos sus activos digitales para funcionar con latencia cero.",
+    "cards": [
+      { "title": "TRIGGERS NUCLEARES", "desc": "Captación de señales en tiempo real (Webhook, Scraping, API)." },
+      { "title": "PROCESADOR LLM", "desc": "Modelado y extracción de intención mediante agentes locales." },
+      { "title": "ESTADO PERSISTENTE", "desc": "Base de datos vectorial para memoria a largo plazo." },
+      { "title": "DESPLIEGUE FINAL", "desc": "Ejecución de acciones (CRM, Email, Slack, ERP)." }
+    ],
+    "main_title": "ESCALABILIDAD SÍNCRONA: EL PODER DE LA CONECTIVIDAD TOTAL",
+    "main_desc": "Nuestros blueprints no son estáticos. Son ecosistemas autoreparables que crecen con su volumen de negocio sin añadir un solo céntimo de coste variable adicional.",
+    "cta": "EXPLORAR ARQUITECTURA"
+  },
+  "blueprint_promo": {
+    "badge": "RECURSO DE ÉLITE GRATUITO",
+    "title_main": "EL BLUEPRINT DE",
+    "title_highlight": "AUTOMATIZACIÓN 2026",
+    "subtitle": "Hemos condensado nuestra metodología de ingeniería IA en un documento técnico de 45 páginas. Aprenda a escalar su margen operativo sin aumentar su plantilla.",
+    "items": ["Diagramas de Arquitectura n8n", "Flujos de Lead Scoring Avanzados", "Estrategia de Agentes de Soporte"],
+    "cta": "DESCARGAR BLUEPRINT",
+    "free": "TOTALMENTE GRATIS"
+  },
+  "tech_stack": {
+    "title": "POTENCIADO POR EL ESTADO DEL ARTE",
+    "subtitle": "Poder Sin Límites"
+  },
+  "pain_points": {
+    "badge": "EL PROBLEMA",
+    "title": "¿Tu empresa sigue operando en modo manual?",
+    "subtitle": "Estado Actual",
+    "items": [
+      { "title": "CUELLO DE BOTELLA OPERATIVO", "description": "Tú o tu equipo sois el motor manual de cada proceso." },
+      { "title": "RECOLECCIÓN DE LEADS MANUAL", "description": "Pierdes prospectos mientras duermes o estás ocupado." },
+      { "title": "INCONSISTENCIA EN EL SEGUIMIENTO", "description": "Cero respuesta inmediata, muerte del lead." }
+    ]
+  },
+  "solucion": {
+    "badge": "LA SOLUCIÓN",
+    "title": "IA que trabaja para ti, 24 horas al día"
+  },
+  "sistemas": {
+    "badge": "ARQUITECTURA DE SISTEMAS",
+    "title": "INFRAESTRUCTURA IA DE GRADO INDUSTRIAL",
+    "subtitle": "Nuestra ingeniería no se basa en herramientas aisladas, sino en ecosistemas autónomos interconectados que eliminan la intervención humana en tareas críticas.",
+    "cards": [
+      { 
+        "title": "Lead Gen Engine", 
+        "description": "Extracción y limpieza de datos masiva 24/7. Automatización de prospección en LinkedIn, Google Maps y directorios industriales.",
+        "specs": ["Scraping Multinodo", "Limpieza de Datos IA", "Enriquecimiento en 0.5s"]
+      },
+      { 
+        "title": "Agentes Operativos", 
+        "description": "Soporte y logística asistida por agentes autónomos. Gestión de inventarios, rutas y resolución de incidencias.",
+        "specs": ["Modelos LLM Locales", "Integración SAP/ERP", "Latencia < 150ms"]
+      },
+      { 
+        "title": "Workflow Core", 
+        "description": "Orquestación central de n8n para toda tu empresa. Conectamos más de 500 aplicaciones en un cerebro digital.",
+        "specs": ["Instancia Dedicada", "500+ Integraciones", "Seguridad SOC2"]
+      },
+      { 
+        "title": "SDR Artificial", 
+        "description": "Cualificación en segundos y agendado directo. Contactamos a los leads en menos de 5 minutos.",
+        "specs": ["Voz y Chat Híbrido", "Analítica de Sentimiento", "Cierre Agendado"]
+      }
+    ]
+  },
+  "impacto": {
+    "badge": "DASHBOARD DE IMPACTO",
+    "title": "Resultados Empresariales Cuantificables",
+    "stats": [
+      { "value": "85%", "label": "Reducción Soporte" },
+      { "value": "3x", "label": "Más Leads" },
+      { "value": "40h", "label": "Ahorradas/Sem" },
+      { "value": "95%", "label": "Reducción Errores" }
+    ]
+  },
+  "offers": {
+    "badge": "UNIDAD DE ADOPCIÓN TEMPRANA",
+    "title": "PROTOCOLOS DE ADSCRIPCIÓN ÉLITE",
+    "subtitle": "Estamos buscando 3 socios comerciales este trimestre para implementar infraestructuras de latencia cero con beneficios exclusivos por fidelidad temprana.",
+    "discount": "-40% EN LA PUESTA EN MARCHA",
+    "items": [
+      "Acceso Vitalicio a Updates",
+      "Soporte Crítico Prioritario",
+      "Auditoría de Escala Gratis",
+      "Custom LLM Training Inc."
+    ],
+    "slots": "03/05",
+    "cta": "RECLAMAR CUPÓN"
+  },
+  "beneficios": {
+    "badge": "DIFERENCIACIÓN ZYNDRIX",
+    "title": "¿POR QUÉ NUESTROS SISTEMAS DOMINAN EL MERCADO?",
+    "items": [
+      { "title": "Escalabilidad Infinita", "description": "Sistemas diseñados para crecer de 10 a 10,000 operaciones diarias." },
+      { "title": "Soberanía de Datos", "description": "Implementamos modelos en sus propios servidores o nubes privadas." },
+      { "title": "ROI Garantizado", "description": "Nuestras implementaciones se pagan solas en menos de 6 meses." },
+      { "title": "Mantenimiento 24/7", "description": "Monitoreamos cada flujo de trabajo. Si algo falla, nuestros ingenieros lo resuelven." }
+    ]
+  },
+  "demos": {
+    "badge": "IA EN ACCIÓN",
+    "title": "Demostraciones en Tiempo Real",
+    "subtitle": "Tecnología Probada"
+  },
+  "metodo": {
+    "badge": "PROCESO",
+    "title": "De la idea al resultado en 4 pasos",
+    "subtitle": "Un proceso claro, eficiente y transparente. Sin sorpresas, sin retrasos.",
+    "steps": [
+      { "s": "01", "t": "Auditoría Total", "d": "Mapeo masivo de ineficiencias." },
+      { "s": "02", "t": "Arquitectura IA", "d": "Diseño de blueprints técnicos." },
+      { "s": "03", "t": "Inyección SPRINT", "d": "Despliegues técnicos de alto impacto." },
+      { "s": "04", "t": "Escalado Industrial", "d": "Monitoreo de latencia y KPI." }
+    ]
+  },
+  "planes": {
+    "badge": "INVERSIÓN",
+    "title": "Planes diseñados para escalar",
+    "subtitle": "con IA",
+    "investment": "INVERSIÓN",
+    "recommended": "RECOMENDADO",
+    "cta": "INICIAR PROTOCOLO",
+    "items": [
+      { 
+        "name": "CORE Foundations", 
+        "setup": "499€", 
+        "price": "199", 
+        "features": ["1 Workflow Nuclear", "Soporte Técnico L1", "Auditoría Mensual"] 
+      },
+      { 
+        "name": "SCALE Protocol", 
+        "setup": "950€", 
+        "price": "450", 
+        "features": ["3 Flujos avanzados", "Agente IA 24/7", "Base RAG", "Soporte prioritario"], 
+        "recommended": true 
+      },
+      { 
+        "name": "INDUSTRIAL OS", 
+        "setup": "Custom", 
+        "price": "A medida", 
+        "features": ["Agentes Ilimitados", "Entrenamiento LLM", "Latencia Cero", "SLA 99.9%"] 
+      }
+    ]
+  },
+  "contacto": {
+    "badge": "EMPEZAR AHORA",
+    "title_part1": "¿Listo para transformar",
+    "title_part2": "tu negocio con IA?",
+    "subtitle": "INICIA TU PROTOCOLO DE AUTOMATIZACIÓN DE ÉLITE HOY MISMO.",
+    "labels": {
+      "name": "IDENTIDAD AGENTE",
+      "email": "CANAL COMUNICACIÓN",
+      "phone": "TELÉFONO CONTACTO",
+      "budget": "NIVEL INVERSIÓN",
+      "message": "MATRIZ CONSULTA"
+    },
+    "placeholders": {
+      "name": "NOMBRE COMPLETO",
+      "email": "EMAIL DE EMPRESA",
+      "phone": "+34 000 000 000",
+      "budget": "PRESUPUESTO",
+      "message": "¿QUÉ NECESITAS AUTOMATIZAR?"
+    },
+    "budget_options": [
+      { "value": "<1k", "label": "MENOS DE 1.000€" },
+      { "value": "1k-3k", "label": "1.000€ - 3.000€" },
+      { "value": "3k-5k", "label": "3.000€ - 5.000€" },
+      { "value": ">5k", "label": "MÁS DE 5.000€" }
+    ],
+    "button": "ENVIAR PROTOCOLO"
+  },
+  "faq": {
+    "badge": "SOPORTE TÉCNICO",
+    "title": "PROTOCOLOS DE DUDA",
+    "subtitle": "RESPUESTAS DE INGENIERÍA PARA OBJECIONES RACIONALES.",
+    "items": [
+      {
+        "q": "¿DÓNDE SE ALOJAN LOS DATOS?",
+        "a": "CONSTRUIMOS EN SUS SERVIDORES. USTED MANTIENE EL 100% DE LA PROPIEDAD Y SOBERANÍA DE SUS DATOS Y AUTOMATIZACIONES."
+      },
+      {
+        "q": "¿CUÁL ES EL TIEMPO DE DESPLIEGUE?",
+        "a": "UN BLUEPRINT NÚCLEO TOMA 7-14 DÍAS. SISTEMAS OS COMPLETOS REQUIEREN DE 3 A 6 SEMANAS DE ARQUITECTURA."
+      },
+      {
+        "q": "¿NECESITO PERSONAL TÉCNICO?",
+        "a": "CERO. ENTREGAMOS DASHBOARDS ULTRA-SIMPLIFICADOS QUE CUALQUIER MIEMBRO DEL EQUIPO PUEDE OPERAR."
+      },
+      {
+        "q": "¿CÓMO SE MIDE EL ÉXITO?",
+        "a": "MEDIANTE KPIs DE LATENCIA, PRECISIÓN Y HORAS/HOMBRE AHORRADAS CUANTIFICADAS EN CADA SPRINT."
+      }
+    ]
+  },
+  "footer": {
+    "desc": "DOMINIO DE INGENIERÍA © 2026.",
+    "links": {
+      "privacy": "PRIVACIDAD",
+      "terms": "TÉRMINOS",
+      "security": "SEGURIDAD"
+    }
+  }
+}

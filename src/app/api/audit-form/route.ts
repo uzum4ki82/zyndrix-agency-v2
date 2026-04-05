@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       name: name,
       email: email,
       phone: phone,
-      company_name: company || body.company || 'Auditoria Directa',
+      company_name: company || body.company || body.business || 'Auditoria Directa',
       website: website,
       problem: problem || body.message,
       message: message || body.message,

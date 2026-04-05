@@ -1,19 +1,29 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Navbar } from '@/components/layout/Navbar';
+import { NavBar } from '@/components/common/NavBar';
 import { Footer } from '@/components/sections/Contacto';
 import { SectionHeader } from '@/components/common/SectionHeader';
 import { Zap, Activity, HardDrive, Network, Globe } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getDictionary } from '@/lib/dictionaries';
 
 export default function SecurityPage() {
+  const [dict, setDict] = useState<any>(null);
+
+  useEffect(() => {
+    getDictionary('es').then(setDict);
+  }, []);
+
+  if (!dict) return <div className="min-h-screen bg-black" />;
+
   return (
-    <div className="min-h-screen bg-base text-white font-body selection:bg-primary selection:text-base">
-      <Navbar />
+    <div className="min-h-screen bg-black text-white font-body selection:bg-primary selection:text-white">
+      <NavBar dict={dict.nav} locale="es" />
       
       <main className="relative z-10 pt-60 pb-40 px-6">
         <div className="max-w-4xl mx-auto">
-          <SectionHeader title="Protocolos de Seguridad" subtitle="Infraestructura de Élite" />
+          <SectionHeader title={dict.footer.links.security} subtitle="Infraestructura de Élite" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-40">
             <motion.div 
@@ -75,7 +85,7 @@ export default function SecurityPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer dict={dict.footer} />
     </div>
   );
 }

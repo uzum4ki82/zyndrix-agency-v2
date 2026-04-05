@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const Testimonios = () => (
+export const Testimonios = ({ dict }: { dict: any }) => (
   <section id="testimonios" className="py-60 px-10 relative">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title="Casos Reales" subtitle="Autoridad Industrial" />

@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         name: body.name || 'Anónimo',
         email: body.email,
         phone: body.phone || null,
-        company_name: body.company_name || null,
+        company_name: body.company_name || body.company || body.business || null,
         message: body.message || 'Lead Blueprint v26',
         budget: body.budget || null,
         service: body.service || 'General',
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     // 2. DISPARO DE WEBHOOKS (n8n)
     const isMagnet = body.service?.toLowerCase().includes('blueprint');
     const n8nUrl = isMagnet 
-      ? 'https://n8n.zyndrix.dev/webhook/leadmagnet'
+      ? 'https://n8n.zyndrix.dev/webhook/blueprint'
       : 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
 
     const payload = { 
@@ -69,7 +69,7 @@ export async function POST(req: Request) {
         name: body.name || 'Anónimo',
         email: body.email,
         phone: body.phone || null,
-        company_name: body.company_name || body.company || null,
+        company_name: body.company_name || body.company || body.business || null,
         message: body.message || 'Lead Inyectado',
         service: body.service || 'General',
         status: 'new'
