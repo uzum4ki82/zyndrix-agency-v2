@@ -72,7 +72,9 @@ export async function POST(req: Request) {
         company_name: body.company_name || body.company || body.business || null,
         message: body.message || 'Lead Inyectado',
         service: body.service || 'General',
-        status: 'new'
+        budget: body.budget || null,
+        status: 'new',
+        source: body.service || 'landing'
       }
     };
 
