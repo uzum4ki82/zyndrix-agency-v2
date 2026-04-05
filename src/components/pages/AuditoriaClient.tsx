@@ -43,29 +43,34 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
     }, 50);
 
     try {
-      await fetch('/api/audit-form', {
+      const response = await fetch('/api/audit-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.personName,
           email: formData.email,
-          business: formData.businessName,
+          company: formData.businessName,
           phone: formData.phone,
           website: formData.website,
-          message: formData.problem,
+          problem: formData.problem,
           budget: formData.budget,
           service: locale === 'es' ? 'Auditoría de Sistemas IA' : 'AI Systems Audit'
         })
       });
 
+      if (!response.ok) throw new Error('API_ERROR');
+
+      // ESPERAR AL PROGRESO ANTES DE MOSTRAR ÉXITO
       setTimeout(() => {
         setStep('success');
+        // Redirigir a Calendly después de que el usuario vea el éxito
         setTimeout(() => {
-          window.open(CALENDLY_URL, '_blank');
-        }, 3000);
+          window.location.href = CALENDLY_URL;
+        }, 3500);
       }, 1500);
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert(locale === 'es' ? 'Error al procesar el protocolo. Reintentando...' : 'Error processing protocol. Retrying...');
       setStep('form');
     }
   };

@@ -57,7 +57,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
     }, 50);
 
     try {
-      await fetch('/api/lead', {
+      const response = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -70,7 +70,16 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
           service: 'Blueprint Diamond 3.0 Final'
         })
       });
-    } catch (error) { console.error(error); }
+
+      if (!response.ok) throw new Error('API_ERROR');
+
+      // SI TODO OK, EL PROGRESO TERMINE Y LUEGO SUCCESS
+    } catch (error) { 
+      console.error(error); 
+      setStep('idle');
+      alert(locale === 'es' ? 'Error al generar el blueprint. Inténtelo de nuevo.' : 'Error generating blueprint. Please try again.');
+      clearInterval(interval);
+    }
   };
 
   return (
