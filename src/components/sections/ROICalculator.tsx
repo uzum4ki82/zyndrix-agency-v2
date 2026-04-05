@@ -10,11 +10,12 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
     const [rate, setRate] = useState(30);
     const [employees, setEmployees] = useState(3);
 
-    const monthlyLeak = hours * rate * employees * 4;
+    const monthlyLeak = Math.round(hours * rate * 4.34 * employees);
     const yearlyLeak = monthlyLeak * 12;
 
     return (
-        <section id="roi" className="py-24 px-10 relative overflow-hidden bg-[#03040a]">
+        <section id="servicios" className="py-24 px-6 md:py-32 md:px-10 relative overflow-hidden bg-base">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.1)_0%,transparent_100%)] opacity-30 pointer-events-none" />
             {/* Warning Background Ambient */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-500/5 blur-[160px] rounded-full pointer-events-none" />
             

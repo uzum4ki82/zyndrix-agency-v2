@@ -1,4 +1,5 @@
 import { Hero } from '@/components/sections/Hero';
+import { NavBar } from '@/components/common/NavBar';
 import { PainPoints } from '@/components/sections/PainPoints';
 import { TechStack } from '@/components/sections/TechStack';
 import { Sistemas } from '@/components/sections/Sistemas';
@@ -24,6 +25,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-base text-white">
+      <NavBar dict={dict.nav} locale={locale} />
       <Hero dict={dict.hero} />
       
       <TechStack dict={dict.tech_stack} />

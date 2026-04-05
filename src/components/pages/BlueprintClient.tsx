@@ -106,8 +106,10 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
               <Network size={14} className="animate-spin-slow" /> {dict.blueprint_page.badge}
            </div>
            <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center">
-             {dict.blueprint_page.title.split(' ')[0]} <br /> 
-             {dict.blueprint_page.title.split(' ')[1]} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-white italic">{dict.blueprint_page.title.split(' ')[2]}</span>
+             {dict.blueprint_page.title.split(' ').slice(0, 2).join(' ')} <br /> 
+             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-white italic">
+               {dict.blueprint_page.title.split(' ').slice(2).join(' ')}
+             </span>
            </h1>
            <p className="text-lg md:text-2xl text-slate-500 max-w-2xl mx-auto font-medium">{dict.blueprint_page.subtitle}</p>
         </motion.div>
@@ -135,7 +137,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
                        <motion.div className="p-20 rounded-[5rem] bg-gradient-to-br from-[#38bdf8]/15 via-[#030712] to-transparent border border-[#38bdf8]/30 flex flex-col items-center text-center space-y-6 relative overflow-hidden group/box">
                           <AnimatePresence>{isScanning && <motion.div initial={{ top: "-5%" }} animate={{ top: "105%" }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="absolute left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_40px_#38bdf8] z-30" />}</AnimatePresence>
                           <TrendingDown size={42} className="text-rose-500 opacity-60 mb-2 animate-bounce" />
-                          <span className="text-[15px] font-black text-[#818cf8] uppercase tracking-[1em] relative z-20">{dict.blueprint_page.scanner.label}</span>
+                          <span className="text-[15px] font-black text-[#818cf8] uppercase tracking-[0.4em] relative z-20">{dict.blueprint_page.scanner.label}</span>
                           <span className="text-8xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]">{monthlyLeak.toLocaleString()}€</span>
                        </motion.div>
                     </div>

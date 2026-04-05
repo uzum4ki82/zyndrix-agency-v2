@@ -26,7 +26,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
   const [step, setStep] = useState<'form' | 'processing' | 'success'>('form');
   const [progress, setProgress] = useState(0);
 
-  const CALENDLY_URL = 'https://calendly.com/zyndrix/auditoria'; 
+  const CALENDLY_URL = 'https://calendly.com/omontesquesada/zyndrix'; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
