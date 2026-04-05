@@ -76,12 +76,32 @@ export async function POST(req: Request) {
       }
     };
 
-    // Lanzar y no esperar (para respuesta rápida al cliente)
-    fetch(n8nUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(err => console.error('Error enviando a n8n:', err.message));
+    console.log(`>>> FORCING WEBHOOK DELIVERY TO: ${n8nUrl}`);
+    
+    // IMPORTANTE: DEBEMOS ESPERAR (await) para asegurar que n8n reciba el lead
+    // Pero añadimos un timeout de 10s para no colgar la web si n8n es lento
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    try {
+      console.log('>>> FETCHING WEBHOOK with 10s timeout...');
+      const webhookRes = await fetch(n8nUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!webhookRes.ok) throw new Error(`Webhook Error: ${webhookRes.status}`);
+      console.log('>>> WEBHOOK DELIVERED SUCCESSFULLY');
+    } catch (err: any) {
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        console.warn('>>> WEBHOOK TIMEOUT (10s) - Lead captured in Supabase, continuing...');
+      } else {
+        console.error('Error crítico enviando a n8n:', err.message);
+      }
+    }
 
     // 3. RESPUESTA DE ÉXITO INMEDIATA
     return NextResponse.json({ 

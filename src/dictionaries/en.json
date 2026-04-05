@@ -193,5 +193,83 @@
       "terms": "TERMS",
       "security": "SECURITY"
     }
+  },
+  "auditoria": {
+    "badge": "ACCESS PROTOCOL",
+    "title": "AI Systems Audit",
+    "subtitle": "Scale your operations to the next level. We identify bottlenecks and design your new autonomy architecture.",
+    "features": [
+      { "title": "IA Diagnostics", "desc": "Key process identification" },
+      { "title": "Global Sync", "desc": "Interconnected systems" },
+      { "title": "Team Scale", "desc": "Multiply your capacity" },
+      { "title": "Architecture", "desc": "Personalized Blueprint" }
+    ],
+    "form": {
+      "business": "Business Name",
+      "name": "Your Name",
+      "phone": "Phone / WhatsApp",
+      "email": "Corporate Email",
+      "web": "Web URL",
+      "problem": "Tell us your biggest bottleneck...",
+      "budget": "Expected Investment",
+      "button": "Claim Audit",
+      "footer": "By sending you accept our security protocols"
+    },
+    "budget_options": [
+      { "value": "<1k", "label": "LESS THAN 1,000€" },
+      { "value": "1k-3k", "label": "1,000€ - 3,000€" },
+      { "value": "3k-5k", "label": "3,000€ - 5,000€" },
+      { "value": ">5k", "label": "MORE THAN 5,000€" }
+    ],
+    "processing": "Syncing...",
+    "success": {
+      "title": "Protocol Validated",
+      "desc": "Your data has been processed. Accessing Calendly to schedule your call..."
+    }
+  },
+  "blueprint_page": {
+    "badge": "HIGH AVAILABILITY INFRASTRUCTURE",
+    "title": "Your Leak is Scalable.",
+    "subtitle": "Diagnose, industrialize, and privatize your operating margin.",
+    "scanner": {
+      "title": "Leak Analysis",
+      "module": "Module: IA_OP_SCANNER_v4",
+      "staff": "Operating Staff",
+      "label": "MONTHLY_INEFFICIENCY"
+    },
+    "form": {
+      "badge": "Access Protocol",
+      "title": "Privatize Scale.",
+      "desc": "Complete corporate registration to acquire the systems today that will allow you to 100% delegate your operational tasks.",
+      "name": "Full Name",
+      "company": "Company / Organization",
+      "email": "Corporate E-mail",
+      "phone": "WhatsApp (Prefix + Num)",
+      "sector": "Operating Sector",
+      "priority": "Improvement Priority",
+      "budget": "Investment Level",
+      "button": "GENERATE BLUEPRINT"
+    },
+    "budget_options": [
+      { "value": "scale", "label": "1k - 3k (SCALE)" },
+      { "value": "industrial", "label": "+5k (INDUSTRIAL)" },
+      { "value": "custom", "label": "Custom OS" }
+    ],
+    "sectors": {
+      "ecommerce": "E-commerce / Retail",
+      "servicios": "B2B Services",
+      "tech": "Software / SaaS",
+      "realestate": "Real Estate / Legal"
+    },
+    "priorities": {
+      "leads": "24/7 AI Capture",
+      "admin": "Remove Operational Burden",
+      "scale": "Scale without Hiring"
+    },
+    "processing": "OPTIMIZING...",
+    "success": {
+      "title": "ACCESS GRANTED",
+      "button": "DOWNLOAD MANUAL"
+    }
   }
 }

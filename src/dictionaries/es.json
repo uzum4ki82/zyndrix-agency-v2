@@ -234,5 +234,83 @@
       "terms": "TÉRMINOS",
       "security": "SEGURIDAD"
     }
+  },
+  "auditoria": {
+    "badge": "PROTOCOLO DE ACCESO",
+    "title": "Auditoría de Sistemas IA",
+    "subtitle": "Escala tu operativa al siguiente nivel. Identificamos los cuellos de botella y diseñamos tu nueva arquitectura de autonomía.",
+    "features": [
+      { "title": "IA Diagnostics", "desc": "Identificación de procesos clave" },
+      { "title": "Global Sync", "desc": "Sistemas interconectados" },
+      { "title": "Team Scale", "desc": "Multiplicamos tu capacidad" },
+      { "title": "Architecture", "desc": "Blueprint personalizado" }
+    ],
+    "form": {
+      "business": "Nombre del Negocio",
+      "name": "Tu Nombre",
+      "phone": "Teléfono / WhatsApp",
+      "email": "Email Corporativo",
+      "web": "Web URL",
+      "problem": "Cuéntanos tu mayor cuello de botella...",
+      "budget": "Inversión Estimada",
+      "button": "Reclamar Auditoría",
+      "footer": "Al enviar aceptas nuestros protocolos de seguridad"
+    },
+    "budget_options": [
+      { "value": "<1k", "label": "MENOS DE 1.000€" },
+      { "value": "1k-3k", "label": "1.000€ - 3.000€" },
+      { "value": "3k-5k", "label": "3.000€ - 5.000€" },
+      { "value": ">5k", "label": "MÁS DE 5.000€" }
+    ],
+    "processing": "Sincronizando...",
+    "success": {
+      "title": "Protocolo Validado",
+      "desc": "Tus datos han sido procesados. Accediendo a Calendly para agendar tu llamada..."
+    }
+  },
+  "blueprint_page": {
+    "badge": "INFRAESTRUCTURA DE ALTA DISPONIBILIDAD",
+    "title": "Tu Fuga es Escalable.",
+    "subtitle": "Diagnóstica, industrializa y privatiza tu margen operativo.",
+    "scanner": {
+      "title": "Análisis de Fuga",
+      "module": "Módulo: IA_OP_SCANNER_v4",
+      "staff": "Cuerpo Operativo",
+      "label": "INEFICIENCIA_MENSUAL"
+    },
+    "form": {
+      "badge": "Protocolo de Acceso",
+      "title": "Privatizar Escala.",
+      "desc": "Completa el registro corporativo para adquirir hoy los sistemas que permitirán delegar al 100% tus tareas operativas.",
+      "name": "Nombre y Apellidos",
+      "company": "Empresa / Organización",
+      "email": "E-mail Corporativo",
+      "phone": "WhatsApp (Prefijo + N°)",
+      "sector": "Sector Operativo",
+      "priority": "Prioridad de Mejora",
+      "budget": "Nivel de Inversión",
+      "button": "GENERAR BLUEPRINT"
+    },
+    "budget_options": [
+      { "value": "scale", "label": "1k - 3k (SCALE)" },
+      { "value": "industrial", "label": "+5k (INDUSTRIAL)" },
+      { "value": "custom", "label": "A Medida" }
+    ],
+    "sectors": {
+      "ecommerce": "E-commerce / Retail",
+      "servicios": "Servicios B2B",
+      "tech": "Software / SaaS",
+      "realestate": "Real Estate / Legal"
+    },
+    "priorities": {
+      "leads": "Captación AI 24/7",
+      "admin": "Quitar Carga Operativa",
+      "scale": "Escalar sin Contratar"
+    },
+    "processing": "OPTIMIZANDO...",
+    "success": {
+      "title": "ACCESO LIBERADO",
+      "button": "DESCARGAR MANUAL"
+    }
   }
 }

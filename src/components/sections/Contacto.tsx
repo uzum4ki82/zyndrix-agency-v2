@@ -7,28 +7,40 @@ import Link from 'next/link';
 export const Contacto = ({ dict }: { dict: any }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        budget: '',
+        message: ''
+    });
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
-        const form = e.currentTarget;
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-
         try {
             const res = await fetch('/api/lead', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    ...data,
+                    ...formData,
                     service: 'General - Landing Home'
                 })
             });
 
             if (res.ok) {
                 setIsSuccess(true);
-                form.reset();
+                setFormData({
+                    name: '',
+                    email: '',
+                    company: '',
+                    phone: '',
+                    budget: '',
+                    message: ''
+                });
+                
+                // RESET DESPUÉS DE 5 SEGUNDOS
+                setTimeout(() => setIsSuccess(false), 5000);
             }
         } catch (error) {
             console.error('Error submitting contact form:', error);
@@ -73,36 +85,35 @@ export const Contacto = ({ dict }: { dict: any }) => {
                 
                 <div className="lg:w-1/2">
                     <form onSubmit={handleSubmit} className="glass-premium p-10 md:p-14 rounded-[4rem] border border-white/10 flex flex-col gap-8 relative overflow-hidden group shadow-[0_0_100px_rgba(0,0,0,0.5)]">
-                        <div className="absolute top-0 right-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                          <Send className="w-60 h-60 text-primary" />
-                        </div>
+                        {/* Glow Ambient Form */}
+                        <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 blur-[80px] rounded-full pointer-events-none group-hover:bg-primary/30 transition-all duration-700" />
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
                             <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">{dict.labels.name}</label>
-                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.name} name="name" />
+                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.name} name="name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                             </div>
                             <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">Email Corporativo</label>
-                                <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.email} name="email" />
+                                <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.email} name="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                             </div>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
                             <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">Empresa / Negocio</label>
-                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder="Nombre de tu empresa" name="company" />
+                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder="Nombre de tu empresa" name="company" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} />
                             </div>
                             <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">{dict.labels.phone}</label>
-                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.phone} name="phone" />
+                                <input required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20" placeholder={dict.placeholders.phone} name="phone" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-1 gap-8 relative z-10">
                             <div>
                                 <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">{dict.labels.budget}</label>
-                                <select required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20 appearance-none" name="budget">
+                                <select required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20 appearance-none" name="budget" value={formData.budget} onChange={e => setFormData({...formData, budget: e.target.value})}>
                                     <option value="" disabled className="bg-black text-white">{dict.placeholders.budget}</option>
                                     {dict.budget_options.map((opt: any) => (
                                         <option key={opt.value} value={opt.value} className="bg-black text-white">{opt.label}</option>
@@ -113,20 +124,30 @@ export const Contacto = ({ dict }: { dict: any }) => {
                         
                         <div className="relative z-10">
                             <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-3 block">{dict.labels.message}</label>
-                            <textarea required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic min-h-[150px] focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20 resize-none" placeholder={dict.placeholders.message} name="message" />
+                            <textarea required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-[16px] font-black italic min-h-[150px] focus:border-primary outline-none transition-all hover:bg-white/10 placeholder:text-white/20 resize-none" placeholder={dict.placeholders.message} name="message" value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})} />
                         </div>
                         
-                        <button disabled={isSubmitting} className="w-full py-8 bg-white text-black rounded-3xl font-heading font-black uppercase italic tracking-[0.6em] text-[16px] hover:bg-primary transition-all duration-700 shadow-massive hover:shadow-primary/40 flex items-center justify-center gap-6 relative z-10 active:scale-95 group/btn overflow-hidden">
+                        <button 
+                            disabled={isSubmitting || isSuccess} 
+                            className={`w-full py-8 rounded-3xl font-heading font-black uppercase italic tracking-[0.6em] text-[16px] transition-all duration-700 shadow-massive flex items-center justify-center gap-6 relative z-10 active:scale-95 group/btn overflow-hidden ${isSuccess ? 'bg-green-500 text-white shadow-green-500/40' : 'bg-white text-black hover:bg-primary hover:shadow-primary/40'}`}
+                        >
+                            <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 skew-x-12" />
                             {isSubmitting ? (
-                                <>SYNCING... <Loader2 className="w-6 h-6 animate-spin" /></>
+                                <>
+                                    <Loader2 className="w-6 h-6 animate-spin" />
+                                    <span>{dict.button_loading}</span>
+                                </>
                             ) : isSuccess ? (
-                                <>SOLICITUD ENVIADA ✅</>
+                                <>
+                                    <ShieldCheck className="w-6 h-6 animate-bounce" />
+                                    <span>MENSAJE RECIBIDO CORRECTAMENTE!</span>
+                                </>
                             ) : (
-                                <span className="relative z-10 flex items-center gap-6">
-                                   {dict.button} <ArrowRight className="w-7 h-7 group-hover/btn:translate-x-4 transition-transform" />
-                                </span>
+                                <>
+                                    <span>{dict.button}</span>
+                                    <Send size={20} className="group-hover/btn:translate-x-2 group-hover/btn:-translate-y-2 transition-transform duration-500" />
+                                </>
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent w-[200%] -translate-x-full animate-beam" />
                         </button>
                     </form>
                 </div>
