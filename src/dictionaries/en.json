@@ -1,0 +1,275 @@
+{
+  "nav": {
+    "servicios": "SYSTEMS",
+    "muestras": "DEMOS",
+    "casos": "RESULTS",
+    "testimonios": "REVIEWS",
+    "process": "PROCESS",
+    "precios": "PLANS",
+    "faq": "FAQ",
+    "connect": "AUDIT"
+  },
+  "hero": {
+    "title_main": "AI Automation Architecture",
+    "subtitle": "Elite Upgrade",
+    "cta_primary": "FREE AUDIT",
+    "cta_secondary": "SYSTEMS"
+  },
+  "roi": {
+    "badge": "ECONOMIC DIAGNOSIS",
+    "title": "QUANTIFY YOUR CAPITAL LEAK",
+    "subtitle": "Manual work is not only slow, it's a constant drain on your operating margins.",
+    "labels": {
+      "hours": "MANUAL HOURS / WEEK",
+      "cost": "AVG HOURLY COST (€)",
+      "employees": "AFFECTED EMPLOYEES",
+      "monthly": "ESTIMATED MONTHLY LOSS",
+      "yearly": "ANNUAL OPPORTUNITY COSTS"
+    },
+    "warning": "Your current infrastructure is inefficiently burning operating capital.",
+    "cta": "REQUEST SCALE AUDIT"
+  },
+  "engine_room": {
+    "badge": "SYSTEM LOG",
+    "title": "THE DIGITAL BRAIN",
+    "subtitle": "We open the black box. This is how we orchestrate your digital assets to work with zero latency.",
+    "cards": [
+      { "title": "NUCLEAR TRIGGERS", "desc": "Real-time signal capture (Webhook, Scraping, API)." },
+      { "title": "LLM PROCESSOR", "desc": "Modeling and intent extraction through local agents." },
+      { "title": "PERSISTENT STATE", "desc": "Vector database for long-term memory." },
+      { "title": "FINAL DEPLOYMENT", "desc": "Execution of actions (CRM, Email, Slack, ERP)." }
+    ],
+    "main_title": "SYNCHRONOUS SCALABILITY: THE POWER OF TOTAL CONNECTIVITY",
+    "main_desc": "Our blueprints are not static. They are self-healing ecosystems that grow with your business volume without adding a single cent of additional variable cost.",
+    "cta": "EXPLORE ARCHITECTURE"
+  },
+  "blueprint_promo": {
+    "badge": "FREE ELITE RESOURCE",
+    "title_main": "THE 2026",
+    "title_highlight": "AUTOMATION BLUEPRINT",
+    "subtitle": "We've condensed our AI engineering methodology into a 45-page technical document. Learn how to scale your operating margin without increasing your headcount.",
+    "items": ["n8n Architecture Diagrams", "Advanced Lead Scoring Flows", "Support Agent Strategy"],
+    "cta": "DOWNLOAD BLUEPRINT",
+    "free": "TOTALLY FREE"
+  },
+  "pain_points": {
+    "badge": "Critical Points",
+    "title": "Your business isn't scalable",
+    "subtitle": "Current State",
+    "items": [
+      { "title": "OPERATIONAL BOTTLENECK", "description": "You or your team are the manual engine behind every process." },
+      { "title": "MANUAL LEAD CAPTURE", "description": "You lose prospects while you sleep or are busy." },
+      { "title": "INCONSISTENT FOLLOW-UP", "description": "Zero immediate response means lead death." }
+    ]
+  },
+  "sistemas": {
+    "title": "Autonomous Systems",
+    "subtitle": "Industrial Level",
+    "cards": [
+      { "title": "Lead Gen Engine", "description": "Massive 24/7 data extraction and cleaning." },
+      { "title": "Operational Agents", "description": "Support and logistics assisted by autonomous agents." },
+      { "title": "Workflow Core", "description": "Central n8n orchestration for your entire enterprise." },
+      { "title": "Artificial SDR", "description": "Seconds-fast qualification and direct scheduling." }
+    ]
+  },
+  "demos": {
+    "title": "Live Ecosystem",
+    "subtitle": "Proven Technology",
+    "d1": { "title": "PROJECT_ALPHA", "desc": "AI CRM Automation." },
+    "d2": { "title": "PROJECT_SIGMA", "desc": "24/7 Artificial SDR." },
+    "d3": { "title": "PROJECT_KAPPA", "desc": "Real-time logs and metrics." }
+  },
+  "casos": {
+    "title": "Applied Engineering",
+    "subtitle": "Elite Case Studies",
+    "items": [
+      {
+        "client": "Logistics Z",
+        "before": "80 hrs/week manual",
+        "after": "< 5 min/week",
+        "result": "500% More Shipments",
+        "desc": "Total automation of order management and route assignment through proprietary AI agents."
+      },
+      {
+        "client": "Global Real Estate",
+        "before": "Lead closing: 12 hours",
+        "after": "< 3 seconds",
+        "result": "Sales conversion +200%",
+        "desc": "Implementation of Lead Score Pro for instant qualification and scheduling on autonomous infrastructures."
+      }
+    ]
+  },
+  "testimonios": {
+    "title": "Real Cases",
+    "subtitle": "Industrial Authority",
+    "items": [
+      {
+        "name": "Marc Soler",
+        "role": "CEO @ TechFlow Labs",
+        "quote": "The architecture Zyndrix built for our support dropped wait times to ZERO. They aren't programmers, they are business architects."
+      },
+      {
+        "name": "Elena Vance",
+        "role": "Ops Director @ PrimeReal",
+        "quote": "Implementing the lead score core was the best decision of the year. It scales our pipeline without hiring more staff. It just works."
+      }
+    ]
+  },
+  "tech_stack": {
+    "title": "Tech Stack",
+    "subtitle": "Unlimited Power"
+  },
+  "faq": {
+    "title": "Query Matrix",
+    "subtitle": "Technical Information",
+    "q1": { "q": "How long does implementation take?", "a": "Our standard protocols are deployed in 14-21 days. Industrial infrastructures may require up to 45 days." },
+    "q2": { "q": "Do I need technical knowledge?", "a": "None. We deliver 'Turn-key' systems that are fully managed and autonomous." },
+    "q3": { "q": "Is it compatible with my current CRM?", "a": "Our architecture is agnostic. We integrate with Salesforce, HubSpot, Pipedrive, or proprietary systems via API." },
+    "q4": { "q": "How do you guarantee data security?", "a": "We use military-grade encryption and local servers in Europe (GDPR compliant) for processing private LLMs." },
+    "q5": { "q": "What is the expected ROI?", "a": "Our clients report an average 70% reduction in operating costs and a 40% increase in prospecting capacity in the first quarter." }
+  },
+  "planes": {
+    "title": "Scale your business",
+    "subtitle": "with AI",
+    "investment": "INVESTMENT",
+    "recommended": "RECOMMENDED",
+    "cta": "START PROTOCOL",
+    "items": [
+      { 
+        "name": "CORE Foundations", 
+        "setup": "499€", 
+        "price": "199", 
+        "desc": "Strategic setup + Monthly maintenance for SMBs.", 
+        "features": ["1 Nuclear Workflow", "L1 Technical Support", "Monthly Technical Audit", "Basic WhatsApp Integration", "Preventative Maintenance"] 
+      },
+      { 
+        "name": "SCALE Protocol", 
+        "setup": "950€", 
+        "price": "450", 
+        "desc": "Intelligent scaling with AI Agents and advanced automation.", 
+        "features": ["3 Advanced workflows", "Custom AI Agent (24/7)", "Knowledge Base (RAG)", "Exclusive priority support", "Guaranteed Scalability"], 
+        "recommended": true 
+      },
+      { 
+        "name": "INDUSTRIAL OS", 
+        "setup": "Custom", 
+        "price": "Tailor-made", 
+        "desc": "High-performance proprietary infrastructure with zero latency.", 
+        "features": ["Unlimited Autonomous Agents", "Private LLM Training", "High Latency Infrastructure", "1-on-1 Strategic Consulting", "99.9% Guaranteed SLA"] 
+      }
+    ]
+  },
+  "contacto": {
+    "badge": "DATA ENTRY",
+    "title_part1": "TRANSFORM",
+    "title_part2": "THE FUTURE",
+    "subtitle": "START YOUR ELITE AUTOMATION PROTOCOL TODAY.",
+    "labels": {
+      "name": "AGENT IDENTITY",
+      "email": "COMMUNICATION CHANNEL",
+      "phone": "CONTACT PHONE",
+      "budget": "INVESTMENT LEVEL",
+      "message": "QUERY MATRIX"
+    },
+    "placeholders": {
+      "name": "FULL NAME",
+      "email": "COMPANY EMAIL",
+      "phone": "+34 000 000 000",
+      "budget": "BUDGET",
+      "message": "WHAT DO YOU NEED TO AUTOMATE?"
+    },
+    "budget_options": [
+      { "value": "<1k", "label": "LESS THAN 1,000€" },
+      { "value": "1k-3k", "label": "1,000€ - 3,000€" },
+      { "value": "3k-5k", "label": "3,000€ - 5,000€" },
+      { "value": ">5k", "label": "MORE THAN 5,000€" }
+    ],
+    "button": "SEND PROTOCOL"
+  },
+  "footer": {
+    "desc": "ENGINEERING DOMAIN © 2026. ALL RIGHTS RESERVED.",
+    "links": {
+      "privacy": "PRIVACY",
+      "terms": "TERMS",
+      "security": "SECURITY"
+    }
+  },
+  "auditoria": {
+    "badge": "ACCESS PROTOCOL",
+    "title": "AI Systems Audit",
+    "subtitle": "Scale your operations to the next level. We identify bottlenecks and design your new autonomy architecture.",
+    "features": [
+      { "title": "IA Diagnostics", "desc": "Key process identification" },
+      { "title": "Global Sync", "desc": "Interconnected systems" },
+      { "title": "Team Scale", "desc": "Multiply your capacity" },
+      { "title": "Architecture", "desc": "Personalized Blueprint" }
+    ],
+    "form": {
+      "business": "Business Name",
+      "name": "Your Name",
+      "phone": "Phone / WhatsApp",
+      "email": "Corporate Email",
+      "web": "Web URL",
+      "problem": "Tell us your biggest bottleneck...",
+      "budget": "Expected Investment",
+      "button": "Claim Audit",
+      "footer": "By sending you accept our security protocols"
+    },
+    "budget_options": [
+      { "value": "<1k", "label": "LESS THAN 1,000€" },
+      { "value": "1k-3k", "label": "1,000€ - 3,000€" },
+      { "value": "3k-5k", "label": "3,000€ - 5,000€" },
+      { "value": ">5k", "label": "MORE THAN 5,000€" }
+    ],
+    "processing": "Syncing...",
+    "success": {
+      "title": "Protocol Validated",
+      "desc": "Your data has been processed. Accessing Calendly to schedule your call..."
+    }
+  },
+  "blueprint_page": {
+    "badge": "HIGH AVAILABILITY INFRASTRUCTURE",
+    "title": "Your Leak is Scalable.",
+    "subtitle": "Diagnose, industrialize, and privatize your operating margin.",
+    "scanner": {
+      "title": "Leak Analysis",
+      "module": "Module: IA_OP_SCANNER_v4",
+      "staff": "Operating Staff",
+      "label": "MONTHLY_INEFFICIENCY"
+    },
+    "form": {
+      "badge": "Access Protocol",
+      "title": "Privatize Scale.",
+      "desc": "Complete corporate registration to acquire the systems today that will allow you to 100% delegate your operational tasks.",
+      "name": "Full Name",
+      "company": "Company / Organization",
+      "email": "Corporate E-mail",
+      "phone": "WhatsApp (Prefix + Num)",
+      "sector": "Operating Sector",
+      "priority": "Improvement Priority",
+      "budget": "Investment Level",
+      "button": "GENERATE BLUEPRINT"
+    },
+    "budget_options": [
+      { "value": "scale", "label": "1k - 3k (SCALE)" },
+      { "value": "industrial", "label": "+5k (INDUSTRIAL)" },
+      { "value": "custom", "label": "Custom OS" }
+    ],
+    "sectors": {
+      "ecommerce": "E-commerce / Retail",
+      "servicios": "B2B Services",
+      "tech": "Software / SaaS",
+      "realestate": "Real Estate / Legal"
+    },
+    "priorities": {
+      "leads": "24/7 AI Capture",
+      "admin": "Remove Operational Burden",
+      "scale": "Scale without Hiring"
+    },
+    "processing": "OPTIMIZING...",
+    "success": {
+      "title": "ACCESS GRANTED",
+      "button": "DOWNLOAD MANUAL"
+    }
+  }
+}

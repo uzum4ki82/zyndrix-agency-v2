@@ -1021,9 +1021,12 @@
                 throw new Error(JSON.stringify(errData));
               }
 
-              btn.innerHTML = '¡Enviado! ✅';
+              // ACTUALIZACIÓN DE BOTÓN ÉLITE
+              btn.innerHTML = '¡MENSAJE RECIBIDO CORRECTAMENTE! ✅';
               btn.style.backgroundColor = '#10B981';
-              alert('¡Lead recibido correctamente!');
+              btn.style.color = 'white';
+              btn.disabled = true;
+              
               document.getElementById('form-v100').reset();
             } catch (err) {
               console.warn('CRITICAL REDUNDANCY INVOKED');
@@ -1045,16 +1048,17 @@
 
                 if (!sRes.ok) {
                    const sErr = await sRes.json();
-                   alert('ERROR SUPABASE: ' + JSON.stringify(sErr));
                    throw new Error('Fallback failed');
                 }
 
-                btn.innerHTML = '¡Recibido! ✅';
+                btn.innerHTML = '¡MENSAJE RECIBIDO CORRECTAMENTE! ✅';
                 btn.style.backgroundColor = '#10B981';
+                btn.style.color = 'white';
+                btn.disabled = true;
                 document.getElementById('form-v100').reset();
               } catch (f) {
-                alert('FALLO TOTAL: ' + err.message);
-                btn.innerHTML = '✕ Error';
+                console.error('FALLO TOTAL:', err.message);
+                btn.innerHTML = 'ERROR DE ENVÍO';
                 btn.style.backgroundColor = '#EF4444';
               }
             } finally {

@@ -1,19 +1,29 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Navbar } from '@/components/layout/Navbar';
+import { NavBar } from '@/components/common/NavBar';
 import { Footer } from '@/components/sections/Contacto';
 import { SectionHeader } from '@/components/common/SectionHeader';
 import { Shield, Eye, Lock, Database } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getDictionary } from '@/lib/dictionaries';
 
 export default function PrivacyPage() {
+  const [dict, setDict] = useState<any>(null);
+
+  useEffect(() => {
+    getDictionary('es').then(setDict);
+  }, []);
+
+  if (!dict) return <div className="min-h-screen bg-black" />;
+
   return (
-    <div className="min-h-screen bg-base text-white font-body selection:bg-primary selection:text-base">
-      <Navbar />
+    <div className="min-h-screen bg-black text-white font-body selection:bg-primary selection:text-white">
+      <NavBar dict={dict.nav} locale="es" />
       
       <main className="relative z-10 pt-60 pb-40 px-6">
         <div className="max-w-4xl mx-auto">
-          <SectionHeader title="Políticas de Privacidad" subtitle="Escudo de Seguridad" />
+          <SectionHeader title={dict.footer.links.privacy} subtitle="Escudo de Seguridad" />
           
           <div className="space-y-24 mt-40">
             <motion.section 
@@ -72,7 +82,7 @@ export default function PrivacyPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer dict={dict.footer} />
     </div>
   );
 }

@@ -1,87 +1,50 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CheckCircle2, Zap } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { SectionHeader } from '../common/SectionHeader';
 
-export const Planes = () => {
-  const planes = [
-    { 
-      n: 'CORE Foundations', 
-      s: '499€', 
-      p: '199', 
-      d: 'Puesta en marcha estratégica + Mantenimiento mensual para PYMES.', 
-      f: ['1 Workflow Nuclear', 'Soporte Técnico L1', 'Auditoría Técnica Mensual', 'Integración básica WhatsApp', 'Mantenimiento Preventivo'] 
-    },
-    { 
-      n: 'SCALE Protocol', 
-      s: '950€', 
-      p: '450', 
-      d: 'Escalado inteligente con Agentes IA y automatización avanzada.', 
-      f: ['3 Flujos de trabajo avanzados', 'Agente IA Personalizado (24/7)', 'Base de Conocimiento (RAG)', 'Soporte prioritario exclusivo', 'Escalabilidad Garantizada'], 
-      m: true 
-    },
-    { 
-      n: 'INDUSTRIAL OS', 
-      s: 'Custom', 
-      p: 'A medida', 
-      d: 'Infraestructura propietaria de alto rendimiento y latencia cero.', 
-      f: ['Agentes Autónomos Ilimitados', 'Entrenamiento LLM Privado', 'Infraestructura de Alta Latencia', 'Consultoría estratégica 1-a-1', 'SLA Garantizado 99.9%'] 
-    },
-  ];
-
+export const Planes = ({ dict }: { dict: any }) => {
   return (
-    <section id="precios" className="py-24 relative overflow-hidden">
+    <section id="precios" className="py-32 px-10 relative overflow-hidden bg-base">
+      {/* Decorative center glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[180px] opacity-20 pointer-events-none" />
+      
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4"
-          >
-            INVERSIÓN
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black text-white mb-6 italic uppercase tracking-tighter"
-          >
-            Escala tu negocio <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">con IA</span>
-          </motion.h2>
-        </div>
+        <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {planes.map((plan, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch pt-12">
+          {dict.items.map((plan: any, idx: number) => (
             <motion.div
-              key={plan.n}
-              initial={{ opacity: 0, y: 20 }}
+              key={plan.name}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className={`p-10 rounded-[40px] border transition-all duration-500 flex flex-col ${plan.m ? 'bg-white/10 backdrop-blur-xl border-primary shadow-2xl shadow-primary/20 scale-105 z-20' : 'bg-white/5 backdrop-blur-md border-white/10 z-10'}`}
+              transition={{ delay: idx * 0.15, type: "spring", stiffness: 100 }}
+              className={`p-10 md:p-14 rounded-[4rem] border transition-all duration-700 flex flex-col relative group ${plan.recommended ? 'glass-premium border-primary/50 shadow-[0_0_100px_rgba(56,189,248,0.15)] scale-105 z-20' : 'bg-white/5 border-white/5 hover:border-white/20 z-10'}`}
             >
-              {plan.m && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-black text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-widest">
-                  RECOMENDADO
+              {plan.recommended && (
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-black text-[11px] font-black px-10 py-3 rounded-full uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(56,189,248,0.5)]">
+                  {dict.recommended}
                 </div>
               )}
 
-              <div className="mb-8">
-                <h3 className="text-2xl font-black text-white mb-2 uppercase italic">{plan.n}</h3>
-                <div className="text-primary font-mono text-sm font-bold tracking-tighter mb-1 uppercase">Setup: {plan.s}</div>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-black text-white tracking-tighter">{plan.p}</span>
-                  {plan.p !== 'A medida' && <span className="text-white/40 font-medium">/mes</span>}
+              <div className="mb-12 relative">
+                <div className="text-primary/40 font-black text-[10px] tracking-[0.4em] uppercase mb-4">{plan.name}</div>
+                <div className="text-white/20 font-mono text-[9px] font-bold tracking-[0.3em] mb-4 uppercase flex items-center gap-2">
+                   <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
+                   {dict.investment}: {plan.setup}
+                </div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-6xl lg:text-7xl font-heading font-black text-white tracking-tighter italic leading-none">{plan.price}</span>
+                  {plan.price.includes('0') && <span className="text-white/20 font-black italic uppercase text-lg">€/mes</span>}
                 </div>
               </div>
 
-              <div className="flex-grow mb-10 overflow-hidden">
-                <ul className="space-y-4">
-                  {plan.f.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-3 text-white/70 text-sm leading-relaxed">
-                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0" />
+              <div className="flex-grow mb-16 px-2">
+                <ul className="space-y-6">
+                  {plan.features.map((feature: string, fIdx: number) => (
+                    <li key={fIdx} className="flex items-start gap-4 text-white/40 text-[13px] font-medium leading-relaxed group-hover:text-white transition-colors duration-500">
+                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
                       {feature}
                     </li>
                   ))}
@@ -90,10 +53,16 @@ export const Planes = () => {
 
               <a 
                 href="#contacto" 
-                className="w-full py-8 text-center rounded-3xl font-black uppercase italic tracking-[0.4em] text-[12px] transition-all bg-black text-white border border-primary/40 shadow-[0_0_40px_rgba(56,189,248,0.1)] hover:border-primary hover:shadow-[0_0_60px_rgba(56,189,248,0.3)] hover:scale-[1.02]"
+                className="btn-elite w-full group py-8 h-20"
               >
-                INICIAR PROTOCOLO
+                <span className="text-[14px]">{dict.cta}</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />
               </a>
+              
+              {/* Subtle background number Decoration */}
+              <div className="absolute bottom-10 right-10 text-9xl font-heading font-black text-white/5 italic pointer-events-none group-hover:text-primary/5 transition-colors duration-1000">
+                 0{idx + 1}
+              </div>
             </motion.div>
           ))}
         </div>
@@ -101,5 +70,3 @@ export const Planes = () => {
     </section>
   );
 };
-
-

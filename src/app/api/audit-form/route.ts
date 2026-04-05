@@ -14,26 +14,62 @@ export async function POST(req: Request) {
       phone, 
       company, 
       website, 
+      problem,
       message, 
       service, 
       source,
-      problem 
+      budget 
     } = body;
 
     const AUDIT_WEBHOOK = 'https://n8n.zyndrix.dev/webhook/auditoria';
+    const SB_URL = 'https://vrvfftftnlspajplqjye.supabase.co';
+    const SB_KEY = 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE';
     
     console.log(`>>> SENDING AUDIT LEAD TO: ${AUDIT_WEBHOOK}`);
 
+    // 1. PERSISTENCIA EN SUPABASE
+    let leadId = Date.now().toString();
+    try {
+      const resSupabase = await fetch(`${SB_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SB_KEY,
+          'Authorization': `Bearer ${SB_KEY}`,
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+          name: name || 'Anónimo',
+          email: email,
+          phone: phone || null,
+          company_name: company || body.business || 'Auditoria Directa',
+          message: message || problem || body.message || 'Solicitud Auditoría',
+          budget: budget || null,
+          service: service || 'Auditoría IA',
+          status: 'new'
+        })
+      });
+
+      if (resSupabase.ok) {
+        const leadData = await resSupabase.json();
+        leadId = Array.isArray(leadData) ? (leadData?.[0]?.id || leadId) : (leadData?.id || leadId);
+      }
+    } catch (sbError) {
+      console.warn('Error saving audit to Supabase:', sbError);
+    }
+
     const baseRecord = {
       ...body,
+      id: leadId,
       name: name,
       email: email,
       phone: phone,
-      company_name: company || body.company || 'Auditoria Directa',
+      company_name: company || body.business || 'Auditoria Directa',
       website: website,
       problem: problem || body.message,
       message: message || body.message,
       service: service || 'Auditoría IA',
+      budget: budget,
       source: source || 'Landing Page Auditoria'
     };
 
@@ -42,15 +78,24 @@ export async function POST(req: Request) {
       record: baseRecord
     };
 
-    const n8nResponse = await fetch(AUDIT_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(n8nPayload)
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-    if (!n8nResponse.ok) {
-        const errorText = await n8nResponse.text();
-        console.error(`Failed to trigger n8n audit (${AUDIT_WEBHOOK}):`, n8nResponse.status, errorText);
+    try {
+      const n8nResponse = await fetch(AUDIT_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(n8nPayload),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      if (!n8nResponse.ok) {
+          const errorText = await n8nResponse.text();
+          console.error(`Failed to trigger n8n audit (${AUDIT_WEBHOOK}):`, n8nResponse.status, errorText);
+      }
+    } catch (n8nErr: any) {
+      clearTimeout(timeoutId);
+      console.warn('Audit Webhook Error/Timeout, continuing...');
     }
 
     return NextResponse.json({ 
