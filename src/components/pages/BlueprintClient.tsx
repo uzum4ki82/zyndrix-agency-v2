@@ -104,7 +104,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
         
         {/* HERO COMPACTO */}
         <motion.div style={{ opacity: heroOpacity }} className="text-center mb-16 max-w-5xl mx-auto space-y-6">
-           <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[10px] font-bold uppercase tracking-[0.8em] backdrop-blur-xl">
+           <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[12px] font-bold uppercase tracking-[0.8em] backdrop-blur-xl">
               <Network size={14} className="animate-spin-slow" /> {dict.blueprint_page.badge}
            </div>
            <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center">
@@ -127,7 +127,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
                  <div className="space-y-12 relative z-20">
                     <div className="flex items-center gap-6">
                        <div className="w-16 h-16 rounded-3xl bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] border border-[#38bdf8]/30 font-black text-2xl shadow-xl">01</div>
-                       <div className="flex flex-col"><h3 className="text-[13px] font-black uppercase tracking-[0.6em] text-white">{dict.blueprint_page.scanner.title}</h3><span className="text-[11px] text-[#818cf8] font-bold uppercase tracking-[0.4em] pt-1">{dict.blueprint_page.scanner.module}</span></div>
+                       <div className="flex flex-col"><h3 className="text-[13px] font-black uppercase tracking-[0.6em] text-white">{dict.blueprint_page.scanner.title}</h3><span className="text-[12px] text-[#818cf8] font-bold uppercase tracking-[0.4em] pt-1">{dict.blueprint_page.scanner.module}</span></div>
                     </div>
                     
                     <div className="space-y-12">
