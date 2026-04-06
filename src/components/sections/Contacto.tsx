@@ -91,8 +91,12 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                         </p>
                         
                         <div className="flex gap-8">
-                            {[Twitter, Linkedin, Instagram].map((Icon, i) => (
-                                <Link key={i} href="#" className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-black transition-all group shadow-xl hover:shadow-primary/40">
+                            {[
+                                { Icon: Twitter, label: 'Twitter' },
+                                { Icon: Linkedin, label: 'LinkedIn' },
+                                { Icon: Instagram, label: 'Instagram' }
+                            ].map(({ Icon, label }, i) => (
+                                <Link key={i} href="#" aria-label={`Sigue a Zyndrix en ${label}`} className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-black transition-all group shadow-xl hover:shadow-primary/40">
                                     <Icon className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" />
                                 </Link>
                             ))}

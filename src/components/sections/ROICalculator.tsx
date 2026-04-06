@@ -6,9 +6,9 @@ import { Calculator, TrendingDown, Clock, AlertTriangle, ArrowRight } from 'luci
 import { SectionHeader } from '../common/SectionHeader';
 
 export const ROICalculator = ({ dict }: { dict: any }) => {
-    const [hours, setHours] = useState(20);
-    const [rate, setRate] = useState(30);
-    const [employees, setEmployees] = useState(3);
+    const [hours, setHours] = useState(40);
+    const [rate, setRate] = useState(10);
+    const [employees, setEmployees] = useState(1);
 
     const monthlyLeak = Math.round(hours * rate * 4.34 * employees);
     const yearlyLeak = monthlyLeak * 12;
@@ -85,7 +85,7 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
                              <div className="relative z-10 space-y-4">
                                 <div className="text-[11px] font-black uppercase tracking-[0.5em] text-white/20">{dict.labels.monthly}</div>
                                 <div className="text-7xl md:text-8xl font-heading font-black text-red-500 tracking-tighter italic">
-                                    {monthlyLeak.toLocaleString()}€
+                                    {monthlyLeak}€
                                 </div>
                              </div>
                         </div>
@@ -98,7 +98,7 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
                              <div className="relative z-10 space-y-4">
                                 <div className="text-[11px] font-black uppercase tracking-[0.5em] text-primary/40">{dict.labels.yearly}</div>
                                 <div className="text-7xl md:text-8xl font-heading font-black text-white tracking-tighter italic">
-                                    {yearlyLeak.toLocaleString()}€
+                                    {yearlyLeak.toLocaleString('es-ES')}€
                                 </div>
                              </div>
                         </div>

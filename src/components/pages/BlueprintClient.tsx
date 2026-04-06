@@ -104,10 +104,10 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
         
         {/* HERO COMPACTO */}
         <motion.div style={{ opacity: heroOpacity }} className="text-center mb-16 max-w-5xl mx-auto space-y-6">
-           <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[12px] font-bold uppercase tracking-[0.8em] backdrop-blur-xl">
+           <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/[0.03] border border-white/10 text-[#38bdf8] text-[12px] font-bold uppercase tracking-[0.4em] md:tracking-[0.8em] backdrop-blur-xl">
               <Network size={14} className="animate-spin-slow" /> {dict.blueprint_page.badge}
            </div>
-           <h1 className="text-6xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center">
+           <h1 className="text-4xl md:text-[125px] font-black leading-[0.85] tracking-[-0.09em] text-white uppercase text-center">
              {dict.blueprint_page.title.split(' ').slice(0, 2).join(' ')} <br /> 
              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] to-white italic">
                {dict.blueprint_page.title.split(' ').slice(2).join(' ')}
@@ -123,11 +123,11 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
            <div className="w-full grid lg:grid-cols-2 gap-0 bg-[#030610]/98 rounded-[4.45rem] overflow-hidden relative z-10 ring-1 ring-white/10 backdrop-blur-4xl shadow-2xl">
               
               {/* IZQUIERDA: DIAGNÓSTICO */}
-              <div className="p-12 lg:p-20 space-y-12 border-r border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden">
+              <div className="p-6 md:p-12 lg:p-20 space-y-12 border-r border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent relative overflow-hidden">
                  <div className="space-y-12 relative z-20">
                     <div className="flex items-center gap-6">
                        <div className="w-16 h-16 rounded-3xl bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] border border-[#38bdf8]/30 font-black text-2xl shadow-xl">01</div>
-                       <div className="flex flex-col"><h3 className="text-[13px] font-black uppercase tracking-[0.6em] text-white">{dict.blueprint_page.scanner.title}</h3><span className="text-[12px] text-[#818cf8] font-bold uppercase tracking-[0.4em] pt-1">{dict.blueprint_page.scanner.module}</span></div>
+                       <div className="flex flex-col"><h3 className="text-[11px] md:text-[13px] font-black uppercase tracking-[0.6em] text-white">{dict.blueprint_page.scanner.title}</h3><span className="text-[10px] md:text-[12px] text-[#818cf8] font-bold uppercase tracking-[0.4em] pt-1">{dict.blueprint_page.scanner.module}</span></div>
                     </div>
                     
                     <div className="space-y-12">
@@ -140,7 +140,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
                           <AnimatePresence>{isScanning && <motion.div initial={{ top: "-5%" }} animate={{ top: "105%" }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="absolute left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_40px_#38bdf8] z-30" />}</AnimatePresence>
                           <TrendingDown size={42} className="text-rose-500 opacity-60 mb-2 animate-bounce" />
                           <span className="text-[15px] font-black text-[#818cf8] uppercase tracking-[0.4em] relative z-20">{dict.blueprint_page.scanner.label}</span>
-                          <span className="text-5xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]">{monthlyLeak.toLocaleString()}€</span>
+                          <span className="text-3xl md:text-[110px] font-black text-white tracking-tighter relative z-20 drop-shadow-[0_0_60px_rgba(56,189,248,0.5)]">{monthlyLeak.toLocaleString()}€</span>
                        </motion.div>
                     </div>
                  </div>
@@ -232,7 +232,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
         </div>
       </main>
 
-      <footer className="py-24 text-center border-t border-white/5 opacity-50"><p className="text-[13px] font-black text-slate-600 tracking-[3em] uppercase">ZYNDRIX • ARQUITECTURA DE AUTONOMÍA</p></footer>
+      <footer className="py-24 text-center border-t border-white/5 opacity-50"><p className="text-[13px] font-black text-white/60 tracking-[3em] uppercase">ZYNDRIX • ARQUITECTURA DE AUTONOMÍA</p></footer>
       <style jsx>{`
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spin-slow 12s linear infinite; }

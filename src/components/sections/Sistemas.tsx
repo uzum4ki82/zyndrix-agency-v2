@@ -20,14 +20,14 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
         <Icon className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
       </div>
       <h3 className="text-3xl font-heading font-black uppercase italic tracking-tighter mb-4 text-white leading-none">{title}</h3>
-      <p className="text-white/60 text-base leading-relaxed max-w-[280px] font-medium italic mb-8 flex-grow">{description}</p>
+      <p className="text-white/95 text-base leading-relaxed max-w-[280px] font-medium italic mb-8 flex-grow">{description}</p>
       
       {specs && (
         <div className="grid grid-cols-1 gap-3 pt-6 border-t border-white/5">
            {specs.map((spec: string, i: number) => (
              <div key={i} className="flex items-center gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                 <span className="text-[12px] font-black uppercase tracking-widest text-primary/60">{spec}</span>
+                 <span className="text-[12px] font-black uppercase tracking-widest text-[#38bdf8]">{spec}</span>
               </div>
            ))}
         </div>
@@ -59,7 +59,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
                <ShieldCheck className="w-6 h-6 text-primary" />
             </div>
             <div>
-               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/20 mb-1">PROTOCOLO_VALIDADO</div>
+               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/60 mb-1">PROTOCOLO_VALIDADO</div>
                <div className="text-[12px] font-black uppercase tracking-[0.2em] text-white">REVISIÓN EXTERNA VERIFICADA</div>
             </div>
          </div>
@@ -67,10 +67,10 @@ export const Sistemas = ({ dict }: { dict: any }) => (
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-8 auto-rows-[450px]">
         
-        {/* Card 1: Automation */}
+        {/* Card 1: Lead Gen Engine */}
         <div className="col-span-1 md:col-span-3 row-span-1 md:row-span-1">
           <ServiceCard 
-            icon={Workflow} 
+            icon={Zap} 
             title={dict.cards[0].title} 
             description={dict.cards[0].description} 
             specs={dict.cards[0].specs}
@@ -78,7 +78,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
           />
         </div>
 
-        {/* Card 2: Agents */}
+        {/* Card 2: Agentes Operativos */}
         <div className="col-span-1 md:col-span-3 row-span-1">
           <ServiceCard 
             icon={Cpu} 
@@ -89,7 +89,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
           />
         </div>
 
-        {/* Card 4: Exponential (Full Width Row) */}
+        {/* Card 4: Workflow Core (n8n) */}
         <div className="col-span-1 md:col-span-6 row-span-1">
           <motion.div 
             whileHover={{ scale: 1.01 }} 
@@ -98,25 +98,25 @@ export const Sistemas = ({ dict }: { dict: any }) => (
             <div className="absolute inset-0 bg-mesh opacity-50" />
             <div className="relative z-10 flex flex-col gap-6 md:w-2/3">
               <div className="flex items-center gap-3 bg-primary/20 w-fit px-8 py-3 rounded-full border border-primary/30">
-                <Zap className="w-5 h-5 text-primary animate-pulse" />
+                <Workflow className="w-5 h-5 text-primary animate-pulse" />
                 <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
               </div>
               <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-none tracking-tighter text-white">
                 {dict.cards[2].title}
               </h3>
-              <p className="text-white/60 font-medium italic text-xl md:text-2xl opacity-80 leading-relaxed max-w-2xl">
+              <p className="text-white/80 font-medium italic text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl">
                 {dict.cards[2].description}
               </p>
               <div className="flex gap-10 mt-6">
                 {dict.cards[2].specs.map((s: string, i: number) => (
                   <div key={i} className="flex flex-col">
                     <span className="text-primary font-black italic text-3xl tracking-tighter leading-none mb-1">{s.split(' ')[0]}</span>
-                    <span className="text-[12px] font-black uppercase tracking-widest text-white/20">{s.split(' ').slice(1).join(' ')}</span>
+                    <span className="text-[12px] font-black uppercase tracking-widest text-white/60">{s.split(' ').slice(1).join(' ')}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <BarChart3 className="hidden lg:block w-72 h-72 text-primary opacity-10 group-hover:rotate-12 transition-transform duration-[1.5s] mr-10 relative z-10" />
+            <Workflow className="hidden lg:block w-72 h-72 text-primary opacity-10 group-hover:rotate-12 transition-transform duration-[1.5s] mr-10 relative z-10" />
           </motion.div>
         </div>
 

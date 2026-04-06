@@ -6,7 +6,7 @@ const ai_stack = [
   { name: "OpenAI", img: "/img/chatgpt-logo-clean.png" },
   { name: "Claude", img: "/img/claude-logo-clean.png" },
   { name: "Grok", img: "/img/grok-logo-clean.png" },
-  { name: "n8n", img: "/img/icon-n8n.png" },
+  { name: "n8n", img: "/img/n8n-logo-clean.png" },
   { name: "Mistral", img: "/img/mistral-logo-clean.png" },
   { name: "Llama", img: "/img/llama-logo-clean.png" },
   { name: "Perplexity", img: "/img/perplexity-logo-clean.png" }
