@@ -271,5 +271,8 @@
       "title": "ACCESS GRANTED",
       "button": "DOWNLOAD MANUAL"
     }
+  },
+  "config": {
+    "calendly": "https://calendly.com/omontesquesada/zyndrix"
   }
 }

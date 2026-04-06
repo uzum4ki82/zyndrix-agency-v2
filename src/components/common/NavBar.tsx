@@ -8,7 +8,10 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -17,8 +20,10 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
   }, []);
 
   const getLink = (id: string) => {
-    // If we are on a subpage, we need the full path to the home section
-    const isHome = typeof window !== 'undefined' && window.location.pathname === '/';
+    // If not mounted yet, default to full path to be consistent with SSR
+    if (!mounted) return `/#${id}`;
+    
+    const isHome = window.location.pathname === '/';
     if (isHome) return `#${id}`;
     return `/#${id}`;
   };
@@ -34,16 +39,16 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
         </a>
 
         {/* Desktop Links */}
-        <div className="hidden lg:flex items-center gap-12 bg-white/5 border border-white/10 px-8 py-3 rounded-full backdrop-blur-xl">
-          <a href={getLink('servicios')} className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.servicios}</a>
-          <a href={getLink('ofertas')} className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.oferta}</a>
-          <a href={getLink('proceso')} className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.proceso}</a>
-          <a href={getLink('precios')} className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.precios}</a>
-          <a href={getLink('faq')} className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.faq}</a>
+        <div className="hidden lg:flex items-center gap-8 bg-white/5 border border-white/10 px-6 py-3 rounded-full backdrop-blur-xl">
+          <a href={getLink('servicios')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.servicios}</a>
+          <a href={getLink('ofertas')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.oferta}</a>
+          <a href={getLink('proceso')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.proceso}</a>
+          <a href={getLink('precios')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.precios}</a>
+          <a href={getLink('faq')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all">{dict.faq}</a>
         </div>
 
         <div className="flex items-center gap-6">
-          <a href={`#${contactId}`} className="hidden md:flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] px-10 py-3 bg-white text-black rounded-full hover:bg-primary transition-all">
+          <a href={`#${contactId}`} className="hidden md:flex items-center gap-3 text-[12px] font-black uppercase tracking-[0.3em] px-10 py-3 bg-white text-black rounded-full hover:bg-primary transition-all">
             {dict.connect} <ArrowRight className="w-4 h-4" />
           </a>
 

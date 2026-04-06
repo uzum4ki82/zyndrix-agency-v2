@@ -32,9 +32,11 @@ export async function POST(req: Request) {
         email: body.email,
         phone: body.phone || null,
         company_name: body.company_name || body.company || body.business || null,
-        message: body.message || 'Lead Blueprint v26',
+        message: body.message || 'Lead Inyectado',
         budget: body.budget || null,
         service: body.service || 'General',
+        language_preference: body.language || body.locale || 'es',
+        niche_category: body.sector || body.niche || null,
         status: 'new'
       })
     });
@@ -73,6 +75,8 @@ export async function POST(req: Request) {
         message: body.message || 'Lead Inyectado',
         service: body.service || 'General',
         budget: body.budget || null,
+        language: body.language || body.locale || 'es',
+        sector: body.sector || body.niche || null,
         status: 'new',
         source: body.service || 'landing'
       }

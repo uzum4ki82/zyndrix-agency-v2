@@ -8,6 +8,9 @@ export const metadata: Metadata = {
     description: "Recurso oficial de Zyndrix para directivos que exigen eficiencia absoluta.",
     images: ["/img/blueprint-cover.png"],
   },
+  alternates: {
+    canonical: 'https://zyndrix.dev/blueprint',
+  },
 };
 
 export default function BlueprintLayout({ children }: { children: React.ReactNode }) {

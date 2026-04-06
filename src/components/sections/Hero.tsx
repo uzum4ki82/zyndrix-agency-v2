@@ -1,16 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { ArrowRight, Sparkles, Activity, Shield, Cpu, Zap, MousePointer2 } from 'lucide-react';
 
 export const Hero = ({ dict }: { dict: any }) => (
   <section className="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden bg-base">
     {/* Background Image with Overlay */}
     <div className="absolute inset-0 z-0">
-      <img 
+      <Image 
         src="/img/hero-bg.png" 
-        alt="" 
-        className="w-full h-full object-cover opacity-20 scale-105"
+        alt="Zyndrix Hero Background" 
+        fill
+        priority
+        className="object-cover opacity-20 scale-105"
+        sizes="100vw"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-base via-transparent to-base" />
       <div className="absolute inset-0 bg-mesh opacity-30" />
@@ -36,7 +40,7 @@ export const Hero = ({ dict }: { dict: any }) => (
              top: `${20 + (i % 3) * 20}%`
            }}
          >
-           <div className="flex items-center gap-2 font-mono text-[8px] text-primary/40 uppercase tracking-[0.5em] whitespace-nowrap">
+           <div className="flex items-center gap-2 font-mono text-[12px] text-primary/40 uppercase tracking-[0.5em] whitespace-nowrap">
              <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
              NODE_SESSION_0{i+1} : ACTIVE
            </div>
@@ -55,20 +59,28 @@ export const Hero = ({ dict }: { dict: any }) => (
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="mb-14 inline-flex items-center gap-4 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.6em] text-primary backdrop-blur-3xl shadow-[0_0_30px_rgba(56,189,248,0.2)]"
+        className="mb-14 inline-flex items-center gap-4 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-[12px] font-black uppercase tracking-[0.6em] text-primary backdrop-blur-3xl shadow-[0_0_30px_rgba(56,189,248,0.2)]"
       >
         <Sparkles className="w-4 h-4" /> 
         {dict.badge}
       </motion.div>
 
       <h1 className="text-5xl md:text-8xl font-heading font-black tracking-[calc(-0.04em)] leading-[0.82] uppercase italic mb-8 select-none drop-shadow-2xl">
-        <span className="text-white block">{dict.title_main.split(':')[0]}<span className="text-primary italic">:</span></span>
+        <span className="text-white block">
+          {dict.title_main.includes(':') ? (
+            <>
+              {dict.title_main.split(':')[0]}<span className="text-primary italic">:</span>
+            </>
+          ) : (
+            dict.title_main
+          )}
+        </span>
         <span className="text-gradient-cyan block mt-2 text-glow">
           {dict.title_highlight || "SOLUCIONES IA ALTO RENDIMIENTO"}
         </span>
       </h1>
 
-      <p className="max-w-4xl mx-auto text-lg md:text-3xl text-white/40 mb-16 font-medium leading-[1.2] lowercase italic tracking-tight">
+      <p className="max-w-4xl mx-auto text-lg md:text-3xl text-white/70 mb-16 font-medium leading-[1.2] lowercase italic tracking-tight">
         {dict.subtitle}
       </p>
 
@@ -78,7 +90,7 @@ export const Hero = ({ dict }: { dict: any }) => (
           <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-3 transition-transform" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent w-[200%] -translate-x-full animate-beam" />
         </a>
-        <a href="#servicios" className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md">
+        <a href="#servicios" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md">
           {dict.cta_secondary}
         </a>
       </div>
@@ -99,7 +111,7 @@ export const Hero = ({ dict }: { dict: any }) => (
           <div key={idx} className={`p-10 text-center group hover:bg-white/[0.02] transition-colors ${idx !== 2 ? 'border-b md:border-b-0 md:border-r border-white/5' : ''}`}>
              <stat.i className="w-6 h-6 text-primary/10 mx-auto mb-6 group-hover:text-primary group-hover:scale-125 transition-all duration-700" />
              <div className="text-5xl md:text-6xl font-heading font-black text-white mb-2 tracking-tighter italic leading-none">{stat.v}</div>
-             <div className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20 group-hover:text-white">{stat.l}</div>
+             <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/20 group-hover:text-white">{stat.l}</div>
           </div>
         ))}
       </motion.div>
@@ -112,7 +124,7 @@ export const Hero = ({ dict }: { dict: any }) => (
       className="absolute bottom-8 flex flex-col items-center gap-2 text-white/10 group cursor-pointer hover:text-primary/40 transition-colors"
       onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
     >
-       <span className="text-[9px] font-black uppercase tracking-[0.6em] rotate-180 [writing-mode:vertical-lr]">EXPLORAR</span>
+       <span className="text-[12px] font-black uppercase tracking-[0.6em] rotate-180 [writing-mode:vertical-lr]">EXPLORAR</span>
        <MousePointer2 className="w-3 h-3 rotate-90" />
     </motion.div>
 

@@ -66,8 +66,10 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
           phone: formData.phone,
           company: formData.company,
           budget: formData.budget,
+          sector: formData.teamSize,
+          locale: locale,
           message: `Staff: ${staffSize}, Sector: ${formData.teamSize}, Fuga: ${monthlyLeak}€, Desafío: ${formData.challenge}`,
-          service: 'Blueprint Diamond 3.0 Final'
+          service: 'Blueprint Diamond 2026 Original'
         })
       });
 
@@ -145,6 +147,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
                  <div className="relative aspect-[16/10] rounded-[3.5rem] overflow-hidden border border-white/10 shadow-2xl bg-[#030712]">
                     <video 
                       src="/videos/blueprint-bg.mp4" 
+                      poster="/img/blueprint-poster.png"
                       autoPlay 
                       loop 
                       muted 

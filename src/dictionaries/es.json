@@ -312,5 +312,8 @@
       "title": "ACCESO LIBERADO",
       "button": "DESCARGAR MANUAL"
     }
+  },
+  "config": {
+    "calendly": "https://calendly.com/omontesquesada/zyndrix"
   }
 }

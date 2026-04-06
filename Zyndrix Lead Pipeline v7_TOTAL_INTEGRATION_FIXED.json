@@ -1,0 +1,142 @@
+{
+  "name": "Zyndrix Lead Pipeline v7_TOTAL_INTEGRATION_FIXED",
+  "nodes": [
+    {
+      "parameters": { "httpMethod": "POST", "path": "zyndrix-lead-scoring", "responseMode": "responseNode" },
+      "id": "e5f719d2-4cc3-4d9e-839d-b37ccb42abdf", "name": "WH Contacto", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 0], "webhookId": "zyndrix-lead-scoring"
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "blueprint", "responseMode": "responseNode" },
+      "id": "4da174c4-b346-47bf-a340-1b87c5a0b072", "name": "WH Blueprint", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 192], "webhookId": "blueprint"
+    },
+    {
+      "parameters": { "httpMethod": "POST", "path": "auditoria", "responseMode": "responseNode" },
+      "id": "45df76bf-f5b5-4194-82d4-55e1f60ef891", "name": "WH Auditoria", "type": "n8n-nodes-base.webhook", "typeVersion": 2, "position": [0, 384], "webhookId": "auditoria"
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all();\nfor (var i = 0; i < items.length; i++) {\n  var fullJson = items[i].json;\n\n  function findEmail(obj) {\n    if (!obj || typeof obj !== 'object') return '';\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var key = keys[k]; var val = obj[key];\n      if (typeof val === 'string' && val.indexOf('@') !== -1) {\n        if (key.toLowerCase().indexOf('mail') !== -1 || key.toLowerCase().indexOf('email') !== -1)\n          return val.trim().toLowerCase();\n      }\n      if (typeof val === 'object' && val !== null) {\n        var found = findEmail(val); if (found) return found;\n      }\n    }\n    return '';\n  }\n\n  function findName(obj) {\n    if (!obj || typeof obj !== 'object') return '';\n    var nameKeys = ['name','nombre','lead_name','nombre_persona','nombre_y_apellidos','full_name'];\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var kl = keys[k].toLowerCase();\n      if (nameKeys.indexOf(kl) !== -1 || kl.indexOf('nombre') !== -1 || kl === 'name') {\n        if (typeof obj[keys[k]] === 'string' && obj[keys[k]].trim().length >= 2)\n          return obj[keys[k]].trim();\n      }\n    }\n    return '';\n  }\n\n  function findField(obj, fieldNames) {\n    if (!obj || typeof obj !== 'object') return '';\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var kl = keys[k].toLowerCase().replace(/[_\\-\\s]/g, '');\n      for (var f = 0; f < fieldNames.length; f++) {\n        if (kl === fieldNames[f].toLowerCase().replace(/[_\\-\\s]/g, ''))\n          return (obj[keys[k]] || '').toString().trim();\n      }\n    }\n    return '';\n  }\n\n  var email = findEmail(fullJson);\n  var name  = findName(fullJson);\n\n  if (!email || email.indexOf('@') === -1) {\n    items[i].json = { valid: false, error: 'Email no encontrado.' };\n    return items;\n  }\n\n  var source_page = 'contacto';\n  var allStr = JSON.stringify(fullJson).toLowerCase();\n  if (allStr.indexOf('sector') !== -1) source_page = 'blueprint';\n  if (allStr.indexOf('negocio') !== -1) source_page = 'auditoria';\n\n  items[i].json = {\n    valid: true,\n    raw_email:   email,\n    raw_name:    name,\n    raw_phone:   findField(fullJson, ['phone','telefono','whatsapp','tel','movil']) || 'N/A',\n    raw_company: findField(fullJson, ['company','company_name','empresa','nombre_negocio','empresa_organizacion']) || 'No especificada',\n    raw_message: findField(fullJson, ['message','mensaje','proyecto','necesidad','problema_principal','descripcion']) || 'Sin mensaje',\n    raw_service: findField(fullJson, ['service','servicio','prioridad_mejora','prioridad','interes']) || 'Consultoria General',\n    raw_budget:  findField(fullJson, ['budget','presupuesto','presupuesto_mensual']) || 'No especificado',\n    raw_website: findField(fullJson, ['website','web','url','sitio_web']) || '',\n    raw_sector:  findField(fullJson, ['sector','sector_operativo','industria']) || 'General',\n    raw_source:  findField(fullJson, ['source','utm_source','origen']) || 'web',\n    raw_source_page: source_page\n  };\n}\nreturn items;"
+      },
+      "id": "fe5d835e-fc6e-4401-a159-4e0377c7c9de", "name": "Validate Fields", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [224, 192]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 1 },
+          "conditions": [
+            { "id": "95efd1b1-1440-45ed-a39c-7c5917c1f692", "leftValue": "={{ $json.valid }}", "rightValue": true, "operator": { "type": "boolean", "operation": "equals" } }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "1591bfbd-7c04-4b55-9b97-df215ce06450", "name": "Valid?", "type": "n8n-nodes-base.if", "typeVersion": 2, "position": [448, 192]
+    },
+    {
+      "parameters": {
+        "respondWith": "json", "responseBody": "={{ JSON.stringify({status:'error', message: $json.error}) }}", "options": { "responseCode": 400 }
+      },
+      "id": "3f96551f-1e2b-4259-baaf-c05f5079d70a", "name": "Respond Error", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1.1, "position": [672, 288]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "n01", "name": "name", "value": "={{ $('Valid?').item.json.raw_name }}", "type": "string" },
+            { "id": "n02", "name": "email", "value": "={{ $('Valid?').item.json.raw_email }}", "type": "string" },
+            { "id": "n03", "name": "phone", "value": "={{ $('Valid?').item.json.raw_phone }}", "type": "string" },
+            { "id": "n04", "name": "company", "value": "={{ $('Valid?').item.json.raw_company }}", "type": "string" },
+            { "id": "n05", "name": "message", "value": "={{ $('Valid?').item.json.raw_message }}", "type": "string" },
+            { "id": "n06", "name": "service", "value": "={{ $('Valid?').item.json.raw_service }}", "type": "string" },
+            { "id": "n07", "name": "budget", "value": "={{ $('Valid?').item.json.raw_budget }}", "type": "string" },
+            { "id": "n08", "name": "website", "value": "={{ $('Valid?').item.json.raw_website }}", "type": "string" },
+            { "id": "n09", "name": "sector", "value": "={{ $('Valid?').item.json.raw_sector }}", "type": "string" },
+            { "id": "n10", "name": "source", "value": "={{ $('Valid?').item.json.raw_source }}", "type": "string" },
+            { "id": "n11", "name": "source_page", "value": "={{ $('Valid?').item.json.raw_source_page }}", "type": "string" }
+          ]
+        }
+      },
+      "id": "5a69871a-568c-4e0f-a346-7301aacd96d0", "name": "Normalize Data", "type": "n8n-nodes-base.set", "typeVersion": 3.4, "position": [1120, 0]
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?email=eq.' + encodeURIComponent($json.raw_email) + '&select=email,status&limit=1' }}", "authentication": "predefinedCredentialType", "nodeCredentialType": "supabaseApi"
+      },
+      "id": "check-dup-zyndrix-001", "name": "Check Duplicate", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [672, 96], "credentials": { "supabaseApi": { "id": "FLSq2fl5VGzVJtCg", "name": "Supabase account" } }
+    },
+    {
+      "parameters": {
+        "conditions": { "options": { "caseSensitive": false, "leftValue": "", "typeValidation": "loose" }, "conditions": [ { "id": "new-lead-check", "leftValue": "={{ Array.isArray($json.body) && $json.body.length > 0 && $json.body[0].status !== 'new' }}", "rightValue": true, "operator": { "type": "boolean", "operation": "equals" } } ] }
+      },
+      "id": "is-new-lead-zyndrix-001", "name": "Is New Lead?", "type": "n8n-nodes-base.if", "typeVersion": 2, "position": [896, 96]
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "={{ JSON.stringify({status:'dup', lead: $('Validate Fields').first().json.raw_email}) }}" },
+      "id": "respond-dup-zyndrix-001", "name": "Respond Duplicate", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1.1, "position": [1120, 192]
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all(); var item = items[0].json;\nvar prompt = `DIAGNÓSTICO TÉCNICO INDUSTRIAL - ZYNDRIX 2026\\n\\n### DATOS DEL LEAD\\n- **Entidad:** ${item.company}\\n- **Sector:** ${item.sector}\\n- **Necesidad:** ${item.message}\\n\\n### INSTRUCCIONES DE FORMATO\\nGenera un BLUEPRINT INDUSTRIAL. No uses párrafos largos. Usa ÚNICAMENTE:\\n1. **Secciones con Título en negrita**\\n2. **Listas con iconos industriales** (⚙️, 🧠, ⚡)\\n3. **Roadmap de 14 días** en pasos numerados con bolding.\\n\\nTU TAREA: Analizar la DEUDA OPERATIVA y proponer arquitectura de 3 capas. Sé agresivo y profesional.\\n\\nResponde siempre con este JSON:\\n{\"tier\":\"VIP|ALTO|MEDIO|BAJO\",\"score\":0-100,\"reasoning\":\"CONTENIDO ESTRUCTURADO CON MARKDOWN E ICONOS AQUÍ\",\"priority_action\":\"ACCIÓN INMEDIATA\",\"estimated_value\":\"EUR\"}`;\nitems[0].json.aiBody = JSON.stringify({ model: \"gpt-4o\", temperature: 0.15, messages: [{role: \"system\", content: \"Eres el Chief Architect de Zyndrix IA.\"}, {role: \"user\", content: prompt}] });\nreturn items;"
+      },
+      "id": "build-ai-body-001", "name": "Build AI Body", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [1344, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST", "url": "https://api.openai.com/v1/chat/completions", "authentication": "predefinedCredentialType", "nodeCredentialType": "openAiApi", "sendBody": true, "specifyBody": "json", "jsonBody": "={{ $json.aiBody }}", "options": { "timeout": 45000 }
+      },
+      "id": "50d7a795-2556-42d2-8fe4-fe139290e58e", "name": "AI Scoring", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [1568, 0], "credentials": { "openAiApi": { "id": "4Gsg49JP9MDiu7rT", "name": "OpenAi account" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all(); var lead = $('Normalize Data').first().json; var aiRaw = '';\ntry { aiRaw = items[0].json.choices[0].message.content || '{}'; } catch(e) { aiRaw = '{}'; }\nfunction fixUtf8(str) { if (!str) return str; try { var fixed = Buffer.from(str, 'latin1').toString('utf8'); return (fixed.indexOf('\\uFFFD') === -1) ? fixed : str; } catch(e) { return str; } }\nvar parsed = {}; try { var cleaned = aiRaw.replace(/^```json\\n?/, '').replace(/\\n?```$/, '').trim(); parsed = JSON.parse(cleaned); } catch(e) { parsed = {tier:'MEDIO',score:50,reasoning:'Error IA',priority_action:'Contactar',estimated_value:'Consultar'}; }\nreturn [{json:{ ...lead, tier:parsed.tier, score:parsed.score, reasoning:fixUtf8(parsed.reasoning || ''), priority_action:fixUtf8(parsed.priority_action || 'Contactar'), estimated_value:fixUtf8(parsed.estimated_value || 'Consultar') }}];"
+      },
+      "id": "34efb4ac-ddcb-4059-9513-46d8d7766419", "name": "Parse AI Score", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [1792, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST", "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email", "authentication": "predefinedCredentialType", "nodeCredentialType": "supabaseApi", "sendBody": true, "specifyBody": "json",\n"jsonBody": "={{ JSON.stringify({\n  name: $('Parse AI Score').item.json.name,\n  email: $('Parse AI Score').item.json.email,\n  phone: $('Parse AI Score').item.json.phone,\n  company_name: $('Parse AI Score').item.json.company,\n  message: $('Parse AI Score').item.json.message,\n  service: $('Parse AI Score').item.json.service,\n  budget: $('Parse AI Score').item.json.budget,\n  website: $('Parse AI Score').item.json.website,\n  sector: $('Parse AI Score').item.json.sector,\n  source: $('Parse AI Score').item.json.source,\n  source_page: $('Parse AI Score').item.json.source_page,\n  status: \"new\",\n  tier: $('Parse AI Score').item.json.tier,\n  score: $('Parse AI Score').item.json.score,\n  ai_reasoning: $('Parse AI Score').item.json.reasoning,\n  estimated_value: $('Parse AI Score').item.json.estimated_value,\n  priority_action: $('Parse AI Score').item.json.priority_action,\n  updated_at: $now.toISO()\n}) }}"
+      },
+      "id": "815c6773-5fb7-4b1e-8cce-59879226a836", "name": "Supabase Upsert", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [2016, 0], "credentials": { "supabaseApi": { "id": "FLSq2fl5VGzVJtCg", "name": "Supabase account" } }
+    },
+    {
+      "parameters": { "chatId": "5498174533", "text": "={{ $('Parse AI Score').item.json.tier === 'VIP' ? \"🚨 LEAD VIP\" : \"📋 Lead Score\" }}: {{ $('Parse AI Score').item.json.score }}/100\\n👤 {{ $('Parse AI Score').item.json.name }}\\n🏢 {{ $('Parse AI Score').item.json.company }}\\n💼 {{ $('Parse AI Score').item.json.service }}\\n⚡ {{ $('Parse AI Score').item.json.priority_action }}" },
+      "id": "fcab28c3-afc8-4e90-9798-b0e158b8a1f1", "name": "Telegram Alert", "type": "n8n-nodes-base.telegram", "typeVersion": 1.2, "position": [2240, 0], "credentials": { "telegramApi": { "id": "dM2AATT2a2VYQjrf", "name": "Telegram account" } }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse AI Score').item.json.email }}",
+        "subject": "={{ $('Parse AI Score').item.json.tier === 'VIP' ? \"🔴 ALTA PRIORIDAD: PROTOCOLO ZYNDRIX\" : \"Protocolo de Entrada: Zyndrix IA\" }}",
+        "message": "=<div style=\"background:#05070a;color:#cbd5e1;padding:30px;font-family:monospace;border:1px solid #1e293b;line-height:1.6;\">\\n  <div style=\"border-bottom:1px solid #38bdf8;padding-bottom:10px;margin-bottom:20px;\">\\n    <h1 style=\"color:#38bdf8;margin:0;font-size:20px;\">SYSTEM_DIAGNOSTIC [v7.0_ELITE]</h1>\\n    <p style=\"font-size:12px;color:#94a3b8;\">ENTITY: {{ $('Parse AI Score').item.json.company }} | IDENT: {{ $('Parse AI Score').item.json.tier }}</p>\\n  </div>\\n  \\n  <div style=\"background:#0a0f1b;padding:20px;border-left:3px solid #38bdf8;white-space:pre-wrap;margin-bottom:25px;\">\\n{{ $('Parse AI Score').item.json.reasoning }}\\n  </div>\\n\\n  <div style=\"background:#38bdf8;color:#05070a;padding:20px;text-align:center;font-weight:bold;\">\\n    REQUISITO PARA EJECUCIÓN: {{ $('Parse AI Score').item.json.priority_action }}\\n  </div>\\n\\n  <div style=\"text-align:center;margin-top:30px;\">\\n    <a href=\"https://cal.com/zyndrix/consulta\" style=\"background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:white;padding:15px 40px;text-decoration:none;border-radius:4px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;\">RESERVAR INTERFACE DIRECTA</a>\\n  </div>\\n</div>"
+      },
+      "id": "94c34a76-4fca-4bcc-809a-32ad08be541e", "name": "Email Lead", "type": "n8n-nodes-base.gmail", "typeVersion": 2.1, "position": [2464, 0], "credentials": { "gmailOAuth2": { "id": "ld5wV3gesGtLQn7A", "name": "Gmail account" } }
+    },
+    {
+      "parameters": {
+        "method": "POST", "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/tasks", "authentication": "predefinedCredentialType", "nodeCredentialType": "supabaseApi",\n"jsonBody": "{\"lead_email\":\"{{ $('Parse AI Score').item.json.email }}\",\"type\":\"follow_up\",\"title\":\"Follow-up: {{ $('Parse AI Score').item.json.name }}\",\"description\":\"{{ $('Parse AI Score').item.json.priority_action }}\",\"status\":\"pending\",\"priority\":\"normal\"}"
+      },
+      "id": "4df7c088-37f6-4c00-aa12-8ae51ca4936f", "name": "Create Task", "type": "n8n-nodes-base.httpRequest", "typeVersion": 4.2, "position": [2688, 0], "credentials": { "supabaseApi": { "id": "FLSq2fl5VGzVJtCg", "name": "Supabase account" } }
+    },
+    {
+      "parameters": { "respondWith": "json", "responseBody": "={{ JSON.stringify({status:'success', tier: $('Parse AI Score').item.json.tier}) }}" },
+      "id": "0b77fdd7-f931-4f5b-aebe-18a994c559bf", "name": "Respond OK", "type": "n8n-nodes-base.respondToWebhook", "typeVersion": 1.1, "position": [2912, 0]
+    }
+  ],
+  "connections": {
+    "WH Contacto": { "main": [[{ "node": "Validate Fields", "type": "main", "index": 0 }]] },
+    "WH Blueprint": { "main": [[{ "node": "Validate Fields", "type": "main", "index": 0 }]] },
+    "WH Auditoria": { "main": [[{ "node": "Validate Fields", "type": "main", "index": 0 }]] },
+    "Validate Fields": { "main": [[{ "node": "Valid?", "type": "main", "index": 0 }]] },
+    "Valid?": { "main": [[{ "node": "Check Duplicate", "type": "main", "index": 0 }], [{ "node": "Respond Error", "type": "main", "index": 0 }]] },
+    "Check Duplicate": { "main": [[{ "node": "Is New Lead?", "type": "main", "index": 0 }]] },
+    "Is New Lead?": { "main": [[{ "node": "Respond Duplicate", "type": "main", "index": 0 }], [{ "node": "Normalize Data", "type": "main", "index": 0 }]] },
+    "Normalize Data": { "main": [[{ "node": "Build AI Body", "type": "main", "index": 0 }]] },
+    "Build AI Body": { "main": [[{ "node": "AI Scoring", "type": "main", "index": 0 }]] },
+    "AI Scoring": { "main": [[{ "node": "Parse AI Score", "type": "main", "index": 0 }]] },
+    "Parse AI Score": { "main": [[{ "node": "Supabase Upsert", "type": "main", "index": 0 }]] },
+    "Supabase Upsert": { "main": [[{ "node": "Telegram Alert", "type": "main", "index": 0 }]] },
+    "Telegram Alert": { "main": [[{ "node": "Email Lead", "type": "main", "index": 0 }]] },
+    "Email Lead": { "main": [[{ "node": "Create Task", "type": "main", "index": 0 }]] },
+    "Create Task": { "main": [[{ "node": "Respond OK", "type": "main", "index": 0 }]] }
+  },
+  "active": true,
+  "settings": { "executionOrder": "v1" }
+}

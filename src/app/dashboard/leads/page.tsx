@@ -35,6 +35,7 @@ const initialLeads: any[] = [];
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState<any[]>(initialLeads);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [isAnalysisOpen, setIsAnalysisOpen] = useState(false);
   const [isAddLeadOpen, setIsAddLeadOpen] = useState(false);
@@ -43,6 +44,23 @@ export default function LeadsPage() {
   useEffect(() => {
     fetchLeads();
   }, []);
+
+  const updateLeadStatus = async (leadId: string, newStatus: string) => {
+      try {
+          const { error } = await supabase
+              .from('leads')
+              .update({ status: newStatus })
+              .eq('id', leadId);
+          
+          if (error) throw error;
+          
+          setLeads(prev => prev.map(l => 
+              l.id === leadId ? { ...l, status: newStatus } : l
+          ));
+      } catch (err) {
+          console.error('Error updating status:', err);
+      }
+  };
 
   const fetchLeads = async () => {
     try {
@@ -92,6 +110,12 @@ export default function LeadsPage() {
     { id: 'cierre', label: 'Fase de Cierre', color: 'bg-rose-50 text-rose-600 border-rose-100' }
   ];
 
+  const filteredLeads = leads.filter(l => 
+    l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    l.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    l.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="animate-in space-y-8 pb-10">
       {/* HEADER SECTION */}
@@ -109,6 +133,8 @@ export default function LeadsPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-hover:text-indigo-400 transition-colors" size={16} />
               <input 
                 placeholder="Buscar prospecto..." 
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
                 className="bg-white border border-slate-100 rounded-xl py-2.5 pl-10 pr-4 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all w-full shadow-sm"
               />
            </div>
@@ -129,13 +155,13 @@ export default function LeadsPage() {
             <div className={cn("p-4 rounded-xl border flex items-center justify-between shadow-sm", column.color)}>
               <span className="text-[10px] font-black uppercase tracking-widest">{column.label}</span>
               <span className="bg-white/50 px-2 py-0.5 rounded text-[10px] font-bold border border-white">
-                {leads.filter(l => l.status === column.id).length}
+                {filteredLeads.filter(l => l.status === column.id).length}
               </span>
             </div>
 
             <div className="flex-1 space-y-4">
               <AnimatePresence mode="popLayout">
-                {leads.filter(l => l.status === column.id).map((lead) => (
+                {filteredLeads.filter(l => l.status === column.id).map((lead) => (
                   <motion.div 
                     layout
                     key={lead.id}
@@ -148,15 +174,33 @@ export default function LeadsPage() {
                        <div className="w-9 h-9 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 group-hover:border-indigo-100 transition-all font-black text-[10px] shadow-sm">
                           {lead.name.split(' ').map((n: string) => n[0]).join('')}
                        </div>
-                       <MoreVertical size={14} className="text-slate-200" />
+                       
+                       <div className="flex items-center gap-2">
+                           {column.id !== 'cierre' && (
+                               <button 
+                                 title="Avanzar Etapa"
+                                 onClick={(e) => {
+                                     e.stopPropagation();
+                                     const nextIndex = columns.findIndex(c => c.id === column.id) + 1;
+                                     updateLeadStatus(lead.id, columns[nextIndex].id);
+                                 }}
+                                 className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 hover:bg-indigo-600 hover:text-white transition-all shadow-sm"
+                               >
+                                  <ChevronRight size={14} />
+                               </button>
+                           )}
+                           <MoreVertical size={14} className="text-slate-200" />
+                       </div>
                     </div>
                     
                     <div className="space-y-1">
                        <h3 className="text-xs font-black text-slate-900 group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{lead.name}</h3>
-                       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5 leading-none">
-                          <Building2 size={10} className="text-slate-300" />
-                          {lead.company}
-                       </p>
+                       <div className="flex items-center justify-between">
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5 leading-none">
+                                <Users size={10} className="text-slate-300" />
+                                {lead.company}
+                            </p>
+                       </div>
                     </div>
 
                     <div className="mt-5 pt-4 border-t border-slate-50 flex items-center justify-between">

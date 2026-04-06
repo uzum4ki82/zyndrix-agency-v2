@@ -33,11 +33,24 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-zyndrix-lang', locale);
 
-  return NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
+
+  // 4. SECURITY HEADERS - CLASE EJECUTIVA
+  // Protección contra Clickjacking, XSS y Sniffing de contenido.
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  
+  // Nota: CSP se omite aquí por ser muy restrictiva para Vercel Analytics/Scripts externos, 
+  // pero se recomienda configurar una básica si se añaden más scripts externos.
+
+  return response;
 }
 
 

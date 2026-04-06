@@ -34,7 +34,7 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1, duration: 0.8 }}
-                                className="bg-[#050508] p-10 rounded-[3rem] border border-white/5 relative group overflow-hidden"
+                                className="bg-[#050508] p-10 rounded-[3rem] border border-white/5 relative group overflow-hidden flex flex-col h-full"
                             >
                                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity">
                                     <Icon className="w-40 h-40" />
@@ -47,11 +47,11 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                                 <h3 className="text-xl font-heading font-black text-white italic mb-4 leading-none uppercase tracking-tighter group-hover:text-primary transition-colors">
                                     {step.title}
                                 </h3>
-                                <p className="text-[14px] text-white/30 font-medium italic mb-10 leading-relaxed uppercase tracking-tight group-hover:text-white/60 transition-colors">
+                                <p className="text-[14px] text-white/60 font-medium italic mb-10 leading-relaxed uppercase tracking-tight group-hover:text-white transition-colors flex-grow">
                                     {step.desc}
                                 </p>
 
-                                <div className="space-y-3 font-mono text-[9px] text-primary/40 uppercase tracking-[0.2em] pt-6 border-t border-white/5">
+                                <div className="space-y-3 font-mono text-[12px] text-primary/40 uppercase tracking-[0.2em] pt-6 border-t border-white/5 mt-auto">
                                     {logs[i].map((log, j) => (
                                         <div key={j} className="flex items-center gap-4">
                                             <div className="w-1.5 h-1.5 rounded-full bg-primary/30" />
@@ -76,16 +76,16 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                         <div className="space-y-6 max-w-xl">
                             <div className="flex items-center gap-4">
                                 <GitBranch className="w-8 h-8 text-primary" />
-                                <div className="text-[11px] font-black uppercase tracking-[0.5em] text-white/20">ORQUESTACIÓN N8N MASTER_WORKFLOW</div>
+                                <div className="text-[12px] font-black uppercase tracking-[0.5em] text-white/20">ORQUESTACIÓN N8N MASTER_WORKFLOW</div>
                             </div>
                             <h2 className="text-4xl font-heading font-black text-white uppercase italic tracking-tighter leading-none">
                                 {dict.main_title}
                             </h2>
-                            <p className="text-[14px] text-white/40 italic font-medium uppercase tracking-tight leading-relaxed max-w-md group-hover:text-white/60 transition-colors">
+                            <p className="text-[14px] text-white/60 font-medium italic uppercase tracking-tight leading-relaxed max-w-md group-hover:text-white transition-colors">
                                 {dict.main_desc}
                             </p>
                             <div className="pt-6">
-                                <a href="#contacto" className="text-[11px] font-black uppercase tracking-[0.5em] text-primary hover:text-white transition-all flex items-center gap-4 group">
+                                <a href="#contacto" className="text-[12px] font-black uppercase tracking-[0.5em] text-primary hover:text-white transition-all flex items-center gap-4 group">
                                    {dict.cta} <Code className="w-5 h-5 group-hover:scale-125 transition-transform" />
                                 </a>
                             </div>
@@ -99,7 +99,7 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                                 { t: 'SECURITY', v: 'SOC2_READY' }
                             ].map((s, i) => (
                                 <div key={i} className="p-8 bg-white/[0.02] border border-white/5 rounded-3xl group-hover:border-primary/20 transition-all">
-                                    <div className="text-[9px] font-black uppercase tracking-[0.4em] text-white/20 mb-2">{s.t}</div>
+                                    <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/20 mb-2">{s.t}</div>
                                     <div className="text-lg font-heading font-black text-white italic tracking-tighter">{s.v}</div>
                                 </div>
                             ))}

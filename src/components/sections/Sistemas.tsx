@@ -12,7 +12,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
   >
     {image && (
       <div className="absolute inset-0 opacity-10 group-hover:opacity-30 transition-opacity duration-1000">
-        <img src={image} alt="" className="w-full h-full object-cover grayscale brightness-50 contrast-125" />
+        <img src={image} alt={`${title} Service Icon`} className="w-full h-full object-cover grayscale brightness-50 contrast-125" />
       </div>
     )}
     <div className="relative z-10 flex flex-col h-full">
@@ -20,15 +20,15 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
         <Icon className="w-6 h-6 text-white group-hover:text-primary transition-colors" />
       </div>
       <h3 className="text-3xl font-heading font-black uppercase italic tracking-tighter mb-4 text-white leading-none">{title}</h3>
-      <p className="text-white/40 text-base leading-relaxed max-w-[280px] font-medium italic mb-8 flex-grow">{description}</p>
+      <p className="text-white/60 text-base leading-relaxed max-w-[280px] font-medium italic mb-8 flex-grow">{description}</p>
       
       {specs && (
         <div className="grid grid-cols-1 gap-3 pt-6 border-t border-white/5">
            {specs.map((spec: string, i: number) => (
              <div key={i} className="flex items-center gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary/60">{spec}</span>
-             </div>
+                 <span className="text-[12px] font-black uppercase tracking-widest text-primary/60">{spec}</span>
+              </div>
            ))}
         </div>
       )}
@@ -42,7 +42,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
     <div className="absolute inset-0 z-0">
       <img 
         src="/img/solution-bg.png" 
-        alt="" 
+        alt="Zyndrix Solutions Background Infrastructure" 
         className="w-full h-full object-cover opacity-5 md:opacity-10 scale-110 blur-sm"
       />
       <div className="absolute inset-0 bg-base/80" />
@@ -59,7 +59,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
                <ShieldCheck className="w-6 h-6 text-primary" />
             </div>
             <div>
-               <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-1">PROTOCOLO_VALIDADO</div>
+               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/20 mb-1">PROTOCOLO_VALIDADO</div>
                <div className="text-[12px] font-black uppercase tracking-[0.2em] text-white">REVISIÓN EXTERNA VERIFICADA</div>
             </div>
          </div>
@@ -99,7 +99,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
             <div className="relative z-10 flex flex-col gap-6 md:w-2/3">
               <div className="flex items-center gap-3 bg-primary/20 w-fit px-8 py-3 rounded-full border border-primary/30">
                 <Zap className="w-5 h-5 text-primary animate-pulse" />
-                <span className="text-[11px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
+                <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
               </div>
               <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-none tracking-tighter text-white">
                 {dict.cards[2].title}
@@ -111,7 +111,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
                 {dict.cards[2].specs.map((s: string, i: number) => (
                   <div key={i} className="flex flex-col">
                     <span className="text-primary font-black italic text-3xl tracking-tighter leading-none mb-1">{s.split(' ')[0]}</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/20">{s.split(' ').slice(1).join(' ')}</span>
+                    <span className="text-[12px] font-black uppercase tracking-widest text-white/20">{s.split(' ').slice(1).join(' ')}</span>
                   </div>
                 ))}
               </div>

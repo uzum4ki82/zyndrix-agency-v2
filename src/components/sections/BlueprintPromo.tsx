@@ -18,7 +18,7 @@ export const BlueprintPromo = ({ dict }: { dict: any }) => (
         <span className="text-primary font-black text-[11px] tracking-[0.5em] uppercase mb-6 inline-block px-8 py-3 bg-primary/5 rounded-full border border-primary/20">{dict.badge}</span>
         <h2 className="text-6xl md:text-8xl font-heading font-black text-white italic tracking-tighter leading-none uppercase mb-4">{dict.title_main} <br/><span className="text-gradient-cyan py-2 inline-block">{dict.title_highlight}</span></h2>
         
-        <p className="text-2xl text-white/40 font-medium italic lowercase leading-relaxed max-w-xl">
+        <p className="text-2xl text-white/70 font-medium italic lowercase leading-relaxed max-w-xl">
           {dict.subtitle}
         </p>
 

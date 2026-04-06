@@ -1,22 +1,26 @@
 import { Hero } from '@/components/sections/Hero';
 import { NavBar } from '@/components/common/NavBar';
-import { PainPoints } from '@/components/sections/PainPoints';
 import { TechStack } from '@/components/sections/TechStack';
-import { Sistemas } from '@/components/sections/Sistemas';
-import { Impacto } from '@/components/sections/Impacto';
-import { Metodo } from '@/components/sections/Metodo';
-import { Planes } from '@/components/sections/Planes';
-import { Contacto, Footer } from '@/components/sections/Contacto';
-import { Demos } from '@/components/sections/Demos';
-import { Beneficios } from '@/components/sections/Beneficios';
-import { Offers } from '@/components/sections/Offers';
-import { BlueprintPromo } from '@/components/sections/BlueprintPromo';
 import { SectionConnector } from '@/components/common/SectionConnector';
-import { ROICalculator } from '@/components/sections/ROICalculator';
-import { EngineRoom } from '@/components/sections/EngineRoom';
-import { FAQ } from '@/components/sections/FAQ';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
+import dynamic from 'next/dynamic';
+
+// DYNAMIC IMPORTS FOR PERFORMANCE - CLASE EJECUTIVA
+const ROICalculator = dynamic(() => import('@/components/sections/ROICalculator').then(mod => mod.ROICalculator), { ssr: true });
+const PainPoints = dynamic(() => import('@/components/sections/PainPoints').then(mod => mod.PainPoints), { ssr: true });
+const Sistemas = dynamic(() => import('@/components/sections/Sistemas').then(mod => mod.Sistemas), { ssr: true });
+const EngineRoom = dynamic(() => import('@/components/sections/EngineRoom').then(mod => mod.EngineRoom), { ssr: true });
+const Impacto = dynamic(() => import('@/components/sections/Impacto').then(mod => mod.Impacto), { ssr: true });
+const Offers = dynamic(() => import('@/components/sections/Offers').then(mod => mod.Offers), { ssr: true });
+const BlueprintPromo = dynamic(() => import('@/components/sections/BlueprintPromo').then(mod => mod.BlueprintPromo), { ssr: true });
+const Beneficios = dynamic(() => import('@/components/sections/Beneficios').then(mod => mod.Beneficios), { ssr: true });
+const Metodo = dynamic(() => import('@/components/sections/Metodo').then(mod => mod.Metodo), { ssr: true });
+const Demos = dynamic(() => import('@/components/sections/Demos').then(mod => mod.Demos), { ssr: true });
+const Planes = dynamic(() => import('@/components/sections/Planes').then(mod => mod.Planes), { ssr: true });
+const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => mod.FAQ), { ssr: true });
+const Contacto = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Contacto), { ssr: true });
+const Footer = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Footer), { ssr: true });
 
 export default async function Home() {
   const headerList = await headers();
@@ -67,7 +71,7 @@ export default async function Home() {
       <FAQ dict={dict.faq} />
       <SectionConnector />
 
-      <Contacto dict={dict.contacto} />
+      <Contacto dict={dict.contacto} locale={locale} />
       <Footer dict={dict.footer} />
     </main>
   );

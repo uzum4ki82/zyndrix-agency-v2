@@ -45,10 +45,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico?v=3" },
-      { url: "/favicon.png?v=3", type: "image/png" },
+      { url: "/img/zyndrix-live.png?v=3" },
+      { url: "/img/zyndrix-live.png?v=3", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png?v=3",
+    apple: "/img/zyndrix-live.png?v=3",
   },
   openGraph: {
     type: "website",
@@ -66,6 +66,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: 'https://zyndrix.dev',
+  },
 };
 
 export default function RootLayout({
@@ -76,6 +79,48 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${outfit.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased min-h-screen selection:bg-[#38bdf8]/30">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "ZYNDRIX | Arquitectura de Automatización IA",
+              "image": "https://zyndrix.dev/img/zyndrix-live.png",
+              "@id": "https://zyndrix.dev",
+              "url": "https://zyndrix.dev",
+              "telephone": "",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "",
+                "addressLocality": "Madrid",
+                "postalCode": "",
+                "addressCountry": "ES"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 40.4168,
+                "longitude": -3.7038
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              },
+              "sameAs": [
+                "https://www.linkedin.com/company/zyndrix",
+                "https://x.com/zyndrix"
+              ]
+            })
+          }}
+        />
         <Background />
         {children}
       </body>

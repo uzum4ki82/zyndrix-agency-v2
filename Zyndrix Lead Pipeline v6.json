@@ -1,0 +1,693 @@
+{
+  "name": "Zyndrix Lead Pipeline v6",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "zyndrix-lead-scoring",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e5f719d2-4cc3-4d9e-839d-b37ccb42abdf",
+      "name": "WH Contacto",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "zyndrix-lead-scoring"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "blueprint",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4da174c4-b346-47bf-a340-1b87c5a0b072",
+      "name": "WH Blueprint",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        192
+      ],
+      "webhookId": "blueprint"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "auditoria",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "45df76bf-f5b5-4194-82d4-55e1f60ef891",
+      "name": "WH Auditoria",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        384
+      ],
+      "webhookId": "auditoria"
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all();\nfor (var i = 0; i < items.length; i++) {\n  var fullJson = items[i].json;\n\n  function findEmail(obj) {\n    if (!obj || typeof obj !== 'object') return '';\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var key = keys[k]; var val = obj[key];\n      if (typeof val === 'string' && val.indexOf('@') !== -1) {\n        if (key.toLowerCase().indexOf('mail') !== -1 || key.toLowerCase().indexOf('email') !== -1)\n          return val.trim().toLowerCase();\n      }\n      if (typeof val === 'object' && val !== null) {\n        var found = findEmail(val); if (found) return found;\n      }\n    }\n    for (var k = 0; k < keys.length; k++) {\n      var val = obj[keys[k]];\n      if (typeof val === 'string' && val.indexOf('@') !== -1) return val.trim().toLowerCase();\n    }\n    return '';\n  }\n\n  function findName(obj) {\n    if (!obj || typeof obj !== 'object') return '';\n    var nameKeys = ['name','nombre','lead_name','nombre_persona','nombre_y_apellidos','full_name'];\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var kl = keys[k].toLowerCase();\n      if (nameKeys.indexOf(kl) !== -1 || kl.indexOf('nombre') !== -1 || kl === 'name') {\n        if (typeof obj[keys[k]] === 'string' && obj[keys[k]].trim().length >= 2)\n          return obj[keys[k]].trim();\n      }\n    }\n    for (var k = 0; k < keys.length; k++) {\n      if (typeof obj[keys[k]] === 'object' && obj[keys[k]] !== null) {\n        var found = findName(obj[keys[k]]); if (found) return found;\n      }\n    }\n    return '';\n  }\n\n  function findField(obj, fieldNames) {\n    if (!obj || typeof obj !== 'object') return '';\n    var keys = Object.keys(obj);\n    for (var k = 0; k < keys.length; k++) {\n      var kl = keys[k].toLowerCase().replace(/[_\\-\\s]/g, '');\n      for (var f = 0; f < fieldNames.length; f++) {\n        if (kl === fieldNames[f].toLowerCase().replace(/[_\\-\\s]/g, ''))\n          return (obj[keys[k]] || '').toString().trim();\n      }\n    }\n    for (var k = 0; k < keys.length; k++) {\n      if (typeof obj[keys[k]] === 'object' && obj[keys[k]] !== null) {\n        var found = findField(obj[keys[k]], fieldNames); if (found) return found;\n      }\n    }\n    return '';\n  }\n\n  var email = findEmail(fullJson);\n  var name  = findName(fullJson);\n\n  if (!email || email.indexOf('@') === -1) {\n    items[i].json = { valid: false, error: 'Email no encontrado. Campos recibidos: ' + Object.keys(fullJson).join(', ') };\n    return items;\n  }\n  if (!name || name.length < 2) {\n    items[i].json = { valid: false, error: 'Nombre no encontrado', email_encontrado: email };\n    return items;\n  }\n\n  var source_page = 'contacto';\n  var allStr = JSON.stringify(fullJson).toLowerCase();\n  if (allStr.indexOf('sector') !== -1 || allStr.indexOf('prioridad') !== -1) source_page = 'blueprint';\n  if (allStr.indexOf('negocio') !== -1 || allStr.indexOf('problema') !== -1) source_page = 'auditoria';\n\n  items[i].json = {\n    valid: true,\n    raw_email:   email,\n    raw_name:    name,\n    raw_phone:   findField(fullJson, ['phone','telefono','whatsapp','tel','movil']) || 'N/A',\n    raw_company: findField(fullJson, ['company','company_name','empresa','nombre_negocio','empresa_organizacion']) || 'No especificada',\n    raw_message: findField(fullJson, ['message','mensaje','proyecto','necesidad','problema_principal','descripcion']) || 'Sin mensaje',\n    raw_service: findField(fullJson, ['service','servicio','prioridad_mejora','prioridad','interes']) || 'Consultoria General',\n    raw_budget:  findField(fullJson, ['budget','presupuesto','presupuesto_mensual']) || 'No especificado',\n    raw_website: findField(fullJson, ['website','web','url','sitio_web']) || '',\n    raw_sector:  findField(fullJson, ['sector','sector_operativo','industria']) || 'General',\n    raw_source:  findField(fullJson, ['source','utm_source','origen']) || 'web',\n    raw_source_page: source_page\n  };\n}\nreturn items;"
+      },
+      "id": "fe5d835e-fc6e-4401-a159-4e0377c7c9de",
+      "name": "Validate Fields",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        192
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "95efd1b1-1440-45ed-a39c-7c5917c1f692",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1591bfbd-7c04-4b55-9b97-df215ce06450",
+      "name": "Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        448,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({status:'error', message: $json.error}) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "3f96551f-1e2b-4259-baaf-c05f5079d70a",
+      "name": "Respond Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "n01",
+              "name": "name",
+              "value": "={{ $('Valid?').item.json.raw_name }}",
+              "type": "string"
+            },
+            {
+              "id": "n02",
+              "name": "email",
+              "value": "={{ $('Valid?').item.json.raw_email }}",
+              "type": "string"
+            },
+            {
+              "id": "n03",
+              "name": "phone",
+              "value": "={{ $('Valid?').item.json.raw_phone }}",
+              "type": "string"
+            },
+            {
+              "id": "n04",
+              "name": "company",
+              "value": "={{ $('Valid?').item.json.raw_company }}",
+              "type": "string"
+            },
+            {
+              "id": "n05",
+              "name": "message",
+              "value": "={{ $('Valid?').item.json.raw_message }}",
+              "type": "string"
+            },
+            {
+              "id": "n06",
+              "name": "service",
+              "value": "={{ $('Valid?').item.json.raw_service }}",
+              "type": "string"
+            },
+            {
+              "id": "n07",
+              "name": "budget",
+              "value": "={{ $('Valid?').item.json.raw_budget }}",
+              "type": "string"
+            },
+            {
+              "id": "n08",
+              "name": "website",
+              "value": "={{ $('Valid?').item.json.raw_website }}",
+              "type": "string"
+            },
+            {
+              "id": "n09",
+              "name": "sector",
+              "value": "={{ $('Valid?').item.json.raw_sector }}",
+              "type": "string"
+            },
+            {
+              "id": "n10",
+              "name": "source",
+              "value": "={{ $('Valid?').item.json.raw_source }}",
+              "type": "string"
+            },
+            {
+              "id": "n11",
+              "name": "source_page",
+              "value": "={{ $('Valid?').item.json.raw_source_page }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5a69871a-568c-4e0f-a346-7301aacd96d0",
+      "name": "Normalize Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.aiBody }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "50d7a795-2556-42d2-8fe4-fe139290e58e",
+      "name": "AI Scoring",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1568,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4Gsg49JP9MDiu7rT",
+          "name": "OpenAi account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all();\nvar lead = $('Normalize Data').first().json;\nvar aiRaw = '';\ntry { aiRaw = items[0].json.choices[0].message.content || '{}'; } catch(e) { aiRaw = '{}'; }\n\n// Fix double-encoded UTF-8 (latin1 misread as bytes)\nfunction fixUtf8(str) {\n  if (!str) return str;\n  try {\n    var fixed = Buffer.from(str, 'latin1').toString('utf8');\n    return (fixed.indexOf('\\uFFFD') === -1) ? fixed : str;\n  } catch(e) { return str; }\n}\n\nvar parsed = {};\ntry {\n  var cleaned = aiRaw.replace(/^```(?:json)?\\n?/, '').replace(/\\n?```$/, '').trim();\n  parsed = JSON.parse(cleaned);\n  if (['VIP','ALTO','MEDIO','BAJO'].indexOf(parsed.tier) === -1) parsed.tier = 'MEDIO';\n  if (typeof parsed.score !== 'number' || parsed.score < 0 || parsed.score > 100) parsed.score = 50;\n} catch(e) {\n  parsed = {tier:'MEDIO',score:50,reasoning:'Error IA - revisar',priority_action:'Contactar manual',estimated_value:'Consultar'};\n}\n\nreturn [{json:{\n  name:lead.name, email:lead.email, phone:lead.phone, company:lead.company,\n  message:lead.message, service:lead.service, budget:lead.budget,\n  website:lead.website, sector:lead.sector, source:lead.source,\n  source_page:lead.source_page,\n  tier:parsed.tier, score:parsed.score,\n  reasoning:       fixUtf8(parsed.reasoning || ''),\n  priority_action: fixUtf8(parsed.priority_action || 'Contactar'),\n  estimated_value: fixUtf8(parsed.estimated_value || 'Consultar')\n}}];"
+      },
+      "id": "34efb4ac-ddcb-4059-9513-46d8d7766419",
+      "name": "Parse AI Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1792,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?on_conflict=email",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "resolution=merge-duplicates,return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  name: $json.name,\n  email: $json.email,\n  phone: $json.phone,\n  company_name: $json.company,\n  message: $json.message,\n  service: $json.service,\n  budget: $json.budget,\n  website: $json.website,\n  sector: $json.sector,\n  source: $json.source,\n  source_page: $json.source_page,\n  status: \"new\",\n  tier: $json.tier,\n  score: $json.score,\n  ai_reasoning: $json.reasoning,\n  estimated_value: $json.estimated_value,\n  priority_action: $json.priority_action,\n  follow_up_count: 0,\n  last_contacted_at: $now.toISO(),\n  updated_at: $now.toISO()\n}) }}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "815c6773-5fb7-4b1e-8cce-59879226a836",
+      "name": "Supabase Upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2016,
+        0
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "FLSq2fl5VGzVJtCg",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "5498174533",
+        "text": "={{ $('Parse AI Score').item.json.tier === 'VIP' ? '🚨 LEAD VIP — LLAMAR HOY' : $('Parse AI Score').item.json.tier === 'ALTO' ? '⚡ LEAD ALTO — PRIORIDAD' : $('Parse AI Score').item.json.tier === 'MEDIO' ? '📩 Lead MEDIO' : '📋 Lead BAJO' }}\n━━━━━━━━━━━━━━━━\n🎯 {{ $('Parse AI Score').item.json.tier }} | Score: {{ $('Parse AI Score').item.json.score }}/100\n📄 Fuente: {{ $('Parse AI Score').item.json.source_page }} | {{ $('Parse AI Score').item.json.source }}\n\n👤 {{ $('Parse AI Score').item.json.name }}\n🏢 {{ $('Parse AI Score').item.json.company }}\n📧 {{ $('Parse AI Score').item.json.email }}\n📱 {{ $('Parse AI Score').item.json.phone }}\n{{ $('Parse AI Score').item.json.website ? '🌐 ' + $('Parse AI Score').item.json.website + '\\n' : '' }}\n💼 {{ $('Parse AI Score').item.json.service }}\n💰 {{ $('Parse AI Score').item.json.budget }}\n📊 Valor est: {{ $('Parse AI Score').item.json.estimated_value }}\n\n🧠 {{ $('Parse AI Score').item.json.reasoning }}\n⚡ {{ $('Parse AI Score').item.json.priority_action }}\n\n💬 {{ ($('Parse AI Score').item.json.message || '').substring(0,200) }}{{ ($('Parse AI Score').item.json.tier === 'VIP' || $('Parse AI Score').item.json.tier === 'ALTO') ? '\\n\\n📞 RESERVAR: https://cal.com/zyndrix/consulta' : '' }}",
+        "additionalFields": {}
+      },
+      "id": "fcab28c3-afc8-4e90-9798-b0e158b8a1f1",
+      "name": "Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2240,
+        0
+      ],
+      "webhookId": "e614cc37-b422-45c1-8f7b-5d5468e3d8dd",
+      "credentials": {
+        "telegramApi": {
+          "id": "dM2AATT2a2VYQjrf",
+          "name": "Telegram account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Parse AI Score').item.json.email }}",
+        "subject": "={{ $('Parse AI Score').item.json.tier === 'VIP' || $('Parse AI Score').item.json.tier === 'ALTO' ? 'Tu consulta con Zyndrix - Reserva tu sesion' : 'Hemos recibido tu consulta - Zyndrix IA' }}",
+        "message": "=<div style=\"font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#0a0f1a;color:#cbd5e1;border:1px solid #1e293b\"><div style=\"padding:30px;text-align:center;background:linear-gradient(135deg,#064e3b,#0d4f6b)\"><h1 style=\"color:#3BFFA8;font-size:28px;margin:0\">ZYNDRIX</h1><p style=\"color:#94a3b8;font-size:13px;margin:5px 0 0\">Inteligencia que ejecuta</p></div><div style=\"padding:30px\"><p>Hola <strong style=\"color:#3BFFA8\">{{ $('Parse AI Score').item.json.name }}</strong>,</p><p>Gracias por contactar con Zyndrix. Hemos recibido tu consulta sobre <strong>{{ $('Parse AI Score').item.json.service }}</strong> para {{ $('Parse AI Score').item.json.company }}.</p><p>Te ofrezco una <strong style=\"color:#3BFFA8\">sesion estrategica gratuita de 30 minutos</strong> donde:</p><ul style=\"color:#94a3b8;line-height:1.8\"><li>Analizamos tus procesos actuales</li><li>Identificamos oportunidades de automatizacion</li><li>Te damos un plan de accion concreto (tuyo aunque no contrates)</li></ul><div style=\"text-align:center;margin:25px 0\"><a href=\"https://cal.com/zyndrix/consulta\" style=\"background:linear-gradient(135deg,#3BFFA8,#00E0FF);color:#0a0f1a;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block\">RESERVAR SESION GRATUITA</a></div><p style=\"color:#64748b;font-size:12px;text-align:center\">Sin compromiso. Incluye mini-audit gratuito de tu negocio.</p></div><div style=\"padding:15px 30px;text-align:center;border-top:1px solid #1e293b;font-size:11px;color:#475569\"><p>Zyndrix IA - Barcelona - <a href=\"https://zyndrix.dev\" style=\"color:#3BFFA8\">zyndrix.dev</a></p></div></div>",
+        "options": {}
+      },
+      "id": "94c34a76-4fca-4bcc-809a-32ad08be541e",
+      "name": "Email Lead",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2464,
+        0
+      ],
+      "webhookId": "377ac715-10c9-48c3-a2be-5c915f5f14c6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ld5wV3gesGtLQn7A",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vrvfftftnlspajplqjye.supabase.co/rest/v1/tasks",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"lead_email\":\"{{ $('Parse AI Score').item.json.email }}\",\"type\":\"follow_up\",\"title\":\"Follow-up: {{ $('Parse AI Score').item.json.name }} ({{ $('Parse AI Score').item.json.tier }})\",\"description\":\"{{ $('Parse AI Score').item.json.priority_action }}\",\"status\":\"pending\",\"priority\":\"{{ $('Parse AI Score').item.json.tier === 'VIP' ? 'urgent' : 'normal' }}\",\"due_at\":\"{{ $now.plus({hours: 24}).toISO() }}\"}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "4df7c088-37f6-4c00-aa12-8ae51ca4936f",
+      "name": "Create Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2688,
+        0
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "FLSq2fl5VGzVJtCg",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({status:'success', pipeline:'Zyndrix v6', lead: $('Parse AI Score').item.json.email, tier: $('Parse AI Score').item.json.tier, score: $('Parse AI Score').item.json.score}) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "0b77fdd7-f931-4f5b-aebe-18a994c559bf",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2912,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var items = $input.all();\nvar item = items[0].json;\n\ntry {\n  var prompt = 'Evalua este lead:\\n' +\n    '- Nombre: ' + (item.name || '') + '\\n' +\n    '- Email: ' + (item.email || '') + '\\n' +\n    '- Empresa: ' + (item.company || '') + '\\n' +\n    '- Sector: ' + (item.sector || '') + '\\n' +\n    '- Servicio: ' + (item.service || '') + '\\n' +\n    '- Presupuesto: ' + (item.budget || '') + '\\n' +\n    '- Web: ' + (item.website || '') + '\\n' +\n    '- Mensaje: ' + (item.message || '') + '\\n' +\n    '- Pagina origen: ' + (item.source_page || '') + '\\n\\n' +\n    'Criterios: VIP(85-100) ALTO(65-84) MEDIO(40-64) BAJO(0-39)\\n\\n' +\n    'Responde SOLO con un JSON valido: {\"tier\":\"VIP|ALTO|MEDIO|BAJO\",\"score\":0-100,\"reasoning\":\"2 frases\",\"priority_action\":\"accion concreta\",\"estimated_value\":\"importe EUR\"}';\n\n  var payload = {\n    model: 'gpt-4o-mini',\n    temperature: 0.15,\n    max_tokens: 500,\n    messages: [\n      {role: 'system', content: 'Eres un motor de scoring de leads B2B para Zyndrix. Responde SIEMPRE con un unico objeto JSON valido. Sin markdown, sin backticks.'},\n      {role: 'user', content: prompt}\n    ]\n  };\n\n  var aiBody = JSON.stringify(payload);\n  \n  items[0].json.aiBody = aiBody;\n  items[0].json.aiBody_len = aiBody.length;\n  \n} catch(e) {\n  items[0].json.aiBody = '{}';\n  items[0].json.aiBody_error = e.message || 'unknown error';\n}\n\nreturn items;"
+      },
+      "id": "build-ai-body-001",
+      "name": "Build AI Body",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        0
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://vrvfftftnlspajplqjye.supabase.co/rest/v1/leads?email=eq.' + encodeURIComponent($json.raw_email) + '&select=email,status&limit=1' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          },
+          "timeout": 5000
+        }
+      },
+      "id": "check-dup-zyndrix-001",
+      "name": "Check Duplicate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        96
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "FLSq2fl5VGzVJtCg",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "new-lead-check-01",
+              "leftValue": "={{ Array.isArray($json.body) && $json.body.length > 0 && $json.body[0].status && $json.body[0].status !== 'new' }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "is-new-lead-zyndrix-001",
+      "name": "Is New Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        896,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({status:'success', pipeline:'Zyndrix v6', note:'already_processed', lead: $('Validate Fields').first().json.raw_email}) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-dup-zyndrix-001",
+      "name": "Respond Duplicate",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        192
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WH Contacto": {
+      "main": [
+        [
+          {
+            "node": "Validate Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WH Blueprint": {
+      "main": [
+        [
+          {
+            "node": "Validate Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WH Auditoria": {
+      "main": [
+        [
+          {
+            "node": "Validate Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Fields": {
+      "main": [
+        [
+          {
+            "node": "Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid?": {
+      "main": [
+        [
+          {
+            "node": "Check Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Data": {
+      "main": [
+        [
+          {
+            "node": "Build AI Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Scoring": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Score": {
+      "main": [
+        [
+          {
+            "node": "Supabase Upsert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Upsert": {
+      "main": [
+        [
+          {
+            "node": "Telegram Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Alert": {
+      "main": [
+        [
+          {
+            "node": "Email Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Lead": {
+      "main": [
+        [
+          {
+            "node": "Create Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Task": {
+      "main": [
+        [
+          {
+            "node": "Respond OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build AI Body": {
+      "main": [
+        [
+          {
+            "node": "AI Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Duplicate": {
+      "main": [
+        [
+          {
+            "node": "Is New Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is New Lead?": {
+      "main": [
+        [
+          {
+            "node": "Respond Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalize Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "6wNDolq9rzd35HgL"
+  },
+  "versionId": "8e4c0c01-eb03-4f85-b4fc-cdbdb3325a08",
+  "meta": {
+    "instanceId": "834d228dc4845b04899310ea91d2f620dffe9defa42925d32d7331cbe4518d9c"
+  },
+  "id": "DqRpCrgFXyQsg10Y",
+  "tags": []
+}

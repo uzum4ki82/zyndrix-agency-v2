@@ -25,8 +25,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
   });
   const [step, setStep] = useState<'form' | 'processing' | 'success'>('form');
   const [progress, setProgress] = useState(0);
-
-  const CALENDLY_URL = 'https://calendly.com/omontesquesada/zyndrix'; 
+  const calendlyUrl = dict.config?.calendly || 'https://calendly.com/omontesquesada/zyndrix'; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +53,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
           website: formData.website,
           problem: formData.problem,
           budget: formData.budget,
+          locale: locale,
           service: locale === 'es' ? 'Auditoría de Sistemas IA' : 'AI Systems Audit'
         })
       });
@@ -65,7 +65,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
         setStep('success');
         // Redirigir a Calendly después de que el usuario vea el éxito
         setTimeout(() => {
-          window.location.href = CALENDLY_URL;
+          window.location.href = calendlyUrl;
         }, 3500);
       }, 1500);
     } catch (error) {

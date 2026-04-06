@@ -46,6 +46,8 @@ export async function POST(req: Request) {
           message: message || problem || body.message || 'Solicitud Auditoría',
           budget: budget || null,
           service: service || 'Auditoría IA',
+          language_preference: body.language || body.locale || 'es',
+          niche_category: body.sector || body.niche || null,
           status: 'new'
         })
       });

@@ -21,7 +21,7 @@ export const TechStack = ({ dict }: { dict: any }) => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-6 inline-block px-6 py-2 bg-primary/5 rounded-full border border-primary/20"
+            className="text-primary font-black text-[12px] tracking-[0.5em] uppercase mb-6 inline-block px-6 py-2 bg-primary/5 rounded-full border border-primary/20"
           >
             {dict.title || "NÚCLEO DE PROCESAMIENTO"} ⚡
           </motion.div>
@@ -47,7 +47,7 @@ export const TechStack = ({ dict }: { dict: any }) => {
               <div className="w-24 h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-6 backdrop-blur-xl group-hover:bg-primary/10 group-hover:border-primary/40 transition-all duration-500 shadow-xl">
                  <img src={tech.img} alt={tech.name} className="w-full h-full object-contain filter grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 transition-all duration-700" />
               </div>
-              <div className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 group-hover:text-primary transition-colors text-shadow">{tech.name}</div>
+              <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/50 group-hover:text-primary transition-colors text-shadow">{tech.name}</div>
             </motion.div>
           ))}
         </div>
