@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const Testimonios = ({ dict }: { dict: any }) => (
+export const Testimonios = ({ dict = {} }: { dict: any }) => (
   <section id="testimonios" className="py-60 px-10 relative">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title={dict.title} subtitle={dict.subtitle} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 relative">
 
-        {dict.items.map((item: any, i: number) => (
+        {dict?.items?.map((item: any, i: number) => (
           <motion.div 
             key={i}
             whileHover={{ y: -15, scale: 1.02 }}

@@ -10,10 +10,12 @@
     "connect": "AUDIT"
   },
   "hero": {
-    "title_main": "AI Automation Architecture",
-    "subtitle": "Elite Upgrade",
-    "cta_primary": "FREE AUDIT",
-    "cta_secondary": "SYSTEMS"
+    "badge": "AI ARCHITECTURE | ENTERPRISE-GRADE",
+    "title_main": "ZYNDRIX: AI SOLUTIONS",
+    "title_highlight": "HIGH PERFORMANCE",
+    "subtitle": "We drive companies with autonomous systems and intelligent workflows.",
+    "cta_primary": "SCALE MY BUSINESS",
+    "cta_secondary": "VIEW INVESTMENT"
   },
   "roi": {
     "badge": "ECONOMIC DIAGNOSIS",
@@ -52,9 +54,13 @@
     "cta": "DOWNLOAD BLUEPRINT",
     "free": "TOTALLY FREE"
   },
+  "tech_stack": {
+    "title": "POWERED BY THE STATE OF THE ART",
+    "subtitle": "Unlimited Power"
+  },
   "pain_points": {
-    "badge": "Critical Points",
-    "title": "Your business isn't scalable",
+    "badge": "THE PROBLEM",
+    "title": "Is your company still operating in manual mode?",
     "subtitle": "Current State",
     "items": [
       { "title": "OPERATIONAL BOTTLENECK", "description": "You or your team are the manual engine behind every process." },
@@ -62,15 +68,40 @@
       { "title": "INCONSISTENT FOLLOW-UP", "description": "Zero immediate response means lead death." }
     ]
   },
+  "solucion": {
+    "badge": "THE SOLUTION",
+    "title": "AI that works for you, 24 hours a day"
+  },
   "sistemas": {
-    "title": "Autonomous Systems",
-    "subtitle": "Industrial Level",
+    "badge": "SYSTEMS ARCHITECTURE",
+    "title": "INDUSTRIAL GRADE AI INFRASTRUCTURE",
+    "subtitle": "Our engineering is not based on isolated tools, but on interconnected autonomous ecosystems that eliminate human intervention in critical tasks.",
     "cards": [
-      { "title": "Lead Gen Engine", "description": "Massive 24/7 data extraction and cleaning.", "specs": ["Scraping", "Data Cleaning", "0.5s Enrichment"] },
-      { "title": "Operational Agents", "description": "Support and logistics assisted by autonomous agents.", "specs": ["Local LLM", "SAP Integration", "<150ms Latency"] },
-      { "title": "Workflow Core", "description": "Central n8n orchestration for your entire enterprise.", "specs": ["Dedicated Instance", "500+ Apps", "SOC2 Security"] },
-      { "title": "Artificial SDR", "description": "Seconds-fast qualification and direct scheduling.", "specs": ["Chat & Voice", "Sentiment Analysis", "Auto-Closing"] },
-      { "title": "Total Sovereignty", "description": "Proprietary infrastructure with 99.9% SLAs and absolute data sovereignty on your own servers.", "specs": ["Military Encryption", "Local Hosting", "Continuous Audit"] }
+      { 
+        "title": "Lead Gen Engine", 
+        "description": "Massive 24/7 data extraction and cleaning. Automation of prospection on LinkedIn, Google Maps and industrial directories.",
+        "specs": ["Multi-node Scraping", "AI Data Cleaning", "0.5s Enrichment"]
+      },
+      { 
+        "title": "Operational Agents", 
+        "description": "Support and logistics assisted by autonomous agents. Management of inventories, routes and incident resolution.",
+        "specs": ["Local LLM Models", "SAP/ERP Integration", "< 150ms Latency"]
+      },
+      { 
+        "title": "Workflow Core", 
+        "description": "Central n8n orchestration for your entire enterprise. We connect more than 500 applications in a digital brain.",
+        "specs": ["Dedicated Instance", "500+ Integrations", "SOC2 Security"]
+      },
+      { 
+        "title": "Artificial SDR", 
+        "description": "Seconds-fast qualification and direct scheduling. We contact leads in less than 5 minutes.",
+        "specs": ["Chat & Voice Hybrid", "Sentiment Analysis", "Auto-Closing"]
+      },
+      {
+        "title": "Total Sovereignty",
+        "description": "Proprietary infrastructure with 99.9% SLAs and absolute data sovereignty on your own servers.",
+        "specs": ["Military Encryption", "Local Hosting", "Continuous Audit"]
+      }
     ]
   },
   "impacto": {
@@ -81,125 +112,6 @@
       { "value": "3x", "label": "More Leads" },
       { "value": "40h", "label": "Saved/Week" },
       { "value": "95%", "label": "Error Reduction" }
-    ]
-  },
-  "demos": {
-    "title": "Live Ecosystem",
-    "subtitle": "Proven Technology",
-    "cta": "VIEW PROTOCOL",
-    "d1": { "title": "PROJECT_ALPHA", "desc": "AI CRM Automation." },
-    "d2": { "title": "PROJECT_SIGMA", "desc": "24/7 Artificial SDR." },
-    "d3": { "title": "PROJECT_KAPPA", "desc": "Real-time logs and metrics." }
-  },
-  "casos": {
-    "badge": "RESULTS",
-    "title": "Applied Engineering",
-    "subtitle": "Elite Case Studies",
-    "base_situation": "BASE SITUATION",
-    "zyndrix_result": "ZYNDRIX RESULT",
-    "director_label": "OPERATIONS DIRECTOR",
-    "verification_label": "VERIFIED EXTERNAL REVIEW",
-    "items": [
-      {
-        "client": "Logistics Z",
-        "before": "80 hrs/week manual",
-        "after": "< 5 min/week",
-        "result": "500% More Shipments",
-        "desc": "Total automation of order management and route assignment through proprietary AI agents."
-      },
-      {
-        "client": "Global Real Estate",
-        "before": "Lead closing: 12 hours",
-        "after": "< 3 seconds",
-        "result": "Sales conversion +200%",
-        "desc": "Implementation of Lead Score Pro for instant qualification and scheduling on autonomous infrastructures."
-      }
-    ]
-  },
-  "testimonios": {
-    "title": "Real Cases",
-    "subtitle": "Industrial Authority",
-    "items": [
-      {
-        "name": "Marc Soler",
-        "role": "CEO @ TechFlow Labs",
-        "quote": "The architecture Zyndrix built for our support dropped wait times to ZERO. They aren't programmers, they are business architects."
-      },
-      {
-        "name": "Elena Vance",
-        "role": "Ops Director @ PrimeReal",
-        "quote": "Implementing the lead score core was the best decision of the year. It scales our pipeline without hiring more staff. It just works."
-      }
-    ]
-  },
-  "tech_stack": {
-    "title": "Tech Stack",
-    "subtitle": "Unlimited Power"
-  },
-  "beneficios": {
-    "badge": "ZYNDRIX DIFFERENTIATION",
-    "title": "WHY OUR SYSTEMS DOMINATE THE MARKET?",
-    "items": [
-      { "title": "Infinite Scalability", "description": "Systems designed to grow from 10 to 10,000 daily operations." },
-      { "title": "Data Sovereignty", "description": "We implement models on your own servers or private clouds." },
-      { "title": "Guaranteed ROI", "description": "Our implementations pay for themselves in less than 6 months." },
-      { "title": "24/7 Maintenance", "description": "We monitor every workflow. If something fails, our engineers solve it." }
-    ]
-  },
-  "metodo": {
-    "badge": "PROCESS",
-    "title": "From Idea to Result in 4 Steps",
-    "subtitle": "A clear, efficient, and transparent process. No surprises, no delays.",
-    "steps": [
-      { "s": "01", "t": "Total Audit", "d": "Massive mapping of inefficiencies." },
-      { "s": "02", "t": "AI Architecture", "d": "Technical blueprint design." },
-      { "s": "03", "t": "SPRINT Injection", "d": "High-impact technical deployments." },
-      { "s": "04", "t": "Industrial Scale", "d": "Latency and KPI monitoring." }
-    ]
-  },
-  "faq": {
-    "badge": "FAQ",
-    "title": "Query Matrix",
-    "subtitle": "Technical Information",
-    "items": [
-      { "q": "How long does implementation take?", "a": "Our standard protocols are deployed in 14-21 days. Industrial infrastructures may require up to 45 days." },
-      { "q": "Do I need technical knowledge?", "a": "None. We deliver 'Turn-key' systems that are fully managed and autonomous." },
-      { "q": "Is it compatible with my current CRM?", "a": "Our architecture is agnostic. We integrate with Salesforce, HubSpot, Pipedrive, or proprietary systems via API." },
-      { "q": "How do you guarantee data security?", "a": "We use military-grade encryption and local servers in Europe (GDPR compliant) for processing private LLMs." },
-      { "q": "What is the expected ROI?", "a": "Our clients report an average 70% reduction in operating costs and a 40% increase in prospecting capacity in the first quarter." }
-    ]
-  },
-  "planes": {
-    "badge": "INVESTMENT",
-    "title": "Scale your business",
-    "subtitle": "with AI",
-    "investment": "INVESTMENT",
-    "recommended": "RECOMMENDED",
-    "cta": "START PROTOCOL",
-    "monthly_suffix": "€/mo",
-    "items": [
-      { 
-        "name": "CORE Foundations", 
-        "setup": "499€", 
-        "price": "199", 
-        "desc": "Strategic setup + Monthly maintenance for SMBs.", 
-        "features": ["1 Nuclear Workflow", "L1 Technical Support", "Monthly Technical Audit", "Basic WhatsApp Integration", "Preventative Maintenance"] 
-      },
-      { 
-        "name": "SCALE Protocol", 
-        "setup": "950€", 
-        "price": "450", 
-        "desc": "Intelligent scaling with AI Agents and advanced automation.", 
-        "features": ["3 Advanced workflows", "Custom AI Agent (24/7)", "Knowledge Base (RAG)", "Exclusive priority support", "Guaranteed Scalability"], 
-        "recommended": true 
-      },
-      { 
-        "name": "INDUSTRIAL OS", 
-        "setup": "Custom", 
-        "price": "Tailor-made", 
-        "desc": "High-performance proprietary infrastructure with zero latency.", 
-        "features": ["Unlimited Autonomous Agents", "Private LLM Training", "High Latency Infrastructure", "1-on-1 Strategic Consulting", "99.9% Guaranteed SLA"] 
-      }
     ]
   },
   "offers": {
@@ -220,10 +132,108 @@
     "cta": "CLAIM COUPON",
     "reset_label": "RESET: 23H 45M 12S"
   },
+  "beneficios": {
+    "badge": "ZYNDRIX DIFFERENTIATION",
+    "title": "WHY OUR SYSTEMS DOMINATE THE MARKET?",
+    "items": [
+      { "title": "Infinite Scalability", "description": "Systems designed to grow from 10 to 10,000 daily operations." },
+      { "title": "Data Sovereignty", "description": "We implement models on your own servers or private clouds." },
+      { "title": "Guaranteed ROI", "description": "Our implementations pay for themselves in less than 6 months." },
+      { "title": "24/7 Maintenance", "description": "We monitor every workflow. If something fails, our engineers solve it." }
+    ]
+  },
+  "demos": {
+    "badge": "AI IN ACTION",
+    "title": "Real-Time Demonstrations",
+    "subtitle": "Proven Technology",
+    "cta": "VIEW PROTOCOL"
+  },
+  "casos": {
+    "badge": "RESULTS",
+    "title": "OPERATIONAL DOMINANCE",
+    "subtitle": "Real Cases",
+    "base_situation": "BASE SITUATION",
+    "zyndrix_result": "ZYNDRIX RESULT",
+    "director_label": "OPERATIONS DIRECTOR",
+    "verification_label": "VERIFIED EXTERNAL REVIEW",
+    "items": [
+      {
+        "client": "ELITE_REALESTATE",
+        "before": "80 hrs/month manual",
+        "after": "2 hrs/month supervision",
+        "result": "ROAS +120%",
+        "desc": "We automated lead qualification and direct scheduling in CRM, eliminating 95% of manual work for the sales team."
+      },
+      {
+        "client": "GLOBAL_LOGISTICS",
+        "before": "24h Latency",
+        "after": "< 120s Latency",
+        "result": "Savings 15k€/month",
+        "desc": "We implemented operational agents for real-time incident management, connecting fleets and warehouses through an n8n core."
+      }
+    ]
+  },
+  "testimonios": {
+    "title": "Real Success Stories",
+    "subtitle": "What our partners say",
+    "items": [
+      {
+        "name": "David R.",
+        "role": "CEO @ Logistics Z",
+        "quote": "The architecture Zyndrix built for our support dropped wait times to ZERO. They aren't programmers, they are business architects."
+      },
+      {
+        "name": "Elena V.",
+        "role": "Ops Director @ RealEstate Elite",
+        "quote": "Implementing the lead score core was the best decision of the year. It scales our pipeline without hiring more staff. It just works."
+      }
+    ]
+  },
+  "metodo": {
+    "badge": "PROCESS",
+    "title": "From Idea to Result in 4 Steps",
+    "subtitle": "A clear, efficient, and transparent process. No surprises, no delays.",
+    "steps": [
+      { "s": "01", "t": "Total Audit", "d": "Massive mapping of inefficiencies." },
+      { "s": "02", "t": "AI Architecture", "d": "Technical blueprint design." },
+      { "s": "03", "t": "SPRINT Injection", "d": "High-impact technical deployments." },
+      { "s": "04", "t": "Industrial Scale", "d": "Latency and KPI monitoring." }
+    ]
+  },
+  "planes": {
+    "badge": "INVESTMENT",
+    "title": "Plans designed to scale",
+    "subtitle": "with AI",
+    "investment": "INVESTMENT",
+    "recommended": "RECOMMENDED",
+    "cta": "START PROTOCOL",
+    "monthly_suffix": "€/mo",
+    "items": [
+      { 
+        "name": "CORE Foundations", 
+        "setup": "499€", 
+        "price": "199", 
+        "features": ["1 Nuclear Workflow", "L1 Technical Support", "Monthly Audit"] 
+      },
+      { 
+        "name": "SCALE Protocol", 
+        "setup": "950€", 
+        "price": "450", 
+        "features": ["3 Advanced workflows", "24/7 AI Agent", "RAG Base", "Priority support"], 
+        "recommended": true 
+      },
+      { 
+        "name": "INDUSTRIAL OS", 
+        "setup": "Custom", 
+        "price": "Tailor-made", 
+        "features": ["Unlimited Agents", "LLM Training", "Zero Latency", "99.9% SLA"] 
+      }
+    ]
+  },
   "contacto": {
-    "badge": "DATA ENTRY",
-    "title_part1": "TRANSFORM",
-    "title_part2": "THE FUTURE",
+    "badge": "START NOW",
+    "title_part1": "Ready to transform",
+    "title_part2": "your business?",
     "subtitle": "START YOUR ELITE AUTOMATION PROTOCOL TODAY.",
     "labels": {
       "name": "AGENT IDENTITY",
@@ -241,8 +251,8 @@
     },
     "budget_options": [
       { "value": "<1k", "label": "LESS THAN 1,000€" },
-      { "value": "1k-3k", "label": "1,000€ - 3,000€" },
-      { "value": "3k-5k", "label": "3,000€ - 5,000€" },
+      { "value": "1k-3k", "label": "1,000€ - 3.000€" },
+      { "value": "3k-5k", "label": "3,000€ - 5.000€" },
       { "value": ">5k", "label": "MORE THAN 5,000€" }
     ],
     "button": "SEND PROTOCOL",
@@ -251,8 +261,31 @@
     "instagram_url": "https://www.instagram.com/zyndrix.ia",
     "success_message": "MESSAGE RECEIVED SUCCESSFULLY!"
   },
+  "faq": {
+    "badge": "TECHNICAL SUPPORT",
+    "title": "QUERY PROTOCOLS",
+    "subtitle": "ENGINEERING ANSWERS FOR RATIONAL OBJECTIONS.",
+    "items": [
+      {
+        "q": "WHERE IS THE DATA HOSTED?",
+        "a": "WE BUILD ON YOUR SERVERS. YOU MAINTAIN 100% OWNERSHIP AND SOVEREIGNTY OF YOUR DATA AND AUTOMATIONS."
+      },
+      {
+        "q": "WHAT IS THE DEPLOYMENT TIME?",
+        "a": "A CORE BLUEPRINT TAKES 7-14 DAYS. FULL OS SYSTEMS REQUIRE 3 TO 6 WEEKS OF ARCHITECTURE."
+      },
+      {
+        "q": "DO I NEED TECHNICAL STAFF?",
+        "a": "ZERO. WE DELIVER ULTRA-SIMPLIFIED DASHBOARDS THAT ANY TEAM MEMBER CAN OPERATE."
+      },
+      {
+        "q": "HOW IS SUCCESS MEASURED?",
+        "a": "THROUGH LATENCY, ACCURACY AND MAN-HOURS SAVED KPIs QUANTIFIED IN EVERY SPRINT."
+      }
+    ]
+  },
   "footer": {
-    "desc": "ENGINEERING DOMAIN © 2026. ALL RIGHTS RESERVED.",
+    "desc": "ENGINEERING DOMAIN © 2026.",
     "sections": {
       "protocol": {
         "title": "Protocol",
@@ -293,7 +326,7 @@
   "auditoria": {
     "badge": "ACCESS PROTOCOL",
     "title": "AI Systems Audit",
-    "subtitle": "Scale your operations to the next level. We identify bottlenecks and design your new autonomy architecture.",
+    "subtitle": "Scale your operation to the next level. We identify bottlenecks and design your new autonomy architecture.",
     "features": [
       { "title": "IA Diagnostics", "desc": "Key process identification" },
       { "title": "Global Sync", "desc": "Interconnected systems" },
@@ -307,14 +340,14 @@
       "email": "Corporate Email",
       "web": "Web URL",
       "problem": "Tell us your biggest bottleneck...",
-      "budget": "Expected Investment",
+      "budget": "Estimated Investment",
       "button": "Claim Audit",
       "footer": "By sending you accept our security protocols"
     },
     "budget_options": [
       { "value": "<1k", "label": "LESS THAN 1,000€" },
-      { "value": "1k-3k", "label": "1,000€ - 3,000€" },
-      { "value": "3k-5k", "label": "3,000€ - 5,000€" },
+      { "value": "1k-3k", "label": "1.000€ - 3.000€" },
+      { "value": "3k-5k", "label": "3.000€ - 5.000€" },
       { "value": ">5k", "label": "MORE THAN 5,000€" }
     ],
     "processing": "Syncing...",
@@ -326,7 +359,7 @@
   "blueprint_page": {
     "badge": "HIGH AVAILABILITY INFRASTRUCTURE",
     "title": "Your Leak is Scalable.",
-    "subtitle": "Diagnose, industrialize, and privatize your operating margin.",
+    "subtitle": "Diagnose, industrialize and privatize your operating margin.",
     "scanner": {
       "title": "Leak Analysis",
       "module": "Module: IA_OP_SCANNER_v4",
@@ -336,20 +369,20 @@
     "form": {
       "badge": "Access Protocol",
       "title": "Privatize Scale.",
-      "desc": "Complete corporate registration to acquire the systems today that will allow you to 100% delegate your operational tasks.",
+      "desc": "Complete the corporate registration to acquire the systems that will allow you to 100% delegate your operational tasks.",
       "name": "Full Name",
       "company": "Company / Organization",
       "email": "Corporate E-mail",
       "phone": "WhatsApp (Prefix + Num)",
       "sector": "Operating Sector",
       "priority": "Improvement Priority",
-      "budget": "Investment Level",
+      "budget": "Invesment Level",
       "button": "GENERATE BLUEPRINT"
     },
     "budget_options": [
       { "value": "scale", "label": "1k - 3k (SCALE)" },
       { "value": "industrial", "label": "+5k (INDUSTRIAL)" },
-      { "value": "custom", "label": "Custom OS" }
+      { "value": "custom", "label": "To measure" }
     ],
     "sectors": {
       "ecommerce": "E-commerce / Retail",
@@ -372,25 +405,25 @@
     "calendly": "https://calendly.com/omontesquesada/zyndrix"
   },
   "privacy_page": {
-    "title": "Privacy & Sovereignty",
+    "title": "Privacy and Sovereignty",
     "subtitle": "Security Shield",
     "sections": [
       {
         "title": "DATA COLLECTION",
         "content": "At Zyndrix, data sovereignty is our absolute priority. We collect information only to optimize the performance of our AI agents and the user experience.",
         "list": [
-          "Contact data supplied in protocol forms.",
+          "Contact data provided in protocol forms.",
           "Technical interaction metrics for LLM refinement.",
-          "Automated real-time security logs."
+          "Automated security logs in real time."
         ]
       },
       {
         "title": "USE OF INFORMATION",
-        "content": "All information processed by our Nuclear Systems is maintained under industrial-grade encryption. We do not sell, trade, or transfer your data to external entities outside the operating protocols strictly necessary for the service."
+        "content": "All information processed by our Nuclear Systems is maintained under industrial-grade encryption. We do not sell, trade or transfer your data to external entities outside of the operating protocols strictly necessary for the service."
       },
       {
         "title": "SECURE STORAGE",
-        "content": "Our servers use zero-latency protocols with full geographic redundancy. Data is automatically deleted after completion of training cycles if required by client protocol."
+        "content": "Our servers use zero-latency protocols with full geographic redundancy. Data is automatically deleted after the completion of the training cycles if the client protocol requires it."
       }
     ]
   },
@@ -400,15 +433,15 @@
     "sections": [
       {
         "title": "1. USE AGREEMENT",
-        "content": "By accessing Zyndrix AI Agency, you accept the operating protocols governing our AI. Zyndrix's 'Nuclear Systems' are provided to empower lawful and ethical business operations."
+        "content": "By accessing Zyndrix AI Agency, you accept the operation protocols that govern our AI. Zyndrix 'Nuclear Systems' are provided to boost lawful and ethical business operations."
       },
       {
         "title": "2. INTELLECTUAL PROPERTY",
-        "content": "Zyndrix's design, interface (UI), and proprietary algorithms are exclusive intellectual property. Results generated by the system belong to the client subject to individual service contract terms."
+        "content": "Zyndrix design, interface (UI) and proprietary algorithms are exclusive intellectual property. The results generated by the system belong to the client subject to the terms of the individual service contract."
       },
       {
         "title": "3. LIMITATION OF LIABILITY",
-        "content": "Zyndrix IA is not responsible for interpretations or decisions made by autonomous agents based on incorrect or incomplete data provided by the end user."
+        "content": "Zyndrix IA is not responsible for the interpretations or decisions made by autonomous agents based on incorrect or incomplete data provided by the final user."
       }
     ]
   },
@@ -418,15 +451,15 @@
     "items": [
       {
         "title": "STORAGE",
-        "desc": "AES-256 encryption at rest with HSM key management managed by each client in isolation."
+        "desc": "AES-256 encryption at rest with HSM key management managed by each client in an isolated manner."
       },
       {
         "title": "NETWORK",
-        "desc": "Next-generation firewalls with real-time packet filtering and AI anomaly-based intrusion detection."
+        "desc": "Next-generation firewalls with real-time packet filtering and AI-based intrusion detection of anomalies."
       },
       {
         "title": "CODE",
-        "desc": "Digital signatures and daily SAST/DAST vulnerability scans in every update to our Nuclear Systems."
+        "desc": "Digital signatures and daily SAST/DAST vulnerability scans in each update of our Nuclear Systems."
       },
       {
         "title": "MONITORING",

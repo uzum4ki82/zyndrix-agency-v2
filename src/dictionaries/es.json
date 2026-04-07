@@ -2,8 +2,9 @@
   "nav": {
     "servicios": "SERVICIOS",
     "muestras": "DEMOS",
-    "oferta": "OFERTA",
-    "proceso": "PROCESO",
+    "casos": "RESULTADOS",
+    "testimonios": "RESEÑAS",
+    "process": "PROCESO",
     "precios": "INVERSIÓN",
     "faq": "FAQ",
     "connect": "AUDITORÍA"
@@ -169,6 +170,22 @@
         "after": "Latencia <120s",
         "result": "Ahorro 15k€/mes",
         "desc": "Implementamos agentes operativos para la gestión de incidencias en tiempo real, conectando flotas y almacenes mediante un núcleo n8n."
+      }
+    ]
+  },
+  "testimonios": {
+    "title": "Historias de Éxito Reales",
+    "subtitle": "Lo que dicen nuestros socios",
+    "items": [
+      {
+        "name": "Marc Soler",
+        "role": "CEO @ TechFlow Labs",
+        "quote": "La arquitectura que Zyndrix construyó para nuestro soporte bajó los tiempos de espera a CERO. No son programadores, son arquitectos de negocio."
+      },
+      {
+        "name": "Elena Vance",
+        "role": "Ops Director @ PrimeReal",
+        "quote": "Implementar el núcleo de lead score fue la mejor decisión del año. Escala nuestro pipeline sin contratar más personal. Simplemente funciona."
       }
     ]
   },
