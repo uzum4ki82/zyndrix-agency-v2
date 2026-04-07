@@ -1,10 +1,8 @@
 {
   "nav": {
     "servicios": "SYSTEMS",
-    "muestras": "DEMOS",
-    "casos": "RESULTS",
-    "testimonios": "REVIEWS",
-    "process": "PROCESS",
+    "oferta": "OFFERS",
+    "proceso": "PROCESS",
     "precios": "PLANS",
     "faq": "FAQ",
     "connect": "AUDIT"
