@@ -7,7 +7,7 @@ import { SectionHeader } from '../common/SectionHeader';
 
 const icons = [Shield, Zap, Key, Database];
 
-export const FAQ = ({ dict }: { dict: any }) => {
+export const FAQ = ({ dict = {} }: { dict: any }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
@@ -23,7 +23,7 @@ export const FAQ = ({ dict }: { dict: any }) => {
                 />
 
                 <div className="mt-12 space-y-6">
-                    {dict.items.map((item: any, i: number) => {
+                    {dict?.items?.map((item: any, i: number) => {
                         const Icon = icons[i % icons.length];
                         return (
                             <motion.div 

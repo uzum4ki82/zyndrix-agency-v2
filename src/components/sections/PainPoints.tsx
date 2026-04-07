@@ -6,7 +6,7 @@ import { SectionHeader } from '../common/SectionHeader';
 
 const icons = [Clock, Database, Users, TrendingUp];
 
-export const PainPoints = ({ dict }: { dict: any }) => {
+export const PainPoints = ({ dict = {} }: { dict: any }) => {
   return (
     <section id="problema" className="py-16 px-6 relative overflow-hidden bg-[#03040a]">
       {/* Background Noise/Grid */}
@@ -17,7 +17,7 @@ export const PainPoints = ({ dict }: { dict: any }) => {
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-20">
-          {dict.items.map((item: any, i: number) => {
+          {dict?.items?.map((item: any, i: number) => {
             const Icon = icons[i % icons.length];
             return (
               <motion.div

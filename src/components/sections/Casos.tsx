@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { SectionHeader } from '../common/SectionHeader';
 import { Quote } from 'lucide-react';
 
-export const Casos = ({ dict }: { dict: any }) => {
+export const Casos = ({ dict = {} }: { dict: any }) => {
   const images = ["/img/carlos.png", "/img/elena.png"];
   
   return (
@@ -14,7 +14,7 @@ export const Casos = ({ dict }: { dict: any }) => {
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {dict.items.map((caso: any, i: number) => (
+          {dict?.items?.map((caso: any, i: number) => (
             <motion.div 
               key={i} 
               initial={{ opacity: 0, y: 30 }}

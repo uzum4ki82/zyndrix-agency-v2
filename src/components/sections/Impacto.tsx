@@ -31,7 +31,7 @@ export const Impacto = ({ dict = {} }: { dict: any }) => (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pt-10">
-        {dict.stats.map((stat: any, i: number) => {
+        {dict?.stats?.map((stat: any, i: number) => {
           const Icon = icons[i % icons.length];
           return (
             <motion.div 

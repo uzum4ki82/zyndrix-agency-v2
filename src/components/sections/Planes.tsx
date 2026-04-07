@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const Planes = ({ dict }: { dict: any }) => {
+export const Planes = ({ dict = {} }: { dict: any }) => {
   return (
     <section id="precios" className="py-20 md:py-32 px-6 md:px-10 relative overflow-hidden bg-base">
       {/* Decorative center glow */}
@@ -14,7 +14,7 @@ export const Planes = ({ dict }: { dict: any }) => {
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch pt-12">
-          {dict.items.map((plan: any, idx: number) => (
+          {dict?.items?.map((plan: any, idx: number) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 50 }}
