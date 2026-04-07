@@ -6,7 +6,7 @@ import { SectionHeader } from '../common/SectionHeader';
 
 const icons = [TrendingUp, ShieldCheck, Zap, Cpu];
 
-export const Beneficios = ({ dict }: { dict: any }) => (
+export const Beneficios = ({ dict = {} }: { dict: any }) => (
   <section id="beneficios" className="py-32 px-10 bg-black/50 backdrop-blur-3xl relative overflow-hidden border-y border-white/5">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.05)_0%,transparent_100%)] opacity-30 pointer-events-none" />
     

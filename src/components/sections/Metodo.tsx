@@ -19,10 +19,10 @@ export const Metodo = ({ dict }: { dict: any }) => {
   });
 
   const steps = [
-    { s: dict.steps[0].s, t: dict.steps[0].t, d: dict.steps[0].d, i: Search },
-    { s: dict.steps[1].s, t: dict.steps[1].t, d: dict.steps[1].d, i: Code },
-    { s: dict.steps[2].s, t: dict.steps[2].t, d: dict.steps[2].d, i: Zap },
-    { s: dict.steps[3].s, t: dict.steps[3].t, d: dict.steps[3].d, i: TrendingUp },
+    { s: dict?.steps?.[0]?.s || "01", t: dict?.steps?.[0]?.t || "", d: dict?.steps?.[0]?.d || "", i: Search },
+    { s: dict?.steps?.[1]?.s || "02", t: dict?.steps?.[1]?.t || "", d: dict?.steps?.[1]?.d || "", i: Code },
+    { s: dict?.steps?.[2]?.s || "03", t: dict?.steps?.[2]?.t || "", d: dict?.steps?.[2]?.d || "", i: Zap },
+    { s: dict?.steps?.[3]?.s || "04", t: dict?.steps?.[3]?.t || "", d: dict?.steps?.[3]?.d || "", i: TrendingUp },
   ];
 
   return (
