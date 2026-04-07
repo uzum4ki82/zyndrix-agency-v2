@@ -8,7 +8,7 @@ export const Casos = ({ dict = {} }: { dict: any }) => {
   const images = ["/img/carlos.png", "/img/elena.png"];
   
   return (
-    <section id="casos" className="py-60 px-10 relative bg-base">
+    <section id="casos" className="py-12 md:py-20 px-6 md:px-10 relative bg-base">
       <div className="absolute inset-0 bg-mesh opacity-10 pointer-events-none" />
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />

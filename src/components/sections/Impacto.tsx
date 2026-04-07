@@ -6,7 +6,7 @@ import { TrendingUp, Users, Zap, BarChart3, Clock, Database, Globe, Layers } fro
 const icons = [TrendingUp, Users, Zap, BarChart3, Clock, Database, Globe, Layers];
 
 export const Impacto = ({ dict = {} }: { dict: any }) => (
-  <section id="impacto" className="py-20 px-10 relative overflow-hidden bg-base">
+  <section id="impacto" className="py-12 md:py-20 px-6 md:px-10 relative overflow-hidden bg-base">
     {/* Animated Background Mesh */}
     <div className="absolute inset-0 bg-mesh opacity-20 pointer-events-none" />
     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-20" />

@@ -5,7 +5,7 @@ import { Quote } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
 export const Testimonios = ({ dict = {} }: { dict: any }) => (
-  <section id="testimonios" className="py-60 px-10 relative">
+  <section id="testimonios" className="py-12 md:py-20 px-10 relative">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title={dict.title} subtitle={dict.subtitle} />
 
