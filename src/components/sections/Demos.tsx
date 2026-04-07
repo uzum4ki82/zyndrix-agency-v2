@@ -11,7 +11,7 @@ const items = [
   { key: "d3", icon: Database, color: "text-primary", bg: "bg-primary/5" },
 ];
 
-export const Demos = ({ dict }: { dict: any }) => {
+export const Demos = ({ dict, locale }: { dict: any, locale: string }) => {
   return (
     <section id="demos" className="py-32 relative overflow-hidden bg-black border-y border-white/5">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
@@ -53,7 +53,7 @@ export const Demos = ({ dict }: { dict: any }) => {
                 <div className="pt-8">
                   <button className="btn-elite w-full group py-6 h-16 border-white/5 hover:border-primary/40 transition-all">
                     <span className="text-[12px] flex items-center gap-4">
-                       <Eye className="w-5 h-5" /> VER PROTOCOLO
+                       <Eye className="w-5 h-5" /> {dict.cta || (locale === 'es' ? 'VER PROTOCOLO' : 'VIEW PROTOCOL')}
                     </span>
                   </button>
                 </div>

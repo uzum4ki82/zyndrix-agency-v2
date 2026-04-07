@@ -90,7 +90,7 @@ export const Hero = ({ dict }: { dict: any }) => (
           <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-3 transition-transform" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent w-[200%] -translate-x-full animate-beam" />
         </a>
-        <a href="#servicios" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md">
+        <a href="#sistemas" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md">
           {dict.cta_secondary}
         </a>
       </div>

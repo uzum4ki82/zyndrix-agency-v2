@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { SectionHeader } from '../common/SectionHeader';
 import { Quote } from 'lucide-react';
 
-export const CasosExito = ({ dict }: { dict: any }) => {
+export const Casos = ({ dict }: { dict: any }) => {
   const images = ["/img/carlos.png", "/img/elena.png"];
   
   return (
@@ -31,11 +31,11 @@ export const CasosExito = ({ dict }: { dict: any }) => {
                 
                 <div className="flex flex-col gap-6 mb-12">
                    <div className="flex justify-between items-center text-sm border-b border-white/5 pb-4">
-                      <span className="text-white/20 uppercase tracking-[0.3em] font-black italic">SITUACIÓN BASE</span>
+                      <span className="text-white/20 uppercase tracking-[0.3em] font-black italic">{dict.base_situation}</span>
                       <span className="text-white/40 font-bold uppercase tracking-tighter">{caso.before}</span>
                    </div>
                    <div className="flex justify-between items-center text-xl bg-primary/5 p-8 rounded-3xl border border-primary/10 shadow-inner">
-                      <span className="text-primary uppercase tracking-[0.3em] font-black italic">RESULTADO ZYNDRIX</span>
+                      <span className="text-primary uppercase tracking-[0.3em] font-black italic">{dict.zyndrix_result}</span>
                       <span className="text-white font-black text-2xl tracking-tighter">{caso.after}</span>
                    </div>
                 </div>
@@ -52,8 +52,8 @@ export const CasosExito = ({ dict }: { dict: any }) => {
                    <img src={images[i]} alt="" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700" />
                 </div>
                 <div>
-                   <div className="text-white font-black uppercase italic tracking-tighter text-xl">DIRECTOR OPERATIVO</div>
-                   <div className="text-primary font-mono text-[10px] tracking-[0.3em]">REVISIÓN EXTERNA VERIFICADA</div>
+                   <div className="text-white font-black uppercase italic tracking-tighter text-xl">{dict.director_label}</div>
+                   <div className="text-primary font-mono text-[10px] tracking-[0.3em]">{dict.verification_label}</div>
                 </div>
               </div>
             </motion.div>

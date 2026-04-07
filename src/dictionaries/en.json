@@ -66,22 +66,29 @@
     "title": "Autonomous Systems",
     "subtitle": "Industrial Level",
     "cards": [
-      { "title": "Lead Gen Engine", "description": "Massive 24/7 data extraction and cleaning." },
-      { "title": "Operational Agents", "description": "Support and logistics assisted by autonomous agents." },
-      { "title": "Workflow Core", "description": "Central n8n orchestration for your entire enterprise." },
-      { "title": "Artificial SDR", "description": "Seconds-fast qualification and direct scheduling." }
+      { "title": "Lead Gen Engine", "description": "Massive 24/7 data extraction and cleaning.", "specs": ["Scraping", "Data Cleaning", "0.5s Enrichment"] },
+      { "title": "Operational Agents", "description": "Support and logistics assisted by autonomous agents.", "specs": ["Local LLM", "SAP Integration", "<150ms Latency"] },
+      { "title": "Workflow Core", "description": "Central n8n orchestration for your entire enterprise.", "specs": ["Dedicated Instance", "500+ Apps", "SOC2 Security"] },
+      { "title": "Artificial SDR", "description": "Seconds-fast qualification and direct scheduling.", "specs": ["Chat & Voice", "Sentiment Analysis", "Auto-Closing"] },
+      { "title": "Total Sovereignty", "description": "Proprietary infrastructure with 99.9% SLAs and absolute data sovereignty on your own servers.", "specs": ["Military Encryption", "Local Hosting", "Continuous Audit"] }
     ]
   },
   "demos": {
     "title": "Live Ecosystem",
     "subtitle": "Proven Technology",
+    "cta": "VIEW PROTOCOL",
     "d1": { "title": "PROJECT_ALPHA", "desc": "AI CRM Automation." },
     "d2": { "title": "PROJECT_SIGMA", "desc": "24/7 Artificial SDR." },
     "d3": { "title": "PROJECT_KAPPA", "desc": "Real-time logs and metrics." }
   },
   "casos": {
+    "badge": "RESULTS",
     "title": "Applied Engineering",
     "subtitle": "Elite Case Studies",
+    "base_situation": "BASE SITUATION",
+    "zyndrix_result": "ZYNDRIX RESULT",
+    "director_label": "OPERATIONS DIRECTOR",
+    "verification_label": "VERIFIED EXTERNAL REVIEW",
     "items": [
       {
         "client": "Logistics Z",
@@ -129,11 +136,13 @@
     "q5": { "q": "What is the expected ROI?", "a": "Our clients report an average 70% reduction in operating costs and a 40% increase in prospecting capacity in the first quarter." }
   },
   "planes": {
+    "badge": "INVESTMENT",
     "title": "Scale your business",
     "subtitle": "with AI",
     "investment": "INVESTMENT",
     "recommended": "RECOMMENDED",
     "cta": "START PROTOCOL",
+    "monthly_suffix": "€/mo",
     "items": [
       { 
         "name": "CORE Foundations", 
@@ -158,6 +167,24 @@
         "features": ["Unlimited Autonomous Agents", "Private LLM Training", "High Latency Infrastructure", "1-on-1 Strategic Consulting", "99.9% Guaranteed SLA"] 
       }
     ]
+  },
+  "offers": {
+    "badge": "PROTOCOL: ACTIVE",
+    "title_part1": "ELITE",
+    "title_part2": "MEMBERSHIP PROTOCOL",
+    "subtitle": "We are seeking 3 business partners this quarter to implement zero-latency infrastructures with exclusive early-loyalty benefits.",
+    "discount_label": "FOUNDER_DISCOUNT_ACTIVE",
+    "discount_value": "-40% ON DEPLOYMENT",
+    "items": [
+      "Lifetime Updates Access",
+      "Critical Priority Support",
+      "Free Scale Audit",
+      "Custom LLM Training Inc."
+    ],
+    "slots_label": "AVAILABLE SLOTS",
+    "slots_value": "03/05",
+    "cta": "CLAIM COUPON",
+    "reset_label": "RESET: 23H 45M 12S"
   },
   "contacto": {
     "badge": "DATA ENTRY",
@@ -184,15 +211,50 @@
       { "value": "3k-5k", "label": "3,000€ - 5,000€" },
       { "value": ">5k", "label": "MORE THAN 5,000€" }
     ],
-    "button": "SEND PROTOCOL"
+    "button": "SEND PROTOCOL",
+    "twitter_url": "https://x.com/zyndrix",
+    "linkedin_url": "https://www.linkedin.com/company/zyndrix",
+    "instagram_url": "https://www.instagram.com/zyndrix.ia",
+    "success_message": "MESSAGE RECEIVED SUCCESSFULLY!"
   },
   "footer": {
     "desc": "ENGINEERING DOMAIN © 2026. ALL RIGHTS RESERVED.",
+    "sections": {
+      "protocol": {
+        "title": "Protocol",
+        "links": [
+          { "label": "PRIVACY", "href": "/privacy" },
+          { "label": "TERMS", "href": "/terms" },
+          { "label": "SECURITY", "href": "/security" }
+        ]
+      },
+      "systems": {
+        "title": "Systems",
+        "links": [
+          { "label": "Lead Gen", "href": "/#sistemas" },
+          { "label": "Agents", "href": "/#sistemas" },
+          { "label": "Workflow Core", "href": "/#sistemas" }
+        ]
+      },
+      "social": {
+        "title": "social",
+        "links": [
+          { "label": "Instagram", "href": "https://www.instagram.com/zyndrix.ia" },
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/zyndrix" },
+          { "label": "X (Twitter)", "href": "https://x.com/zyndrix" }
+        ]
+      }
+    },
     "links": {
       "privacy": "PRIVACY",
       "terms": "TERMS",
       "security": "SECURITY"
     }
+  },
+  "socials": {
+    "twitter": "https://x.com/zyndrix",
+    "linkedin": "https://www.linkedin.com/company/zyndrix",
+    "instagram": "https://www.instagram.com/zyndrix.ia"
   },
   "auditoria": {
     "badge": "ACCESS PROTOCOL",
@@ -274,5 +336,68 @@
   },
   "config": {
     "calendly": "https://calendly.com/omontesquesada/zyndrix"
+  },
+  "privacy_page": {
+    "title": "Privacy & Sovereignty",
+    "subtitle": "Security Shield",
+    "sections": [
+      {
+        "title": "DATA COLLECTION",
+        "content": "At Zyndrix, data sovereignty is our absolute priority. We collect information only to optimize the performance of our AI agents and the user experience.",
+        "list": [
+          "Contact data supplied in protocol forms.",
+          "Technical interaction metrics for LLM refinement.",
+          "Automated real-time security logs."
+        ]
+      },
+      {
+        "title": "USE OF INFORMATION",
+        "content": "All information processed by our Nuclear Systems is maintained under industrial-grade encryption. We do not sell, trade, or transfer your data to external entities outside the operating protocols strictly necessary for the service."
+      },
+      {
+        "title": "SECURE STORAGE",
+        "content": "Our servers use zero-latency protocols with full geographic redundancy. Data is automatically deleted after completion of training cycles if required by client protocol."
+      }
+    ]
+  },
+  "terms_page": {
+    "title": "Terms of Service",
+    "subtitle": "Operating Framework",
+    "sections": [
+      {
+        "title": "1. USE AGREEMENT",
+        "content": "By accessing Zyndrix AI Agency, you accept the operating protocols governing our AI. Zyndrix's 'Nuclear Systems' are provided to empower lawful and ethical business operations."
+      },
+      {
+        "title": "2. INTELLECTUAL PROPERTY",
+        "content": "Zyndrix's design, interface (UI), and proprietary algorithms are exclusive intellectual property. Results generated by the system belong to the client subject to individual service contract terms."
+      },
+      {
+        "title": "3. LIMITATION OF LIABILITY",
+        "content": "Zyndrix AI is not responsible for interpretations or decisions made by autonomous agents based on incorrect or incomplete data provided by the end user."
+      }
+    ]
+  },
+  "security_page": {
+    "title": "Security Protocols",
+    "subtitle": "Elite Infrastructure",
+    "items": [
+      {
+        "title": "STORAGE",
+        "desc": "AES-256 encryption at rest with HSM key management managed by each client in isolation."
+      },
+      {
+        "title": "NETWORK",
+        "desc": "Next-generation firewalls with real-time packet filtering and AI anomaly-based intrusion detection."
+      },
+      {
+        "title": "CODE",
+        "desc": "Digital signatures and daily SAST/DAST vulnerability scans in every update to our Nuclear Systems."
+      },
+      {
+        "title": "MONITORING",
+        "desc": "24/7 total observability with precision latency alerts and automated remediation protocols by n8n."
+      }
+    ]
   }
 }

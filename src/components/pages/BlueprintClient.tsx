@@ -8,6 +8,7 @@ import {
   Zap, Loader2, DollarSign, Rocket, Shield, Activity, Users, TrendingDown, Scan, Cpu, Radio, Network
 } from "lucide-react";
 import { NavBar } from '@/components/common/NavBar';
+import { Footer } from '@/components/sections/Contacto';
 
 interface BlueprintClientProps {
   dict: any;
@@ -232,7 +233,7 @@ export default function BlueprintClient({ dict, locale }: BlueprintClientProps) 
         </div>
       </main>
 
-      <footer className="py-24 text-center border-t border-white/5 opacity-50"><p className="text-[13px] font-black text-white/60 tracking-[3em] uppercase">ZYNDRIX • ARQUITECTURA DE AUTONOMÍA</p></footer>
+      <Footer dict={dict.footer} locale={locale} />
       <style jsx>{`
         @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .animate-spin-slow { animation: spin-slow 12s linear infinite; }

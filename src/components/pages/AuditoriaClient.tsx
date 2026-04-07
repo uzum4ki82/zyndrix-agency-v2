@@ -94,7 +94,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
               <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/5 border border-white/10 text-[#38bdf8] text-[10px] font-bold uppercase tracking-[0.6em] backdrop-blur-xl">
                 <Activity size={14} className="animate-pulse" /> {dict.auditoria.badge}
               </div>
-              <h1 className="text-6xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase italic">
+              <h1 className="text-5xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase italic">
                 {dict.auditoria.title.split('IA')[0]}
                 <span className="text-[#38bdf8]">IA</span>
               </h1>
@@ -260,7 +260,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
         </div>
       </main>
 
-      <Footer dict={dict.footer} />
+      <Footer dict={dict.footer} locale={locale} />
     </div>
   );
 }

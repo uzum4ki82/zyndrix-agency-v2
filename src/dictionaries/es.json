@@ -95,6 +95,11 @@
         "title": "SDR Artificial", 
         "description": "Cualificación en segundos y agendado directo. Contactamos a los leads en menos de 5 minutos.",
         "specs": ["Voz y Chat Híbrido", "Analítica de Sentimiento", "Cierre Agendado"]
+      },
+      {
+        "title": "Soberanía Total",
+        "description": "Infraestructura propietaria con SLAs del 99.9% y soberanía de datos absoluta en sus propios servidores.",
+        "specs": ["Cifrado Militar", "Hosting local", "Auditoría Continua"]
       }
     ]
   },
@@ -109,18 +114,22 @@
     ]
   },
   "offers": {
-    "badge": "UNIDAD DE ADOPCIÓN TEMPRANA",
-    "title": "PROTOCOLOS DE ADSCRIPCIÓN ÉLITE",
+    "badge": "PROTOCOL: ACTIVE",
+    "title_part1": "PROTOCOLO DE",
+    "title_part2": "ADSCRIPCIÓN ÉLITE",
     "subtitle": "Estamos buscando 3 socios comerciales este trimestre para implementar infraestructuras de latencia cero con beneficios exclusivos por fidelidad temprana.",
-    "discount": "-40% EN LA PUESTA EN MARCHA",
+    "discount_label": "DESCUENTO_FUNDADOR_ACTIVO",
+    "discount_value": "-40% EN LA PUESTA EN MARCHA",
     "items": [
       "Acceso Vitalicio a Updates",
       "Soporte Crítico Prioritario",
       "Auditoría de Escala Gratis",
       "Custom LLM Training Inc."
     ],
-    "slots": "03/05",
-    "cta": "RECLAMAR CUPÓN"
+    "slots_label": "CUPOS DISPONIBLES",
+    "slots_value": "03/05",
+    "cta": "RECLAMAR CUPÓN",
+    "reset_label": "REINICIO: 23H 45M 12S"
   },
   "beneficios": {
     "badge": "DIFERENCIACIÓN ZYNDRIX",
@@ -135,7 +144,33 @@
   "demos": {
     "badge": "IA EN ACCIÓN",
     "title": "Demostraciones en Tiempo Real",
-    "subtitle": "Tecnología Probada"
+    "subtitle": "Tecnología Probada",
+    "cta": "VER PROTOCOLO"
+  },
+  "casos": {
+    "badge": "RESULTADOS",
+    "title": "EL DOMINIO DE LA OPERACIÓN",
+    "subtitle": "Casos Reales",
+    "base_situation": "SITUACIÓN BASE",
+    "zyndrix_result": "RESULTADO ZYNDRIX",
+    "director_label": "DIRECTOR OPERATIVO",
+    "verification_label": "REVISIÓN EXTERNA VERIFICADA",
+    "items": [
+      {
+        "client": "INMOBILIARIA_ELITE",
+        "before": "80h manuales/mes",
+        "after": "2h supervisión/mes",
+        "result": "ROAS +120%",
+        "desc": "Automatizamos la cualificación de leads y agendado directo en CRM, eliminando el 95% del trabajo manual del equipo comercial."
+      },
+      {
+        "client": "LOGÍSTICA_GLOBAL",
+        "before": "Latencia 24h",
+        "after": "Latencia <120s",
+        "result": "Ahorro 15k€/mes",
+        "desc": "Implementamos agentes operativos para la gestión de incidencias en tiempo real, conectando flotas y almacenes mediante un núcleo n8n."
+      }
+    ]
   },
   "metodo": {
     "badge": "PROCESO",
@@ -155,6 +190,7 @@
     "investment": "INVERSIÓN",
     "recommended": "RECOMENDADO",
     "cta": "INICIAR PROTOCOLO",
+    "monthly_suffix": "€/mes",
     "items": [
       { 
         "name": "CORE Foundations", 
@@ -202,7 +238,11 @@
       { "value": "3k-5k", "label": "3.000€ - 5.000€" },
       { "value": ">5k", "label": "MÁS DE 5.000€" }
     ],
-    "button": "ENVIAR PROTOCOLO"
+    "button": "ENVIAR PROTOCOLO",
+    "twitter_url": "https://x.com/zyndrix",
+    "linkedin_url": "https://www.linkedin.com/company/zyndrix",
+    "instagram_url": "https://www.instagram.com/zyndrix.ia",
+    "success_message": "MENSAJE RECIBIDO CORRECTAMENTE!"
   },
   "faq": {
     "badge": "SOPORTE TÉCNICO",
@@ -229,11 +269,42 @@
   },
   "footer": {
     "desc": "DOMINIO DE INGENIERÍA © 2026.",
+    "sections": {
+      "protocol": {
+        "title": "Protocolo",
+        "links": [
+          { "label": "PRIVACIDAD", "href": "/privacy" },
+          { "label": "TÉRMINOS", "href": "/terms" },
+          { "label": "SEGURIDAD", "href": "/security" }
+        ]
+      },
+      "systems": {
+        "title": "Sistemas",
+        "links": [
+          { "label": "Lead Gen", "href": "/#sistemas" },
+          { "label": "Agents", "href": "/#sistemas" },
+          { "label": "Workflow Core", "href": "/#sistemas" }
+        ]
+      },
+      "social": {
+        "title": "social",
+        "links": [
+          { "label": "Instagram", "href": "https://www.instagram.com/zyndrix.ia" },
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/zyndrix" },
+          { "label": "X (Twitter)", "href": "https://x.com/zyndrix" }
+        ]
+      }
+    },
     "links": {
       "privacy": "PRIVACIDAD",
       "terms": "TÉRMINOS",
       "security": "SEGURIDAD"
     }
+  },
+  "socials": {
+    "twitter": "https://x.com/zyndrix",
+    "linkedin": "https://www.linkedin.com/company/zyndrix",
+    "instagram": "https://www.instagram.com/zyndrix.ia"
   },
   "auditoria": {
     "badge": "PROTOCOLO DE ACCESO",
@@ -315,5 +386,68 @@
   },
   "config": {
     "calendly": "https://calendly.com/omontesquesada/zyndrix"
+  },
+  "privacy_page": {
+    "title": "Privacidad y Soberanía",
+    "subtitle": "Escudo de Seguridad",
+    "sections": [
+      {
+        "title": "RECOLECCIÓN DE DATOS",
+        "content": "En Zyndrix, la soberanía de los datos es nuestra prioridad absoluta. Recopilamos información únicamente para optimizar el rendimiento de nuestros agentes de IA y la experiencia del usuario.",
+        "list": [
+          "Datos de contacto suministrados en formularios de protocolo.",
+          "Métricas de interacción técnica para refinamiento de LLMs.",
+          "Logs de seguridad automatizados en tiempo real."
+        ]
+      },
+      {
+        "title": "USO DE INFORMACIÓN",
+        "content": "Toda la información procesada por nuestros Sistemas Nucleares se mantiene bajo encriptación de grado industrial. No vendemos, intercambiamos ni transferimos sus datos a entidades externas fuera de los protocolos de operación estrictamente necesarios para el servicio."
+      },
+      {
+        "title": "ALMACENAMIENTO SEGURO",
+        "content": "Nuestros servidores utilizan protocolos de latencia cero con redundancia geográfica total. Los datos son eliminados automáticamente tras la finalización de los ciclos de entrenamiento si así lo requiere el protocolo del cliente."
+      }
+    ]
+  },
+  "terms_page": {
+    "title": "Términos de Servicio",
+    "subtitle": "Marco Operativo",
+    "sections": [
+      {
+        "title": "1. ACUERDO DE USO",
+        "content": "Al acceder a Zyndrix AI Agency, usted acepta los protocolos de operación que rigen nuestra IA. Los 'Sistemas Nucleares' de Zyndrix se proporcionan para potenciar operaciones empresariales lícitas y éticas."
+      },
+      {
+        "title": "2. PROPIEDAD INTELECTUAL",
+        "content": "El diseño, la interfaz (UI) y los algoritmos propietarios de Zyndrix son propiedad intelectual exclusiva. Los resultados generados por el sistema pertenecen al cliente sujeto a los términos del contrato de servicio individual."
+      },
+      {
+        "title": "3. LIMITACIÓN DE RESPONSABILIDAD",
+        "content": "Zyndrix IA no se hace responsable de las interpretaciones o decisiones tomadas por agentes autónomos basadas en datos incorrectos o incompletos suministrados por el usuario final."
+      }
+    ]
+  },
+  "security_page": {
+    "title": "Protocolos de Seguridad",
+    "subtitle": "Infraestructura de Élite",
+    "items": [
+      {
+        "title": "ALMACENAMIENTO",
+        "desc": "Encriptación AES-256 en reposo con gestión de claves HSM gestionada por cada cliente de forma aislada."
+      },
+      {
+        "title": "RED",
+        "desc": "Firewalls de última generación con filtrado de paquetes en tiempo real y detección de intrusos basada en anomalías de IA."
+      },
+      {
+        "title": "CÓDIGO",
+        "desc": "Firmas digitales y escaneos de vulnerabilidades SAST/DAST diarios en cada actualización de nuestros Sistemas Nucleares."
+      },
+      {
+        "title": "MONITOREO",
+        "desc": "Observabilidad total 24/7 con alertas de latencia milimétricas y protocolos de remediación automatizados por n8n."
+      }
+    ]
   }
 }

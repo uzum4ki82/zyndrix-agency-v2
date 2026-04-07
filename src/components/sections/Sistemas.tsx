@@ -37,7 +37,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
 );
 
 export const Sistemas = ({ dict }: { dict: any }) => (
-  <section id="servicios" className="py-20 px-6 relative overflow-hidden bg-base">
+  <section id="sistemas" className="py-20 px-6 relative overflow-hidden bg-base">
     {/* Industrial Background Layer */}
     <div className="absolute inset-0 z-0">
       <img 
@@ -66,81 +66,64 @@ export const Sistemas = ({ dict }: { dict: any }) => (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 gap-8 auto-rows-[450px]">
-        
-        {/* Card 1: Lead Gen Engine */}
-        <div className="col-span-1 md:col-span-3 row-span-1 md:row-span-1">
-          <ServiceCard 
-            icon={Zap} 
-            title={dict.cards[0].title} 
-            description={dict.cards[0].description} 
-            specs={dict.cards[0].specs}
-            image="/img/icon-automation.png"
-          />
-        </div>
+        {/* Render first two cards */}
+        {dict.cards.slice(0, 2).map((card: any, i: number) => (
+          <div key={i} className="col-span-1 md:col-span-3">
+            <ServiceCard 
+              icon={i === 0 ? Zap : Cpu} 
+              title={card.title} 
+              description={card.description} 
+              specs={card.specs}
+              image={i === 0 ? "/img/icon-automation.png" : "/img/icon-agents.png"}
+            />
+          </div>
+        ))}
 
-        {/* Card 2: Agentes Operativos */}
-        <div className="col-span-1 md:col-span-3 row-span-1">
-          <ServiceCard 
-            icon={Cpu} 
-            title={dict.cards[1].title} 
-            description={dict.cards[1].description} 
-            specs={dict.cards[1].specs}
-            image="/img/icon-agents.png"
-          />
-        </div>
-
-        {/* Card 4: Workflow Core (n8n) */}
-        <div className="col-span-1 md:col-span-6 row-span-1">
-          <motion.div 
-            whileHover={{ scale: 1.01 }} 
-            className="h-full bg-primary/10 rounded-[4rem] p-12 md:p-20 flex flex-col md:flex-row justify-between items-center relative overflow-hidden group border border-primary/20 shadow-[0_0_80px_rgba(56,189,248,0.15)]"
-          >
-            <div className="absolute inset-0 bg-mesh opacity-50" />
-            <div className="relative z-10 flex flex-col gap-6 md:w-2/3">
-              <div className="flex items-center gap-3 bg-primary/20 w-fit px-8 py-3 rounded-full border border-primary/30">
-                <Workflow className="w-5 h-5 text-primary animate-pulse" />
-                <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
+        {/* Card 3: Workflow Core (Special wide card) */}
+        {dict.cards[2] && (
+          <div className="col-span-1 md:col-span-6">
+            <motion.div 
+              whileHover={{ scale: 1.01 }} 
+              className="h-full bg-primary/10 rounded-[4rem] p-12 md:p-20 flex flex-col md:flex-row justify-between items-center relative overflow-hidden group border border-primary/20 shadow-[0_0_80px_rgba(56,189,248,0.15)]"
+            >
+              <div className="absolute inset-0 bg-mesh opacity-50" />
+              <div className="relative z-10 flex flex-col gap-6 md:w-2/3">
+                <div className="flex items-center gap-3 bg-primary/20 w-fit px-8 py-3 rounded-full border border-primary/30">
+                  <Workflow className="w-5 h-5 text-primary animate-pulse" />
+                  <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
+                </div>
+                <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-none tracking-tighter text-white">
+                  {dict.cards[2].title}
+                </h3>
+                <p className="text-white/80 font-medium italic text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl">
+                  {dict.cards[2].description}
+                </p>
+                <div className="flex flex-wrap gap-10 mt-6">
+                  {dict.cards[2].specs.map((s: string, i: number) => (
+                    <div key={i} className="flex flex-col">
+                      <span className="text-primary font-black italic text-3xl tracking-tighter leading-none mb-1">{s.split(' ')[0]}</span>
+                      <span className="text-[12px] font-black uppercase tracking-widest text-white/60">{s.split(' ').slice(1).join(' ')}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-none tracking-tighter text-white">
-                {dict.cards[2].title}
-              </h3>
-              <p className="text-white/80 font-medium italic text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl">
-                {dict.cards[2].description}
-              </p>
-              <div className="flex gap-10 mt-6">
-                {dict.cards[2].specs.map((s: string, i: number) => (
-                  <div key={i} className="flex flex-col">
-                    <span className="text-primary font-black italic text-3xl tracking-tighter leading-none mb-1">{s.split(' ')[0]}</span>
-                    <span className="text-[12px] font-black uppercase tracking-widest text-white/60">{s.split(' ').slice(1).join(' ')}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <Workflow className="hidden lg:block w-72 h-72 text-primary opacity-10 group-hover:rotate-12 transition-transform duration-[1.5s] mr-10 relative z-10" />
-          </motion.div>
-        </div>
+              <Workflow className="hidden lg:block w-72 h-72 text-primary opacity-10 group-hover:rotate-12 transition-transform duration-[1.5s] mr-10 relative z-10" />
+            </motion.div>
+          </div>
+        )}
 
-        {/* Card 3: Support */}
-        <div className="col-span-1 md:col-span-3 row-span-1">
-          <ServiceCard 
-            icon={BrainCircuit} 
-            title={dict.cards[3].title} 
-            description={dict.cards[3].description} 
-            specs={dict.cards[3].specs}
-            image="/img/icon-rag.png"
-          />
-        </div>
-
-        {/* Card 5: Security */}
-        <div className="col-span-1 md:col-span-3 row-span-1">
-          <ServiceCard 
-            icon={ShieldCheck} 
-            title="Soberanía Total" 
-            description="Infraestructura propietaria con SLAs del 99.9% y soberanía de datos absoluta en sus propios servidores." 
-            specs={["Cifrado Militar", "Hosting local", "Auditoría Continua"]}
-          />
-        </div>
-
+        {/* Render last two cards if they exist */}
+        {dict.cards.slice(3).map((card: any, i: number) => (
+          <div key={i} className="col-span-1 md:col-span-3">
+            <ServiceCard 
+              icon={i === 0 ? BrainCircuit : ShieldCheck} 
+              title={card.title} 
+              description={card.description} 
+              specs={card.specs}
+              image={i === 0 ? "/img/icon-rag.png" : undefined}
+            />
+          </div>
+        ))}
       </div>
     </div>
   </section>

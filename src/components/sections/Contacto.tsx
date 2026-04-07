@@ -92,13 +92,13 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                         
                         <div className="flex gap-8">
                             {[
-                                { Icon: Twitter, label: 'Twitter' },
-                                { Icon: Linkedin, label: 'LinkedIn' },
-                                { Icon: Instagram, label: 'Instagram' }
-                            ].map(({ Icon, label }, i) => (
-                                <Link key={i} href="#" aria-label={`Sigue a Zyndrix en ${label}`} className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-black transition-all group shadow-xl hover:shadow-primary/40">
+                                { Icon: Twitter, label: 'Twitter', href: (dict as any).twitter_url || 'https://x.com/zyndrix' },
+                                { Icon: Linkedin, label: 'LinkedIn', href: (dict as any).linkedin_url || 'https://www.linkedin.com/company/zyndrix' },
+                                { Icon: Instagram, label: 'Instagram', href: (dict as any).instagram_url || 'https://www.instagram.com/zyndrix.ia' }
+                            ].map(({ Icon, label, href }, i) => (
+                                <a key={i} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Sigue a Zyndrix en ${label}`} className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-primary hover:text-black transition-all group shadow-xl hover:shadow-primary/40">
                                     <Icon className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" />
-                                </Link>
+                                </a>
                             ))}
                         </div>
 
@@ -174,7 +174,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                             ) : isSuccess ? (
                                 <>
                                     <ShieldCheck className="w-6 h-6 animate-bounce" />
-                                    <span>MENSAJE RECIBIDO CORRECTAMENTE!</span>
+                                    <span>{dict.success_message || (locale === 'es' ? 'MENSAJE RECIBIDO CORRECTAMENTE!' : 'MESSAGE RECEIVED SUCCESSFULLY!')}</span>
                                 </>
                             ) : (
                                 <>
@@ -190,7 +190,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
     );
 };
 
-export const Footer = ({ dict }: { dict: any }) => (
+export const Footer = ({ dict, locale }: { dict: any, locale: string }) => (
     <footer className="py-32 px-10 border-t border-white/5 overflow-hidden bg-[#03040a] relative">
         <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
         <div className="absolute inset-0 bg-mesh opacity-5 pointer-events-none" />
@@ -208,25 +208,23 @@ export const Footer = ({ dict }: { dict: any }) => (
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-16">
-                     {[
-                        { title: 'Protocolo', links: [dict.links.privacy, dict.links.terms, dict.links.security] },
-                        { title: 'Sistemas', links: ['Lead Gen', 'Agents', 'Workflow Core'] },
-                        { title: 'Contacto', links: ['Instagram', 'LinkedIn', 'X (Twitter)'] }
-                     ].map((col, i) => (
+                     {dict.sections ? Object.values(dict.sections).map((col: any, i: number) => (
                         <div key={i} className="flex flex-col gap-6 text-center lg:text-left">
                             <div className="text-[12px] font-black uppercase tracking-[0.6em] text-primary">{col.title}</div>
                             <div className="flex flex-col gap-3">
-                               {col.links.map((ln, j) => (
-                                  <Link key={j} href="#" className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all">{ln}</Link>
+                               {col.links.map((link: any, j: number) => (
+                                  <Link key={j} href={link.href} className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all uppercase">{link.label}</Link>
                                ))}
                             </div>
                         </div>
-                     ))}
+                     )) : (
+                        <div className="text-white/20 text-[10px] uppercase tracking-widest italic">Cargando protocolos de navegación...</div>
+                     )}
                 </div>
             </div>
 
             <div className="pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-                <div className="text-[12px] font-black uppercase tracking-[0.5em] text-white/10 italic">BUILD_VERSION_2026.04.05.MASTER_STABLE</div>
+            <div className="text-[12px] font-black uppercase tracking-[0.5em] text-white/10 italic">ENGINEERING_DOMAIN // v2.0.42_PROD</div>
                 <div className="flex items-center gap-6">
                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-glow" />
                      <span className="text-[12px] font-black uppercase tracking-[0.5em] text-white/20">ALL_SYSTEMS_OPERATIONAL</span>

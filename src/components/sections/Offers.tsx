@@ -15,16 +15,16 @@ export const Offers = ({ dict }: { dict: any }) => (
         whileInView={{ opacity: 1, scale: 1 }}
         className="inline-flex items-center gap-3 px-8 py-3 bg-red-500/10 border border-red-500/30 rounded-full text-[11px] font-black uppercase tracking-[0.5em] text-red-400 mb-10 shadow-[0_0_30px_rgba(239,68,68,0.1)]"
       >
-        <Zap className="w-4 h-4 animate-pulse" /> PROBABILITY_LIMIT_LOCK: ACTIVE
+        <Zap className="w-4 h-4 animate-pulse" /> {dict.badge}
       </motion.div>
 
       <h2 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black uppercase italic tracking-tighter leading-[0.8] mb-12 text-white drop-shadow-2xl">
-        PROTOCOLO DE<br/>
-        <span className="text-gradient-cyan">ADSCRIPCIÓN ÉLITE</span>
+        {dict.title_part1}<br/>
+        <span className="text-gradient-cyan">{dict.title_part2}</span>
       </h2>
 
       <p className="max-w-3xl mx-auto text-xl md:text-3xl text-white/40 mb-20 font-medium italic lowercase leading-relaxed">
-        Estamos buscando 3 socios comerciales este trimestre para implementar infraestructuras de latencia cero con beneficios exclusivos por fidelidad temprana.
+        {dict.subtitle}
       </p>
 
       {/* Main Offer Card */}
@@ -42,20 +42,15 @@ export const Offers = ({ dict }: { dict: any }) => (
            <div className="text-left space-y-12 md:w-3/5 relative z-10">
               <div className="space-y-4">
                  <div className="flex items-center gap-3 text-primary font-black uppercase tracking-[0.4em] text-xs">
-                    <Tag className="w-5 h-5" /> DESCUENTO_FUNDADOR_ACTIVO
+                    <Tag className="w-5 h-5" /> {dict.discount_label}
                  </div>
                  <h3 className="text-5xl md:text-7xl font-heading font-black italic tracking-tighter uppercase leading-none text-white leading-tight">
-                   -40% <span className="text-white/20">EN LA PUESTA EN MARCHA</span>
+                   {dict.discount_value}
                  </h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-white/5">
-                 {[
-                    "Acceso Vitalicio a Updates",
-                    "Soporte Crítico Prioritario",
-                    "Auditoría de Escala Gratis",
-                    "Custom LLM Training Inc."
-                 ].map((feat, i) => (
+                 {dict.items.map((feat: string, i: number) => (
                     <div key={i} className="flex items-center gap-4 group/item">
                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40 group-hover/item:bg-primary transition-all">
                           <Zap className="w-3 h-3 text-primary group-hover/item:text-black" />
@@ -70,14 +65,14 @@ export const Offers = ({ dict }: { dict: any }) => (
 
            <div className="md:w-2/5 flex flex-col items-center justify-center space-y-8 bg-black/40 p-12 rounded-[3.5rem] border border-white/5 backdrop-blur-3xl shadow-inner relative z-10">
               <div className="text-center">
-                 <div className="text-white/20 text-[10px] font-black uppercase tracking-[0.5em] mb-4">CUPOS DISPONIBLES</div>
-                 <div className="text-8xl md:text-9xl font-heading font-black text-primary italic leading-none trekking-tighter">03/05</div>
+                 <div className="text-white/20 text-[10px] font-black uppercase tracking-[0.5em] mb-4">{dict.slots_label}</div>
+                 <div className="text-8xl md:text-9xl font-heading font-black text-primary italic leading-none trekking-tighter">{dict.slots_value}</div>
               </div>
               <div className="flex items-center gap-4 text-red-400 font-mono text-[11px] font-bold animate-pulse">
-                 <Clock className="w-4 h-4" /> REINICIO: 23H 45M 12S
+                 <Clock className="w-4 h-4" /> {dict.reset_label}
               </div>
               <a href="#contacto" className="btn-elite w-full group py-8 h-24">
-                 <span className="text-[18px]">RECLAMAR CUPÓN</span>
+                 <span className="text-[18px]">{dict.cta}</span>
                  <ArrowRight className="w-7 h-7 group-hover:translate-x-3 transition-transform" />
               </a>
            </div>
