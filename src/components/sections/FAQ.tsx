@@ -11,7 +11,7 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section id="faq" className="py-24 px-10 relative overflow-hidden bg-[#03040a]">
+        <section id="faq" className="py-12 md:py-20 px-10 relative overflow-hidden bg-[#03040a]">
             {/* Background Glow */}
             <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[140px] rounded-full pointer-events-none opacity-20" />
             

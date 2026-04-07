@@ -26,7 +26,7 @@ export const Metodo = ({ dict }: { dict: any }) => {
   ];
 
   return (
-    <section id="proceso" ref={containerRef} className="py-32 px-10 relative overflow-hidden bg-base">
+    <section id="proceso" ref={containerRef} className="py-12 md:py-20 px-10 relative overflow-hidden bg-base">
       <div className="absolute inset-0 bg-mesh opacity-5 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">

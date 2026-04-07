@@ -13,7 +13,7 @@ const items = [
 
 export const Demos = ({ dict, locale }: { dict: any, locale: string }) => {
   return (
-    <section id="demos" className="py-32 relative overflow-hidden bg-black border-y border-white/5">
+    <section id="demos" className="py-12 md:py-20 relative overflow-hidden bg-black border-y border-white/5">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
