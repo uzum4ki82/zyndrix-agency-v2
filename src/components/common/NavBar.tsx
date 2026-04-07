@@ -39,12 +39,14 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
         </a>
 
         {/* Desktop Links */}
-        <div className="hidden lg:flex items-center gap-8 bg-white/5 border border-white/10 px-6 py-3 rounded-full backdrop-blur-xl">
-          <a href={getLink('sistemas')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/90 hover:text-white transition-all">{dict.servicios}</a>
-          <a href={getLink('ofertas')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/90 hover:text-white transition-all">{dict.oferta}</a>
-          <a href={getLink('proceso')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/90 hover:text-white transition-all">{dict.proceso}</a>
-          <a href={getLink('precios')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/90 hover:text-white transition-all">{dict.precios}</a>
-          <a href={getLink('faq')} className="text-[12px] font-black uppercase tracking-[0.4em] text-white/90 hover:text-white transition-all">{dict.faq}</a>
+        <div className="hidden lg:flex items-center gap-10 bg-white/5 border border-white/10 px-10 py-3 rounded-full backdrop-blur-3xl shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+          <a href={getLink('sistemas')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.servicios}</a>
+          <a href={getLink('ofertas')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.oferta}</a>
+          <a href={getLink('casos')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.casos}</a>
+          <a href={getLink('testimonios')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.testimonios}</a>
+          <a href={getLink('proceso')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.proceso}</a>
+          <a href={getLink('precios')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.precios}</a>
+          <a href={getLink('faq')} className="text-[11px] font-black uppercase tracking-[0.4em] text-white/50 hover:text-primary transition-all">{dict.faq}</a>
         </div>
 
         <div className="flex items-center gap-6">
@@ -65,11 +67,15 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-black border-t border-white/5 p-12 flex flex-col gap-12 items-center animate-in fade-in slide-in-from-top-4 duration-500">
-          <a href={getLink('sistemas')} onClick={() => setIsMobileMenuOpen(false)} className="text-[16px] font-black uppercase tracking-[0.4em] text-white uppercase py-4">{dict.servicios}</a>
-          <a href={getLink('ofertas')} onClick={() => setIsMobileMenuOpen(false)} className="text-[16px] font-black uppercase tracking-[0.4em] text-white uppercase py-4">{dict.oferta}</a>
-          <a href={getLink('proceso')} onClick={() => setIsMobileMenuOpen(false)} className="text-[16px] font-black uppercase tracking-[0.4em] text-white uppercase py-4">{dict.proceso}</a>
-          <a href={`#${contactId}`} onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-6 bg-white text-black font-black uppercase tracking-[0.4em] rounded-full mt-4">{dict.connect}</a>
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-3xl border-t border-white/5 p-12 flex flex-col gap-10 items-center animate-in fade-in slide-in-from-top-4 duration-500 shadow-massive">
+          <a href={getLink('sistemas')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.servicios}</a>
+          <a href={getLink('ofertas')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.oferta}</a>
+          <a href={getLink('casos')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.casos}</a>
+          <a href={getLink('testimonios')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.testimonios}</a>
+          <a href={getLink('proceso')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.proceso}</a>
+          <a href={getLink('precios')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.precios}</a>
+          <a href={getLink('faq')} onClick={() => setIsMobileMenuOpen(false)} className="text-[14px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-primary transition-colors py-2">{dict.faq}</a>
+          <a href={`#${contactId}`} onClick={() => setIsMobileMenuOpen(false)} className="w-full text-center py-6 bg-white text-black font-black uppercase tracking-[0.4em] rounded-full mt-10 hover:bg-primary transition-colors">{dict.connect}</a>
         </div>
       )}
     </nav>
