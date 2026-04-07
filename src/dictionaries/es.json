@@ -1,10 +1,8 @@
 {
   "nav": {
     "servicios": "SERVICIOS",
-    "muestras": "DEMOS",
-    "casos": "RESULTADOS",
-    "testimonios": "RESEÑAS",
-    "process": "PROCESO",
+    "oferta": "OFERTAS",
+    "proceso": "PROCESO",
     "precios": "INVERSIÓN",
     "faq": "FAQ",
     "connect": "AUDITORÍA"
