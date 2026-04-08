@@ -16,6 +16,7 @@ import { Metodo } from '@/components/sections/Metodo';
 import { Demos } from '@/components/sections/Demos';
 import { Planes } from '@/components/sections/Planes';
 import { FAQ } from '@/components/sections/FAQ';
+import { Guarantee } from '@/components/sections/Guarantee';
 import { Contacto } from '@/components/sections/Contacto';
 import { Footer } from '@/components/common/Footer';
 
@@ -79,6 +80,9 @@ export default async function Home() {
       <SectionConnector />
 
       <FAQ dict={dict.faq} />
+      <SectionConnector />
+
+      <Guarantee dict={dict.guarantee} />
       <SectionConnector />
 
       <Contacto dict={dict.contacto} locale={locale} />

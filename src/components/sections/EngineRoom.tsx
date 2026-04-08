@@ -16,7 +16,7 @@ export const EngineRoom = ({ dict, system = {} }: { dict: any, system?: any }) =
     }, []);
 
     return (
-        <section id="ingenieria" className="py-24 px-6 md:px-10 relative overflow-hidden bg-base border-y border-white/5">
+        <section id="ingenieria" className="py-16 px-6 md:px-10 relative overflow-hidden bg-base border-y border-white/5">
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
             <div className="absolute inset-0 bg-mesh opacity-10 pointer-events-none" />
             
@@ -126,7 +126,7 @@ export const EngineRoom = ({ dict, system = {} }: { dict: any, system?: any }) =
                                 </div>
                                 <div className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-white/40">ZYN_ENGINE 2.0 // MASTER_WORKFLOW</div>
                             </div>
-                            <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-black text-white uppercase italic tracking-tighter leading-none">
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white uppercase italic tracking-tighter leading-none">
                                 {dict.main_title}
                             </h2>
                             <p className="text-[13px] md:text-[14px] text-white/40 font-medium italic uppercase tracking-tight leading-relaxed max-w-sm md:max-w-md group-hover:text-white/60 transition-colors">

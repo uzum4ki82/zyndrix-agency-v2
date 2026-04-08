@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowRight, Sparkles, Activity, Shield, Cpu, Zap, MousePointer2 } from 'lucide-react';
+import { ArrowRight, Sparkles, Activity, Shield, Cpu, Zap, MousePointer2, PlayCircle } from 'lucide-react';
 
 export const Hero = ({ dict }: { dict: any }) => {
   const [isMobile, setIsMobile] = React.useState(false);
@@ -78,7 +78,7 @@ export const Hero = ({ dict }: { dict: any }) => {
           {dict.badge}
         </motion.div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-[7.5vw] lg:text-[8rem] font-heading font-black tracking-[calc(-0.04em)] leading-[0.95] uppercase italic mb-8 select-none drop-shadow-2xl">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-[calc(-0.04em)] leading-[0.95] uppercase italic mb-8 select-none drop-shadow-2xl">
           <span className="text-white block">
             {dict.title_main.includes(':') ? (
               <>
@@ -97,14 +97,15 @@ export const Hero = ({ dict }: { dict: any }) => {
           {dict.subtitle}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-32">
+        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
           <a href="#contacto" className="btn-elite group h-20 px-14 min-w-[280px]">
             <span className="relative z-10 text-[18px] font-black">{dict.cta_primary}</span>
             <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-3 transition-transform" />
             {!isMobile && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent w-[200%] -translate-x-full animate-beam" />}
           </a>
-          <a href="#sistemas" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md">
-            {dict.cta_secondary}
+          <a href="#demos" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center gap-4 px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md group">
+            <PlayCircle className="w-5 h-5 group-hover:scale-110 transition-transform text-primary/60" />
+            {dict.cta_secondary_video || "VER PROTOCOLO"}
           </a>
         </div>
 

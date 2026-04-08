@@ -16,6 +16,7 @@
     "subtitle": "We drive companies with autonomous systems and intelligent workflows.",
     "cta_primary": "SCALE MY BUSINESS",
     "cta_secondary": "VIEW INVESTMENT",
+    "cta_secondary_video": "VIEW PROTOCOL",
     "stats": [
       { "v": "12+", "l": "NUCLEAR FLOWS" },
       { "v": "99.9%", "l": "AI PRECISION" },
@@ -293,6 +294,12 @@
         "a": "THROUGH LATENCY, ACCURACY AND MAN-HOURS SAVED KPIs QUANTIFIED IN EVERY SPRINT."
       }
     ]
+  },
+  "guarantee": {
+    "badge": "TECHNICAL COMMITMENT",
+    "title": "ZERO LATENCY GUARANTEE",
+    "subtitle": "If our system does not reduce your operational load in the first 30 days, we recalibrate the entire infrastructure at no additional cost until the agreed KPI is reached.",
+    "cta": "START WITH CONFIDENCE"
   },
   "footer": {
     "desc": "ENGINEERING DOMAIN © 2026.",

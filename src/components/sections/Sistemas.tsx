@@ -43,7 +43,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
 );
 
 export const Sistemas = ({ dict, system = {} }: { dict: any, system?: any }) => (
-  <section id="sistemas" className="py-20 px-6 relative overflow-hidden bg-base">
+  <section id="sistemas" className="py-16 px-6 relative overflow-hidden bg-base">
     {/* Industrial Background Layer */}
     <div className="absolute inset-0 z-0">
       <Image 
@@ -99,7 +99,7 @@ export const Sistemas = ({ dict, system = {} }: { dict: any, system?: any }) => 
                   <Workflow className="w-5 h-5 text-primary animate-pulse" />
                   <span className="text-[12px] font-black uppercase tracking-[0.5em]">{system.core || "NÚCLEO ESTRATÉGICO"}</span>
                 </div>
-                <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-[0.95] tracking-tighter text-white">
+                <h3 className="text-4xl lg:text-6xl font-heading font-black uppercase italic leading-[0.95] tracking-tighter text-white">
                   {dict.cards[2].title}
                 </h3>
                 <p className="text-white/80 font-medium italic text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl">

@@ -16,6 +16,7 @@
     "subtitle": "Impulsamos empresas con sistemas autónomos y flujos de trabajo inteligentes.",
     "cta_primary": "ESCALAR MI NEGOCIO",
     "cta_secondary": "VER INVERSIÓN",
+    "cta_secondary_video": "VER PROTOCOLO",
     "stats": [
       { "v": "12+", "l": "FLUJOS NUCLEARES" },
       { "v": "99.9%", "l": "PRECISIÓN IA" },
@@ -293,6 +294,12 @@
         "a": "MEDIANTE KPIs DE LATENCIA, PRECISIÓN Y HORAS/HOMBRE AHORRADAS CUANTIFICADAS EN CADA SPRINT."
       }
     ]
+  },
+  "guarantee": {
+    "badge": "COMPROMISO TÉCNICO",
+    "title": "GARANTÍA DE LATENCIA CERO",
+    "subtitle": "Si nuestro sistema no reduce su carga operativa en los primeros 30 días, recalibramos toda la infraestructura sin coste adicional hasta alcanzar el KPI acordado.",
+    "cta": "INICIAR CON SEGURIDAD"
   },
   "footer": {
     "desc": "DOMINIO DE INGENIERÍA © 2026.",
