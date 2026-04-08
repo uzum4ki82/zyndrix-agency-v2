@@ -10,6 +10,12 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
     const [rate, setRate] = useState(10);
     const [employees, setEmployees] = useState(1);
 
+    const [mounted, setMounted] = useState(false);
+
+    useState(() => {
+        if (typeof window !== 'undefined') setMounted(true);
+    });
+
     const monthlyLeak = Math.round(hours * rate * 4.34 * employees);
     const yearlyLeak = monthlyLeak * 12;
 
@@ -71,7 +77,7 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
                                <TrendingDown className="w-6 h-6 text-red-500" />
                             </div>
                             <div className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 italic leading-relaxed">
-                                {dict.warning.split('quemando capital')[0]} <span className="text-red-500">{dict.warning.includes('quemando capital') ? 'quemando capital' : 'burning capital'}</span> {dict.warning.split('quemando capital')[1] || dict.warning.split('burning capital')[1]}
+                                {dict.warning.part1} <span className="text-red-500">{dict.warning.highlight}</span> {dict.warning.part2}
                             </div>
                         </div>
                     </div>
@@ -98,7 +104,7 @@ export const ROICalculator = ({ dict }: { dict: any }) => {
                              <div className="relative z-10 space-y-4">
                                 <div className="text-[11px] font-black uppercase tracking-[0.5em] text-primary/40">{dict.labels.yearly}</div>
                                 <div className="text-7xl md:text-8xl font-heading font-black text-white tracking-tighter italic">
-                                    {yearlyLeak.toLocaleString('es-ES')}€
+                                    {mounted ? yearlyLeak.toLocaleString('es-ES') : yearlyLeak}€
                                 </div>
                              </div>
                         </div>

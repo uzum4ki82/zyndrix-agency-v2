@@ -6,7 +6,7 @@ import {
   CheckCircle2, ArrowRight, Activity, Users, Globe, ClipboardCheck, Zap
 } from 'lucide-react';
 import { NavBar } from '@/components/common/NavBar';
-import { Footer } from '@/components/sections/Contacto';
+import { Footer } from '@/components/common/Footer';
 
 interface AuditoriaClientProps {
   dict: any;

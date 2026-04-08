@@ -15,7 +15,13 @@
     "title_highlight": "DE ALTO RENDIMIENTO",
     "subtitle": "Impulsamos empresas con sistemas autónomos y flujos de trabajo inteligentes.",
     "cta_primary": "ESCALAR MI NEGOCIO",
-    "cta_secondary": "VER INVERSIÓN"
+    "cta_secondary": "VER INVERSIÓN",
+    "stats": [
+      { "v": "12+", "l": "FLUJOS NUCLEARES" },
+      { "v": "99.9%", "l": "PRECISIÓN IA" },
+      { "v": "10X", "l": "ESCALA OPERATIVA" }
+    ],
+    "scroll": "EXPLORAR"
   },
   "roi": {
     "badge": "DIAGNÓSTICO ECONÓMICO",
@@ -28,7 +34,11 @@
       "monthly": "PÉRDIDA MENSUAL ESTIMADA",
       "yearly": "COSTES DE OPORTUNIDAD ANUALES"
     },
-    "warning": "Su infraestructura actual está quemando capital operativo de forma ineficiente.",
+    "warning": {
+      "part1": "Su infraestructura actual está",
+      "highlight": "quemando capital",
+      "part2": "operativo de forma ineficiente."
+    },
     "cta": "SOLICITAR AUDITORÍA DE ESCALA"
   },
   "engine_room": {
@@ -466,5 +476,28 @@
         "desc": "Observabilidad total 24/7 con alertas de latencia milimétricas y protocolos de remediación automatizados por n8n."
       }
     ]
+  },
+  "system": {
+    "analyzing": "SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL",
+    "diagnosing": "STATUS: DIAGNÓSTICO EJECUTANDO // COMPROBANDO_FRAGMENTACIÓN",
+    "validated": "PROTOCOLO_VALIDADO",
+    "verified": "REVISIÓN EXTERNA VERIFICADA",
+    "core": "NÚCLEO ESTRATÉGICO"
+  },
+  "metadata": {
+    "home": {
+      "title": "ZYNDRIX | AGENCIA DE IA - SISTEMAS AUTÓNOMOS PARA EMPRESAS",
+      "description": "Lideramos la automatización industrial con IA. Sistemas cognitivos para escalar tu margen operativo sin aumentar personal."
+    },
+    "auditoria": {
+      "title": "AUDITORÍA GRATIS | Zyndrix IA - Detecta Ineficiencias Ahora",
+      "description": "Solicita tu auditoría de sistemas IA. Analizamos tu stack tecnológico gratis y diseñamos tu plan de automatización personalizado en 48h."
+    },
+    "blueprint": {
+      "title": "BLUEPRINT 2026 | MANUAL DE AUTOMATIZACIÓN IA - ZYNDRIX",
+      "description": "Accede a nuestra metodología de ingeniería IA. 45 páginas de arquitectura de flujos y agentes para dominar tu sector."
+    },
+    "keywords": "IA para empresas, Automatización de leads, Ingeniería de procesos IA, Agencia de automatización Madrid, Captación de leads autónoma",
+    "schema_name": "ZYNDRIX | Arquitectura de Automatización IA"
   }
 }

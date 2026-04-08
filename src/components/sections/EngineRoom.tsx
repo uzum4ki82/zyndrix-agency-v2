@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Cpu, Database, Activity, Code, Server, GitBranch, Terminal, Layers } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const EngineRoom = ({ dict }: { dict: any }) => {
+export const EngineRoom = ({ dict, system = {} }: { dict: any, system?: any }) => {
     const [isMobile, setIsMobile] = React.useState(false);
 
     React.useEffect(() => {

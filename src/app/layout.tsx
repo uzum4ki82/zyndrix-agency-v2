@@ -1,112 +1,54 @@
-import type { Metadata, Viewport } from "next";
-import { Outfit, Space_Grotesk } from "next/font/google";
-import { Background } from "@/components/common/Background";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import { Viewport } from 'next';
+import { Background } from "@/components/common/Background";
+import { headers } from 'next/headers';
+import { getDictionary } from '@/lib/dictionaries';
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const viewport: Viewport = {
+  themeColor: '#03040a',
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#000000',
-}
-
-// FUENTES DE GRADO EJECUTIVO
-const outfit = Outfit({ 
-  subsets: ["latin"], 
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({ 
-  subsets: ["latin"], 
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-
-/**
- * ZYNDRIX SEO INFRASTRUCTURE - ENTERPRISE LEVEL
- * Optimizado para indexación de Google Search Console 2024.
- */
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://zyndrix.dev'),
-  title: {
-    default: "ZYNDRIX | Arquitectura de Automatización de IA",
-    template: "%s | ZYNDRIX"
-  },
-  description: "Líderes en ingeniería de automatización IA para organizaciones que exigen eficiencia absoluta. Privatiza tu margen operativo con el Blueprint Zyndrix.",
-  keywords: ["IA para empresas", "Automatización de leads", "Ingeniería de procesos IA", "Agencia de automatización Madrid", "Captación de leads autónoma"],
-  authors: [{ name: "Zyndrix Team" }],
-  creator: "Zyndrix Agency",
-  publisher: "Zyndrix",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  icons: {
-    icon: [
-      { url: "/img/zyndrix-live.png?v=3" },
-      { url: "/img/zyndrix-live.png?v=3", type: "image/png" },
-    ],
-    apple: "/img/zyndrix-live.png?v=3",
-  },
-  openGraph: {
-    type: "website",
-    locale: "es_ES",
-    url: "https://zyndrix.dev",
-    siteName: "ZYNDRIX",
-    title: "ZYNDRIX | Arquitectura de Sistemas de IA",
-    description: "La estructura de la autonomía operativa para PYMES y Grandes organizaciones.",
-    images: [
-      {
-        url: "/img/zyndrix-live.png",
-        width: 1200,
-        height: 630,
-        alt: "Zyndrix Official Logo",
-      },
-    ],
-  },
-  alternates: {
-    canonical: 'https://zyndrix.dev',
-  },
+  maximumScale: 5,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const locale = (headerList.get('x-zyndrix-lang') as string) || 'es';
+  const dict = await getDictionary(locale);
+
   return (
-    <html lang="es" className={`${outfit.variable} ${spaceGrotesk.variable}`}>
-      <body className="antialiased min-h-screen selection:bg-[#38bdf8]/30">
+    <html lang={locale} className="scroll-smooth">
+      <head>
+        {/* Localized JSON-LD Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
-              "name": "ZYNDRIX | Arquitectura de Automatización IA",
-              "image": "https://zyndrix.dev/img/zyndrix-live.png",
-              "@id": "https://zyndrix.dev",
-              "url": "https://zyndrix.dev",
-              "telephone": "",
+              "name": dict.metadata.schema_name || "ZYNDRIX | Arquitectura de Automatización IA",
+              "image": "https://www.zyndrix.com/img/zyndrix-live.png",
+              "url": "https://www.zyndrix.com",
+              "telephone": "+34680875704",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "",
+                "streetAddress": "Torre Europa, P.º de la Castellana, 95",
                 "addressLocality": "Madrid",
-                "postalCode": "",
+                "postalCode": "28046",
                 "addressCountry": "ES"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": 40.4168,
-                "longitude": -3.7038
+                "latitude": 40.4502,
+                "longitude": -3.6918
               },
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
@@ -127,10 +69,11 @@ export default function RootLayout({
             })
           }}
         />
+      </head>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#03040a] selection:bg-primary selection:text-black`}>
         <Background />
         {children}
       </body>
     </html>
   );
 }
-

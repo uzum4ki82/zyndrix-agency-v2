@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { NavBar } from '@/components/common/NavBar';
-import { Footer } from '@/components/sections/Contacto';
+import { Footer } from '@/components/common/Footer';
 import { SectionHeader } from '@/components/common/SectionHeader';
 import { Shield, Eye, Lock, Database } from 'lucide-react';
 

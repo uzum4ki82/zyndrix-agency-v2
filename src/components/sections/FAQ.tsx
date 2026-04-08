@@ -34,7 +34,7 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
                             >
                                 <button 
                                     onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                                    className="w-full p-10 flex items-center justify-between text-left gap-8"
+                                    className="w-full p-6 md:p-10 flex items-center justify-between text-left gap-8"
                                 >
                                     <div className="flex items-center gap-6">
                                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all ${openIndex === i ? 'bg-primary/20 border-primary/40' : 'bg-white/5 border-white/10 group-hover:bg-white/10'}`}>

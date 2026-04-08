@@ -5,7 +5,7 @@ import { TrendingUp, Users, Zap, BarChart3, Clock, Database, Globe, Layers } fro
 
 const icons = [TrendingUp, Users, Zap, BarChart3, Clock, Database, Globe, Layers];
 
-export const Impacto = ({ dict = {} }: { dict: any }) => (
+export const Impacto = ({ dict = {}, system = {} }: { dict: any, system?: any }) => (
   <section id="impacto" className="py-12 md:py-20 px-6 md:px-10 relative overflow-hidden bg-base">
     {/* Animated Background Mesh */}
     <div className="absolute inset-0 bg-mesh opacity-20 pointer-events-none" />
@@ -18,7 +18,7 @@ export const Impacto = ({ dict = {} }: { dict: any }) => (
           whileInView={{ opacity: 1, scale: 1 }}
           className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-6 inline-block px-8 py-3 bg-primary/5 rounded-full border border-primary/20 shadow-[0_0_20px_rgba(56,189,248,0.1)]"
         >
-          {dict.badge || "INDICADORES NUCLEARES"}
+          {dict.badge || "NUCLEAR INDICATORS"}
         </motion.span>
         <motion.h2 
            initial={{ opacity: 0, y: 20 }}

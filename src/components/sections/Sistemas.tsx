@@ -9,7 +9,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
   <motion.div 
     whileHover={{ y: -10, scale: 1.02 }}
     transition={{ type: "spring", stiffness: 400 }}
-    className={`p-10 rounded-[3.5rem] relative overflow-hidden group glass-premium group-hover:glow-border transition-all h-full flex flex-col justify-start border border-white/5 ${className}`}
+    className={`p-8 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] relative overflow-hidden group glass-premium group-hover:glow-border transition-all h-full flex flex-col justify-start border border-white/5 ${className}`}
   >
     {image && (
       <div className="absolute inset-0 opacity-10 group-hover:opacity-30 transition-opacity duration-1000">
@@ -42,7 +42,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
   </motion.div>
 );
 
-export const Sistemas = ({ dict }: { dict: any }) => (
+export const Sistemas = ({ dict, system = {} }: { dict: any, system?: any }) => (
   <section id="sistemas" className="py-20 px-6 relative overflow-hidden bg-base">
     {/* Industrial Background Layer */}
     <div className="absolute inset-0 z-0">
@@ -66,8 +66,8 @@ export const Sistemas = ({ dict }: { dict: any }) => (
                <ShieldCheck className="w-6 h-6 text-primary" />
             </div>
             <div>
-               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/60 mb-1">PROTOCOLO_VALIDADO</div>
-               <div className="text-[12px] font-black uppercase tracking-[0.2em] text-white">REVISIÓN EXTERNA VERIFICADA</div>
+               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/60 mb-1">{system.validated || "PROTOCOLO_VALIDADO"}</div>
+               <div className="text-[12px] font-black uppercase tracking-[0.2em] text-white">{system.verified || "REVISIÓN EXTERNA VERIFICADA"}</div>
             </div>
          </div>
       </div>
@@ -97,7 +97,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
               <div className="relative z-10 flex flex-col gap-6 md:w-2/3">
                 <div className="flex items-center gap-3 bg-primary/20 w-fit px-8 py-3 rounded-full border border-primary/30">
                   <Workflow className="w-5 h-5 text-primary animate-pulse" />
-                  <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
+                  <span className="text-[12px] font-black uppercase tracking-[0.5em]">{system.core || "NÚCLEO ESTRATÉGICO"}</span>
                 </div>
                 <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-[0.95] tracking-tighter text-white">
                   {dict.cards[2].title}

@@ -4,24 +4,33 @@ import { TechStack } from '@/components/sections/TechStack';
 import { SectionConnector } from '@/components/common/SectionConnector';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
-import dynamic from 'next/dynamic';
+import { ROICalculator } from '@/components/sections/ROICalculator';
+import { PainPoints } from '@/components/sections/PainPoints';
+import { Sistemas } from '@/components/sections/Sistemas';
+import { EngineRoom } from '@/components/sections/EngineRoom';
+import { Impacto } from '@/components/sections/Impacto';
+import { Offers } from '@/components/sections/Offers';
+import { BlueprintPromo } from '@/components/sections/BlueprintPromo';
+import { Beneficios } from '@/components/sections/Beneficios';
+import { Metodo } from '@/components/sections/Metodo';
+import { Demos } from '@/components/sections/Demos';
+import { Planes } from '@/components/sections/Planes';
+import { FAQ } from '@/components/sections/FAQ';
+import { Contacto } from '@/components/sections/Contacto';
+import { Footer } from '@/components/common/Footer';
 
-// DYNAMIC IMPORTS FOR PERFORMANCE - CLASE EJECUTIVA
-// Only SSR needed for above-the-fold content
-const ROICalculator = dynamic(() => import('@/components/sections/ROICalculator').then(mod => mod.ROICalculator), { ssr: false });
-const PainPoints = dynamic(() => import('@/components/sections/PainPoints').then(mod => mod.PainPoints), { ssr: false });
-const Sistemas = dynamic(() => import('@/components/sections/Sistemas').then(mod => mod.Sistemas), { ssr: false });
-const EngineRoom = dynamic(() => import('@/components/sections/EngineRoom').then(mod => mod.EngineRoom), { ssr: false });
-const Impacto = dynamic(() => import('@/components/sections/Impacto').then(mod => mod.Impacto), { ssr: false });
-const Offers = dynamic(() => import('@/components/sections/Offers').then(mod => mod.Offers), { ssr: false });
-const BlueprintPromo = dynamic(() => import('@/components/sections/BlueprintPromo').then(mod => mod.BlueprintPromo), { ssr: false });
-const Beneficios = dynamic(() => import('@/components/sections/Beneficios').then(mod => mod.Beneficios), { ssr: false });
-const Metodo = dynamic(() => import('@/components/sections/Metodo').then(mod => mod.Metodo), { ssr: false });
-const Demos = dynamic(() => import('@/components/sections/Demos').then(mod => mod.Demos), { ssr: false });
-const Planes = dynamic(() => import('@/components/sections/Planes').then(mod => mod.Planes), { ssr: false });
-const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => mod.FAQ), { ssr: false });
-const Contacto = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Contacto), { ssr: false });
-const Footer = dynamic(() => import('@/components/common/Footer').then(mod => mod.Footer), { ssr: false });
+export async function generateMetadata() {
+  const headerList = await headers();
+  const locale = (headerList.get('x-zyndrix-lang') as string) || 'es';
+  const dict = await getDictionary(locale);
+  const m = dict.metadata.home;
+
+  return {
+    title: m.title,
+    description: m.description,
+    keywords: dict.metadata.keywords.split(', '),
+  };
+}
 
 export default async function Home() {
   const headerList = await headers();
@@ -39,16 +48,16 @@ export default async function Home() {
       <ROICalculator dict={dict.roi} />
       <SectionConnector />
       
-      <PainPoints dict={dict.pain_points} />
+      <PainPoints dict={dict.pain_points} system={dict.system} />
       <SectionConnector />
       
-      <Sistemas dict={dict.sistemas} />
+      <Sistemas dict={dict.sistemas} system={dict.system} />
       <SectionConnector />
 
-      <EngineRoom dict={dict.engine_room} />
+      <EngineRoom dict={dict.engine_room} system={dict.system} />
       <SectionConnector />
 
-      <Impacto dict={dict.impacto} />
+      <Impacto dict={dict.impacto} system={dict.system} />
       <SectionConnector />
 
       <Offers dict={dict.offers} />
@@ -66,7 +75,7 @@ export default async function Home() {
       <Demos dict={dict.demos} locale={locale} />
       <SectionConnector />
 
-      <Planes dict={dict.planes} />
+      <Planes dict={dict.planes} system={dict.system} />
       <SectionConnector />
 
       <FAQ dict={dict.faq} />

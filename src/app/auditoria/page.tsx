@@ -1,20 +1,24 @@
-import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
 import AuditoriaClient from '@/components/pages/AuditoriaClient';
 
-export const metadata: Metadata = {
-  title: "AUDITORÍA GRATIS | Zyndrix IA - Detecta Ineficiencias Ahora",
-  description: "Solicita tu auditoría de sistemas IA. Analizamos tu stack tecnológico gratis y diseñamos tu plan de automatización personalizado en 48h.",
-  alternates: {
-    canonical: 'https://zyndrix.dev/auditoria',
-  },
-};
+export async function generateMetadata() {
+  const headerList = await headers();
+  const locale = (headerList.get('x-zyndrix-lang') as string) || 'es';
+  const dict = await getDictionary(locale);
+  const m = dict.metadata.auditoria;
+
+  return {
+    title: m.title,
+    description: m.description,
+    keywords: dict.metadata.keywords.split(', '),
+  };
+}
 
 export default async function AuditoriaPage() {
   const headerList = await headers();
-  const locale = headerList.get('x-zyndrix-lang') || 'es';
-  const dict = await getDictionary(locale as any);
+  const locale = (headerList.get('x-zyndrix-lang') as string) || 'es';
+  const dict = await getDictionary(locale);
 
   return <AuditoriaClient dict={dict} locale={locale} />;
 }

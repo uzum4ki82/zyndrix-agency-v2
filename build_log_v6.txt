@@ -1,0 +1,55 @@
+
+> zyndrix-agency@1.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/28) ...
+  Generating static pages using 11 workers (7/28) 
+  Generating static pages using 11 workers (14/28) 
+⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+  Generating static pages using 11 workers (21/28) 
+✓ Generating static pages using 11 workers (28/28) in 458.0ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/audit-form
+├ ƒ /api/auth/login
+├ ƒ /api/lead
+├ ƒ /api/lead/leads
+├ ƒ /api/webhook/dashboard-sync
+├ ƒ /auditoria
+├ ƒ /blueprint
+├ ƒ /dashboard
+├ ƒ /dashboard/ai-tools
+├ ƒ /dashboard/automations
+├ ƒ /dashboard/calendar
+├ ƒ /dashboard/customers
+├ ƒ /dashboard/docs
+├ ƒ /dashboard/leads
+├ ƒ /dashboard/login
+├ ƒ /dashboard/logs
+├ ƒ /dashboard/quotes
+├ ƒ /dashboard/reports
+├ ƒ /dashboard/settings
+├ ƒ /dashboard/tasks
+├ ƒ /privacy
+├ ○ /robots.txt
+├ ƒ /security
+├ ○ /sitemap.xml
+└ ƒ /terms
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -31,7 +31,7 @@ export const Offers = ({ dict }: { dict: any }) => (
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        className="glass-premium p-12 md:p-24 rounded-[5rem] border border-white/10 relative overflow-hidden group shadow-[0_0_100px_rgba(0,0,0,0.5)]"
+        className="glass-premium p-8 md:p-24 rounded-[2.5rem] md:rounded-[5rem] border border-white/10 relative overflow-hidden group shadow-[0_0_100px_rgba(0,0,0,0.5)]"
       >
         {/* Decorative corner tag */}
         <div className="absolute top-0 right-0 p-12 overflow-hidden pointer-events-none opacity-5">

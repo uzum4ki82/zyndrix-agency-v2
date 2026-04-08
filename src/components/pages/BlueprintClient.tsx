@@ -8,7 +8,7 @@ import {
   Zap, Loader2, DollarSign, Rocket, Shield, Activity, Users, TrendingDown, Scan, Cpu, Radio, Network
 } from "lucide-react";
 import { NavBar } from '@/components/common/NavBar';
-import { Footer } from '@/components/sections/Contacto';
+import { Footer } from '@/components/common/Footer';
 
 interface BlueprintClientProps {
   dict: any;

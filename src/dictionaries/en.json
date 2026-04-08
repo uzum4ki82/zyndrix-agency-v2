@@ -15,7 +15,13 @@
     "title_highlight": "HIGH PERFORMANCE",
     "subtitle": "We drive companies with autonomous systems and intelligent workflows.",
     "cta_primary": "SCALE MY BUSINESS",
-    "cta_secondary": "VIEW INVESTMENT"
+    "cta_secondary": "VIEW INVESTMENT",
+    "stats": [
+      { "v": "12+", "l": "NUCLEAR FLOWS" },
+      { "v": "99.9%", "l": "AI PRECISION" },
+      { "v": "10X", "l": "OPERATIONAL SCALE" }
+    ],
+    "scroll": "EXPLORE"
   },
   "roi": {
     "badge": "ECONOMIC DIAGNOSIS",
@@ -28,7 +34,11 @@
       "monthly": "ESTIMATED MONTHLY LOSS",
       "yearly": "ANNUAL OPPORTUNITY COSTS"
     },
-    "warning": "Your current infrastructure is inefficiently burning operating capital.",
+    "warning": {
+      "part1": "Your current infrastructure is",
+      "highlight": "burning capital",
+      "part2": "inefficiently."
+    },
     "cta": "REQUEST SCALE AUDIT"
   },
   "engine_room": {
@@ -466,5 +476,28 @@
         "desc": "24/7 total observability with precision latency alerts and automated remediation protocols by n8n."
       }
     ]
+  },
+  "system": {
+    "analyzing": "SYSTEM: ANALYZING INVESTMENT MODELS // CALCULATING ROI_OPTIMAL",
+    "diagnosing": "STATUS: DIAGNOSTICS RUNNING // CHECKING_FRAGMENTATION",
+    "validated": "PROTOCOL_VALIDATED",
+    "verified": "EXTERNAL REVIEW VERIFIED",
+    "core": "STRATEGIC CORE"
+  },
+  "metadata": {
+    "home": {
+      "title": "ZYNDRIX | AI AGENCY - AUTONOMOUS SYSTEMS FOR ENTERPRISE",
+      "description": "Elite AI automation engineering. Cognitive systems to scale your operating margin without increasing headcount."
+    },
+    "auditoria": {
+      "title": "FREE AUDIT | Zyndrix AI - Detect Inefficiencies Now",
+      "description": "Request your AI systems audit. We analyze your tech stack for free and design your custom automation plan in 48h."
+    },
+    "blueprint": {
+      "title": "2026 BLUEPRINT | AI AUTOMATION MANUAL - ZYNDRIX",
+      "description": "Access our AI engineering methodology. 45 pages of workflow architecture and agents to dominate your sector."
+    },
+    "keywords": "Enterprise AI, Lead Automation, AI Process Engineering, Automation Agency, Autonomous Lead Capture",
+    "schema_name": "ZYNDRIX | AI Automation Architecture"
   }
 }

@@ -6,7 +6,7 @@ import { SectionHeader } from '../common/SectionHeader';
 
 const icons = [Clock, Database, Users, TrendingUp];
 
-export const PainPoints = ({ dict = {} }: { dict: any }) => {
+export const PainPoints = ({ dict = {}, system = {} }: { dict: any, system?: any }) => {
   return (
     <section id="problema" className="py-16 px-6 relative overflow-hidden bg-[#03040a]">
       {/* Background Noise/Grid */}
@@ -21,7 +21,7 @@ export const PainPoints = ({ dict = {} }: { dict: any }) => {
              className="font-mono text-[9px] font-black text-red-500/80 uppercase tracking-[0.5em] mb-4 flex items-center gap-4 bg-red-500/5 px-6 py-2 rounded-full border border-red-500/20"
            >
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping" />
-              STATUS: DIAGNÓSTICO EJECUTANDO // COMPROBANDO_FRAGMENTACIÓN
+              {system.diagnosing || "STATUS: DIAGNÓSTICO EJECUTANDO // COMPROBANDO_FRAGMENTACIÓN"}
            </motion.div>
         </div>
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
@@ -35,7 +35,7 @@ export const PainPoints = ({ dict = {} }: { dict: any }) => {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-                className="relative group p-14 rounded-[4rem] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-700 overflow-hidden"
+                className="relative group p-8 md:p-14 rounded-[2.5rem] md:rounded-[4rem] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-700 overflow-hidden"
               >
                 {/* Decorative index */}
                 <div className="absolute top-10 right-10 font-mono text-[9px] text-white/5 font-black uppercase tracking-[0.5em] group-hover:text-red-500/20 transition-colors">

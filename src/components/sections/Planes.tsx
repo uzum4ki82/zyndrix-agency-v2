@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 
-export const Planes = ({ dict = {} }: { dict: any }) => {
+export const Planes = ({ dict = {}, system = {} }: { dict: any, system?: any }) => {
   return (
     <section id="precios" className="py-12 md:py-20 px-4 md:px-10 relative overflow-hidden bg-base">
       {/* Decorative center glow */}
@@ -18,7 +18,7 @@ export const Planes = ({ dict = {} }: { dict: any }) => {
              className="font-mono text-[9px] font-black text-primary uppercase tracking-[0.5em] mb-4 flex items-center gap-4 bg-primary/5 px-6 py-2 rounded-full border border-primary/20"
            >
               <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
-              SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL
+              {system.analyzing || "SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL"}
            </motion.div>
         </div>
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
