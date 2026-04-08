@@ -44,8 +44,8 @@ export const Planes = ({ dict = {} }: { dict: any }) => {
                    <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
                    {dict.investment}: {plan.setup}
                 </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-6xl lg:text-8xl font-heading font-black text-white tracking-tighter italic leading-none">
+                <div className="flex items-baseline gap-2 w-full overflow-hidden">
+                  <span className={`${isNaN(Number(plan.price)) ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-6xl lg:text-8xl'} font-heading font-black text-white tracking-tighter italic leading-none whitespace-pre-wrap`}>
                     {plan.price}{!isNaN(Number(plan.price)) && <span className="text-4xl ml-1">€</span>}
                   </span>
                   {!isNaN(Number(plan.price)) && <span className="text-white/20 font-black italic uppercase text-lg">{dict.monthly_suffix}</span>}
