@@ -11,9 +11,7 @@ const ROICalculator = dynamic(() => import('@/components/sections/ROICalculator'
 const PainPoints = dynamic(() => import('@/components/sections/PainPoints').then(mod => mod.PainPoints), { ssr: true });
 const Sistemas = dynamic(() => import('@/components/sections/Sistemas').then(mod => mod.Sistemas), { ssr: true });
 const EngineRoom = dynamic(() => import('@/components/sections/EngineRoom').then(mod => mod.EngineRoom), { ssr: true });
-const Casos = dynamic(() => import('@/components/sections/Casos').then(mod => mod.Casos), { ssr: true });
 const Impacto = dynamic(() => import('@/components/sections/Impacto').then(mod => mod.Impacto), { ssr: true });
-const Testimonios = dynamic(() => import('@/components/sections/Testimonios').then(mod => mod.Testimonios), { ssr: true });
 const Offers = dynamic(() => import('@/components/sections/Offers').then(mod => mod.Offers), { ssr: true });
 const BlueprintPromo = dynamic(() => import('@/components/sections/BlueprintPromo').then(mod => mod.BlueprintPromo), { ssr: true });
 const Beneficios = dynamic(() => import('@/components/sections/Beneficios').then(mod => mod.Beneficios), { ssr: true });
@@ -49,15 +47,9 @@ export default async function Home() {
       <EngineRoom dict={dict.engine_room} />
       <SectionConnector />
 
-      <Casos dict={dict.casos} />
-      <SectionConnector />
-      
       <Impacto dict={dict.impacto} />
       <SectionConnector />
 
-      <Testimonios dict={dict.testimonios} />
-      <SectionConnector />
-      
       <Offers dict={dict.offers} />
       <SectionConnector />
       
