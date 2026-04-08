@@ -45,16 +45,16 @@ export const TechStack = ({ dict }: { dict: any }) => {
               whileHover={{ scale: 1.1, y: -5 }}
               className="flex flex-col items-center gap-6 group"
             >
-              <div className="w-24 h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-6 backdrop-blur-xl group-hover:bg-primary/10 group-hover:border-primary/40 transition-all duration-500 shadow-xl">
+              <div className="w-24 h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-6 backdrop-blur-xl group-hover:bg-primary/5 group-hover:border-primary/20 transition-all duration-500 shadow-xl">
                  <Image 
                     src={tech.img} 
                     alt={tech.name} 
                     width={96}
                     height={96}
-                    className="w-full h-full object-contain filter grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 transition-all duration-700" 
+                    className="w-full h-full object-contain filter brightness-200 contrast-125 opacity-40 group-hover:opacity-100 transition-all duration-700" 
                  />
               </div>
-              <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/50 group-hover:text-primary transition-colors text-shadow">{tech.name}</div>
+              <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/30 group-hover:text-primary transition-colors text-shadow">{tech.name}</div>
             </motion.div>
           ))}
         </div>
