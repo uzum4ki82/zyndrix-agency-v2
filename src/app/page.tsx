@@ -21,7 +21,7 @@ const Demos = dynamic(() => import('@/components/sections/Demos').then(mod => mo
 const Planes = dynamic(() => import('@/components/sections/Planes').then(mod => mod.Planes), { ssr: false });
 const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => mod.FAQ), { ssr: false });
 const Contacto = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Contacto), { ssr: false });
-const Footer = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Footer), { ssr: false });
+const Footer = dynamic(() => import('@/components/common/Footer').then(mod => mod.Footer), { ssr: false });
 
 export default async function Home() {
   const headerList = await headers();
