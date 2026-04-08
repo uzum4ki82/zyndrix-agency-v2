@@ -31,7 +31,7 @@ export const TechStack = ({ dict }: { dict: any }) => {
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-4xl md:text-6xl font-heading font-black text-white italic tracking-tighter uppercase leading-none drop-shadow-2xl"
           >
-            POTENCIE SU MARGEN <span className="text-white/20">CON EL ESTADO DEL ARTE</span>
+            POTENCIE SU MARGEN <span className="text-white/20">CON EL ESTADO DEL ARTE !!TEST!!</span>
           </motion.h2>
         </div>
 
