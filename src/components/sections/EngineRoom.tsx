@@ -129,60 +129,115 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                         </div>
 
                         {/* n8n Workflow Visualization Reproduction */}
-                        <div className="relative w-full lg:w-[500px] h-[350px] bg-black/40 rounded-[3rem] border border-white/5 p-10 overflow-hidden shadow-inner">
-                            <div className="absolute inset-0 opacity-20 grainy-bg" />
+                        <div className="relative w-full lg:w-[600px] h-[400px] bg-black/60 rounded-[4rem] border border-white/10 p-12 overflow-hidden shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] group/canvas">
+                            <div className="absolute inset-0 opacity-10 grainy-bg" />
+                            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
                             
-                            {/* SVG Connections */}
-                            <svg className="absolute inset-0 w-full h-full opacity-30">
-                                <motion.path 
-                                    d="M 50 175 L 150 175 M 150 175 L 250 100 M 150 175 L 250 250 M 250 100 L 350 100 M 250 250 L 350 250 M 350 100 L 450 175 M 350 250 L 450 175"
-                                    stroke="rgba(56,189,248,0.5)"
-                                    strokeWidth="2"
+                            {/* Animated Background Pulse Wave */}
+                            <motion.div 
+                               animate={{ 
+                                 scale: [1, 1.2, 1],
+                                 opacity: [0, 0.1, 0]
+                               }}
+                               transition={{ duration: 4, repeat: Infinity }}
+                               className="absolute inset-0 bg-primary/20 blur-[120px] rounded-full"
+                            />
+
+                            {/* SVG Connections with 'Flowing' effect */}
+                            <svg className="absolute inset-0 w-full h-full">
+                                <defs>
+                                    <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stopColor="transparent" />
+                                        <stop offset="50%" stopColor="#38bdf8" />
+                                        <stop offset="100%" stopColor="transparent" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <path 
+                                    d="M 80 200 L 180 200 M 180 200 L 300 120 M 180 200 L 300 280 M 300 120 L 420 120 M 300 280 L 420 280 M 420 120 L 520 200 M 420 280 L 520 200"
+                                    stroke="rgba(255,255,255,0.05)"
+                                    strokeWidth="6"
                                     fill="transparent"
-                                    strokeDasharray="4 4"
-                                    initial={{ pathLength: 0 }}
-                                    whileInView={{ pathLength: 1 }}
-                                    transition={{ duration: 3, repeat: Infinity }}
+                                    strokeLinecap="round"
                                 />
-                                {/* Active Signal Path */}
+
+                                {/* Moving Light Path */}
+                                <motion.path 
+                                    d="M 80 200 L 180 200 L 300 120 L 420 120 L 520 200"
+                                    stroke="url(#flow-gradient)"
+                                    strokeWidth="3"
+                                    fill="transparent"
+                                    strokeDasharray="20 100"
+                                    animate={{ strokeDashoffset: [-120, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                />
+                                
                                 <motion.circle 
-                                    r="4" 
+                                    r="6" 
                                     fill="#38bdf8"
-                                    style={{ offsetPath: "path('M 50 175 L 150 175 L 250 100 L 350 100 L 450 175')" }}
+                                    className="shadow-[0_0_20px_#38bdf8]"
+                                    style={{ offsetPath: "path('M 80 200 L 180 200 L 300 120 L 420 120 L 520 200')" }}
                                 >
-                                    <animateMotion dur="4s" repeatCount="indefinite" path="M 50 175 L 150 175 L 250 100 L 350 100 L 450 175" />
+                                    <animateMotion dur="4s" repeatCount="indefinite" path="M 80 200 L 180 200 L 300 120 L 420 120 L 520 200" />
                                 </motion.circle>
                             </svg>
 
                             {/* Node points */}
-                            <div className="absolute inset-0 flex items-center justify-between px-10">
+                            <div className="absolute inset-0 flex items-center justify-between px-16">
+                                {/* Trigger node */}
                                 <div className="space-y-20 flex flex-col items-center">
-                                    <div className="w-12 h-12 bg-white/10 rounded-xl border border-white/20 flex items-center justify-center relative shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-                                        <Layers className="w-6 h-6 text-white/40" />
-                                        <div className="absolute -bottom-6 text-[8px] font-black text-white/20 whitespace-nowrap uppercase tracking-widest">TRIGGER</div>
-                                    </div>
+                                    <motion.div 
+                                      whileHover={{ scale: 1.1, rotate: -5 }}
+                                      className="w-16 h-16 bg-white/5 rounded-2xl border border-white/20 flex flex-col items-center justify-center relative shadow-2xl backdrop-blur-xl group/node"
+                                    >
+                                        <Layers className="w-8 h-8 text-white/40 group-hover/node:text-white transition-colors" />
+                                        <div className="absolute -bottom-8 text-[10px] font-black text-white/20 group-hover/node:text-white/40 uppercase tracking-widest transition-colors">TRIGGER</div>
+                                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-black" />
+                                    </motion.div>
                                 </div>
 
-                                <div className="w-16 h-16 bg-primary/20 rounded-2xl border border-primary/40 flex items-center justify-center relative shadow-[0_0_40px_rgba(56,189,248,0.2)]">
-                                    <Cpu className="w-8 h-8 text-primary animate-pulse" />
-                                    <div className="absolute -bottom-8 text-[8px] font-black text-primary uppercase tracking-widest">CORE_LOGIC</div>
+                                {/* Core Logic node (Vibrant) */}
+                                <motion.div 
+                                    animate={{ boxShadow: ["0 0 20px rgba(56,189,248,0)", "0 0 40px rgba(56,189,248,0.4)", "0 0 20px rgba(56,189,248,0)"] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="w-24 h-24 bg-primary/20 rounded-3xl border-2 border-primary/60 flex flex-col items-center justify-center relative backdrop-blur-3xl"
+                                >
+                                    <Cpu className="w-12 h-12 text-primary animate-pulse" />
+                                    <div className="absolute -bottom-10 text-[11px] font-black text-primary uppercase tracking-[0.2em] shadow-primary/50 text-shadow">CORE_AGENTS</div>
+                                    <div className="absolute inset-0 bg-primary/20 blur-2xl -z-10 rounded-full animate-pulse" />
+                                </motion.div>
+
+                                {/* Support nodes */}
+                                <div className="space-y-28 flex flex-col">
+                                    <motion.div 
+                                      whileHover={{ scale: 1.1, x: 5 }}
+                                      className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10 flex flex-col items-center justify-center relative backdrop-blur-xl group/subnode"
+                                    >
+                                        <Database className="w-7 h-7 text-white/20 group-hover/subnode:text-primary/60 transition-colors" />
+                                        <div className="absolute -top-8 text-[9px] font-black text-white/20 uppercase tracking-widest">KNOWLEDGE</div>
+                                    </motion.div>
+                                    <motion.div 
+                                      whileHover={{ scale: 1.1, x: 5 }}
+                                      className="w-16 h-16 bg-white/5 rounded-2xl border border-white/10 flex flex-col items-center justify-center relative backdrop-blur-xl group/subnode"
+                                    >
+                                        <Terminal className="w-7 h-7 text-white/20 group-hover/subnode:text-primary/60 transition-colors" />
+                                        <div className="absolute -bottom-8 text-[9px] font-black text-white/20 uppercase tracking-widest">TASKS</div>
+                                    </motion.div>
                                 </div>
 
-                                <div className="space-y-32 flex flex-col">
-                                    <div className="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center relative">
-                                        <Database className="w-6 h-6 text-white/20" />
-                                        <div className="absolute -top-6 text-[8px] font-black text-white/20 uppercase tracking-widest">VECTOR_DB</div>
-                                    </div>
-                                    <div className="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center relative">
-                                        <Terminal className="w-6 h-6 text-white/20" />
-                                        <div className="absolute -bottom-6 text-[8px] font-black text-white/20 uppercase tracking-widest">SCRAPER</div>
-                                    </div>
-                                </div>
-
-                                <div className="w-14 h-14 bg-white/10 rounded-2xl border border-white/20 flex items-center justify-center relative">
-                                    <Server className="w-7 h-7 text-white/40" />
-                                    <div className="absolute -right-12 text-[8px] font-black text-white/20 uppercase tracking-widest rotate-90">OUTPUT</div>
-                                </div>
+                                {/* Output node (Final) */}
+                                <motion.div 
+                                  whileHover={{ scale: 1.1 }}
+                                  className="w-20 h-20 bg-white/10 rounded-[2.5rem] border border-white/30 flex flex-col items-center justify-center relative shadow-2xl backdrop-blur-2xl group/final"
+                                >
+                                    <Server className="w-10 h-10 text-white/60 group-hover/final:text-white transition-colors" />
+                                    <div className="absolute -right-16 text-[10px] font-black text-white/20 uppercase tracking-widest rotate-90">SUCCESS_SYNC</div>
+                                    <motion.div 
+                                       animate={{ opacity: [0, 1, 0], scale: [1, 1.5, 1] }}
+                                       transition={{ duration: 3, repeat: Infinity }}
+                                       className="absolute inset-0 bg-white/5 rounded-[2.5rem]" 
+                                    />
+                                </motion.div>
                             </div>
                         </div>
                     </div>
