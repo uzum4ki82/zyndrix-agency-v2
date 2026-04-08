@@ -51,7 +51,8 @@ export const TechStack = ({ dict }: { dict: any }) => {
                     alt={tech.name} 
                     width={96}
                     height={96}
-                    className="w-full h-full object-contain filter brightness-0 invert opacity-80 group-hover:opacity-100 transition-all duration-700" 
+                    style={{ filter: 'brightness(0) invert(1)' }}
+                    className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-all duration-700" 
                  />
               </div>
               <div className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 group-hover:text-primary transition-colors text-shadow">{tech.name}</div>
