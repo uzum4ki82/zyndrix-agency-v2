@@ -14,6 +14,16 @@ export const PainPoints = ({ dict = {} }: { dict: any }) => {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col items-center mb-10">
+           <motion.div 
+             animate={{ opacity: [1, 0.4, 1] }} 
+             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+             className="font-mono text-[9px] font-black text-red-500/80 uppercase tracking-[0.5em] mb-4 flex items-center gap-4 bg-red-500/5 px-6 py-2 rounded-full border border-red-500/20"
+           >
+              <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping" />
+              STATUS: DIAGNÓSTICO EJECUTANDO // COMPROBANDO_FRAGMENTACIÓN
+           </motion.div>
+        </div>
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-20">

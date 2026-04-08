@@ -11,6 +11,16 @@ export const Planes = ({ dict = {} }: { dict: any }) => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[180px] opacity-20 pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col items-center mb-10">
+           <motion.div 
+             animate={{ opacity: [1, 0.4, 1] }} 
+             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+             className="font-mono text-[9px] font-black text-primary uppercase tracking-[0.5em] mb-4 flex items-center gap-4 bg-primary/5 px-6 py-2 rounded-full border border-primary/20"
+           >
+              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
+              SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL
+           </motion.div>
+        </div>
         <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch pt-12">
@@ -35,8 +45,10 @@ export const Planes = ({ dict = {} }: { dict: any }) => {
                    {dict.investment}: {plan.setup}
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-6xl lg:text-7xl font-heading font-black text-white tracking-tighter italic leading-none">{plan.price}</span>
-                  {plan.price.includes('0') && <span className="text-white/20 font-black italic uppercase text-lg">{dict.monthly_suffix}</span>}
+                  <span className="text-6xl lg:text-8xl font-heading font-black text-white tracking-tighter italic leading-none">
+                    {plan.price}{!isNaN(Number(plan.price)) && <span className="text-4xl ml-1">€</span>}
+                  </span>
+                  {!isNaN(Number(plan.price)) && <span className="text-white/20 font-black italic uppercase text-lg">{dict.monthly_suffix}</span>}
                 </div>
               </div>
 
