@@ -23,7 +23,7 @@ export const Impacto = ({ dict = {} }: { dict: any }) => (
         <motion.h2 
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
-           className="text-5xl md:text-7xl font-heading font-black uppercase italic text-white tracking-tighter leading-none mb-4 drop-shadow-2xl"
+           className="text-5xl md:text-7xl font-heading font-black uppercase italic text-white tracking-tighter leading-[0.95] mb-4 drop-shadow-2xl"
         >
           {dict.title}
         </motion.h2>

@@ -92,7 +92,7 @@ export const Sistemas = ({ dict }: { dict: any }) => (
                   <Workflow className="w-5 h-5 text-primary animate-pulse" />
                   <span className="text-[12px] font-black uppercase tracking-[0.5em]">NÚCLEO ESTRATÉGICO</span>
                 </div>
-                <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-none tracking-tighter text-white">
+                <h3 className="text-5xl lg:text-8xl font-heading font-black uppercase italic leading-[0.95] tracking-tighter text-white">
                   {dict.cards[2].title}
                 </h3>
                 <p className="text-white/80 font-medium italic text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl">

@@ -28,7 +28,7 @@ export const SectionHeader = ({ title, subtitle, badge, centered = true }: Secti
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      className="text-5xl md:text-7xl font-heading font-black uppercase italic tracking-[calc(-0.04em)] leading-[0.85] text-white drop-shadow-2xl"
+      className="text-5xl md:text-7xl font-heading font-black uppercase italic tracking-[calc(-0.04em)] leading-[0.95] text-white drop-shadow-2xl"
     >
       {title}
     </motion.h2>

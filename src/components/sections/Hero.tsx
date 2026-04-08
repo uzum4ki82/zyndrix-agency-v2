@@ -36,11 +36,11 @@ export const Hero = ({ dict }: { dict: any }) => (
            }}
            className="absolute hidden lg:block"
            style={{
-             left: `${15 + i * 15}%`,
-             top: `${20 + (i % 3) * 20}%`
+             left: i < 3 ? `${5 + i * 5}%` : `${75 + (i - 3) * 5}%`,
+             top: `${15 + (i % 3) * 25}%`
            }}
          >
-           <div className="flex items-center gap-2 font-mono text-[12px] text-primary/40 uppercase tracking-[0.5em] whitespace-nowrap">
+           <div className="flex items-center gap-2 font-mono text-[10px] text-primary/40 uppercase tracking-[0.5em] whitespace-nowrap">
              <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
              NODE_SESSION_0{i+1} : ACTIVE
            </div>
@@ -65,7 +65,7 @@ export const Hero = ({ dict }: { dict: any }) => (
         {dict.badge}
       </motion.div>
 
-      <h1 className="text-5xl md:text-8xl font-heading font-black tracking-[calc(-0.04em)] leading-[0.82] uppercase italic mb-8 select-none drop-shadow-2xl">
+      <h1 className="text-5xl md:text-[7.5vw] lg:text-[8rem] font-heading font-black tracking-[calc(-0.04em)] leading-[0.95] uppercase italic mb-8 select-none drop-shadow-2xl">
         <span className="text-white block">
           {dict.title_main.includes(':') ? (
             <>
@@ -80,7 +80,7 @@ export const Hero = ({ dict }: { dict: any }) => (
         </span>
       </h1>
 
-      <p className="max-w-4xl mx-auto text-lg md:text-3xl text-white/70 mb-16 font-medium leading-[1.2] lowercase italic tracking-tight">
+      <p className="max-w-3xl mx-auto text-xl md:text-3xl text-white/70 mb-16 font-medium leading-[1.3] lowercase italic tracking-tight">
         {dict.subtitle}
       </p>
 

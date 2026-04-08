@@ -62,7 +62,7 @@ export const Metodo = ({ dict }: { dict: any }) => {
                 </div>
               </div>
               
-              <h4 className="text-3xl font-heading font-black uppercase italic mb-6 tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">
+              <h4 className="text-3xl font-heading font-black uppercase italic mb-6 tracking-tighter leading-[0.95] group-hover:text-primary transition-colors duration-500">
                 {step.t}
               </h4>
               <p className="text-white/20 text-[14px] leading-relaxed max-w-[220px] mx-auto italic font-medium uppercase tracking-tight group-hover:text-white/60 transition-colors duration-500">
