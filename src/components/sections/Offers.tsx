@@ -18,9 +18,9 @@ export const Offers = ({ dict }: { dict: any }) => (
         <Zap className="w-4 h-4 animate-pulse" /> {dict.badge}
       </motion.div>
 
-      <h2 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase italic tracking-tighter leading-[1.0] mb-12 text-white drop-shadow-2xl">
-        {dict.title_part1}<br/>
-        <span className="text-gradient-cyan">{dict.title_part2}</span>
+      <h2 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black uppercase italic tracking-tighter leading-[1.1] mb-12 text-white drop-shadow-2xl">
+        <span className="inline-block px-4">{dict.title_part1}</span><br/>
+        <span className="text-gradient-cyan inline-block px-4">{dict.title_part2}</span>
       </h2>
 
       <p className="max-w-3xl mx-auto text-xl md:text-3xl text-white/40 mb-20 font-medium italic lowercase leading-relaxed">
