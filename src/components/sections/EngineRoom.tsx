@@ -17,7 +17,7 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                     subtitle={dict.subtitle}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
                     {dict.cards.map((step: any, i: number) => {
                         const iconsList = [Activity, Cpu, Database, Terminal];
                         const Icon = iconsList[i % iconsList.length];
@@ -31,44 +31,68 @@ export const EngineRoom = ({ dict }: { dict: any }) => {
                         return (
                             <motion.div 
                                 key={i}
-                                initial={{ opacity: 0, y: 30 }}
+                                initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1, duration: 0.8 }}
-                                className="bg-[#050508] p-10 rounded-[3rem] border border-white/5 relative group overflow-hidden flex flex-col h-full"
+                                transition={{ delay: i * 0.15, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                                whileHover={{ scale: 1.02, y: -5 }}
+                                className="group relative"
                             >
-                                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-10 transition-opacity">
-                                    <Icon className="w-40 h-40" />
-                                </div>
-                                
-                                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20 mb-10 group-hover:bg-primary/20 transition-all shadow-xl shadow-primary/5">
-                                    <Icon className="w-7 h-7 text-primary" />
-                                </div>
+                                {/* Card Body */}
+                                <div className="glass-premium p-10 rounded-[3.5rem] border border-white/5 relative overflow-hidden flex flex-col h-full bg-gradient-to-b from-white/[0.03] to-transparent group-hover:from-primary/10 transition-all duration-700">
+                                    {/* Scanline Effect */}
+                                    <div className="absolute inset-0 bg-scanline opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-700" />
+                                    
+                                    {/* Abstract Background Icon */}
+                                    <div className="absolute -top-10 -right-10 p-8 opacity-[0.02] group-hover:opacity-10 transition-all duration-1000 group-hover:scale-150 rotate-12">
+                                        <Icon className="w-48 h-48" />
+                                    </div>
 
-                                <h3 className="text-xl font-heading font-black text-white italic mb-4 leading-none uppercase tracking-tighter group-hover:text-primary transition-colors">
-                                    {step.title}
-                                </h3>
-                                <p className="text-[14px] text-white/60 font-medium italic mb-10 leading-relaxed uppercase tracking-tight group-hover:text-white transition-colors flex-grow">
-                                    {step.desc}
-                                </p>
-
-                                <div className="space-y-3 font-mono text-[12px] text-primary/40 uppercase tracking-[0.2em] pt-6 border-t border-white/5 mt-auto">
-                                    {logs[i].map((log, j) => (
-                                        <div key={j} className="flex items-center gap-4">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-primary/30" />
-                                            {log}
+                                    {/* Icon Container */}
+                                    <div className="relative mb-12">
+                                        <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center border border-white/10 group-hover:border-primary/50 group-hover:bg-primary/20 transition-all duration-500 shadow-2xl relative z-10">
+                                            <Icon className="w-7 h-7 text-white group-hover:text-primary transition-colors" />
                                         </div>
-                                    ))}
+                                        {/* Glow effect behind icon */}
+                                        <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                                    </div>
+
+                                    <h3 className="text-2xl font-heading font-black text-white italic mb-4 leading-none uppercase tracking-tighter group-hover:text-primary transition-colors duration-500 drop-shadow-md">
+                                        {step.title}
+                                    </h3>
+                                    
+                                    <p className="text-[14px] text-white/40 font-medium italic mb-12 leading-relaxed uppercase tracking-tight group-hover:text-white/80 transition-colors duration-500 flex-grow">
+                                        {step.desc}
+                                    </p>
+
+                                    {/* Technical Logs with animated dot */}
+                                    <div className="space-y-4 pt-10 border-t border-white/5 mt-auto relative z-10">
+                                        {logs[i].map((log, j) => (
+                                            <div key={j} className="flex items-center gap-4 group/log">
+                                                <div className="relative">
+                                                    <div className="w-2 h-2 rounded-full bg-primary/20 group-hover/log:bg-primary transition-colors" />
+                                                    {j === 0 && (
+                                                        <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-60" />
+                                                    )}
+                                                </div>
+                                                <span className="font-mono text-[11px] text-primary/40 uppercase tracking-[0.3em] group-hover/log:text-primary/80 transition-colors">
+                                                    {log}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Interactive Border Glow */}
+                                    <div className="absolute inset-0 border border-primary/0 group-hover:border-primary/20 rounded-[3.5rem] transition-colors duration-700 pointer-events-none" />
                                 </div>
                             </motion.div>
                         );
                     })}
                 </div>
 
-                {/* Workflow Visualization Mockup */}
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    className="mt-20 p-10 bg-[#050508] border border-white/5 rounded-[4rem] relative overflow-hidden group shadow-[0_0_100px_rgba(0,0,0,0.5)]"
+                    className="mt-20 p-10 md:p-20 glass-premium rounded-[4rem] relative overflow-hidden group shadow-[0_0_150px_rgba(0,0,0,0.6)]"
                 >
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                     
