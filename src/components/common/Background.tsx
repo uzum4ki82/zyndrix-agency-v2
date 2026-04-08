@@ -130,12 +130,12 @@ export const Background = () => {
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#030712] pointer-events-none select-none">
-      {/* 1. LAYER: Particles Canvas */}
-      {!shouldReduceMotion && <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />}
+      {/* 1. LAYER: Particles Canvas - DISABLED ON MOBILE FOR PERFORMANCE */}
+      {!shouldReduceMotion && !isMobile && <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />}
 
-      {/* 2. LAYER: Glow Orbs - Reduced density on mobile */}
+      {/* 2. LAYER: Glow Orbs - Reduced density and static on mobile */}
       <motion.div 
-        {...glowProps(15)}
+        {...(isMobile ? { animate: { opacity: 0.15 } } : glowProps(15))}
         className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#38bdf8] rounded-full blur-[150px] mix-blend-screen"
       />
       {!isMobile && (

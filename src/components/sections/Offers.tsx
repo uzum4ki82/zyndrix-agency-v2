@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Tag, Clock, ArrowRight, Zap, Gem } from 'lucide-react';
 
 export const Offers = ({ dict }: { dict: any }) => (
-  <section id="ofertas" className="py-12 md:py-20 px-10 relative overflow-hidden bg-base">
+  <section id="ofertas" className="py-12 md:py-20 px-6 md:px-10 relative overflow-hidden bg-base">
     {/* Animated Background Mesh - Hot Accents */}
     <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[600px] bg-primary/20 blur-[200px] opacity-20 animate-pulse pointer-events-none" />
     <div className="absolute inset-0 bg-mesh opacity-10 pointer-events-none" />

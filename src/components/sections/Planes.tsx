@@ -6,7 +6,7 @@ import { SectionHeader } from '../common/SectionHeader';
 
 export const Planes = ({ dict = {} }: { dict: any }) => {
   return (
-    <section id="precios" className="py-12 md:py-20 px-6 md:px-10 relative overflow-hidden bg-base">
+    <section id="precios" className="py-12 md:py-20 px-4 md:px-10 relative overflow-hidden bg-base">
       {/* Decorative center glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[180px] opacity-20 pointer-events-none" />
       
