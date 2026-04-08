@@ -7,20 +7,21 @@ import { getDictionary } from '@/lib/dictionaries';
 import dynamic from 'next/dynamic';
 
 // DYNAMIC IMPORTS FOR PERFORMANCE - CLASE EJECUTIVA
-const ROICalculator = dynamic(() => import('@/components/sections/ROICalculator').then(mod => mod.ROICalculator), { ssr: true });
-const PainPoints = dynamic(() => import('@/components/sections/PainPoints').then(mod => mod.PainPoints), { ssr: true });
-const Sistemas = dynamic(() => import('@/components/sections/Sistemas').then(mod => mod.Sistemas), { ssr: true });
-const EngineRoom = dynamic(() => import('@/components/sections/EngineRoom').then(mod => mod.EngineRoom), { ssr: true });
-const Impacto = dynamic(() => import('@/components/sections/Impacto').then(mod => mod.Impacto), { ssr: true });
-const Offers = dynamic(() => import('@/components/sections/Offers').then(mod => mod.Offers), { ssr: true });
-const BlueprintPromo = dynamic(() => import('@/components/sections/BlueprintPromo').then(mod => mod.BlueprintPromo), { ssr: true });
-const Beneficios = dynamic(() => import('@/components/sections/Beneficios').then(mod => mod.Beneficios), { ssr: true });
-const Metodo = dynamic(() => import('@/components/sections/Metodo').then(mod => mod.Metodo), { ssr: true });
-const Demos = dynamic(() => import('@/components/sections/Demos').then(mod => mod.Demos), { ssr: true });
-const Planes = dynamic(() => import('@/components/sections/Planes').then(mod => mod.Planes), { ssr: true });
-const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => mod.FAQ), { ssr: true });
-const Contacto = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Contacto), { ssr: true });
-const Footer = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Footer), { ssr: true });
+// Only SSR needed for above-the-fold content
+const ROICalculator = dynamic(() => import('@/components/sections/ROICalculator').then(mod => mod.ROICalculator), { ssr: false });
+const PainPoints = dynamic(() => import('@/components/sections/PainPoints').then(mod => mod.PainPoints), { ssr: false });
+const Sistemas = dynamic(() => import('@/components/sections/Sistemas').then(mod => mod.Sistemas), { ssr: false });
+const EngineRoom = dynamic(() => import('@/components/sections/EngineRoom').then(mod => mod.EngineRoom), { ssr: false });
+const Impacto = dynamic(() => import('@/components/sections/Impacto').then(mod => mod.Impacto), { ssr: false });
+const Offers = dynamic(() => import('@/components/sections/Offers').then(mod => mod.Offers), { ssr: false });
+const BlueprintPromo = dynamic(() => import('@/components/sections/BlueprintPromo').then(mod => mod.BlueprintPromo), { ssr: false });
+const Beneficios = dynamic(() => import('@/components/sections/Beneficios').then(mod => mod.Beneficios), { ssr: false });
+const Metodo = dynamic(() => import('@/components/sections/Metodo').then(mod => mod.Metodo), { ssr: false });
+const Demos = dynamic(() => import('@/components/sections/Demos').then(mod => mod.Demos), { ssr: false });
+const Planes = dynamic(() => import('@/components/sections/Planes').then(mod => mod.Planes), { ssr: false });
+const FAQ = dynamic(() => import('@/components/sections/FAQ').then(mod => mod.FAQ), { ssr: false });
+const Contacto = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Contacto), { ssr: false });
+const Footer = dynamic(() => import('@/components/sections/Contacto').then(mod => mod.Footer), { ssr: false });
 
 export default async function Home() {
   const headerList = await headers();

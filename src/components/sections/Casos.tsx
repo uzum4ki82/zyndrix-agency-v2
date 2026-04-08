@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { SectionHeader } from '../common/SectionHeader';
 import { Quote } from 'lucide-react';
+import Image from 'next/image';
 
 export const Casos = ({ dict = {} }: { dict: any }) => {
   const images = ["/img/carlos.png", "/img/elena.png"];
@@ -49,7 +50,13 @@ export const Casos = ({ dict = {} }: { dict: any }) => {
               {/* Client Face Profile */}
               <div className="flex items-center gap-6 pt-10 border-t border-white/5">
                 <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 overflow-hidden shadow-xl group-hover:border-primary transition-colors">
-                   <img src={images[i]} alt="" className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700" />
+                   <Image 
+                      src={images[i]} 
+                      alt={caso.client} 
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700" 
+                   />
                 </div>
                 <div>
                    <div className="text-white font-black uppercase italic tracking-tighter text-xl">{dict.director_label}</div>

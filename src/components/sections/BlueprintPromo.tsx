@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Download, CheckCircle, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export const BlueprintPromo = ({ dict }: { dict: any }) => (
   <section className="py-32 px-10 relative overflow-hidden bg-[#03040a]">
@@ -47,9 +48,11 @@ export const BlueprintPromo = ({ dict }: { dict: any }) => (
         className="lg:w-1/2 relative group"
       >
         <div className="absolute inset-0 bg-primary/30 blur-[100px] opacity-0 group-hover:opacity-20 transition-opacity duration-1000" />
-        <img 
+        <Image 
           src="/img/blueprint-mockup.png" 
           alt="Zyndrix Blueprint Mockup" 
+          width={800}
+          height={600}
           className="w-full h-auto drop-shadow-[0_0_100px_rgba(56,189,248,0.3)] group-hover:scale-105 transition-transform duration-1000"
         />
         <div className="absolute -bottom-10 -right-10 bg-primary h-32 w-32 rounded-full flex items-center justify-center shadow-2xl animate-bounce shadow-primary/40 p-4 border-4 border-black">

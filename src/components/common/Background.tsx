@@ -1,20 +1,27 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export const Background = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || shouldReduceMotion) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     let particles: Particle[] = [];
-    const particleCount = 60;
+    // DYNAMIC DENSITY - PERFORMANCE MODE
+    const particleCount = window.innerWidth < 768 ? 20 : 50;
     const connectionDistance = 150;
     let mouse = { x: null as number | null, y: null as number | null };
 
@@ -23,7 +30,9 @@ export const Background = () => {
       mouse.y = e.clientY;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    if (window.innerWidth >= 768) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
 
     class Particle {
       x: number = 0;
@@ -37,8 +46,8 @@ export const Background = () => {
         if (!canvas) return;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
+        this.vx = (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.15 : 0.3);
+        this.vy = (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.15 : 0.3);
         this.radius = Math.random() * 1.2 + 0.8;
       }
       update() {
@@ -66,6 +75,7 @@ export const Background = () => {
       }
     };
 
+    let animationFrameId: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p, index) => {
@@ -83,7 +93,7 @@ export const Background = () => {
             ctx.stroke();
           }
         }
-        if (mouse.x && mouse.y) {
+        if (mouse.x && mouse.y && window.innerWidth >= 768) {
           const distM = Math.hypot(p.x - mouse.x, p.y - mouse.y);
           if (distM < 120) {
             ctx.beginPath();
@@ -95,7 +105,7 @@ export const Background = () => {
           }
         }
       });
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     window.addEventListener('resize', init);
@@ -105,45 +115,41 @@ export const Background = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', init);
+      window.removeEventListener('resize', checkMobile);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [shouldReduceMotion]);
+
+  const glowProps = (duration: number) => ({
+    animate: shouldReduceMotion ? {} : { 
+      scale: [1, 1.1, 1],
+      opacity: [0.1, 0.2, 0.1],
+    },
+    transition: { duration, repeat: Infinity, ease: "linear" as const }
+  });
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#030712] pointer-events-none select-none">
       {/* 1. LAYER: Particles Canvas */}
-      <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />
+      {!shouldReduceMotion && <canvas ref={canvasRef} className="absolute inset-0 opacity-40" />}
 
-      {/* 2. LAYER: Glow Orbs (As seen in Landing) */}
+      {/* 2. LAYER: Glow Orbs - Reduced density on mobile */}
       <motion.div 
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.15, 0.25, 0.15],
-          x: [0, 50, 0],
-          y: [0, -30, 0]
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        {...glowProps(15)}
         className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#38bdf8] rounded-full blur-[150px] mix-blend-screen"
       />
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.1, 0.2, 0.1],
-          x: [0, -40, 0],
-          y: [0, 60, 0]
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-[#818cf8] rounded-full blur-[150px] mix-blend-screen"
-      />
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.3, 1],
-          opacity: [0.05, 0.15, 0.05],
-          x: [50, 0, 50],
-          y: [30, 0, 30]
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] bg-[#c084fc] rounded-full blur-[150px] mix-blend-screen"
-      />
+      {!isMobile && (
+        <>
+          <motion.div 
+            {...glowProps(18)}
+            className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-[#818cf8] rounded-full blur-[150px] mix-blend-screen"
+          />
+          <motion.div 
+            {...glowProps(20)}
+            className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] bg-[#c084fc] rounded-full blur-[150px] mix-blend-screen"
+          />
+        </>
+      )}
 
       {/* 3. LAYER: Subtle Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:80px_80px] [mask-image:radial-gradient(ellipse_at_50%_50%,black_20%,transparent_100%)] opacity-20" />
@@ -153,3 +159,4 @@ export const Background = () => {
     </div>
   );
 };
+

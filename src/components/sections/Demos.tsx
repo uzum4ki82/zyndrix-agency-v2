@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PlayCircle, ShieldCheck, Zap, Activity, Cpu, Database, Eye } from "lucide-react";
+import { PlayCircle, ShieldCheck, Zap, Activity, Cpu, Database, Eye, Layers, Server, Code } from "lucide-react";
 import { SectionHeader } from "../common/SectionHeader";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const items = [
   { key: "d1", icon: Zap, color: "text-primary", bg: "bg-primary/5" },
@@ -13,7 +14,7 @@ const items = [
 
 export const Demos = ({ dict, locale }: { dict: any, locale: string }) => {
   return (
-    <section id="demos" className="py-12 md:py-20 relative overflow-hidden bg-black border-y border-white/5">
+    <section id="demos" className="py-12 md:py-20 relative overflow-hidden bg-base border-y border-white/5">
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -30,10 +31,11 @@ export const Demos = ({ dict, locale }: { dict: any, locale: string }) => {
             >
               {/* Background Image with Overlay */}
               <div className="absolute inset-0 z-0">
-                <img 
+                <Image 
                    src={`/img/demo${i+1}.png`} 
                    alt={`Demo ${i+1} background`} 
-                   className="w-full h-full object-cover opacity-20 scale-100 group-hover:scale-110 group-hover:opacity-40 transition-all duration-1000 grayscale group-hover:grayscale-0" 
+                   fill
+                   className="object-cover opacity-20 scale-100 group-hover:scale-110 group-hover:opacity-40 transition-all duration-1000 grayscale group-hover:grayscale-0" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#08080a] via-[#08080a]/80 to-transparent" />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-700" />

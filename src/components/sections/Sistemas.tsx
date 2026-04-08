@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Workflow, Cpu, BrainCircuit, BarChart3, MessageSquare, ShieldCheck, Zap } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
+import Image from 'next/image';
 
 const ServiceCard = ({ icon: Icon, title, description, specs, image, className = "" }: any) => (
   <motion.div 
@@ -12,7 +13,12 @@ const ServiceCard = ({ icon: Icon, title, description, specs, image, className =
   >
     {image && (
       <div className="absolute inset-0 opacity-10 group-hover:opacity-30 transition-opacity duration-1000">
-        <img src={image} alt={`${title} Service Icon`} className="w-full h-full object-cover grayscale brightness-50 contrast-125" />
+        <Image 
+          src={image} 
+          alt={`${title} Service Icon`} 
+          fill
+          className="object-cover grayscale brightness-50 contrast-125" 
+        />
       </div>
     )}
     <div className="relative z-10 flex flex-col h-full">
@@ -40,10 +46,11 @@ export const Sistemas = ({ dict }: { dict: any }) => (
   <section id="sistemas" className="py-20 px-6 relative overflow-hidden bg-base">
     {/* Industrial Background Layer */}
     <div className="absolute inset-0 z-0">
-      <img 
+      <Image 
         src="/img/solution-bg.png" 
         alt="Zyndrix Solutions Background Infrastructure" 
-        className="w-full h-full object-cover opacity-5 md:opacity-10 scale-110 blur-sm"
+        fill
+        className="object-cover opacity-5 md:opacity-10 scale-110 blur-sm"
       />
       <div className="absolute inset-0 bg-base/80" />
       <div className="absolute inset-0 bg-mesh opacity-20" />

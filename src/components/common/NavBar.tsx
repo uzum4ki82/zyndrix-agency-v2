@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, locale: string, contactId?: string }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,7 +36,14 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
     )}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="/" className="flex items-center gap-3">
-          <img src="/img/zyndrix-live.png" alt="Zyndrix Logo" className="h-12 w-auto brightness-110" />
+          <Image 
+            src="/img/zyndrix-live.png" 
+            alt="Zyndrix Logo" 
+            width={160}
+            height={48}
+            priority
+            className="h-12 w-auto brightness-110" 
+          />
         </a>
 
         {/* Desktop Links */}
