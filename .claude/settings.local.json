@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l src/components/sections/*.tsx)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

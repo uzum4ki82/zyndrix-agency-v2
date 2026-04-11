@@ -65,18 +65,18 @@ export const Kernel = ({ dict }: { dict: any }) => {
                     src={imgSrc}
                     alt={card.title}
                     fill
-                    className="object-cover grayscale brightness-90 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
+                    className="object-cover grayscale brightness-100 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
                 </div>
 
                 <div className="relative z-10 p-10 md:p-16 flex flex-col justify-between h-full">
                   <div className="flex items-start justify-between mb-auto">
-                    <div className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/30 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 backdrop-blur-sm">
+                    <div className="w-12 h-12 flex items-center justify-center bg-blue-500/20 border border-blue-400/50 text-blue-300 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 backdrop-blur-sm">
                       <Icon strokeWidth={1.5} size={24} />
                     </div>
                     <div className="text-[9px] font-black tracking-[0.5em] text-white/30 uppercase">
-                      MOD_{String(i+1).padStart(2, '0')}
+                      {String(i+1).padStart(2, '0')}
                     </div>
                   </div>
 
@@ -94,7 +94,6 @@ export const Kernel = ({ dict }: { dict: any }) => {
                           <div key={idx} className="flex items-center gap-4">
                              <div className="w-1.5 h-1.5 bg-white/50 rounded-full" />
                              <div className="h-px flex-1 bg-white/20" />
-                             <span className="text-[8px] font-black text-white/40 uppercase tracking-widest leading-none">DAT_STREAM_{String(idx).padStart(2, '0')}</span>
                           </div>
                        ))}
                     </div>
@@ -120,23 +119,23 @@ export const Kernel = ({ dict }: { dict: any }) => {
                src="/img/zyndrix_industrial_macro_v4.png"
                alt="Zyndrix Hardware Core"
                fill
-               className="object-cover grayscale brightness-90 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
+               className="object-cover grayscale brightness-100 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
 
             <div className="absolute top-8 left-8 bg-white/10 backdrop-blur-sm text-white p-4 z-10 border border-white/30">
-               <div className="text-[7px] font-black tracking-[0.4em] uppercase opacity-50">HARDWARE_NODE</div>
-               <div className="text-[11px] font-black uppercase tracking-widest text-white">ZY_CORE_SYNC</div>
+               <div className="text-[7px] font-black tracking-[0.4em] uppercase opacity-50">NÚCLEO</div>
+               <div className="text-[11px] font-black uppercase tracking-widest text-white">PROCESAMIENTO</div>
             </div>
 
             <div className="absolute bottom-8 right-8 text-white z-10 flex gap-6">
                <div className="flex flex-col items-end">
-                  <span className="text-[7px] font-black uppercase tracking-widest opacity-50">TEMP</span>
-                  <span className="text-[12px] font-black">24°C</span>
+                  <span className="text-[7px] font-black uppercase tracking-widest opacity-50">ESTADO</span>
+                  <span className="text-[12px] font-black">OPERATIVO</span>
                </div>
                <div className="flex flex-col items-end border-l border-white/20 pl-6">
-                  <span className="text-[7px] font-black uppercase tracking-widest opacity-50">LOAD</span>
-                  <span className="text-[12px] font-black">OPTIMAL</span>
+                  <span className="text-[7px] font-black uppercase tracking-widest opacity-50">EFICIENCIA</span>
+                  <span className="text-[12px] font-black">MÁXIMA</span>
                </div>
             </div>
           </motion.div>

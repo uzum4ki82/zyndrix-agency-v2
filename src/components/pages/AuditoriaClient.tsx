@@ -60,10 +60,8 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
 
       if (!response.ok) throw new Error('API_ERROR');
 
-      // ESPERAR AL PROGRESO ANTES DE MOSTRAR ÉXITO
       setTimeout(() => {
         setStep('success');
-        // Redirigir a Calendly después de que el usuario vea el éxito
         setTimeout(() => {
           window.location.href = calendlyUrl;
         }, 3500);
@@ -78,87 +76,116 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
   const icons = [Activity, Globe, Users, ClipboardCheck];
 
   return (
-    <div className="min-h-screen bg-black text-white font-body selection:bg-[#38bdf8] selection:text-black">
+    <div className="min-h-screen bg-base text-primary selection:bg-black selection:text-white relative overflow-hidden">
+      <div className="arch-grid opacity-20" />
       <NavBar dict={dict.nav} locale={locale} />
 
-      <main className="relative z-10 pt-48 md:pt-60 pb-32 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-start">
+      <main className="relative z-10 pt-32 md:pt-48 pb-24 px-6">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 md:gap-20 items-start">
           
           {/* Lado Izquierdo: Contexto */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="space-y-16"
+            className="lg:col-span-7 space-y-12"
           >
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/5 border border-white/10 text-[#38bdf8] text-[10px] font-bold uppercase tracking-[0.6em] backdrop-blur-xl">
-                <Activity size={14} className="animate-pulse" /> {dict.auditoria.badge}
+            <div className="space-y-6">
+              <div className="text-[9px] font-black uppercase tracking-[0.5em] text-secondary mb-4 flex items-center gap-4">
+                <div className="w-8 h-px bg-primary/10" />
+                {dict.auditoria.badge}
               </div>
-              <h1 className="text-5xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase italic">
+              <h1 className="text-5xl md:text-8xl font-heading font-black leading-[0.85] tracking-tighter uppercase mb-8">
                 {dict.auditoria.title.split('IA')[0]}
-                <span className="text-[#38bdf8]">IA</span>
+                <span className="opacity-20">IA</span>
               </h1>
-              <p className="text-xl md:text-2xl text-slate-500 font-medium italic leading-relaxed max-w-xl">
+              <p className="text-lg md:text-xl text-secondary font-medium leading-relaxed max-w-xl border-l border-primary/10 pl-8">
                 {dict.auditoria.subtitle}
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-8">
+            <div className="grid sm:grid-cols-2 gap-6">
               {dict.auditoria.features.map((item: any, idx: number) => {
                 const Icon = icons[idx];
                 return (
-                  <div key={idx} className="glass-premium p-8 rounded-[2.5rem] border border-white/5 space-y-4">
-                    <div className="w-12 h-12 bg-[#38bdf8]/10 rounded-2xl flex items-center justify-center text-[#38bdf8]">
-                      <Icon size={24} />
+                  <div key={idx} className="bg-white p-8 border border-primary/5 shadow-sm group hover:bg-slate-50 transition-all duration-500 relative overflow-hidden">
+                    <div className="relative z-10">
+                      <div className="w-10 h-10 bg-slate-100 border border-primary/5 flex items-center justify-center text-primary/40 group-hover:bg-black group-hover:text-white transition-all mb-6">
+                        <Icon size={18} strokeWidth={1.5} />
+                      </div>
+                      <h3 className="text-sm font-black uppercase tracking-widest mb-3">{item.title}</h3>
+                      <p className="text-xs text-secondary/60 font-medium leading-relaxed">{item.desc}</p>
                     </div>
-                    <h3 className="text-sm font-black uppercase tracking-wider">{item.title}</h3>
-                    <p className="text-xs text-slate-500 font-medium italic">{item.desc}</p>
+                    <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.1] transition-opacity">
+                       <Icon size={64} />
+                    </div>
                   </div>
                 );
               })}
             </div>
+
+            <div className="pt-8 border-t border-primary/5">
+               <div className="flex gap-12">
+                  {[
+                    { l: "Protocol", v: "Z-AUDIT-v4" },
+                    { l: "Sec Level", v: "MAXIMUM" },
+                    { l: "Review", v: "EXECUTIVE" }
+                  ].map((x, i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                       <span className="text-[7px] font-black text-secondary/30 uppercase tracking-widest">{x.l}</span>
+                       <span className="text-[10px] font-black text-primary uppercase">{x.v}</span>
+                    </div>
+                  ))}
+               </div>
+            </div>
           </motion.div>
 
           {/* Lado Derecho: Formulario */}
-          <div id="contacto" className="relative">
-            <div className="absolute inset-0 bg-[#38bdf8]/10 blur-[150px] -z-10 animate-pulse" />
+          <div className="lg:col-span-5 relative">
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass-premium p-10 md:p-16 rounded-[4rem] border border-white/10 shadow-massive"
+              className="bg-white p-8 md:p-12 border border-primary/5 shadow-2xl relative"
             >
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary/5" />
+              
               <AnimatePresence mode="wait">
                 {step === 'form' ? (
                   <motion.form 
                     key="form"
-                    className="space-y-8"
+                    className="space-y-6"
                     onSubmit={handleSubmit}
                   >
                     <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input 
-                          required
-                          type="text" 
-                          placeholder={dict.auditoria.form.business}
-                          className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic"
-                          value={formData.businessName}
-                          onChange={e => setFormData({...formData, businessName: e.target.value})}
-                        />
-                        <input 
-                          required
-                          type="text" 
-                          placeholder={dict.auditoria.form.name}
-                          className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic"
-                          value={formData.personName}
-                          onChange={e => setFormData({...formData, personName: e.target.value})}
-                        />
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="space-y-1">
+                           <label className="text-[8px] font-black text-primary/20 uppercase tracking-widest ml-2">ORGANIZATION</label>
+                           <input 
+                             required
+                             type="text" 
+                             placeholder={dict.auditoria.form.business}
+                             className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30"
+                             value={formData.businessName}
+                             onChange={e => setFormData({...formData, businessName: e.target.value})}
+                           />
+                        </div>
+                        <div className="space-y-1">
+                           <label className="text-[8px] font-black text-primary/20 uppercase tracking-widest ml-2">REPRESENTATIVE</label>
+                           <input 
+                             required
+                             type="text" 
+                             placeholder={dict.auditoria.form.name}
+                             className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30"
+                             value={formData.personName}
+                             onChange={e => setFormData({...formData, personName: e.target.value})}
+                           />
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input 
                           required
                           type="tel" 
                           placeholder={dict.auditoria.form.phone}
-                          className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic"
+                          className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30"
                           value={formData.phone}
                           onChange={e => setFormData({...formData, phone: e.target.value})}
                         />
@@ -166,7 +193,7 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
                           required
                           type="email" 
                           placeholder={dict.auditoria.form.email}
-                          className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic"
+                          className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30"
                           value={formData.email}
                           onChange={e => setFormData({...formData, email: e.target.value})}
                         />
@@ -175,40 +202,44 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
                         required
                         type="url" 
                         placeholder={dict.auditoria.form.web}
-                        className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic"
+                        className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30"
                         value={formData.website}
                         onChange={e => setFormData({...formData, website: e.target.value})}
                       />
-                      <select 
-                        required
-                        className="bg-white/5 border border-white/5 w-full p-6 rounded-3xl outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic appearance-none text-slate-400"
-                        value={formData.budget}
-                        onChange={e => setFormData({...formData, budget: e.target.value})}
-                      >
-                         <option value="" disabled>{dict.auditoria.form.budget}</option>
-                         {dict.auditoria.budget_options.map((opt: any) => (
-                           <option key={opt.value} value={opt.value} className="bg-black text-white">{opt.label}</option>
-                         ))}
-                      </select>
+                      <div className="relative">
+                         <select 
+                           required
+                           className="bg-slate-50 border border-primary/5 w-full p-5 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase appearance-none"
+                           value={formData.budget}
+                           onChange={e => setFormData({...formData, budget: e.target.value})}
+                         >
+                            <option value="" disabled>{dict.auditoria.form.budget}</option>
+                            {dict.auditoria.budget_options.map((opt: any) => (
+                              <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                         </select>
+                         <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none opacity-20">
+                            <Activity size={12} />
+                         </div>
+                      </div>
                       <textarea 
                         required
-                        rows={4}
+                        rows={3}
                         placeholder={dict.auditoria.form.problem}
-                        className="bg-white/5 border border-white/5 w-full p-8 rounded-[2.5rem] outline-none focus:border-[#38bdf8]/30 transition-all text-sm font-bold italic resize-none"
+                        className="bg-slate-50 border border-primary/5 w-full p-6 outline-none focus:bg-white focus:border-primary/20 transition-all text-[13px] font-bold uppercase placeholder:opacity-30 resize-none"
                         value={formData.problem}
                         onChange={e => setFormData({...formData, problem: e.target.value})}
                       />
                     </div>
 
-                    <motion.button
-                      whileHover={{ scale: 1.02, boxShadow: '0 0 50px rgba(56,189,248,0.4)' }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full bg-[#38bdf8] text-black py-8 rounded-[2.5rem] font-black uppercase tracking-[0.4em] italic text-base flex items-center justify-center gap-6 shadow-2xl transition-all"
+                    <button
+                      className="btn-executive w-full h-18 group shadow-xl"
                     >
-                      {dict.auditoria.form.button} <ArrowRight size={24} />
-                    </motion.button>
+                      <span className="text-[12px]">{dict.auditoria.form.button}</span>
+                      <ArrowRight size={20} className="group-hover:translate-x-3 transition-transform duration-700" />
+                    </button>
                     
-                    <p className="text-center text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
+                    <p className="text-center text-[10px] text-secondary/30 font-black uppercase tracking-[0.2em]">
                       {dict.auditoria.form.footer}
                     </p>
                   </motion.form>
@@ -217,44 +248,55 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
                     key="processing"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="py-20 text-center space-y-12"
+                    className="py-16 text-center space-y-10"
                   >
-                    <div className="relative w-40 h-40 mx-auto">
-                      <div className="absolute inset-0 border-[10px] border-[#38bdf8]/10 rounded-full" />
-                      <div className="absolute inset-0 border-[10px] border-t-[#38bdf8] rounded-full animate-spin" />
-                      <Zap className="absolute inset-0 m-auto text-[#38bdf8] animate-pulse" size={48} />
+                    <div className="relative w-32 h-32 mx-auto">
+                      <div className="absolute inset-0 border-[8px] border-primary/5 rounded-full" />
+                      <div className="absolute inset-0 border-[8px] border-t-primary rounded-full animate-spin" />
+                      <Activity className="absolute inset-0 m-auto text-primary animate-pulse" size={40} />
                     </div>
                     <div className="space-y-4">
-                      <h3 className="text-3xl font-black uppercase italic tracking-tighter">{dict.auditoria.processing}</h3>
-                      <p className="text-[#38bdf8] font-black text-xl italic tracking-[0.5em]">{progress}%</p>
+                      <h3 className="text-2xl font-black uppercase tracking-tighter">{dict.auditoria.processing}</h3>
+                      <div className="flex items-center justify-center gap-4">
+                         <div className="w-24 h-0.5 bg-primary/5 relative overflow-hidden">
+                            <motion.div className="absolute inset-0 bg-primary" animate={{ x: ['-100%', '100%'] }} transition={{ repeat: Infinity, duration: 1.5 }} />
+                         </div>
+                         <p className="text-primary font-black text-lg tracking-widest">{progress}%</p>
+                      </div>
                     </div>
                   </motion.div>
                 ) : (
                   <motion.div 
                     key="success"
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="py-12 md:py-20 text-center space-y-12"
+                    className="py-16 text-center space-y-10"
                   >
-                    <div className="w-40 h-40 bg-[#38bdf8] rounded-[3rem] mx-auto flex items-center justify-center text-black shadow-massive animate-pulse">
-                      <CheckCircle2 size={70} strokeWidth={3} />
+                    <div className="w-24 h-24 bg-black text-white rounded-full mx-auto flex items-center justify-center shadow-massive">
+                      <CheckCircle2 size={48} strokeWidth={2.5} />
                     </div>
                     <div className="space-y-6">
-                      <h2 className="text-5xl md:text-6xl font-black uppercase italic italic tracking-tighter leading-none">
-                        {dict.auditoria.success.title.split(' ')[0]} <br />
-                        <span className="text-[#38bdf8]">{dict.auditoria.success.title.split(' ')[1]}</span>
+                      <h2 className="text-4xl md:text-5xl font-heading font-black uppercase tracking-tighter leading-none">
+                        {dict.auditoria.success.title}
                       </h2>
-                      <p className="text-slate-400 font-medium italic px-4">
+                      <p className="text-secondary font-medium px-4">
                         {dict.auditoria.success.desc}
                       </p>
-                      <div className="pt-8">
-                         <div className="w-1.5 h-1.5 bg-[#38bdf8] rounded-full mx-auto animate-ping" />
-                       </div>
+                      <div className="flex justify-center gap-2">
+                         <div className="w-2 h-2 bg-primary animate-bounce delay-0" />
+                         <div className="w-2 h-2 bg-primary animate-bounce delay-75" />
+                         <div className="w-2 h-2 bg-primary animate-bounce delay-150" />
+                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.div>
+            
+            <div className="mt-8 flex justify-between items-center opacity-10">
+               <div className="text-[10px] font-black uppercase tracking-widest">ENCRYPTED_SSL</div>
+               <div className="text-[10px] font-black uppercase tracking-widest">NODE_ZYNDRIX_01</div>
+            </div>
           </div>
 
         </div>
@@ -264,3 +306,4 @@ export default function AuditoriaClient({ dict, locale }: AuditoriaClientProps) 
     </div>
   );
 }
+

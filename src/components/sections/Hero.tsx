@@ -2,148 +2,109 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowRight, Play, Activity } from 'lucide-react';
 import Image from 'next/image';
-import { ArrowRight, Sparkles, Activity, Shield, Cpu, Zap, MousePointer2, PlayCircle } from 'lucide-react';
 
 export const Hero = ({ dict }: { dict: any }) => {
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center px-6 overflow-hidden bg-base">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <Image 
-          src="/img/hero-bg.png" 
-          alt="Zyndrix Hero Background" 
-          fill
-          priority
-          className="object-cover opacity-20 scale-105"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-base via-transparent to-base" />
-        <div className="absolute inset-0 bg-mesh opacity-30" />
-      </div>
-
-      {/* Floating Technical Elements - DISABLED ON MOBILE */}
-      {!isMobile && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-           {[...Array(6)].map((_, i) => (
-             <motion.div
-               key={i}
-               animate={{ 
-                 y: [0, -20, 0],
-                 opacity: [0.1, 0.3, 0.1]
-               }}
-               transition={{ 
-                 duration: 5 + i, 
-                 repeat: Infinity,
-                 delay: i * 0.5 
-               }}
-               className="absolute hidden lg:block"
-               style={{
-                 left: i < 3 ? `${5 + i * 5}%` : `${75 + (i - 3) * 5}%`,
-                 top: `${15 + (i % 3) * 25}%`
-               }}
-             >
-               <div className="flex items-center gap-2 font-mono text-[10px] text-primary/40 uppercase tracking-[0.5em] whitespace-nowrap">
-                 <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
-                 NODE_SESSION_0{i+1} : ACTIVE
-               </div>
-             </motion.div>
-           ))}
-        </div>
-      )}
+    <section className="relative min-h-[90vh] flex items-center pt-24 md:pt-32 pb-16 md:pb-24 px-6 overflow-hidden bg-base">
+      <div className="arch-grid opacity-40" />
       
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="lg:w-4/7 space-y-6 md:space-y-8 text-center lg:text-left relative"
+          >
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full">
+              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
+              <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-blue-700">{dict.badge}</span>
+            </div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center relative z-20 max-w-7xl pt-20"
-      >
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mb-14 inline-flex items-center gap-4 px-8 py-3 bg-white/5 border border-white/10 rounded-full text-[12px] font-black uppercase tracking-[0.6em] text-primary backdrop-blur-3xl shadow-[0_0_30px_rgba(56,189,248,0.2)]"
-        >
-          <Sparkles className="w-4 h-4" /> 
-          {dict.badge}
-        </motion.div>
+            <h1 className="text-6xl md:text-8xl lg:text-[8.5rem] font-heading font-black text-primary leading-[0.85] tracking-[-0.05em] uppercase">
+              {dict.title_main} <br/>
+              <span className="opacity-20">{dict.title_highlight}</span>
+            </h1>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-[calc(-0.04em)] leading-[0.95] uppercase italic mb-8 select-none drop-shadow-2xl">
-          <span className="text-white block">
-            {dict.title_main.includes(':') ? (
-              <>
-                {dict.title_main.split(':')[0]}<span className="text-primary italic">:</span>
-              </>
-            ) : (
-              dict.title_main
-            )}
-          </span>
-          <span className="text-gradient-cyan block mt-2 text-glow">
-            {dict.title_highlight || "SOLUCIONES IA ALTO RENDIMIENTO"}
-          </span>
-        </h1>
+            <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start pt-6">
+              <p className="text-xl md:text-2xl text-secondary font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 italic">
+                {dict.subtitle}
+              </p>
+              
+              <div className="hidden xl:flex flex-col gap-3 border-l border-primary/10 pl-8 text-left">
+                  {["Análisis Profundo", "Respuestas Instantáneas", "Optimización Inteligente"].map((spec, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                       <div className="w-1 h-1 bg-primary" />
+                       <span className="text-[10px] font-black text-secondary tracking-widest uppercase">{spec}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
 
-        <p className="max-w-3xl mx-auto text-xl md:text-2xl lg:text-3xl text-white/70 mb-16 font-medium leading-[1.3] lowercase italic tracking-tight">
-          {dict.subtitle}
-        </p>
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-6">
+              <button className="w-full sm:w-auto px-12 h-18 md:h-20 shadow-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold tracking-widest uppercase flex items-center justify-center gap-3 transition-all duration-300">
+                <span>{dict.cta_primary}</span>
+                <ArrowRight size={18} />
+              </button>
+              <button className="flex items-center gap-4 px-8 py-5 text-[10px] font-bold uppercase tracking-[0.3em] text-primary/40 hover:text-primary transition-colors group">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full border border-primary/5 group-hover:border-primary/20 transition-all">
+                   <Play className="w-3 h-3 text-primary fill-primary" />
+                </div>
+                <span>{dict.cta_secondary_video}</span>
+              </button>
+            </div>
+          </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
-          <a href="#contacto" className="btn-elite group h-20 px-14 min-w-[280px]">
-            <span className="relative z-10 text-[18px] font-black">{dict.cta_primary}</span>
-            <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-3 transition-transform" />
-            {!isMobile && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent w-[200%] -translate-x-full animate-beam" />}
-          </a>
-          <a href="#demos" className="text-[12px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-all h-20 flex items-center gap-4 px-10 border border-white/10 rounded-full hover:bg-white/5 backdrop-blur-md group">
-            <PlayCircle className="w-5 h-5 group-hover:scale-110 transition-transform text-primary/60" />
-            {dict.cta_secondary_video || "VER PROTOCOLO"}
-          </a>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: "circOut" }}
+            className="lg:w-3/7 relative group"
+          >
+            <div className="relative aspect-square overflow-hidden border border-primary/10 shadow-[0_0_100px_rgba(0,0,0,0.1)] bg-white p-2">
+                <div className="absolute inset-0 z-20 border-[15px] border-white pointer-events-none" />
+                <div className="relative w-full h-full overflow-hidden">
+                   <Image
+                     src="/img/zyndrix_hero_architectural_v4.png"
+                     alt="Zyndrix Intelligence Architecture"
+                     fill
+                     className="object-cover grayscale brightness-100 contrast-[1.1] group-hover:scale-110 group-hover:brightness-100 transition-all duration-[2000ms]"
+                     priority
+                   />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-40 z-10" />
+            </div>
+            
+          </motion.div>
         </div>
 
-        {/* Trust Stats Block - More Industrial */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-0 max-w-5xl mx-auto border border-white/5 rounded-[3rem] overflow-hidden glass-premium shadow-massive"
-        >
-          {dict.stats?.map((stat: any, idx: number) => {
-            const icons = [Cpu, Shield, Zap];
-            const Icon = icons[idx % icons.length];
-            return (
-              <div key={idx} className={`p-10 text-center group hover:bg-white/[0.02] transition-colors ${idx !== 2 ? 'border-b md:border-b-0 md:border-r border-white/5' : ''}`}>
-                 <Icon className="w-6 h-6 text-primary/10 mx-auto mb-6 group-hover:text-primary group-hover:scale-125 transition-all duration-700" />
-                 <div className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white mb-2 tracking-tighter italic leading-none">{stat.v}</div>
-                 <div className="text-[11px] md:text-[12px] font-black uppercase tracking-[0.4em] text-white/20 group-hover:text-white uppercase">{stat.l}</div>
+        <div className="mt-24 md:mt-32 bg-white border border-primary/10 p-8 md:p-12 flex flex-wrap justify-between items-center gap-12 shadow-sm">
+          <div className="flex gap-16 md:gap-32">
+            {dict.stats?.map((stat: any, i: number) => (
+              <div key={i} className="flex flex-col gap-2">
+                <span className="text-3xl md:text-4xl font-heading font-black text-primary tracking-tighter uppercase leading-none">{stat.v}</span>
+                <span className="text-[9px] font-bold tracking-[0.4em] text-secondary uppercase opacity-70">{stat.l}</span>
               </div>
-            );
-          })}
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll Indicator - SIMPLIFIED ON MOBILE */}
-      <motion.div 
-        animate={isMobile ? {} : { y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-8 flex flex-col items-center gap-2 text-white/10 group cursor-pointer hover:text-primary/40 transition-colors"
-        onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-      >
-         <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.6em] rotate-180 [writing-mode:vertical-lr]">{dict.scroll || 'EXPLORAR'}</span>
-         <MousePointer2 className="w-3 h-3 rotate-90" />
-      </motion.div>
-
-      {/* Horizontal bottom border */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+            ))}
+          </div>
+          
+          <div className="flex items-center gap-12">
+              <div className="hidden lg:flex flex-col items-end gap-1 text-right">
+                  <span className="text-[8px] font-bold tracking-[0.4em] text-secondary uppercase opacity-30">HQ</span>
+                  <span className="text-[10px] font-black text-primary">BARCELONA</span>
+              </div>
+              <div className="flex flex-col items-end gap-1 text-right border-l border-green-200 pl-8">
+                  <span className="text-[8px] font-bold tracking-[0.4em] text-green-600 uppercase opacity-70">STATUS</span>
+                  <div className="flex items-center gap-3">
+                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                     <span className="text-[10px] font-black text-green-700 uppercase">ONLINE</span>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </section>
+
   );
 };

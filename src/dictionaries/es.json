@@ -10,268 +10,208 @@
     "connect": "AUDITORÍA"
   },
   "hero": {
-    "badge": "ARQUITECTURA IA | CLASE-ENTERPRISE",
-    "title_main": "ZYNDRIX: SOLUCIONES IA",
-    "title_highlight": "DE ALTO RENDIMIENTO",
-    "subtitle": "Impulsamos empresas con sistemas autónomos y flujos de trabajo inteligentes.",
-    "cta_primary": "ESCALAR MI NEGOCIO",
-    "cta_secondary": "VER INVERSIÓN",
-    "cta_secondary_video": "VER PROTOCOLO",
+    "badge": "FIRMA DE ARQUITECTURA INTELIGENTE",
+    "title_main": "EL SISTEMA OPERATIVO",
+    "title_highlight": "DEL FUTURO",
+    "subtitle": "No vendemos herramientas. Diseñamos la infraestructura que reemplaza la fricción humana por ejecución autónoma.",
+    "cta_primary": "INICIAR PROTOCOLO",
+    "cta_secondary": "EL MÉTODO",
+    "cta_secondary_video": "VER KERNEL",
     "stats": [
-      { "v": "12+", "l": "FLUJOS NUCLEARES" },
-      { "v": "99.9%", "l": "PRECISIÓN IA" },
-      { "v": "10X", "l": "ESCALA OPERATIVA" }
+      { "v": "KERNEL", "l": "OPERATIVO" },
+      { "v": "0.15ms", "l": "LATENCIA MEDIA" },
+      { "v": "100%", "l": "SOBERANÍA" }
     ],
     "scroll": "EXPLORAR"
   },
-  "roi": {
-    "badge": "DIAGNÓSTICO ECONÓMICO",
-    "title": "CUANTIFIQUE SU FUGA DE CAPITAL",
-    "subtitle": "El trabajo manual no solo es lento, es un drenaje constante de sus márgenes operativos.",
-    "labels": {
-      "hours": "HORAS MANUALES / SEMANA",
-      "cost": "COSTE HORA MEDIO (€)",
-      "employees": "EMPLEADOS AFECTADOS",
-      "monthly": "PÉRDIDA MENSUAL ESTIMADA",
-      "yearly": "COSTES DE OPORTUNIDAD ANUALES"
-    },
-    "warning": {
-      "part1": "Su infraestructura actual está",
-      "highlight": "quemando capital",
-      "part2": "operativo de forma ineficiente."
-    },
-    "cta": "SOLICITAR AUDITORÍA DE ESCALA"
-  },
-  "engine_room": {
-    "badge": "LOG DE SISTEMA",
-    "title": "EL CEREBRO DIGITAL",
-    "subtitle": "Abrimos la caja negra. Así es como orquestamos sus activos digitales para funcionar con latencia cero.",
-    "cards": [
-      { "title": "TRIGGERS NUCLEARES", "desc": "Captación de señales en tiempo real (Webhook, Scraping, API)." },
-      { "title": "PROCESADOR LLM", "desc": "Modelado y extracción de intención mediante agentes locales." },
-      { "title": "ESTADO PERSISTENTE", "desc": "Base de datos vectorial para memoria a largo plazo." },
-      { "title": "DESPLIEGUE FINAL", "desc": "Ejecución de acciones (CRM, Email, Slack, ERP)." }
-    ],
-    "main_title": "ESCALABILIDAD SÍNCRONA: EL PODER DE LA CONECTIVIDAD TOTAL",
-    "main_desc": "Nuestros blueprints no son estáticos. Son ecosistemas autoreparables que crecen con su volumen de negocio sin añadir un solo céntimo de coste variable adicional.",
-    "cta": "EXPLORAR ARQUITECTURA"
-  },
-  "blueprint_promo": {
-    "badge": "RECURSO DE ÉLITE GRATUITO",
-    "title_main": "EL BLUEPRINT DE",
-    "title_highlight": "AUTOMATIZACIÓN 2026",
-    "subtitle": "Hemos condensado nuestra metodología de ingeniería IA en un documento técnico de 45 páginas. Aprenda a escalar su margen operativo sin aumentar su plantilla.",
-    "items": ["Diagramas de Arquitectura n8n", "Flujos de Lead Scoring Avanzados", "Estrategia de Agentes de Soporte"],
-    "cta": "DESCARGAR BLUEPRINT",
-    "free": "TOTALMENTE GRATIS"
-  },
   "tech_stack": {
-    "title": "POTENCIADO POR EL ESTADO DEL ARTE",
-    "subtitle": "Poder Sin Límites"
+    "title": "TECNOLOGÍAS INTEGRADAS"
   },
   "pain_points": {
-    "badge": "EL PROBLEMA",
-    "title": "¿Tu empresa sigue operando en modo manual?",
-    "subtitle": "Estado Actual",
+    "badge": "ANÁLISIS DE FRICCIÓN",
+    "title": "LA FRICCIÓN ES EL ENEMIGO",
+    "subtitle": "Identificando los cuellos de botella que limitan su visión corporativa.",
     "items": [
-      { "title": "CUELLO DE BOTELLA OPERATIVO", "description": "Tú o tu equipo sois el motor manual de cada proceso." },
-      { "title": "RECOLECCIÓN DE LEADS MANUAL", "description": "Pierdes prospectos mientras duermes o estás ocupado." },
-      { "title": "INCONSISTENCIA EN EL SEGUIMIENTO", "description": "Cero respuesta inmediata, muerte del lead." }
+      { 
+        "title": "PROCESOS MANUALES", 
+        "description": "Su equipo pierde el 70% de su tiempo en tareas que un algoritmo ejecuta en milisegundos." 
+      },
+      { 
+        "title": "FUGA DE DATOS", 
+        "description": "Información fragmentada en silos que impiden una toma de decisiones basada en la verdad." 
+      },
+      { 
+        "title": "LATENCIA OPERATIVA", 
+        "description": "Respuestas lentas que resultan en la pérdida sistemática de oportunidades de alta conversión." 
+      }
     ]
   },
-  "solucion": {
-    "badge": "LA SOLUCIÓN",
-    "title": "IA que trabaja para ti, 24 horas al día"
+  "roi": {
+    "badge": "ANÁLISIS DE FRICCIÓN",
+    "title": "EL TRABAJO MANUAL ES UN ERROR",
+    "subtitle": "Cada hora que su equipo dedica a tareas repetitivas es capital que no está expandiendo el núcleo de su negocio.",
+    "labels": {
+      "hours": "FRICCIÓN OPERATIVA / SEMANA",
+      "cost": "COSTE DE OPORTUNIDAD (€)",
+      "employees": "CAPACIDAD PERDIDA",
+      "monthly": "FUGA MENSUAL",
+      "yearly": "DECREMENTO ANUAL ESTIMADO"
+    },
+    "warning": {
+      "part1": "Su arquitectura actual está",
+      "highlight": "limitando su escala",
+      "part2": "mediante procesos obsoletos."
+    },
+    "cta": "SOLICITAR AUDITORÍA DE FRICCIÓN"
   },
-  "sistemas": {
-    "badge": "ARQUITECTURA DE SISTEMAS",
-    "title": "INFRAESTRUCTURA IA DE GRADO INDUSTRIAL",
-    "subtitle": "Nuestra ingeniería no se basa en herramientas aisladas, sino en ecosistemas autónomos interconectados que eliminan la intervención humana en tareas críticas.",
+  "kernel": {
+    "badge": "ZYNDRIX KERNEL",
+    "title": "LOS PILARES DE LA EJECUCIÓN",
+    "subtitle": "Cuatro módulos de ingeniería diseñados para integrarse en su flujo de trabajo y eliminar los cuellos de botella para siempre.",
     "cards": [
       { 
+        "title": "AUDITORÍA DE FRICCIÓN", 
+        "description": "No buscamos problemas, buscamos donde se pierde dinero por lentitud.",
+        "icon": "Search"
+      },
+      { 
+        "title": "INYECCIÓN DE INTELIGENCIA", 
+        "description": "Implementación del Kernel en sus departamentos clave mediante agentes autónomos.",
+        "icon": "Zap"
+      },
+      { 
+        "title": "LATENCIA CERO", 
+        "description": "Orquestación de procesos que suceden en milisegundos, sin intervención humana.",
+        "icon": "Activity"
+      },
+      { 
+        "title": "ESCALADO AUTÓNOMO", 
+        "description": "Sistemas que aprenden y se optimizan solos según el volumen de demanda.",
+        "icon": "Shield"
+      }
+    ]
+  },
+  "engine_room": {
+    "badge": "SISTEMAS OPERATIVOS",
+    "title": "INFRAESTRUCTURA DE EJECUCIÓN",
+    "subtitle": "No implementamos bots aislados. Diseñamos ecosistemas interconectados que privatizan la eficiencia y eliminan la dependencia del error humano.",
+    "cards": [
+      { 
+        "icon": "Terminal",
         "title": "Lead Gen Engine", 
-        "description": "Extracción y limpieza de datos masiva 24/7. Automatización de prospección en LinkedIn, Google Maps y directorios industriales.",
-        "specs": ["Scraping Multinodo", "Limpieza de Datos IA", "Enriquecimiento en 0.5s"]
+        "desc": "Extracción y limpieza masiva 24/7. Prospección autónoma en LinkedIn y Google Maps con filtrado por intención."
       },
       { 
+        "icon": "Cpu",
         "title": "Agentes Operativos", 
-        "description": "Soporte y logística asistida por agentes autónomos. Gestión de inventarios, rutas y resolución de incidencias.",
-        "specs": ["Modelos LLM Locales", "Integración SAP/ERP", "Latencia < 150ms"]
+        "desc": "Modelos LLM locales para gestión de soporte, inventarios y logística sin latencia y con soberanía total de datos."
       },
       { 
+        "icon": "Layers",
         "title": "Workflow Core", 
-        "description": "Orquestación central de n8n para toda tu empresa. Conectamos más de 500 aplicaciones en un cerebro digital.",
-        "specs": ["Instancia Dedicada", "500+ Integraciones", "Seguridad SOC2"]
+        "desc": "Orquestación centralizada en n8n. Conectamos toda su infraestructura en un cerebro digital único y escalable."
       },
       { 
+        "icon": "Shield",
         "title": "SDR Artificial", 
-        "description": "Cualificación en segundos y agendado directo. Contactamos a los leads en menos de 5 minutos.",
-        "specs": ["Voz y Chat Híbrido", "Analítica de Sentimiento", "Cierre Agendado"]
-      },
-      {
-        "title": "Soberanía Total",
-        "description": "Infraestructura propietaria con SLAs del 99.9% y soberanía de datos absoluta en sus propios servidores.",
-        "specs": ["Cifrado Militar", "Hosting local", "Auditoría Continua"]
+        "desc": "Cualificación en milisegundos y agendado directo. Sus leads son contactados antes de que abandonen su web."
       }
-    ]
-  },
-  "impacto": {
-    "badge": "DASHBOARD DE IMPACTO",
-    "title": "Resultados Empresariales Cuantificables",
-    "stats": [
-      { "value": "85%", "label": "Reducción Soporte" },
-      { "value": "3x", "label": "Más Leads" },
-      { "value": "40h", "label": "Ahorradas/Sem" },
-      { "value": "95%", "label": "Reducción Errores" }
-    ]
-  },
-  "offers": {
-    "badge": "PROTOCOL: ACTIVE",
-    "title_part1": "PROTOCOLO DE",
-    "title_part2": "ADSCRIPCIÓN ÉLITE",
-    "subtitle": "Estamos buscando 3 socios comerciales este trimestre para implementar infraestructuras de latencia cero con beneficios exclusivos por fidelidad temprana.",
-    "discount_label": "DESCUENTO_FUNDADOR_ACTIVO",
-    "discount_value": "-40% EN LA PUESTA EN MARCHA",
-    "items": [
-      "Acceso Vitalicio a Updates",
-      "Soporte Crítico Prioritario",
-      "Auditoría de Escala Gratis",
-      "Custom LLM Training Inc."
     ],
-    "slots_label": "CUPOS DISPONIBLES",
-    "slots_value": "03/05",
-    "cta": "RECLAMAR CUPÓN",
-    "reset_label": "REINICIO: 23H 45M 12S"
+    "main_title": "SOBERANÍA DE DATOS ABSOLUTA",
+    "main_desc": "Toda la infraestructura se despliega en sus propios servidores. Usted es dueño del código, de los datos y de la inteligencia generada. Sin dependencias externas, sin vulnerabilidades de terceros.",
+    "cta": "VER PROTOCOLOS"
   },
-  "beneficios": {
-    "badge": "DIFERENCIACIÓN ZYNDRIX",
-    "title": "¿POR QUÉ NUESTROS SISTEMAS DOMINAN EL MERCADO?",
-    "items": [
-      { "title": "Escalabilidad Infinita", "description": "Sistemas diseñados para crecer de 10 a 10,000 operaciones diarias." },
-      { "title": "Soberanía de Datos", "description": "Implementamos modelos en sus propios servidores o nubes privadas." },
-      { "title": "ROI Garantizado", "description": "Nuestras implementaciones se pagan solas en menos de 6 meses." },
-      { "title": "Mantenimiento 24/7", "description": "Monitoreamos cada flujo de trabajo. Si algo falla, nuestros ingenieros lo resuelven." }
+
+  "impacto": {
+    "badge": "LA MÉTRICA DE LA AUTORÍA",
+    "title": "REEMPLAZAMOS TAREAS, NO PERSONAS",
+    "stats": [
+      { "v": "100%", "l": "REPETICIÓN ELIMINADA" },
+      { "v": "40h+", "l": "TIEMPO LIBERADO" },
+      { "v": "24/7", "l": "EJECUCIÓN NATIVA" },
+      { "v": "0.0s", "l": "TIEMPO DE RESPUESTA" }
     ]
   },
-  "demos": {
-    "badge": "IA EN ACCIÓN",
-    "title": "Demostraciones en Tiempo Real",
-    "subtitle": "Tecnología Probada",
-    "cta": "VER PROTOCOLO"
-  },
-  "casos": {
-    "badge": "RESULTADOS",
-    "title": "EL DOMINIO DE LA OPERACIÓN",
-    "subtitle": "Casos Reales",
-    "base_situation": "SITUACIÓN BASE",
-    "zyndrix_result": "RESULTADO ZYNDRIX",
-    "director_label": "DIRECTOR OPERATIVO",
-    "verification_label": "REVISIÓN EXTERNA VERIFICADA",
+  "blueprint_promo": {
+    "badge": "AUDITORÍA ESTRATÉGICA",
+    "title_main": "TU FUGA ES",
+    "title_highlight": "ESCALABLE",
+    "subtitle": "Diseñamos el Blueprint de su próxima arquitectura operativa. Un plan de ingeniería detallado para eliminar su dependencia del trabajo manual.",
     "items": [
-      {
-        "client": "INMOBILIARIA_ELITE",
-        "before": "80h manuales/mes",
-        "after": "2h supervisión/mes",
-        "result": "ROAS +120%",
-        "desc": "Automatizamos la cualificación de leads y agendado directo en CRM, eliminando el 95% del trabajo manual del equipo comercial."
-      },
-      {
-        "client": "LOGÍSTICA_GLOBAL",
-        "before": "Latencia 24h",
-        "after": "Latencia <120s",
-        "result": "Ahorro 15k€/mes",
-        "desc": "Implementamos agentes operativos para la gestión de incidencias en tiempo real, conectando flotas y almacenes mediante un núcleo n8n."
-      }
-    ]
-  },
-  "testimonios": {
-    "title": "Historias de Éxito Reales",
-    "subtitle": "Lo que dicen nuestros socios",
-    "items": [
-      {
-        "name": "Marc Soler",
-        "role": "CEO @ TechFlow Labs",
-        "quote": "La arquitectura que Zyndrix construyó para nuestro soporte bajó los tiempos de espera a CERO. No son programadores, son arquitectos de negocio."
-      },
-      {
-        "name": "Elena Vance",
-        "role": "Ops Director @ PrimeReal",
-        "quote": "Implementar el núcleo de lead score fue la mejor decisión del año. Escala nuestro pipeline sin contratar más personal. Simplemente funciona."
-      }
-    ]
+      "Mapa de Fricción Operativa",
+      "Diseño de Arquitectura n8n",
+      "Proyección de ROI en Latencia",
+      "Protocolo de Seguridad Local"
+    ],
+    "cta": "SOLICITAR BLUEPRINT",
+    "free": "GRATIS POR_TIEMPO_LIMITADO"
   },
   "metodo": {
     "badge": "PROCESO",
-    "title": "De la idea al resultado en 4 pasos",
-    "subtitle": "Un proceso claro, eficiente y transparente. Sin sorpresas, sin retrasos.",
+    "title": "Del Concepto al Resultado en 4 Pasos",
+    "subtitle": "Un proceso de ingeniería claro, eficiente y transparente. Sin fricción, sin retrasos.",
     "steps": [
-      { "s": "01", "t": "Auditoría Total", "d": "Mapeo masivo de ineficiencias." },
-      { "s": "02", "t": "Arquitectura IA", "d": "Diseño de blueprints técnicos." },
-      { "s": "03", "t": "Inyección SPRINT", "d": "Despliegues técnicos de alto impacto." },
-      { "s": "04", "t": "Escalado Industrial", "d": "Monitoreo de latencia y KPI." }
+      { "s": "01", "t": "Auditoría Forense", "d": "Mapeo masivo de ineficiencias y fugas de capital." },
+      { "s": "02", "t": "Arquitectura IA", "d": "Diseño del blueprint técnico y mapa de flujos." },
+      { "s": "03", "t": "Inyección SPRINT", "d": "Despliegues técnicos de alto impacto en su núcleo." },
+      { "s": "04", "t": "Escala Industrial", "d": "Monitoreo de latencia y expansión de resultados." }
     ]
   },
-  "planes": {
-    "badge": "INVERSIÓN",
-    "title": "Planes diseñados para escalar",
-    "subtitle": "con IA",
-    "investment": "INVERSIÓN",
-    "recommended": "RECOMENDADO",
-    "cta": "INICIAR PROTOCOLO",
-    "monthly_suffix": "€/mes",
+
+  "casos": {
+    "badge": "RESULTADOS VERIFICADOS",
+    "title": "CUANDO LA ARQUITECTURA FUNCIONA",
+    "subtitle": "Resultados cuantificables de empresas que delegaron su operativa a máquinas inteligentes.",
+    "base_situation": "SITUACIÓN INICIAL",
+    "zyndrix_result": "POST_ZYNDRIX",
+    "director_label": "VERIFICACIÓN",
+    "verification_label": "Implementación Exitosa",
     "items": [
-      { 
-        "name": "CORE Foundations", 
-        "setup": "499€", 
-        "price": "199", 
-        "features": ["1 Workflow Nuclear", "Soporte Técnico L1", "Auditoría Mensual"] 
+      {
+        "client": "CLIENTE_001",
+        "before": "8,000 HORAS/AÑO",
+        "after": "120 HORAS/AÑO",
+        "result": "Reducción de 98.5% en trabajo manual",
+        "desc": "Agencia de marketing con 25 empleados ejecutando tareas repetitivas de lead nurturing. Implementamos Kernel IA + Portal ZYNDRIX. Ahora 1 empleado supervisa 95% del flujo mientras el equipo se dedica a estrategia creativa pura."
       },
-      { 
-        "name": "SCALE Protocol", 
-        "setup": "950€", 
-        "price": "450", 
-        "features": ["3 Flujos avanzados", "Agente IA 24/7", "Base RAG", "Soporte prioritario"], 
-        "recommended": true 
+      {
+        "client": "CLIENTE_002",
+        "before": "€240K/AÑO",
+        "after": "€32K/AÑO",
+        "result": "86.7% reducción en costes operativos",
+        "desc": "Fintech con 18 operarios en back-office procesando transacciones. Orquestamos flujos n8n + agentes LLM locales. La arquitectura ahora ejecuta 4.2TB/segundo de procesamiento con latencia <2ms. Escalaron 12X sin contratar."
       },
-      { 
-        "name": "INDUSTRIAL OS", 
-        "setup": "Custom", 
-        "price": "A medida", 
-        "features": ["Agentes Ilimitados", "Entrenamiento LLM", "Latencia Cero", "SLA 99.9%"] 
+      {
+        "client": "CLIENTE_003",
+        "before": "12 DÍAS",
+        "after": "2.4 HORAS",
+        "result": "99.8% aceleración en ciclo de ventas",
+        "desc": "SaaS B2B con web anticuada desconectada de CRM. Migramos a Portal ZYNDRIX con IA integrada: lead capture → calificación → agendado automático. Conversión web mejoró 340%. El portal ahora opera 24/7 de forma autónoma, con SDR artificial respondiendo consultas en tiempo real."
       }
     ]
   },
+
   "contacto": {
-    "badge": "EMPEZAR AHORA",
-    "title_part1": "¿Listo para transformar",
-    "title_part2": "tu negocio con IA?",
-    "subtitle": "INICIA TU PROTOCOLO DE AUTOMATIZACIÓN DE ÉLITE HOY MISMO.",
+    "badge": "INICIAR CONEXIÓN",
+    "title_part1": "¿CUÁL ES TU",
+    "title_part2": "MAYOR BLOQUEO?",
+    "subtitle": "Un solo paso separa su operativa actual de la autonomía total. Cuéntenos dónde se detiene su crecimiento.",
     "labels": {
-      "name": "IDENTIDAD AGENTE",
-      "email": "CANAL COMUNICACIÓN",
-      "phone": "TELÉFONO CONTACTO",
-      "budget": "NIVEL INVERSIÓN",
-      "message": "MATRIZ CONSULTA"
+      "name": "IDENTIDAD CORPORATIVA",
+      "email": "CANAL DE ENLACE",
+      "phone": "TELÉFONO",
+      "message": "TU MAYOR BLOQUEO"
     },
     "placeholders": {
-      "name": "NOMBRE COMPLETO",
-      "email": "EMAIL DE EMPRESA",
-      "phone": "+34 000 000 000",
-      "budget": "PRESUPUESTO",
-      "message": "¿QUÉ NECESITAS AUTOMATIZAR?"
+      "name": "NOMBRE / EMPRESA",
+      "email": "tu@empresa.com",
+      "phone": "+34 ...",
+      "message": "Describe el cuello de botella que quieres eliminar..."
     },
-    "budget_options": [
-      { "value": "<1k", "label": "MENOS DE 1.000€" },
-      { "value": "1k-3k", "label": "1.000€ - 3.000€" },
-      { "value": "3k-5k", "label": "3.000€ - 5.000€" },
-      { "value": ">5k", "label": "MÁS DE 5.000€" }
-    ],
-    "button": "ENVIAR PROTOCOLO",
-    "twitter_url": "https://x.com/zyndrix",
-    "linkedin_url": "https://www.linkedin.com/company/zyndrix",
-    "instagram_url": "https://www.instagram.com/zyndrix.ia",
-    "success_message": "MENSAJE RECIBIDO CORRECTAMENTE!"
+    "button": "INICIAR AUDITORÍA",
+    "success_message": "PROTOCOLO DE CONTACTO INICIADO."
   },
+
   "faq": {
     "badge": "SOPORTE TÉCNICO",
     "title": "PROTOCOLOS DE DUDA",
