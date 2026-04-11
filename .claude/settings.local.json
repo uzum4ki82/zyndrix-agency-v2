@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(wc -l src/components/sections/*.tsx)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:3001)",
+      "Bash(Get-Process -Id 8372 -ErrorAction SilentlyContinue)",
+      "Bash(Stop-Process -Force -ErrorAction SilentlyContinue)",
+      "Bash(Start-Sleep -Milliseconds 500)"
     ]
   }
 }
