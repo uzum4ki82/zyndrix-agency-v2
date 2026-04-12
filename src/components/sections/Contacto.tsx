@@ -69,20 +69,6 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                 {dict.subtitle}
             </p>
 
-            <div className="space-y-4 pt-12 border-t border-primary/10">
-                <div className="flex items-center justify-between">
-                   <span className="text-[8px] font-black text-slate-300 tracking-[0.4em] uppercase">SYSTEM_NODE</span>
-                   <span className="text-[11px] font-black text-primary">ZYNDRIX_CORE_01</span>
-                </div>
-                <div className="flex items-center justify-between">
-                   <span className="text-[8px] font-black text-slate-300 tracking-[0.4em] uppercase">SECURE_LEVEL</span>
-                   <span className="text-[11px] font-black text-primary uppercase">MAX_TRUST</span>
-                </div>
-                <div className="flex items-center justify-between">
-                   <span className="text-[8px] font-black text-slate-300 tracking-[0.4em] uppercase">HQ_LOCATION</span>
-                   <span className="text-[11px] font-black text-primary uppercase">BCN_SANT_ANTONI</span>
-                </div>
-            </div>
         </div>
         
         {/* Right Side: Form */}
@@ -163,14 +149,6 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                 </button>
             </form>
 
-            <div className="mt-12 flex justify-between items-center opacity-30 group">
-               <span className="text-[9px] font-black uppercase tracking-[0.5em] text-slate-700">SECURE_ENCRYPTION_v4</span>
-               <div className="flex gap-3">
-                  <div className="w-2 h-2 bg-black rounded-full group-hover:animate-pulse" />
-                  <div className="w-1.5 h-1.5 bg-black/40 rounded-full" />
-               </div>
-               <span className="text-[9px] font-black uppercase tracking-[0.5em] text-slate-700">BARCELONA_HQ</span>
-            </div>
         </div>
       </div>
     </section>

@@ -38,7 +38,7 @@ export const PainPoints = ({ dict = {}, system = {} }: { dict: any, system?: any
         >
           <div className="relative aspect-video md:aspect-[2/1] overflow-hidden border-2 border-red-200 bg-slate-100 shadow-2xl hover:shadow-3xl transition-all duration-700">
             <Image
-              src="/img/zyndrix_process_flow_v4.png"
+              src="/img/zyndrix_process_flow_v5.png"
               alt="Diagnostic Process Flow"
               fill
               className="object-cover grayscale brightness-95 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"

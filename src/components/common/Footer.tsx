@@ -21,8 +21,8 @@ export const Footer = ({ dict, locale }: { dict: any, locale: string }) => (
                     
                     <div className="flex gap-4 pt-4 border-t border-primary/5 w-full justify-center lg:justify-start">
                         {[
-                          { l: "HQ", v: "BARCELONA" },
-                          { l: "FOUNDED", v: "2024" }
+                          { l: "SEDE", v: "BARCELONA" },
+                          { l: "FUNDADO", v: "2024" }
                         ].map((item, idx) => (
                            <div key={idx} className="flex flex-col">
                               <span className="text-[7px] font-black text-secondary/30 uppercase tracking-widest">{item.l}</span>
@@ -49,13 +49,13 @@ export const Footer = ({ dict, locale }: { dict: any, locale: string }) => (
             <div className="pt-8 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-6 opacity-40">
                 <div className="flex items-center gap-8">
                    <div className="text-[7px] font-black uppercase tracking-[0.5em] text-primary">UNIT_ID: Z-HQ-BCN</div>
-                   <div className="text-[7px] font-black uppercase tracking-[0.5em] text-primary">BUILD: 2.0.42_PROD</div>
+                   <div className="text-[7px] font-black uppercase tracking-[0.5em] text-primary">VERSIÓN: 2.0.42_PROD</div>
                 </div>
                 
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-3">
                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                       <span className="text-[7px] font-black uppercase tracking-[0.5em] text-primary">NET_AUTH_VERIFIED</span>
+                       <span className="text-[7px] font-black uppercase tracking-[0.5em] text-primary">AUT_RED_VERIFICADA</span>
                     </div>
                     <div className="w-12 h-px bg-primary/20" />
                     <span className="text-[7px] font-black uppercase tracking-[0.2em] text-primary/40">© 2026 ZYNDRIX</span>

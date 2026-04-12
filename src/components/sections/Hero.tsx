@@ -91,14 +91,14 @@ export const Hero = ({ dict }: { dict: any }) => {
           
           <div className="flex items-center gap-12">
               <div className="hidden lg:flex flex-col items-end gap-1 text-right">
-                  <span className="text-[8px] font-bold tracking-[0.4em] text-secondary uppercase opacity-30">HQ</span>
+                  <span className="text-[8px] font-bold tracking-[0.4em] text-secondary uppercase opacity-30">SEDE</span>
                   <span className="text-[10px] font-black text-primary">BARCELONA</span>
               </div>
               <div className="flex flex-col items-end gap-1 text-right border-l border-green-200 pl-8">
-                  <span className="text-[8px] font-bold tracking-[0.4em] text-green-600 uppercase opacity-70">STATUS</span>
+                  <span className="text-[8px] font-bold tracking-[0.4em] text-green-600 uppercase opacity-70">ESTADO</span>
                   <div className="flex items-center gap-3">
                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                     <span className="text-[10px] font-black text-green-700 uppercase">ONLINE</span>
+                     <span className="text-[10px] font-black text-green-700 uppercase">EN LÍNEA</span>
                   </div>
               </div>
           </div>

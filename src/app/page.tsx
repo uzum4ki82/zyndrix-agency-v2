@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
 import { Kernel } from '@/components/sections/Kernel';
 import { Metodo } from '@/components/sections/Metodo';
-import { Casos } from '@/components/sections/Casos';
 import { EngineRoom } from '@/components/sections/EngineRoom';
 import { Impacto } from '@/components/sections/Impacto';
 import { BlueprintPromo } from '@/components/sections/BlueprintPromo';
@@ -46,7 +45,6 @@ export default async function Home() {
         <Kernel dict={dict.kernel} />
         <Metodo dict={dict.metodo} />
         <ROICalculator dict={dict.roi} />
-        <Casos dict={dict.casos} />
         <Impacto dict={dict.impacto} />
         <EngineRoom dict={dict.engine_room} />
         <FAQ dict={dict.faq} />

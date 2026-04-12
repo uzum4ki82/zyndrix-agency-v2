@@ -5,9 +5,7 @@ import { FileText, ArrowRight, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 
 export const BlueprintPromo = ({ dict }: { dict: any }) => (
-    <section className="py-12 px-6 md:px-10 relative bg-white border-t border-primary/10 overflow-hidden">
-      <div className="arch-grid opacity-20" />
-      
+    <section className="py-24 px-6 md:px-10 relative bg-white border-t border-primary/5 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 md:gap-24 relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -16,9 +14,14 @@ export const BlueprintPromo = ({ dict }: { dict: any }) => (
           className="lg:w-1/2 space-y-12 md:space-y-16 text-center lg:text-left"
         >
           <div className="flex flex-col gap-8">
-            <div className="text-[11px] font-black uppercase tracking-[0.6em] text-slate-500 flex items-center justify-center lg:justify-start gap-4">
-              <div className="w-12 h-[2px] bg-primary/30" />
-              {dict.badge}
+            <div className="flex items-center justify-center lg:justify-start gap-6">
+               <div className="text-[11px] font-black uppercase tracking-[0.6em] text-slate-500 flex items-center gap-4">
+                 <div className="w-12 h-[2px] bg-primary/10" />
+                 {dict.badge}
+               </div>
+               <div className="px-5 py-1.5 bg-primary/5 text-primary text-[8px] font-black uppercase tracking-[0.3em] border border-primary/10 rounded-full">
+                  ESTADO: DOCUMENTO_LIBERADO
+               </div>
             </div>
 
             <h2 className="text-5xl md:text-8xl font-heading font-black text-primary tracking-[-0.05em] uppercase leading-[0.85]">
@@ -27,31 +30,52 @@ export const BlueprintPromo = ({ dict }: { dict: any }) => (
             </h2>
           </div>
 
-          <div className="relative p-12 md:p-16 border-l-4 border-black bg-slate-100 backdrop-blur-sm shadow-xl">
-             <p className="text-xl md:text-2xl text-slate-800 font-medium tracking-tight leading-relaxed max-w-xl mx-auto lg:mx-0">
+          <div className="relative p-12 md:p-16 border-l-4 border-black bg-slate-50 shadow-sm transition-all duration-500 hover:shadow-md">
+             <p className="text-xl md:text-2xl text-slate-800 font-medium tracking-tight leading-relaxed">
                {dict.subtitle}
              </p>
-             <div className="absolute top-4 right-6 text-[8px] font-black text-primary/30 tracking-[0.5em] uppercase">VERIFIED_PROTOCOL_v4</div>
+             <div className="absolute top-4 right-6 text-[8px] font-black text-primary/20 tracking-[0.5em] uppercase">PROTOCOLO_VERIFICADO_v4</div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
-            {dict.items.map((item: string, i: number) => (
-              <div key={i} className="flex items-center gap-6 group bg-white p-8 border border-primary/10 shadow-sm hover:shadow-2xl hover:border-primary/30 transition-all duration-500">
-                  <ShieldCheck className="w-6 h-6 text-primary/50 group-hover:text-black transition-colors flex-shrink-0" />
-                  <span className="text-[12px] md:text-[13px] font-black uppercase tracking-tight text-slate-700 group-hover:text-black transition-colors">
-                    {item}
-                  </span>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+            {dict.items.map((item: string, i: number) => {
+              const images = [
+                "/img/blueprint_card_friction.png",
+                "/img/blueprint_card_architecture.png",
+                "/img/blueprint_card_roi.png",
+                "/img/blueprint_card_security.png",
+                "/img/blueprint_card_flows.png",
+                "/img/blueprint_card_autonomy.png"
+              ];
+              return (
+                <div key={i} className="flex flex-col group bg-white border border-primary/5 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden rounded-sm">
+                    <div className="relative w-full h-32 md:h-28 overflow-hidden bg-white border-b border-primary/5">
+                        <Image 
+                          src={images[i]} 
+                          alt={item}
+                          fill 
+                          className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-80 group-hover:opacity-100"
+                        />
+                    </div>
+                    <div className="p-6 md:p-8 flex items-center gap-4">
+                        <ShieldCheck className="w-4 h-4 text-primary/20 group-hover:text-black transition-colors flex-shrink-0" />
+                        <span className="text-[11px] font-black uppercase tracking-tight text-slate-700 group-hover:text-black transition-colors leading-tight">
+                          {item}
+                        </span>
+                    </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="pt-10 flex flex-col md:flex-row items-center gap-12">
-            <button className="btn-executive w-full md:w-auto px-20 h-24 flex items-center justify-center gap-8 group shadow-3xl bg-black text-white rounded-sm font-black text-[13px] uppercase tracking-[0.3em]">
+          <div className="pt-12 flex flex-col md:flex-row items-center gap-12">
+            <button className="btn-executive w-full md:w-auto px-16 h-24 flex items-center justify-center gap-8 group shadow-xl bg-black text-white rounded-sm font-black text-[13px] uppercase tracking-[0.3em]">
               <span>{dict.cta}</span>
               <ArrowRight size={22} className="group-hover:translate-x-4 transition-transform duration-700" />
             </button>
-            <div className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] max-w-[160px] leading-relaxed text-center md:text-left hidden md:block">
-               INITIAL_VALUATION_TIME: <br/><span className="text-black text-2xl tracking-tighter font-heading block mt-2">48 HORAS</span>
+            <div className="flex flex-col border-l-2 border-primary/5 pl-10 py-2">
+               <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mb-2">TIEMPO_VALORACIÓN:</span>
+               <span className="text-black text-2xl tracking-tighter font-heading font-black">48 HORAS</span>
             </div>
           </div>
         </motion.div>
@@ -63,48 +87,43 @@ export const BlueprintPromo = ({ dict }: { dict: any }) => (
           transition={{ duration: 1, ease: "circOut" }}
           className="lg:w-1/2 relative group w-full"
         >
-          {/* Decorative Technical Layer */}
-          <div className="absolute inset-0 bg-primary/5 blur-[120px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-          
-          <div className="relative border border-primary/10 p-4 bg-white shadow-3xl">
-            <div className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden border border-primary/10 bg-slate-50 group">
+          <div className="relative border border-primary/5 p-4 bg-white shadow-2xl">
+            <div className="absolute top-8 left-8 bg-black text-white px-6 py-2 z-10 font-bold text-[10px] tracking-[0.4em] uppercase">
+               REVISIÓN_ARCH_06
+            </div>
+            
+            <div className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden border border-primary/5 bg-white group">
                <Image 
-                 src="/img/zyndrix_technical_blueprint_v4.png" 
-                 alt="Zyndrix Architecture Workflow" 
+                 src="/img/zyndrix_framework_core_v1.png" 
+                 alt="Zyndrix Framework Core" 
                  fill
                  className="object-cover grayscale opacity-95 transition-all duration-1000 group-hover:scale-105 group-hover:opacity-100"
                />
                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+               <div className="absolute bottom-8 left-8 right-8 bg-black/90 p-6 border border-white/10">
+                  <div className="text-[14px] font-black text-white tracking-widest uppercase mb-1">FRAMEWORK_NÚCLEO_v1</div>
+                  <div className="text-[8px] font-medium text-white/50 tracking-[0.2em] uppercase">Arquitectura Interconectada para Escala Industrial</div>
+               </div>
             </div>
             
-            <div className="absolute -top-4 -right-4 md:-top-10 md:-right-10 bg-black text-white p-8 md:p-14 flex flex-col items-center justify-center border border-black shadow-3xl transform group-hover:scale-105 transition-transform duration-700">
-               <div className="text-[9px] font-black uppercase tracking-[0.4em] mb-3 opacity-40">PRIORITY_ACCESS</div>
+            <div className="absolute -top-4 -right-4 md:-top-10 md:-right-10 bg-black text-white p-8 md:p-14 flex flex-col items-center justify-center border border-black shadow-xl transform group-hover:scale-105 transition-transform duration-700">
+               <div className="text-[9px] font-black uppercase tracking-[0.4em] mb-3 opacity-40 text-center">ACCESO_PRIORITARIO</div>
                <div className="text-4xl md:text-5xl font-heading font-black tracking-tighter uppercase">{dict.free.split(' ')[0]}</div>
-               <div className="text-[8px] font-bold text-white/30 tracking-[0.2em] mt-3 uppercase">SEATS_REMAINING: 04</div>
+               <div className="text-[8px] font-bold text-white/30 tracking-[0.2em] mt-3 uppercase text-center">SLOTS_LIBRES: 04</div>
             </div>
 
             <div className="mt-10 grid grid-cols-3 gap-10">
-               {[
-                 { l: "Security", v: "MAX" },
-                 { l: "Auth", v: "LEVEL_4" },
-                 { l: "Status", v: "LIVE" }
-               ].map((x, idx) => (
-                  <div key={idx} className="flex flex-col border-l-2 border-primary/10 pl-6">
-                     <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">{x.l}</span>
-                     <span className="text-[11px] font-black text-black uppercase">{x.v}</span>
+               {dict.stats?.map((x: any, idx: number) => (
+                  <div key={idx} className="flex flex-col border-l-2 border-primary/5 pl-6">
+                     <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">{x.l}</span>
+                     <span className="text-xl md:text-2xl font-heading font-black text-black tracking-tight mb-1">{x.v}</span>
+                     <span className="text-[10px] font-medium text-slate-500 leading-tight">{x.d}</span>
                   </div>
                ))}
             </div>
           </div>
-          
-          <div className="absolute top-0 left-0 w-24 h-[2px] bg-black animate-pulse" />
-          <div className="absolute top-0 left-0 w-[2px] h-24 bg-black animate-pulse" />
         </motion.div>
       </div>
     </section>
-
-
-
-
 );
 

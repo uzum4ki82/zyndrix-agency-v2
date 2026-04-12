@@ -18,9 +18,10 @@
     "cta_secondary": "VIEW INVESTMENT",
     "cta_secondary_video": "VIEW PROTOCOL",
     "stats": [
-      { "v": "12+", "l": "NUCLEAR FLOWS" },
-      { "v": "99.9%", "l": "AI PRECISION" },
-      { "v": "10X", "l": "OPERATIONAL SCALE" }
+      { "v": "99.9% SLA", "l": "UPTIME" },
+      { "v": "1.2TB/S", "l": "THROUGHPUT" },
+      { "v": "0.15ms", "l": "LATENCY" },
+      { "v": "100%", "l": "SOVEREIGNTY" }
     ],
     "scroll": "EXPLORE"
   },
@@ -61,7 +62,19 @@
     "title_main": "THE 2026",
     "title_highlight": "AUTOMATION BLUEPRINT",
     "subtitle": "We've condensed our AI engineering methodology into a 45-page technical document. Learn how to scale your operating margin without increasing your headcount.",
-    "items": ["n8n Architecture Diagrams", "Advanced Lead Scoring Flows", "Support Agent Strategy"],
+    "items": [
+      "n8n Architecture Diagrams", 
+      "Advanced Lead Scoring Flows", 
+      "Support Agent Strategy",
+      "Nuclear Flow Mapping",
+      "Autonomy Manual 2026",
+      "Latency Audit Protocol"
+    ],
+    "stats": [
+      { "l": "CYCLE TIME", "v": "14 DAYS", "d": "From audit to initial injection." },
+      { "l": "INTEGRATION", "v": "FULL NATIVE", "d": "Zero friction with current stacks." },
+      { "l": "DEPLOYMENT", "v": "AUTONOMOUS", "d": "Self-healing operational loops." }
+    ],
     "cta": "DOWNLOAD BLUEPRINT",
     "free": "TOTALLY FREE"
   },
@@ -205,10 +218,15 @@
     "title": "From Idea to Result in 4 Steps",
     "subtitle": "A clear, efficient, and transparent process. No surprises, no delays.",
     "steps": [
-      { "s": "01", "t": "Total Audit", "d": "Massive mapping of inefficiencies." },
-      { "s": "02", "t": "AI Architecture", "d": "Technical blueprint design." },
-      { "s": "03", "t": "SPRINT Injection", "d": "High-impact technical deployments." },
-      { "s": "04", "t": "Industrial Scale", "d": "Latency and KPI monitoring." }
+      { "s": "01", "t": "TOTAL_AUDIT", "d": "Massive mapping of inefficiencies and capital leaks." },
+      { "s": "02", "t": "AI_ARCHITECTURE", "d": "Technical blueprint design and flow mapping." },
+      { "s": "03", "t": "SPRINT_INJECTION", "d": "High-impact technical deployments in your core." },
+      { "s": "04", "t": "INDUSTRIAL_SCALE", "d": "Latency monitoring and results expansion." }
+    ],
+    "stats": [
+      { "l": "CYCLE TIME", "v": "14 DAYS", "d": "From audit to initial injection." },
+      { "l": "INTEGRATION", "v": "FULL NATIVE", "d": "Zero friction with current stacks." },
+      { "l": "DEPLOYMENT", "v": "AUTONOMOUS", "d": "Self-healing operational loops." }
     ]
   },
   "planes": {

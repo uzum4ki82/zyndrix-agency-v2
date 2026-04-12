@@ -108,6 +108,33 @@ export const Kernel = ({ dict }: { dict: any }) => {
               </motion.div>
             );
           })}
+          {/* Visual Module - System Core Extended */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="md:col-span-12 lg:col-span-8 bg-white border border-primary/10 relative overflow-hidden group min-h-[420px] shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-700"
+          >
+            <Image
+               src="/img/zyndrix_control_center_v4.png"
+               alt="Zyndrix Control Center"
+               fill
+               className="object-cover grayscale brightness-100 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+
+            <div className="absolute top-8 left-8 bg-black text-white p-6 z-10 border border-white/20">
+               <div className="text-[7px] font-black tracking-[0.4em] uppercase opacity-50 mb-1">CENTRO DE</div>
+               <div className="text-[14px] font-black uppercase tracking-widest text-white">CONTROL_MÁSTER</div>
+            </div>
+
+            <div className="absolute top-8 right-8 flex gap-4 z-10">
+               {[1, 2, 3].map(i => (
+                 <div key={i} className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
+               ))}
+            </div>
+          </motion.div>
+
           {/* Visual Module - Hardware Core */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

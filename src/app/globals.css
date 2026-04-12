@@ -33,56 +33,33 @@
 }
 
 @layer components {
-  /* Premium Texture Overlay - Architectural "Paper" */
+  /* Clean White Base */
   .bg-base {
-    background-color: #f8fafc; /* Slate 50 */
-    background-image: 
-      linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: center center;
+    background-color: #FFFFFF;
     position: relative;
   }
 
-  .bg-base::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: url("/img/noise.svg");
-    opacity: 0.04;
-    pointer-events: none;
-    z-index: 50;
-  }
-
-  /* Decorative lines */
+  /* Structural Cleanliness - No grids */
   .arch-grid {
-    position: absolute;
-    inset: 0;
-    background-image: 
-      linear-gradient(to right, var(--color-primary) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-primary) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: linear-gradient(to bottom, black, transparent);
-    opacity: 0.08;
-    pointer-events: none;
+    display: none;
   }
 
   /* Bento Grid / Modular Architecture - Refined for Light Mode */
   .bento-card {
     background: #FFFFFF;
     border: 1px solid rgba(15, 23, 42, 0.05);
-    border-radius: 0.75rem; /* Slightly more rounded for premium feel */
+    border-radius: 2px; /* Professional Sharp Corners */
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 4px 24px -1px rgba(15, 23, 42, 0.03);
+    box-shadow: 0 4px 20px -1px rgba(15, 23, 42, 0.02);
   }
 
   .bento-card:hover {
     border-color: rgba(15, 23, 42, 0.1);
     background: #FFFFFF;
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -4px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -4px rgba(15, 23, 42, 0.05);
   }
 
   /* Executive Button - Industrial, Solid, High-Impact */
@@ -91,16 +68,11 @@
   }
 
   .text-luxury {
-    background: linear-gradient(180deg, #020617 0%, #475569 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #020617;
   }
 
   .glass-grid {
-    background-image: 
-      linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background: transparent;
   }
 }
 

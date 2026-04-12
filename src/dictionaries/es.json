@@ -20,7 +20,9 @@
     "stats": [
       { "v": "KERNEL", "l": "OPERATIVO" },
       { "v": "0.15ms", "l": "LATENCIA MEDIA" },
-      { "v": "100%", "l": "SOBERANÍA" }
+      { "v": "100%", "l": "SOBERANÍA" },
+      { "v": "99.9%", "l": "UPTIME SISTEMA" },
+      { "v": "1.2TB/S", "l": "PROCESAMIENTO" }
     ],
     "scroll": "EXPLORAR"
   },
@@ -141,7 +143,14 @@
       "Mapa de Fricción Operativa",
       "Diseño de Arquitectura n8n",
       "Proyección de ROI en Latencia",
-      "Protocolo de Seguridad Local"
+      "Protocolo de Seguridad Local",
+      "Mapeo de Flujos Nucleares",
+      "Manual de Autonomía 2026"
+    ],
+    "stats": [
+      { "l": "TIEMPO CICLO", "v": "14 DÍAS", "d": "De la auditoría a la inyección inicial." },
+      { "l": "INTEGRACIÓN", "v": "NATIVA TOTAL", "d": "Fricción cero con su stack actual." },
+      { "l": "DESPLIEGUE", "v": "AUTÓNOMO", "d": "Bucles operativos autorreparables." }
     ],
     "cta": "SOLICITAR BLUEPRINT",
     "free": "GRATIS POR_TIEMPO_LIMITADO"
@@ -151,10 +160,15 @@
     "title": "Del Concepto al Resultado en 4 Pasos",
     "subtitle": "Un proceso de ingeniería claro, eficiente y transparente. Sin fricción, sin retrasos.",
     "steps": [
-      { "s": "01", "t": "Auditoría Forense", "d": "Mapeo masivo de ineficiencias y fugas de capital." },
-      { "s": "02", "t": "Arquitectura IA", "d": "Diseño del blueprint técnico y mapa de flujos." },
-      { "s": "03", "t": "Inyección SPRINT", "d": "Despliegues técnicos de alto impacto en su núcleo." },
-      { "s": "04", "t": "Escala Industrial", "d": "Monitoreo de latencia y expansión de resultados." }
+      { "s": "01", "t": "AUDITORÍA_FORENSE", "d": "Análisis exhaustivo de flujos de datos y detección de cuellos de botella." },
+      { "s": "02", "t": "DISEÑO_ARQUITECTÓNICO", "d": "Creación del blueprint del núcleo de automatización a medida." },
+      { "s": "03", "t": "INYECCIÓN_DINÁMICA", "d": "Implementación de agentes y workflows en el sistema central." },
+      { "s": "04", "t": "ESCALADO_INDUSTRIAL", "d": "Optimización continua y expansión de la capacidad operativa." }
+    ],
+    "stats": [
+      { "l": "TIEMPO CICLO", "v": "14 DÍAS", "d": "De la auditoría a la inyección inicial." },
+      { "l": "INTEGRACIÓN", "v": "NATIVA TOTAL", "d": "Fricción cero con su stack actual." },
+      { "l": "DESPLIEGUE", "v": "AUTÓNOMO", "d": "Bucles operativos autorreparables." }
     ]
   },
 
@@ -186,7 +200,7 @@
         "before": "12 DÍAS",
         "after": "2.4 HORAS",
         "result": "99.8% aceleración en ciclo de ventas",
-        "desc": "SaaS B2B con web anticuada desconectada de CRM. Migramos a Portal ZYNDRIX con IA integrada: lead capture → calificación → agendado automático. Conversión web mejoró 340%. El portal ahora opera 24/7 de forma autónoma, con SDR artificial respondiendo consultas en tiempo real."
+        "desc": "SaaS B2B con web anticuada desconectada de CRM. Migramos a Portal ZYNDRIX con IA integrada: captación de leads → calificación → agendado automático. Conversión web mejoró 340%. El portal ahora opera 24/7 de forma autónoma, con SDR artificial respondiendo consultas en tiempo real."
       }
     ]
   },
@@ -255,9 +269,9 @@
       "systems": {
         "title": "Sistemas",
         "links": [
-          { "label": "Lead Gen", "href": "/#sistemas" },
-          { "label": "Agents", "href": "/#sistemas" },
-          { "label": "Workflow Core", "href": "/#sistemas" }
+          { "label": "Captación de Leads", "href": "/#sistemas" },
+          { "label": "Agentes de IA", "href": "/#sistemas" },
+          { "label": "Núcleo de Flujos", "href": "/#sistemas" }
         ]
       },
       "social": {

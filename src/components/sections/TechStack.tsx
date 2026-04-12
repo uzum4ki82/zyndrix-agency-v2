@@ -9,7 +9,11 @@ const ai_stack = [
   { name: "n8n", img: "/img/n8n-logo-clean.png" },
   { name: "Mistral", img: "/img/mistral-logo-clean.png" },
   { name: "Llama", img: "/img/llama-logo-clean.png" },
-  { name: "Perplexity", img: "/img/perplexity-logo-clean.png" }
+  { name: "Perplexity", img: "/img/perplexity-logo-clean.png" },
+  { name: "Grok", img: "/img/grok-logo-clean.png" },
+  { name: "Veo", img: "/img/veo-logo-clean.png" },
+  { name: "Sora", img: "/img/chatgpt-logo-clean.png" },
+  { name: "Gemini", img: "/img/veo-logo-clean.png" }
 ];
 
 export const TechStack = ({ dict }: { dict: any }) => {
@@ -22,11 +26,11 @@ export const TechStack = ({ dict }: { dict: any }) => {
           <div className="flex items-center gap-6">
              <div className="w-8 h-px bg-primary/20" />
              <div className="text-[10px] font-black uppercase tracking-[0.5em] text-primary/50 whitespace-nowrap">
-               {dict.title || "POWERED_BY_KERNEL_v4"}
+               {dict.title || "IMPULSADO_POR_NÚCLEO_v4"}
              </div>
           </div>
 
-          <div className="flex-1 flex flex-wrap items-center justify-center lg:justify-end gap-x-12 gap-y-6 md:gap-x-16 opacity-50 group-hover:opacity-100 transition-opacity duration-700">
+          <div className="flex-1 flex flex-wrap items-center justify-center lg:justify-between gap-x-12 gap-y-6 md:gap-x-16 opacity-50 group-hover:opacity-100 transition-opacity duration-700">
             {ai_stack.map((tech, i) => (
               <motion.div
                 key={i}

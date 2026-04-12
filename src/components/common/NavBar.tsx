@@ -79,10 +79,6 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
           </div>
 
           <div className="flex items-center gap-10">
-            <div className="hidden xl:flex items-center gap-3">
-               <ShieldCheck size={14} className="text-primary/20" />
-               <span className="text-[7px] font-black tracking-[0.4em] text-primary/10 uppercase">ENCRYPTED_SESSION_v4</span>
-            </div>
 
             <a href={`#${contactId}`} className="hidden md:flex items-center gap-6 text-[11px] font-black uppercase tracking-[0.5em] px-12 py-6 bg-black text-white hover:bg-slate-800 transition-all shadow-2xl relative overflow-hidden group">
               <span className="relative z-10">{dict.connect}</span>
@@ -117,7 +113,7 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
             </div>
 
             <div className="flex-1 p-10 flex flex-col justify-center gap-12">
-               <div className="text-[10px] font-black text-primary/20 tracking-[1em] mb-4 uppercase">MAIN_PROTOCOLS</div>
+               <div className="text-[10px] font-black text-primary/20 tracking-[1em] mb-4 uppercase">PROTOCOLOS_PRINCIPALES</div>
                 {[
                   { label: dict.servicios, id: 'kernel' },
                   { label: dict.casos, id: 'impacto' },
@@ -149,7 +145,7 @@ export const NavBar = ({ dict, locale, contactId = "contacto" }: { dict: any, lo
                 </a>
 
                 <div className="flex justify-between items-center">
-                   <div className="text-[8px] font-black tracking-[0.6em] uppercase text-primary/20">SYSTEM_CORE_v4.2</div>
+                   <div className="text-[8px] font-black tracking-[0.6em] uppercase text-primary/20">NÚCLEO_SISTEMA_v4.2</div>
                    <LiveTerminalSmall />
                 </div>
             </div>
@@ -163,7 +159,7 @@ const LiveTerminalSmall = () => {
     return (
         <div className="flex items-center gap-2">
             <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-[8px] font-mono text-primary/30 uppercase tracking-widest">ENCRYPTED_LIVE</span>
+            <span className="text-[8px] font-mono text-primary/30 uppercase tracking-widest">TRANSMISIÓN_ENCRIPTADA</span>
         </div>
     );
 };

@@ -62,9 +62,9 @@ export const Casos = ({ dict = {} }: { dict: any }) => {
                 <div className="w-full md:w-56 flex flex-col gap-8 pt-12 md:pt-0 border-t md:border-t-0 md:border-l border-primary/10 md:pl-10">
                    <div className="text-[10px] font-black text-secondary/40 uppercase tracking-[0.5em]">IMPACT_KPI</div>
                    {[
-                     { l: "Efficiency", v: "42%" },
-                     { l: "Cost Reduction", v: "28%" },
-                     { l: "Delivery Speed", v: "2.4x" }
+                     { l: "Eficiencia", v: "42%" },
+                     { l: "Reducción Costes", v: "28%" },
+                     { l: "Velocidad Entrega", v: "2.4x" }
                    ].map((m, idx) => (
                       <div key={idx} className="space-y-3">
                         <div className="flex justify-between text-[11px] font-bold text-primary">
@@ -115,15 +115,15 @@ export const Casos = ({ dict = {} }: { dict: any }) => {
 
            <div className="absolute inset-0 flex items-center justify-between px-24 z-10 pointer-events-none">
               <div className="max-w-lg bg-white p-14 shadow-3xl border border-primary/10">
-                 <div className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-500 mb-8">GLOBAL_IMPACT_REPORT</div>
+                 <div className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-500 mb-8">INFORME_IMPACTO_GLOBAL</div>
                  <h4 className="text-4xl font-heading font-black text-primary uppercase tracking-tighter mb-6 leading-none">RENDIMIENTO SISTEMÁTICO</h4>
                  <p className="text-[13px] text-slate-600 font-medium leading-relaxed">Arquitectura de IA desplegada para el control de operaciones complejas sin latencia física.</p>
               </div>
 
               <div className="flex flex-col gap-16 text-right hidden lg:flex">
                  {[
-                   { l: "Nodes Optimized", v: "142+" },
-                   { l: "Data Velocity", v: "1.2GB/s" }
+                   { l: "Nodos Optimizados", v: "142+" },
+                   { l: "Velocidad de Datos", v: "1.2GB/s" }
                  ].map((x, idx) => (
                     <div key={idx} className="flex flex-col gap-3">
                        <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.3em] leading-none">{x.l}</span>
@@ -133,7 +133,7 @@ export const Casos = ({ dict = {} }: { dict: any }) => {
               </div>
            </div>
 
-           <div className="absolute top-0 right-0 p-10 text-[8px] font-black text-primary/10 tracking-[0.6em] uppercase">SYSTEM_STABILITY_SECURED</div>
+           <div className="absolute top-0 right-0 p-10 text-[8px] font-black text-primary/10 tracking-[0.6em] uppercase">ESTABILIDAD_SISTEMA_ASEGURADA</div>
            <div className="absolute bottom-10 left-10 flex gap-2">
               {[1,2,3,4].map(i => <div key={i} className="w-1.5 h-4 bg-black opacity-30" />)}
            </div>
