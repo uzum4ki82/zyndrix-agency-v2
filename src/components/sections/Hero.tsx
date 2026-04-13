@@ -17,16 +17,16 @@ export const Hero = ({ dict }: { dict: any }) => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:w-[42%] space-y-10 text-center lg:text-left"
+            className="lg:w-[55%] space-y-10 text-center lg:text-left"
           >
             <div className="inline-flex items-center gap-3 px-6 py-2 bg-primary/10 border border-primary/20 rounded-full">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">{dict.badge}</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-heading font-black text-secondary leading-[0.95] tracking-tighter uppercase">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black text-secondary leading-[0.95] tracking-tighter uppercase">
               {dict.title_main} <br/>
-              <span className="text-primary italic">{dict.title_highlight}</span>
+              <span className="text-primary italic whitespace-nowrap">{dict.title_highlight}</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-secondary/70 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
@@ -70,7 +70,7 @@ export const Hero = ({ dict }: { dict: any }) => {
             initial={{ opacity: 0, scale: 0.9, x: 40 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-            className="lg:w-[58%] relative"
+            className="lg:w-[45%] relative"
           >
             <div className="relative aspect-square rounded-[4rem] overflow-hidden shadow-2xl border-[16px] border-white group">
                 <Image
@@ -87,7 +87,7 @@ export const Hero = ({ dict }: { dict: any }) => {
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 1, duration: 0.6 }}
-                  className="absolute bottom-12 -left-12 bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-primary/10 max-w-[240px]"
+                  className="absolute bottom-12 -left-6 bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-primary/10 max-w-[240px]"
                 >
                   <div className="text-primary font-black text-3xl tracking-tighter italic">"¡Vendiendo!"</div>
                   <div className="text-[10px] font-bold text-secondary/40 uppercase tracking-widest mt-2">Cita reservada hace 2 min</div>
