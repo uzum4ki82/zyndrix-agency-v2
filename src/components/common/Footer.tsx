@@ -9,12 +9,12 @@ export const Footer = ({ dict, locale }: { dict: any, locale: string }) => (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20 text-center md:text-left">
                 {/* Brand Column */}
                 <div className="col-span-1 lg:col-span-2 space-y-8">
-                    <Link href="/" className="relative w-[450px] h-48 block">
+                    <Link href="/" className="relative w-full max-w-[280px] md:max-w-[450px] h-24 md:h-48 block mx-auto md:mx-0">
                          <Image 
                             src="/img/logo_raw.png" 
                             alt="Zyndrix Logo" 
                             fill 
-                            className="object-contain mix-blend-multiply scale-125"
+                            className="object-contain mix-blend-multiply scale-100 md:scale-125"
                          />
                     </Link>
                     <p className="text-lg font-medium text-secondary/40 leading-relaxed max-w-sm mx-auto md:mx-0">
