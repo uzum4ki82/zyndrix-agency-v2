@@ -49,7 +49,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
 
     return (
         <section id="contacto" className="py-24 px-6 relative bg-white overflow-hidden">
-            <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+            <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-32 items-center">
                 
                 {/* Left Side: Business Message */}
                 <div className="flex flex-col">
@@ -58,7 +58,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                         {dict.badge}
                     </div>
                     
-                    <h2 className="text-6xl md:text-8xl font-heading font-black uppercase tracking-tight leading-[1] md:leading-[0.9] mb-10 text-secondary">
+                    <h2 className="text-6xl md:text-7xl font-heading font-black uppercase tracking-tight leading-[1] md:leading-[0.9] mb-10 text-secondary max-w-md">
                         {dict.title_part1}<br />
                         <span className="text-primary italic italic-font">{dict.title_part2}</span>
                     </h2>
