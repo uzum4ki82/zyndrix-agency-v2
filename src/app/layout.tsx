@@ -37,7 +37,7 @@ export default async function RootLayout({
               "name": dict.metadata.schema_name || "ZYNDRIX | Arquitectura de Automatización IA",
               "image": "https://www.zyndrix.com/img/zyndrix-live.png",
               "url": "https://www.zyndrix.com",
-              "telephone": "+34680875704",
+              "telephone": "+34637729266",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Torre Europa, P.º de la Castellana, 95",

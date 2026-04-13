@@ -70,7 +70,7 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
                 <div className="mt-16 p-10 rounded-[3rem] bg-secondary text-white flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="text-2xl font-heading font-black uppercase italic tracking-tight">¿Alguna otra duda?</div>
                     <a
-                      href="https://wa.me/34600123456" // Replace with actual phone
+                      href="https://wa.me/34637729266"
                       className="px-10 py-5 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-xl hover:bg-white hover:text-secondary transition-all duration-300"
                     >
                       PREGÚNTAME POR WHATSAPP
