@@ -26,7 +26,7 @@ export const Hero = ({ dict }: { dict: any }) => {
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black text-secondary leading-[0.95] tracking-tighter uppercase">
               {dict.title_main} <br/>
-              <span className="text-primary italic whitespace-nowrap">{dict.title_highlight}</span>
+              <span className="text-primary italic">{dict.title_highlight}</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-secondary/70 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
