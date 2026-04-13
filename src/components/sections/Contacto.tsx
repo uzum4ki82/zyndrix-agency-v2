@@ -68,7 +68,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                     </p>
 
                     <div className="space-y-6 pt-10 border-t border-secondary/5">
-                        <div className="flex items-center gap-6 group cursor-pointer">
+                        <a href="https://wa.me/34637729266" className="flex items-center gap-6 group cursor-pointer hover:no-underline">
                             <div className="w-14 h-14 rounded-2xl bg-secondary/5 flex items-center justify-center text-secondary group-hover:bg-primary group-hover:text-white transition-all duration-300">
                                 <MessageSquare size={24} />
                             </div>
@@ -76,7 +76,7 @@ export const Contacto = ({ dict, locale }: { dict: any, locale: string }) => {
                                 <div className="text-[10px] font-black text-secondary/30 uppercase tracking-[0.2em] mb-1">RESPUESTA RÁPIDA</div>
                                 <div className="text-xl font-black text-secondary uppercase">Hablemos por WhatsApp</div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 
