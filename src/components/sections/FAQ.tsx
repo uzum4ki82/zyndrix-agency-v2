@@ -2,28 +2,22 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus, Shield, Zap, Key, Database, ArrowRight } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-
-const icons = [Shield, Zap, Key, Database];
+import { Plus, Minus, HelpCircle } from 'lucide-react';
 
 export const FAQ = ({ dict = {} }: { dict: any }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section id="faq" className="py-12 px-10 relative overflow-hidden bg-white border-y border-primary/10">
-            <div className="arch-grid opacity-10" />
-            
+        <section id="faq" className="py-24 px-6 relative overflow-hidden bg-white">
             <div className="max-w-4xl mx-auto relative z-10">
-                <SectionHeader 
-                    title={dict.title || "PROTOCOLOS DE DUDA"} 
-                    badge={dict.badge || "SOPORTE_TÉCNICO"} 
-                    subtitle={dict.subtitle || "Respuesta de ingeniería para ejecutivos."}
-                />
+                <div className="flex flex-col items-center text-center mb-16">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary mb-6">{dict.badge}</div>
+                    <h2 className="text-5xl md:text-7xl font-heading font-black text-secondary mb-6 tracking-tight uppercase leading-[0.9]">{dict.title}</h2>
+                    <p className="text-xl text-secondary/40 leading-relaxed font-medium max-w-2xl">{dict.subtitle}</p>
+                </div>
 
-                <div className="mt-12 space-y-5">
+                <div className="space-y-4">
                     {dict?.items?.map((item: any, i: number) => {
-                        const Icon = icons[i % icons.length];
                         const isOpen = openIndex === i;
 
                         return (
@@ -33,25 +27,22 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`group border ${isOpen ? 'border-primary/30 bg-slate-50 shadow-lg' : 'border-primary/10 bg-white'} transition-all duration-500 hover:border-primary/20`}
+                                className={`rounded-3xl border transition-all duration-500 overflow-hidden ${isOpen ? 'border-primary bg-primary/5 shadow-xl' : 'border-secondary/5 bg-white hover:border-primary/30'}`}
                             >
                                 <button
                                     onClick={() => setOpenIndex(isOpen ? null : i)}
-                                    className="w-full p-10 md:p-12 flex items-center justify-between text-left gap-10"
+                                    className="w-full p-8 md:p-10 flex items-center justify-between text-left gap-6"
                                 >
-                                    <div className="flex items-center gap-10">
-                                        <div className={`w-16 h-16 flex items-center justify-center border-2 transition-all duration-500 ${isOpen ? 'bg-black text-white border-black' : 'bg-slate-50 text-primary/50 border-primary/20 group-hover:border-primary/40'}`}>
-                                            <Icon strokeWidth={1.5} size={24} />
+                                    <div className="flex items-center gap-6">
+                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-primary text-white' : 'bg-secondary/5 text-secondary/40'}`}>
+                                            <HelpCircle size={20} />
                                         </div>
-                                        <div className="flex-1">
-                                            <div className="text-[11px] font-black text-primary/30 tracking-[0.5em] uppercase mb-3">QUERY_LOG_{String(i+1).padStart(2, '0')}</div>
-                                            <span className={`text-lg md:text-2xl font-heading font-black tracking-tight uppercase transition-colors leading-tight ${isOpen ? 'text-primary' : 'text-slate-600 group-hover:text-primary'}`}>
-                                                {item.q}
-                                            </span>
-                                        </div>
+                                        <span className={`text-xl md:text-2xl font-heading font-black tracking-tight uppercase transition-colors leading-tight ${isOpen ? 'text-secondary' : 'text-secondary/60 group-hover:text-primary'}`}>
+                                            {item.q}
+                                        </span>
                                     </div>
-                                    <div className={`flex-shrink-0 w-10 h-10 rounded-full border-2 border-primary/20 flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 bg-primary border-primary text-white' : 'group-hover:border-primary/40'}`}>
-                                        {isOpen ? <Minus size={16} className="text-white" /> : <Plus size={16} className="text-primary/40" />}
+                                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 border-primary bg-primary text-white' : 'border-secondary/10 text-secondary/20'}`}>
+                                        {isOpen ? <Minus size={14} /> : <Plus size={14} />}
                                     </div>
                                 </button>
 
@@ -61,16 +52,12 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
                                             initial={{ height: 0, opacity: 0 }}
                                             animate={{ height: 'auto', opacity: 1 }}
                                             exit={{ height: 0, opacity: 0 }}
-                                            className="px-10 md:px-12 pb-12 overflow-hidden bg-slate-50/50"
+                                            className="px-8 md:px-10 pb-10 overflow-hidden"
                                         >
-                                            <div className="pl-24 border-l-4 border-primary/20 ml-8">
-                                                <p className="text-[15px] md:text-[16px] text-slate-700 leading-relaxed font-medium mb-8">
+                                            <div className="pl-18 border-l-2 border-primary/20">
+                                                <p className="text-lg text-secondary/60 leading-relaxed font-medium">
                                                     {item.a}
                                                 </p>
-                                                <div className="pt-8 border-t border-primary/10 flex items-center gap-4 text-[10px] font-black text-primary/40 uppercase tracking-[0.4em]">
-                                                   <div className="w-12 h-px bg-primary/20" />
-                                                   ✓ Verified Protocol v4.2
-                                                </div>
                                             </div>
                                         </motion.div>
                                     )}
@@ -78,6 +65,16 @@ export const FAQ = ({ dict = {} }: { dict: any }) => {
                             </motion.div>
                         );
                     })}
+                </div>
+                
+                <div className="mt-16 p-10 rounded-[3rem] bg-secondary text-white flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="text-2xl font-heading font-black uppercase italic tracking-tight">¿Alguna otra duda?</div>
+                    <a
+                      href="https://wa.me/34600123456" // Replace with actual phone
+                      className="px-10 py-5 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-xl hover:bg-white hover:text-secondary transition-all duration-300"
+                    >
+                      PREGÚNTAME POR WHATSAPP
+                    </a>
                 </div>
             </div>
         </section>

@@ -1,77 +1,34 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
-export const PainPoints = ({ dict = {}, system = {} }: { dict: any, system?: any }) => {
+export const PainPoints = ({ dict, system }: { dict: any, system?: any }) => {
   return (
-    <section id="problema" className="py-20 px-6 relative overflow-hidden bg-white border-y border-primary/10">
-      <div className="arch-grid opacity-15" />
-
+    <section id="razones" className="py-24 px-6 relative bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Minimal Diagnostic Header */}
-        <div className="mb-16">
-          <motion.div
-            animate={{ opacity: [1, 0.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="font-mono text-[9px] font-black text-red-600 uppercase tracking-[0.5em] mb-6 flex items-center gap-3"
-          >
-            <div className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />
-            {system.diagnosing || "DIAGNOSTIC_SCAN"}
-          </motion.div>
-
-          <h2 className="text-5xl md:text-7xl font-heading font-black text-primary uppercase tracking-[-0.04em] leading-[0.9] mb-6">
-            {dict.title || "LA FRICCIÓN"}
-          </h2>
-          <p className="text-lg md:text-xl text-secondary font-medium max-w-2xl leading-relaxed">
-            {dict.subtitle || "Operaciones fragmentadas = valor perdido. Visualizamos exactamente dónde está el cuello de botella."}
-          </p>
+        <div className="flex flex-col mb-16 items-center text-center">
+          <div className="text-[11px] font-bold uppercase tracking-[0.5em] text-primary mb-6">{dict.badge}</div>
+          <h2 className="text-5xl md:text-8xl font-heading font-black text-secondary mb-10 tracking-[-0.04em] uppercase leading-[0.85]">{dict.title}</h2>
+          <p className="text-xl text-secondary/40 leading-relaxed font-medium max-w-2xl">{dict.subtitle}</p>
         </div>
 
-        {/* Single Large Visual Diagnostic */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative group"
-        >
-          <div className="relative aspect-video md:aspect-[2/1] overflow-hidden border-2 border-red-200 bg-slate-100 shadow-2xl hover:shadow-3xl transition-all duration-700">
-            <Image
-              src="/img/zyndrix_process_flow_v5.png"
-              alt="Diagnostic Process Flow"
-              fill
-              className="object-cover grayscale brightness-95 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-1000"
-            />
-
-            {/* Overlay Text */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-            <div className="absolute bottom-8 left-8 right-8 relative z-10">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-                <div>
-                  <div className="text-[9px] font-black text-red-400 uppercase tracking-[0.5em] mb-3">PROCESO DIAGNOSTICADO</div>
-                  <h3 className="text-3xl md:text-5xl font-heading font-black text-white uppercase leading-[0.9] tracking-tight">
-                    {dict.diagnostic || "4 ETAPAS CRÍTICAS"}
-                  </h3>
-                </div>
-
-                <div className="hidden md:flex flex-col items-end gap-4 border-l border-white/30 pl-8">
-                  {[
-                    { label: "Fricción Operativa", value: "-98%" },
-                    { label: "Tiempo Manual", value: "-95%" },
-                    { label: "Costes Fijos", value: "-87%" }
-                  ].map((stat, i) => (
-                    <div key={i}>
-                      <div className="text-[10px] font-black text-white/50 uppercase tracking-widest">{stat.label}</div>
-                      <div className="text-3xl font-heading font-black text-white">{stat.value}</div>
-                    </div>
-                  ))}
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {dict.items?.map((item: any, i: number) => (
+            <div key={i} className="p-12 bg-slate-50 border border-secondary/5 rounded-[3rem] hover:border-primary/20 transition-all duration-500 group">
+              <div className="bg-primary/5 w-12 h-12 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                <span className="text-xl font-black italic">0{i+1}</span>
               </div>
+              <h3 className="text-2xl font-black uppercase tracking-tight mb-6 text-secondary">{item.title}</h3>
+              <p className="text-secondary/50 text-lg leading-relaxed font-medium">{item.description}</p>
             </div>
-          </div>
-        </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-20 flex justify-center">
+            <a href="#precios" className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-primary bg-primary/5 px-12 py-6 rounded-full hover:bg-primary hover:text-white transition-all duration-500">
+              EXPLORAR PLANES <ArrowRight size={16} />
+            </a>
+        </div>
       </div>
     </section>
   );

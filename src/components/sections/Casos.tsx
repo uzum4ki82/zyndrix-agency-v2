@@ -1,146 +1,109 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { SectionHeader } from '../common/SectionHeader';
-import { Quote } from 'lucide-react';
+import { Star, ArrowRight, Quote } from 'lucide-react';
 import Image from 'next/image';
 
 export const Casos = ({ dict = {} }: { dict: any }) => {
-  const images = ["/img/carlos.png", "/img/elena.png"];
-  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
   return (
-    <section id="casos" className="py-12 md:py-16 px-6 md:px-10 relative bg-base border-t border-primary/5 overflow-hidden">
-      <div className="arch-grid opacity-40" />
-      
+    <section id="casos" className="py-24 px-6 relative bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-8">
-           <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
-          {dict?.items?.map((caso: any, i: number) => (
+        <motion.div
+          className="flex flex-col items-center text-center mb-20"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary mb-6">{dict.badge}</div>
+          <h2 className="text-5xl md:text-7xl font-heading font-black text-secondary mb-6 tracking-tight uppercase leading-[0.9]">{dict.title}</h2>
+          <p className="text-xl text-secondary/40 leading-relaxed font-medium max-w-2xl">{dict.subtitle}</p>
+        </motion.div>
+
+        {/* Testimonials Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.1, delayChildren: 0.1 }}
+        >
+          {dict.items?.map((item: any, i: number) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -6 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-white p-10 md:p-14 border border-primary/10 group hover:shadow-2xl hover:border-primary/20 transition-all duration-700 relative overflow-hidden"
+              variants={itemVariants}
+              className="p-12 bg-slate-50 border border-secondary/5 rounded-[3.5rem] hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Quote size={120} />
-              </div>
-
-              <div className="relative z-10 w-full flex flex-col md:flex-row gap-12">
-                <div className="flex-1">
-                  <div className="flex justify-between items-start mb-10">
-                    <Quote className="w-8 h-8 text-primary/20" />
-                    <div className="text-[9px] font-black uppercase tracking-[0.5em] text-secondary/30">REP_0{i+1}</div>
-                  </div>
-
-                  <h4 className="text-4xl md:text-6xl font-heading font-black uppercase mb-12 tracking-tight text-primary leading-[0.9]">{caso.client}</h4>
-
-                  <div className="space-y-5 mb-12">
-                    <div className="flex justify-between items-center text-[11px] border-b border-primary/10 pb-4">
-                        <span className="text-secondary/50 uppercase tracking-[0.3em] font-bold">{dict.base_situation}</span>
-                        <span className="text-secondary font-bold uppercase">{caso.before}</span>
-                    </div>
-                    <div className="flex justify-between items-center bg-slate-50 p-8 border border-primary/10">
-                        <span className="text-primary uppercase tracking-[0.3em] font-black">{dict.zyndrix_result}</span>
-                        <span className="text-primary font-black text-2xl tracking-tighter">{caso.after}</span>
-                    </div>
-                  </div>
-
-                  <div className="mb-12">
-                      <div className="text-3xl font-black mb-4 tracking-tight text-primary leading-tight">{caso.result}</div>
-                      <p className="text-secondary text-base md:text-lg leading-relaxed font-medium">{caso.desc}</p>
-                  </div>
-                </div>
-
-                {/* Sidebar Metrics - Filling Space */}
-                <div className="w-full md:w-56 flex flex-col gap-8 pt-12 md:pt-0 border-t md:border-t-0 md:border-l border-primary/10 md:pl-10">
-                   <div className="text-[10px] font-black text-secondary/40 uppercase tracking-[0.5em]">IMPACT_KPI</div>
-                   {[
-                     { l: "Eficiencia", v: "42%" },
-                     { l: "Reducción Costes", v: "28%" },
-                     { l: "Velocidad Entrega", v: "2.4x" }
-                   ].map((m, idx) => (
-                      <div key={idx} className="space-y-3">
-                        <div className="flex justify-between text-[11px] font-bold text-primary">
-                           <span className="opacity-50">{m.l}</span>
-                           <span className="text-lg tracking-tighter">{m.v}</span>
-                        </div>
-                        <div className="h-1 w-full bg-slate-100 relative overflow-hidden">
-                           <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: "70%" }}
-                              className="h-full bg-primary/40"
-                           />
-                        </div>
+              <Quote className="absolute -top-4 -right-4 w-32 h-32 text-primary/5 opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-700" />
+              
+              <div className="flex flex-col md:flex-row gap-10 items-start md:items-center mb-10 relative z-10">
+                {/* Profile Image */}
+                <div className="relative flex-shrink-0">
+                  <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full opacity-0 group-hover:opacity-40 transition-opacity" />
+                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl relative z-10">
+                    {item.image ? (
+                      <Image 
+                        src={item.image} 
+                        alt={item.name} 
+                        width={128} 
+                        height={128} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-secondary/10 flex items-center justify-center text-secondary/40 font-black text-4xl">
+                        {item.name.charAt(0)}
                       </div>
-                   ))}
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <Star key={star} size={14} className="fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <h4 className="text-2xl font-heading font-black uppercase text-secondary mb-1 leading-none tracking-tight">
+                    {item.name}
+                  </h4>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-primary/60">
+                    {item.business}
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-8 pt-12 mt-12 border-t border-primary/10 relative z-10">
-                <div className="w-20 h-20 rounded-sm bg-slate-50 border border-primary/10 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700">
-                   <Image
-                      src={images[i] || "/img/hero-architectural.png"}
-                      alt={caso.client}
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
-                   />
+              {/* Quote */}
+              <blockquote className="text-xl md:text-2xl text-secondary/70 leading-relaxed font-medium mb-12 flex-grow italic relative z-10">
+                "{item.quote}"
+              </blockquote>
+
+              {/* Footer with metric */}
+              <div className="flex items-center justify-between pt-10 border-t border-secondary/5 relative z-10 mt-auto">
+                <div className="flex items-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm group-hover:shadow-md transition-shadow">
+                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  <span className="text-[12px] font-black uppercase tracking-[0.2em] text-secondary">
+                    {item.metric}
+                  </span>
                 </div>
-                <div>
-                   <div className="text-primary font-black uppercase tracking-tight text-xl leading-none mb-2">{dict.director_label}</div>
-                   <div className="text-secondary font-bold text-[9px] tracking-[0.4em] uppercase opacity-50">{dict.verification_label}</div>
+                
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-primary group-hover:translate-x-2 transition-transform">
+                  HISTORIA REAL <ArrowRight size={14} />
                 </div>
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Success Visualization Board to bridge holes */}
-        <div className="mt-16 relative aspect-[21/9] md:aspect-[32/9] overflow-hidden border border-primary/10 bg-white p-3 group shadow-xl">
-           <div className="relative w-full h-full overflow-hidden grayscale opacity-90 group-hover:opacity-100 transition-all duration-1000">
-              <Image
-                src="/img/zyndrix_success_growth_v4.png"
-                alt="Zyndrix Industrial Scaling"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-1000"
-              />
-           </div>
-
-           <div className="absolute inset-0 flex items-center justify-between px-24 z-10 pointer-events-none">
-              <div className="max-w-lg bg-white p-14 shadow-3xl border border-primary/10">
-                 <div className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-500 mb-8">INFORME_IMPACTO_GLOBAL</div>
-                 <h4 className="text-4xl font-heading font-black text-primary uppercase tracking-tighter mb-6 leading-none">RENDIMIENTO SISTEMÁTICO</h4>
-                 <p className="text-[13px] text-slate-600 font-medium leading-relaxed">Arquitectura de IA desplegada para el control de operaciones complejas sin latencia física.</p>
-              </div>
-
-              <div className="flex flex-col gap-16 text-right hidden lg:flex">
-                 {[
-                   { l: "Nodos Optimizados", v: "142+" },
-                   { l: "Velocidad de Datos", v: "1.2GB/s" }
-                 ].map((x, idx) => (
-                    <div key={idx} className="flex flex-col gap-3">
-                       <span className="text-[11px] font-black text-slate-300 uppercase tracking-[0.3em] leading-none">{x.l}</span>
-                       <span className="text-5xl font-heading font-black text-white mix-blend-difference">{x.v}</span>
-                    </div>
-                 ))}
-              </div>
-           </div>
-
-           <div className="absolute top-0 right-0 p-10 text-[8px] font-black text-primary/10 tracking-[0.6em] uppercase">ESTABILIDAD_SISTEMA_ASEGURADA</div>
-           <div className="absolute bottom-10 left-10 flex gap-2">
-              {[1,2,3,4].map(i => <div key={i} className="w-1.5 h-4 bg-black opacity-30" />)}
-           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
-
-
   );
 };

@@ -1,18 +1,16 @@
 import { Hero } from '@/components/sections/Hero';
 import { NavBar } from '@/components/common/NavBar';
-import { TechStack } from '@/components/sections/TechStack';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
-import { Kernel } from '@/components/sections/Kernel';
-import { Metodo } from '@/components/sections/Metodo';
-import { EngineRoom } from '@/components/sections/EngineRoom';
-import { Impacto } from '@/components/sections/Impacto';
-import { BlueprintPromo } from '@/components/sections/BlueprintPromo';
 import { Contacto } from '@/components/sections/Contacto';
 import { Footer } from '@/components/common/Footer';
 import { PainPoints } from '@/components/sections/PainPoints';
-import { ROICalculator } from '@/components/sections/ROICalculator';
 import { FAQ } from '@/components/sections/FAQ';
+import { Sistemas } from '@/components/sections/Sistemas';
+import { Planes } from '@/components/sections/Planes';
+import { Metodo } from '@/components/sections/Metodo';
+import { Ahorros } from '@/components/sections/Ahorros';
+import { Casos } from '@/components/sections/Casos';
 
 export async function generateMetadata() {
   const headerList = await headers();
@@ -33,22 +31,19 @@ export default async function Home() {
   const dict = await getDictionary(locale);
 
   return (
-    <main className="min-h-screen bg-base text-primary relative selection:bg-black selection:text-white">
+    <main className="min-h-screen bg-base text-primary relative selection:bg-primary selection:text-white">
       <NavBar dict={dict.nav} locale={locale} />
       
       <Hero dict={dict.hero} />
       
-      <TechStack dict={dict.tech_stack} />
-      
       <div className="space-y-0 relative z-10">
         <PainPoints dict={dict.pain_points} system={dict.system} />
-        <Kernel dict={dict.kernel} />
+        <Sistemas dict={dict.sistemas} system={dict.system} />
         <Metodo dict={dict.metodo} />
-        <ROICalculator dict={dict.roi} />
-        <Impacto dict={dict.impacto} />
-        <EngineRoom dict={dict.engine_room} />
+        <Ahorros dict={dict.ahorros} />
+        <Planes dict={dict.planes} system={dict.system} />
         <FAQ dict={dict.faq} />
-        <BlueprintPromo dict={dict.blueprint_promo} />
+        <Casos dict={dict.casos} />
         <Contacto dict={dict.contacto} locale={locale} />
       </div>
 

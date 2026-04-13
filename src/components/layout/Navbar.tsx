@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -17,53 +17,50 @@ export const Navbar = () => {
 
     const navLinks = [
         { name: 'Servicios', href: '/#servicios' },
-        { name: 'Impacto', href: '/#impacto' },
-        { name: 'Casos', href: '/#casos' },
-        { name: 'Proceso', href: '/#proceso' },
-        { name: 'FAQ', href: '/#faq' }
+        { name: 'Precios', href: '/#precios' },
+        { name: 'FAQ', href: '/#faq' },
+        { name: 'Contacto', href: '/#contacto' }
     ];
 
     return (
         <motion.nav
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            className={`fixed top-0 w-full z-100 transition-all duration-500 border-b ${
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ${
                 scrolled 
-                ? 'bg-base/80 backdrop-blur-2xl py-4 border-white/5' 
-                : 'bg-transparent py-8 border-transparent'
+                ? 'bg-white/80 backdrop-blur-2xl py-4 shadow-sm' 
+                : 'bg-transparent py-8'
             }`}
         >
             <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2 group">
-                    <img 
-                        src="/img/zyndrix-ultimate.png?v=horizontal" 
-                        alt="Zyndrix AI" 
-                        className="h-32 w-auto object-contain transition-all duration-300"
-                    />
+                    <span className="text-2xl font-heading font-black tracking-tighter uppercase text-secondary">
+                        ZYND<span className="text-primary italic italic-font">RIX</span>
+                    </span>
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-12">
-                    {navLinks.map((link) => (
+                <div className="hidden md:flex items-center gap-10">
+                    {navLinks.slice(0, 3).map((link) => (
                         <Link 
                             key={link.name} 
                             href={link.href}
-                            className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white transition-colors"
+                            className="text-[11px] font-black uppercase tracking-[0.3em] text-secondary/40 hover:text-primary transition-colors"
                         >
                             {link.name}
                         </Link>
                     ))}
                     <Link 
                         href="/#contacto" 
-                        className="flex items-center gap-2 px-8 py-4 bg-white text-black rounded-2xl font-black uppercase italic tracking-[0.2em] text-[10px] hover:bg-primary hover:text-white transition-all duration-500 shadow-xl"
+                        className="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/20"
                     >
-                        PROTOCOL_INIT <ArrowUpRight className="w-3 h-3" />
+                        HABLEMOS <ArrowRight className="w-3 h-3" />
                     </Link>
                 </div>
 
                 {/* Mobile Toggle */}
-                <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-                    {isOpen ? <X size={32} /> : <Menu size={32} />}
+                <button className="md:hidden text-secondary" onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? <X size={28} /> : <Menu size={28} />}
                 </button>
             </div>
 
@@ -71,20 +68,21 @@ export const Navbar = () => {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-surface-low border-b border-white/5"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="fixed inset-0 top-[72px] bg-white z-40 md:hidden p-10"
                     >
-                        <div className="px-10 py-20 flex flex-col gap-10">
+                        <div className="flex flex-col gap-8">
                             {navLinks.map((link) => (
                                 <Link 
                                     key={link.name} 
                                     href={link.href}
                                     onClick={() => setIsOpen(false)}
-                                    className="text-4xl font-black italic uppercase tracking-tighter text-white"
+                                    className="text-5xl font-heading font-black uppercase tracking-tighter text-secondary flex items-center justify-between group"
                                 >
-                                    {link.name}
+                                    <span>{link.name}</span>
+                                    <ArrowRight size={32} className="opacity-0 group-hover:opacity-100 -translate-x-10 group-hover:translate-x-0 transition-all text-primary" />
                                 </Link>
                             ))}
                         </div>

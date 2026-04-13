@@ -1,464 +1,270 @@
 {
   "nav": {
     "servicios": "SERVICIOS",
-    "oferta": "OFERTAS",
-    "casos": "RESULTADOS",
-    "testimonios": "RESEÑAS",
-    "proceso": "PROCESO",
-    "precios": "INVERSIÓN",
-    "faq": "FAQ",
-    "connect": "AUDITORÍA"
+    "precios": "PLANES Y PRECIOS",
+    "proceso": "CÓMO FUNCIONA",
+    "faq": "DUDAS",
+    "connect": "CONTACTAR"
   },
   "hero": {
-    "badge": "FIRMA DE ARQUITECTURA INTELIGENTE",
-    "title_main": "EL SISTEMA OPERATIVO",
-    "title_highlight": "DEL FUTURO",
-    "subtitle": "No vendemos herramientas. Diseñamos la infraestructura que reemplaza la fricción humana por ejecución autónoma.",
-    "cta_primary": "INICIAR PROTOCOLO",
-    "cta_secondary": "EL MÉTODO",
-    "cta_secondary_video": "VER KERNEL",
-    "stats": [
-      { "v": "KERNEL", "l": "OPERATIVO" },
-      { "v": "0.15ms", "l": "LATENCIA MEDIA" },
-      { "v": "100%", "l": "SOBERANÍA" },
-      { "v": "99.9%", "l": "UPTIME SISTEMA" },
-      { "v": "1.2TB/S", "l": "PROCESAMIENTO" }
-    ],
-    "scroll": "EXPLORAR"
-  },
-  "tech_stack": {
-    "title": "TECNOLOGÍAS INTEGRADAS"
+    "badge": "DIGITALIZACIÓN CERRADA EN 7-10 DÍAS",
+    "title_main": "TU NEGOCIO DE SIEMPRE,",
+    "title_highlight": "AHORA VENDIENDO 24H",
+    "subtitle": "Creamos tu web, tu tienda y tu sistema de reservas para que dejes de perder clientes frente a las grandes plataformas. Sin palabras raras, sin cuotas infinitas.",
+    "cta_primary": "VER PLANES Y PRECIOS",
+    "cta_secondary": "MI AUDITORÍA GRATIS",
+    "micro_copy": "Instalación en menos de 10 días."
   },
   "pain_points": {
-    "badge": "ANÁLISIS DE FRICCIÓN",
-    "title": "LA FRICCIÓN ES EL ENEMIGO",
-    "subtitle": "Identificando los cuellos de botella que limitan su visión corporativa.",
+    "badge": "¿POR QUÉ AHORA?",
+    "title": "SI NO ESTÁS EN EL MÓVIL DE TUS VECINOS, NO EXISTES",
+    "subtitle": "Mientras tú cierras a las 20:00, tus clientes están en Amazon o buscando en Google.",
     "items": [
       { 
-        "title": "PROCESOS MANUALES", 
-        "description": "Su equipo pierde el 70% de su tiempo en tareas que un algoritmo ejecuta en milisegundos." 
+        "title": "FUGA DE CLIENTES", 
+        "description": "Si tu web da pena (o no tienes), estás regalando dinero a la competencia que sí se tomó en serio internet." 
       },
       { 
-        "title": "FUGA DE DATOS", 
-        "description": "Información fragmentada en silos que impiden una toma de decisiones basada en la verdad." 
+        "title": "EL BARRIO HA CAMBIADO", 
+        "description": "Tus vecinos ya no pasean por la calle para descubrirte; lo hacen deslizando el dedo en su iPhone." 
       },
       { 
-        "title": "LATENCIA OPERATIVA", 
-        "description": "Respuestas lentas que resultan en la pérdida sistemática de oportunidades de alta conversión." 
+        "title": "GESTIÓN DEL SIGLO PASADO", 
+        "description": "¿Sigues apuntando citas a mano o perdiendo ventas por WhatsApp? Es hora de jugar en las grandes ligas." 
       }
     ]
   },
-  "roi": {
-    "badge": "ANÁLISIS DE FRICCIÓN",
-    "title": "EL TRABAJO MANUAL ES UN ERROR",
-    "subtitle": "Cada hora que su equipo dedica a tareas repetitivas es capital que no está expandiendo el núcleo de su negocio.",
-    "labels": {
-      "hours": "FRICCIÓN OPERATIVA / SEMANA",
-      "cost": "COSTE DE OPORTUNIDAD (€)",
-      "employees": "CAPACIDAD PERDIDA",
-      "monthly": "FUGA MENSUAL",
-      "yearly": "DECREMENTO ANUAL ESTIMADO"
-    },
-    "warning": {
-      "part1": "Su arquitectura actual está",
-      "highlight": "limitando su escala",
-      "part2": "mediante procesos obsoletos."
-    },
-    "cta": "SOLICITAR AUDITORÍA DE FRICCIÓN"
-  },
-  "kernel": {
-    "badge": "ZYNDRIX KERNEL",
-    "title": "LOS PILARES DE LA EJECUCIÓN",
-    "subtitle": "Cuatro módulos de ingeniería diseñados para integrarse en su flujo de trabajo y eliminar los cuellos de botella para siempre.",
+  "sistemas": {
+    "badge": "NUESTROS SERVICIOS",
+    "title": "SOLUCIONES LISTAS PARA USAR",
+    "subtitle": "Olvídate del código. Nosotros montamos todo y tú solo te encargas de vender.",
     "cards": [
       { 
-        "title": "AUDITORÍA DE FRICCIÓN", 
-        "description": "No buscamos problemas, buscamos donde se pierde dinero por lentitud.",
-        "icon": "Search"
+        "title": "PACK LOCAL", 
+        "description": "Ideal para bares, talleres y peluquerías que quieren ser encontrados por sus vecinos.",
+        "specs": ["Web Básica de Contacto", "Perfil Google Maps Optimizado", "Botón de WhatsApp Directo"]
       },
       { 
-        "title": "INYECCIÓN DE INTELIGENCIA", 
-        "description": "Implementación del Kernel en sus departamentos clave mediante agentes autónomos.",
-        "icon": "Zap"
+        "title": "PACK VENTA", 
+        "description": "Ideal para tiendas de ropa, alimentación o cualquier negocio con stock físico.",
+        "specs": ["Tienda Online Completa", "Pasarela de Pagos Segura", "Gestión de Stock Simplificada"]
       },
       { 
-        "title": "LATENCIA CERO", 
-        "description": "Orquestación de procesos que suceden en milisegundos, sin intervención humana.",
-        "icon": "Activity"
-      },
-      { 
-        "title": "ESCALADO AUTÓNOMO", 
-        "description": "Sistemas que aprenden y se optimizan solos según el volumen de demanda.",
-        "icon": "Shield"
+        "title": "PACK FUTURO (IA)", 
+        "description": "Ideal para negocios que quieren automatizar su atención al cliente y reservas.",
+        "specs": ["Web Profesional", "Bot de WhatsApp 24/7", "Sistema Automático de Citas"]
       }
     ]
   },
-  "engine_room": {
-    "badge": "SISTEMAS OPERATIVOS",
-    "title": "INFRAESTRUCTURA DE EJECUCIÓN",
-    "subtitle": "No implementamos bots aislados. Diseñamos ecosistemas interconectados que privatizan la eficiencia y eliminan la dependencia del error humano.",
-    "cards": [
-      { 
-        "icon": "Terminal",
-        "title": "Lead Gen Engine", 
-        "desc": "Extracción y limpieza masiva 24/7. Prospección autónoma en LinkedIn y Google Maps con filtrado por intención."
-      },
-      { 
-        "icon": "Cpu",
-        "title": "Agentes Operativos", 
-        "desc": "Modelos LLM locales para gestión de soporte, inventarios y logística sin latencia y con soberanía total de datos."
-      },
-      { 
-        "icon": "Layers",
-        "title": "Workflow Core", 
-        "desc": "Orquestación centralizada en n8n. Conectamos toda su infraestructura en un cerebro digital único y escalable."
-      },
-      { 
-        "icon": "Shield",
-        "title": "SDR Artificial", 
-        "desc": "Cualificación en milisegundos y agendado directo. Sus leads son contactados antes de que abandonen su web."
-      }
-    ],
-    "main_title": "SOBERANÍA DE DATOS ABSOLUTA",
-    "main_desc": "Toda la infraestructura se despliega en sus propios servidores. Usted es dueño del código, de los datos y de la inteligencia generada. Sin dependencias externas, sin vulnerabilidades de terceros.",
-    "cta": "VER PROTOCOLOS"
-  },
-
-  "impacto": {
-    "badge": "LA MÉTRICA DE LA AUTORÍA",
-    "title": "REEMPLAZAMOS TAREAS, NO PERSONAS",
-    "stats": [
-      { "v": "100%", "l": "REPETICIÓN ELIMINADA" },
-      { "v": "40h+", "l": "TIEMPO LIBERADO" },
-      { "v": "24/7", "l": "EJECUCIÓN NATIVA" },
-      { "v": "0.0s", "l": "TIEMPO DE RESPUESTA" }
-    ]
-  },
-  "blueprint_promo": {
-    "badge": "AUDITORÍA ESTRATÉGICA",
-    "title_main": "TU FUGA ES",
-    "title_highlight": "ESCALABLE",
-    "subtitle": "Diseñamos el Blueprint de su próxima arquitectura operativa. Un plan de ingeniería detallado para eliminar su dependencia del trabajo manual.",
+  "planes": {
+    "badge": "INVERSIÓN CLARA",
+    "title": "PRECIOS CERRADOS, SIN SORPRESAS",
+    "subtitle": "Elige el plan que mejor se adapte a tu momento actual. Un solo pago, sin suscripciones que te ahoguen.",
+    "recommended": "MÁS POPULAR",
+    "investment": "PAGO ÚNICO",
+    "monthly_suffix": "",
+    "cta": "LO QUIERO",
     "items": [
-      "Mapa de Fricción Operativa",
-      "Diseño de Arquitectura n8n",
-      "Proyección de ROI en Latencia",
-      "Protocolo de Seguridad Local",
-      "Mapeo de Flujos Nucleares",
-      "Manual de Autonomía 2026"
-    ],
-    "stats": [
-      { "l": "TIEMPO CICLO", "v": "14 DÍAS", "d": "De la auditoría a la inyección inicial." },
-      { "l": "INTEGRACIÓN", "v": "NATIVA TOTAL", "d": "Fricción cero con su stack actual." },
-      { "l": "DESPLIEGUE", "v": "AUTÓNOMO", "d": "Bucles operativos autorreparables." }
-    ],
-    "cta": "SOLICITAR BLUEPRINT",
-    "free": "GRATIS POR_TIEMPO_LIMITADO"
+      {
+        "name": "ARRANCA",
+        "price": "497",
+        "setup": "Un solo pago",
+        "features": [
+          "Web Profesional de Contacto",
+          "Gestión Google My Business",
+          "Integración WhatsApp",
+          "Soporte 1 mes"
+        ]
+      },
+      {
+        "name": "VENDE",
+        "price": "997",
+        "setup": "Un solo pago",
+        "recommended": true,
+        "features": [
+          "Tienda Online Completa",
+          "Gestión de Stock",
+          "Pasarela de Pagos (Tarjeta/Bizum)",
+          "Formación para vender online",
+          "Soporte 2 meses"
+        ]
+      },
+      {
+        "name": "ESCALA + IA",
+        "price": "1.997",
+        "setup": "Un solo pago",
+        "features": [
+          "Web + Sistema de Citas IA",
+          "Bot de WhatsApp 24/7",
+          "Automatización de Facturas",
+          "Estrategia de Captación Local",
+          "Soporte VIP 3 meses"
+        ]
+      }
+    ]
   },
   "metodo": {
-    "badge": "PROCESO",
-    "title": "Del Concepto al Resultado en 4 Pasos",
-    "subtitle": "Un proceso de ingeniería claro, eficiente y transparente. Sin fricción, sin retrasos.",
+    "badge": "PROCESO PROBADO",
+    "title": "DE LA IDEA A LA VENTA EN 7 DÍAS",
+    "subtitle": "Un proceso claro y sin sorpresas. Así hacemos que tu negocio esté vendiendo online en una semana.",
     "steps": [
-      { "s": "01", "t": "AUDITORÍA_FORENSE", "d": "Análisis exhaustivo de flujos de datos y detección de cuellos de botella." },
-      { "s": "02", "t": "DISEÑO_ARQUITECTÓNICO", "d": "Creación del blueprint del núcleo de automatización a medida." },
-      { "s": "03", "t": "INYECCIÓN_DINÁMICA", "d": "Implementación de agentes y workflows en el sistema central." },
-      { "s": "04", "t": "ESCALADO_INDUSTRIAL", "d": "Optimización continua y expansión de la capacidad operativa." }
-    ],
-    "stats": [
-      { "l": "TIEMPO CICLO", "v": "14 DÍAS", "d": "De la auditoría a la inyección inicial." },
-      { "l": "INTEGRACIÓN", "v": "NATIVA TOTAL", "d": "Fricción cero con su stack actual." },
-      { "l": "DESPLIEGUE", "v": "AUTÓNOMO", "d": "Bucles operativos autorreparables." }
-    ]
-  },
-
-  "casos": {
-    "badge": "RESULTADOS VERIFICADOS",
-    "title": "CUANDO LA ARQUITECTURA FUNCIONA",
-    "subtitle": "Resultados cuantificables de empresas que delegaron su operativa a máquinas inteligentes.",
-    "base_situation": "SITUACIÓN INICIAL",
-    "zyndrix_result": "POST_ZYNDRIX",
-    "director_label": "VERIFICACIÓN",
-    "verification_label": "Implementación Exitosa",
-    "items": [
       {
-        "client": "CLIENTE_001",
-        "before": "8,000 HORAS/AÑO",
-        "after": "120 HORAS/AÑO",
-        "result": "Reducción de 98.5% en trabajo manual",
-        "desc": "Agencia de marketing con 25 empleados ejecutando tareas repetitivas de lead nurturing. Implementamos Kernel IA + Portal ZYNDRIX. Ahora 1 empleado supervisa 95% del flujo mientras el equipo se dedica a estrategia creativa pura."
+        "number": "01",
+        "title": "AUDITORÍA",
+        "description": "Te hacemos un diagnóstico rápido: qué tienes, qué te falta, cuánto puedes ganar.",
+        "timeline": "Día 1",
+        "icon": "search"
       },
       {
-        "client": "CLIENTE_002",
-        "before": "€240K/AÑO",
-        "after": "€32K/AÑO",
-        "result": "86.7% reducción en costes operativos",
-        "desc": "Fintech con 18 operarios en back-office procesando transacciones. Orquestamos flujos n8n + agentes LLM locales. La arquitectura ahora ejecuta 4.2TB/segundo de procesamiento con latencia <2ms. Escalaron 12X sin contratar."
+        "number": "02",
+        "title": "DISEÑO",
+        "description": "Creamos tu web, tu tienda o tu bot. Todo hecho a medida, nada genérico.",
+        "timeline": "Días 2-3",
+        "icon": "palette"
       },
       {
-        "client": "CLIENTE_003",
-        "before": "12 DÍAS",
-        "after": "2.4 HORAS",
-        "result": "99.8% aceleración en ciclo de ventas",
-        "desc": "SaaS B2B con web anticuada desconectada de CRM. Migramos a Portal ZYNDRIX con IA integrada: captación de leads → calificación → agendado automático. Conversión web mejoró 340%. El portal ahora opera 24/7 de forma autónoma, con SDR artificial respondiendo consultas en tiempo real."
+        "number": "03",
+        "title": "IMPLEMENTACIÓN",
+        "description": "Integramos con tu WhatsApp, Google, pasarela de pagos. Todo conectado.",
+        "timeline": "Días 4-7",
+        "icon": "zap"
+      },
+      {
+        "number": "04",
+        "title": "GO LIVE",
+        "description": "Te enseñamos a vender. Soporte completo para que no tengas dudas.",
+        "timeline": "Día 7-10",
+        "icon": "rocket"
       }
     ]
   },
-
+  "ahorros": {
+    "badge": "INVERSIÓN INTELIGENTE",
+    "title": "LOS NÚMEROS QUE IMPORTAN",
+    "subtitle": "No te pedimos que confíes. Te mostramos el dinero.",
+    "items": [
+      {
+        "metric": "15h",
+        "description": "Horas que ahorras cada semana en gestión manual"
+      },
+      {
+        "metric": "€3.500",
+        "description": "Ingresos extra en el primer mes con tienda online"
+      },
+      {
+        "metric": "30%",
+        "description": "Aumento promedio en ventas con presencia online"
+      },
+      {
+        "metric": "7 días",
+        "description": "Tiempo hasta estar vendiendo 24/7"
+      }
+    ],
+    "cta": "CALCULAR MI GANANCIA",
+    "calculator_title": "Simulador de Ganancia"
+  },
+  "casos": {
+    "badge": "NEGOCIOS QUE YA VENDEN 24H",
+    "title": "DE CLIENTES REALES",
+    "subtitle": "Mira qué pasó cuando dejaron de perder dinero por no estar online.",
+    "items": [
+      {
+        "name": "María García",
+        "business": "Peluquería García",
+        "image": "/img/maria_final.png",
+        "quote": "En 10 días pasé de apuntar citas en papel a recibir reservas online. He ganado 8 clientes nuevos solo por Google Maps.",
+        "metric": "+8 clientes/mes"
+      },
+      {
+        "name": "Carlos Ruiz",
+        "business": "Taller Mecánico Ruiz",
+        "image": "/img/carlos_final.png",
+        "quote": "No creía que mi taller necesitara web. Hoy vendo repuestos online y eso genera un 40% de ingresos extra.",
+        "metric": "+40% ingresos"
+      },
+      {
+        "name": "Ana Martínez",
+        "business": "Tienda Textil Ana",
+        "image": "/img/ana_final.png",
+        "quote": "La tienda online nos funcionó desde el día 1. Ahora duermo tranquila sabiendo que vendo aunque el negocio esté cerrado.",
+        "metric": "Ventas 24/7"
+      },
+      {
+        "name": "Juan López",
+        "business": "Bar El Rincón",
+        "image": "/img/juan_final.png",
+        "quote": "Con la reserva automática de mesas pierdo menos clientes. El bot de WhatsApp nos ahorra horas de gestión cada semana.",
+        "metric": "-15h/semana"
+      }
+    ]
+  },
+  "faq": {
+    "badge": "PREGUNTAS COMUNES",
+    "title": "RESOLVEMOS TUS DUDAS",
+    "subtitle": "Si sabes usar WhatsApp, sabes usar lo que te montamos.",
+    "items": [
+      {
+        "q": "¿Es difícil de usar?",
+        "a": "Para nada. Te entregamos un panel ultra-sencillo y te enseñamos a manejarlo en 15 minutos."
+      },
+      {
+        "q": "¿Tengo que pagar cada mes?",
+        "a": "No. El software es tuyo. No hay suscripciones obligatorias ocultas que te aten a nosotros."
+      },
+      {
+        "q": "¿Cuánto tardáis realmente?",
+        "a": "Entre 7 y 10 días desde que tenemos tu información básica, tu negocio estará vendiendo online."
+      },
+      {
+        "q": "¿Y si no tengo fotos o logo?",
+        "a": "Nos encargamos nosotros. Creamos imágenes profesionales para que tu negocio luzca impecable."
+      }
+    ]
+  },
   "contacto": {
-    "badge": "INICIAR CONEXIÓN",
-    "title_part1": "¿CUÁL ES TU",
-    "title_part2": "MAYOR BLOQUEO?",
-    "subtitle": "Un solo paso separa su operativa actual de la autonomía total. Cuéntenos dónde se detiene su crecimiento.",
+    "badge": "VAMOS A ELLO",
+    "title_part1": "¿EMPEZAMOS",
+    "title_part2": "HOY MISMO?",
+    "subtitle": "Cuéntanos qué necesitas y te escribiremos en menos de 24h para empezar a trabajar.",
     "labels": {
-      "name": "IDENTIDAD CORPORATIVA",
-      "email": "CANAL DE ENLACE",
-      "phone": "TELÉFONO",
-      "message": "TU MAYOR BLOQUEO"
+      "name": "NOMBRE",
+      "email": "TU EMAIL",
+      "message": "CUÉNTANOS TU CASO"
     },
     "placeholders": {
-      "name": "NOMBRE / EMPRESA",
-      "email": "tu@empresa.com",
-      "phone": "+34 ...",
-      "message": "Describe el cuello de botella que quieres eliminar..."
+      "name": "Juan Pérez",
+      "email": "juan@negocio.com",
+      "message": "Tengo una peluquería y quiero que reserven online..."
     },
-    "button": "INICIAR AUDITORÍA",
-    "success_message": "PROTOCOLO DE CONTACTO INICIADO."
-  },
-
-  "faq": {
-    "badge": "SOPORTE TÉCNICO",
-    "title": "PROTOCOLOS DE DUDA",
-    "subtitle": "RESPUESTAS DE INGENIERÍA PARA OBJECIONES RACIONALES.",
-    "items": [
-      {
-        "q": "¿DÓNDE SE ALOJAN LOS DATOS?",
-        "a": "CONSTRUIMOS EN SUS SERVIDORES. USTED MANTIENE EL 100% DE LA PROPIEDAD Y SOBERANÍA DE SUS DATOS Y AUTOMATIZACIONES."
-      },
-      {
-        "q": "¿CUÁL ES EL TIEMPO DE DESPLIEGUE?",
-        "a": "UN BLUEPRINT NÚCLEO TOMA 7-14 DÍAS. SISTEMAS OS COMPLETOS REQUIEREN DE 3 A 6 SEMANAS DE ARQUITECTURA."
-      },
-      {
-        "q": "¿NECESITO PERSONAL TÉCNICO?",
-        "a": "CERO. ENTREGAMOS DASHBOARDS ULTRA-SIMPLIFICADOS QUE CUALQUIER MIEMBRO DEL EQUIPO PUEDE OPERAR."
-      },
-      {
-        "q": "¿CÓMO SE MIDE EL ÉXITO?",
-        "a": "MEDIANTE KPIs DE LATENCIA, PRECISIÓN Y HORAS/HOMBRE AHORRADAS CUANTIFICADAS EN CADA SPRINT."
-      }
-    ]
-  },
-  "guarantee": {
-    "badge": "COMPROMISO TÉCNICO",
-    "title": "GARANTÍA DE LATENCIA CERO",
-    "subtitle": "Si nuestro sistema no reduce su carga operativa en los primeros 30 días, recalibramos toda la infraestructura sin coste adicional hasta alcanzar el KPI acordado.",
-    "cta": "INICIAR CON SEGURIDAD"
+    "button": "SOLICITAR INFORMACIÓN",
+    "success_message": "¡Recibido! Te contactamos muy pronto."
   },
   "footer": {
-    "desc": "DOMINIO DE INGENIERÍA © 2026.",
+    "desc": "ZYNDRIX © 2026. Llevamos tu negocio de la calle a la pantalla.",
     "sections": {
       "protocol": {
-        "title": "Protocolo",
+        "title": "Legal",
         "links": [
           { "label": "PRIVACIDAD", "href": "/privacy" },
-          { "label": "TÉRMINOS", "href": "/terms" },
-          { "label": "SEGURIDAD", "href": "/security" }
+          { "label": "TÉRMINOS", "href": "/terms" }
         ]
       },
       "systems": {
-        "title": "Sistemas",
+        "title": "Servicios",
         "links": [
-          { "label": "Captación de Leads", "href": "/#sistemas" },
-          { "label": "Agentes de IA", "href": "/#sistemas" },
-          { "label": "Núcleo de Flujos", "href": "/#sistemas" }
-        ]
-      },
-      "social": {
-        "title": "social",
-        "links": [
-          { "label": "Instagram", "href": "https://www.instagram.com/zyndrix.ia" },
-          { "label": "LinkedIn", "href": "https://www.linkedin.com/company/zyndrix" },
-          { "label": "X (Twitter)", "href": "https://x.com/zyndrix" }
+          { "label": "Pack Local", "href": "/#sistemas" },
+          { "label": "Pack Venta", "href": "/#sistemas" },
+          { "label": "Pack Futuro", "href": "/#sistemas" }
         ]
       }
-    },
-    "links": {
-      "privacy": "PRIVACIDAD",
-      "terms": "TÉRMINOS",
-      "security": "SEGURIDAD"
     }
-  },
-  "socials": {
-    "twitter": "https://x.com/zyndrix",
-    "linkedin": "https://www.linkedin.com/company/zyndrix",
-    "instagram": "https://www.instagram.com/zyndrix.ia"
-  },
-  "auditoria": {
-    "badge": "PROTOCOLO DE ACCESO",
-    "title": "Auditoría de Sistemas IA",
-    "subtitle": "Escala tu operativa al siguiente nivel. Identificamos los cuellos de botella y diseñamos tu nueva arquitectura de autonomía.",
-    "features": [
-      { "title": "IA Diagnostics", "desc": "Identificación de procesos clave" },
-      { "title": "Global Sync", "desc": "Sistemas interconectados" },
-      { "title": "Team Scale", "desc": "Multiplicamos tu capacidad" },
-      { "title": "Architecture", "desc": "Blueprint personalizado" }
-    ],
-    "form": {
-      "business": "Nombre del Negocio",
-      "name": "Tu Nombre",
-      "phone": "Teléfono / WhatsApp",
-      "email": "Email Corporativo",
-      "web": "Web URL",
-      "problem": "Cuéntanos tu mayor cuello de botella...",
-      "budget": "Inversión Estimada",
-      "button": "Reclamar Auditoría",
-      "footer": "Al enviar aceptas nuestros protocolos de seguridad"
-    },
-    "budget_options": [
-      { "value": "<1k", "label": "MENOS DE 1.000€" },
-      { "value": "1k-3k", "label": "1.000€ - 3.000€" },
-      { "value": "3k-5k", "label": "3.000€ - 5.000€" },
-      { "value": ">5k", "label": "MÁS DE 5.000€" }
-    ],
-    "processing": "Sincronizando...",
-    "success": {
-      "title": "Protocolo Validado",
-      "desc": "Tus datos han sido procesados. Accediendo a Calendly para agendar tu llamada..."
-    }
-  },
-  "blueprint_page": {
-    "badge": "INFRAESTRUCTURA DE ALTA DISPONIBILIDAD",
-    "title": "Tu Fuga es Escalable.",
-    "subtitle": "Diagnóstica, industrializa y privatiza tu margen operativo.",
-    "scanner": {
-      "title": "Análisis de Fuga",
-      "module": "Módulo: IA_OP_SCANNER_v4",
-      "staff": "Cuerpo Operativo",
-      "label": "INEFICIENCIA_MENSUAL"
-    },
-    "form": {
-      "badge": "Protocolo de Acceso",
-      "title": "Privatizar Escala.",
-      "desc": "Completa el registro corporativo para adquirir hoy los sistemas que permitirán delegar al 100% tus tareas operativas.",
-      "name": "Nombre y Apellidos",
-      "company": "Empresa / Organización",
-      "email": "E-mail Corporativo",
-      "phone": "WhatsApp (Prefijo + N°)",
-      "sector": "Sector Operativo",
-      "priority": "Prioridad de Mejora",
-      "budget": "Nivel de Inversión",
-      "button": "GENERAR BLUEPRINT"
-    },
-    "budget_options": [
-      { "value": "scale", "label": "1k - 3k (SCALE)" },
-      { "value": "industrial", "label": "+5k (INDUSTRIAL)" },
-      { "value": "custom", "label": "A Medida" }
-    ],
-    "sectors": {
-      "ecommerce": "E-commerce / Retail",
-      "servicios": "Servicios B2B",
-      "tech": "Software / SaaS",
-      "realestate": "Real Estate / Legal"
-    },
-    "priorities": {
-      "leads": "Captación AI 24/7",
-      "admin": "Quitar Carga Operativa",
-      "scale": "Escalar sin Contratar"
-    },
-    "processing": "OPTIMIZANDO...",
-    "success": {
-      "title": "ACCESO LIBERADO",
-      "button": "DESCARGAR MANUAL"
-    }
-  },
-  "config": {
-    "calendly": "https://calendly.com/omontesquesada/zyndrix"
-  },
-  "privacy_page": {
-    "title": "Privacidad y Soberanía",
-    "subtitle": "Escudo de Seguridad",
-    "sections": [
-      {
-        "title": "RECOLECCIÓN DE DATOS",
-        "content": "En Zyndrix, la soberanía de los datos es nuestra prioridad absoluta. Recopilamos información únicamente para optimizar el rendimiento de nuestros agentes de IA y la experiencia del usuario.",
-        "list": [
-          "Datos de contacto suministrados en formularios de protocolo.",
-          "Métricas de interacción técnica para refinamiento de LLMs.",
-          "Logs de seguridad automatizados en tiempo real."
-        ]
-      },
-      {
-        "title": "USO DE INFORMACIÓN",
-        "content": "Toda la información procesada por nuestros Sistemas Nucleares se mantiene bajo encriptación de grado industrial. No vendemos, intercambiamos ni transferimos sus datos a entidades externas fuera de los protocolos de operación estrictamente necesarios para el servicio."
-      },
-      {
-        "title": "ALMACENAMIENTO SEGURO",
-        "content": "Nuestros servidores utilizan protocolos de latencia cero con redundancia geográfica total. Los datos son eliminados automáticamente tras la finalización de los ciclos de entrenamiento si así lo requiere el protocolo del cliente."
-      }
-    ]
-  },
-  "terms_page": {
-    "title": "Términos de Servicio",
-    "subtitle": "Marco Operativo",
-    "sections": [
-      {
-        "title": "1. ACUERDO DE USO",
-        "content": "Al acceder a Zyndrix AI Agency, usted acepta los protocolos de operación que rigen nuestra IA. Los 'Sistemas Nucleares' de Zyndrix se proporcionan para potenciar operaciones empresariales lícitas y éticas."
-      },
-      {
-        "title": "2. PROPIEDAD INTELECTUAL",
-        "content": "El diseño, la interfaz (UI) y los algoritmos propietarios de Zyndrix son propiedad intelectual exclusiva. Los resultados generados por el sistema pertenecen al cliente sujeto a los términos del contrato de servicio individual."
-      },
-      {
-        "title": "3. LIMITACIÓN DE RESPONSABILIDAD",
-        "content": "Zyndrix IA no se hace responsable de las interpretaciones o decisiones tomadas por agentes autónomos basadas en datos incorrectos o incompletos suministrados por el usuario final."
-      }
-    ]
-  },
-  "security_page": {
-    "title": "Protocolos de Seguridad",
-    "subtitle": "Infraestructura de Élite",
-    "items": [
-      {
-        "title": "ALMACENAMIENTO",
-        "desc": "Encriptación AES-256 en reposo con gestión de claves HSM gestionada por cada cliente de forma aislada."
-      },
-      {
-        "title": "RED",
-        "desc": "Firewalls de última generación con filtrado de paquetes en tiempo real y detección de intrusos basada en anomalías de IA."
-      },
-      {
-        "title": "CÓDIGO",
-        "desc": "Firmas digitales y escaneos de vulnerabilidades SAST/DAST diarios en cada actualización de nuestros Sistemas Nucleares."
-      },
-      {
-        "title": "MONITOREO",
-        "desc": "Observabilidad total 24/7 con alertas de latencia milimétricas y protocolos de remediación automatizados por n8n."
-      }
-    ]
-  },
-  "system": {
-    "analyzing": "SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL",
-    "diagnosing": "STATUS: DIAGNÓSTICO EJECUTANDO // COMPROBANDO_FRAGMENTACIÓN",
-    "validated": "PROTOCOLO_VALIDADO",
-    "verified": "REVISIÓN EXTERNA VERIFICADA",
-    "core": "NÚCLEO ESTRATÉGICO"
   },
   "metadata": {
     "home": {
-      "title": "ZYNDRIX | AGENCIA DE IA - SISTEMAS AUTÓNOMOS PARA EMPRESAS",
-      "description": "Lideramos la automatización industrial con IA. Sistemas cognitivos para escalar tu margen operativo sin aumentar personal."
+      "title": "ZYNDRIX | Digitalización para Negocios Locales - Tu Web en 7 Días",
+      "description": "Llevamos tu negocio de la calle a la pantalla. Creamos tu tienda online y sistema de reservas sin líos técnicos y en menos de 10 días."
     },
-    "auditoria": {
-      "title": "AUDITORÍA GRATIS | Zyndrix IA - Detecta Ineficiencias Ahora",
-      "description": "Solicita tu auditoría de sistemas IA. Analizamos tu stack tecnológico gratis y diseñamos tu plan de automatización personalizado en 48h."
-    },
-    "blueprint": {
-      "title": "BLUEPRINT 2026 | MANUAL DE AUTOMATIZACIÓN IA - ZYNDRIX",
-      "description": "Accede a nuestra metodología de ingeniería IA. 45 páginas de arquitectura de flujos y agentes para dominar tu sector."
-    },
-    "keywords": "IA para empresas, Automatización de leads, Ingeniería de procesos IA, Agencia de automatización Madrid, Captación de leads autónoma",
-    "schema_name": "ZYNDRIX | Arquitectura de Automatización IA"
+    "keywords": "digitalización negocios locales, tienda online barata, sistema reservas peluquería, web para talleres, agencia web madrid",
+    "schema_name": "ZYNDRIX | Tu Socio Digital"
   }
 }

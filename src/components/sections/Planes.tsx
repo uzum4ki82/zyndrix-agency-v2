@@ -1,62 +1,53 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
+import { ArrowRight, Check } from 'lucide-react';
 
-export const Planes = ({ dict = {}, system = {} }: { dict: any, system?: any }) => {
+export const Planes = ({ dict = {} }: { dict: any }) => {
   return (
-    <section id="precios" className="py-12 md:py-20 px-4 md:px-10 relative overflow-hidden bg-base">
-      {/* Decorative center glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[180px] opacity-20 pointer-events-none" />
+    <section id="precios" className="py-24 px-6 relative overflow-hidden bg-secondary text-white">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 blur-[180px] opacity-20 pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="flex flex-col items-center mb-10">
-           <motion.div 
-             animate={{ opacity: [1, 0.4, 1] }} 
-             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-             className="font-mono text-[9px] font-black text-primary uppercase tracking-[0.5em] mb-4 flex items-center gap-4 bg-primary/5 px-6 py-2 rounded-full border border-primary/20"
-           >
-              <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
-              {system.analyzing || "SISTEMA: ANALIZANDO MODELOS DE INVERSIÓN // CALCULANDO ROI_OPTIMAL"}
-           </motion.div>
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col items-center mb-16 text-center">
+           <div className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary mb-6">{dict.badge}</div>
+           <h2 className="text-5xl md:text-7xl font-heading font-black text-white mb-6 tracking-[-0.04em] uppercase leading-[0.9]">{dict.title}</h2>
+           <p className="text-xl text-white/40 leading-relaxed font-medium max-w-2xl">{dict.subtitle}</p>
         </div>
-        <SectionHeader title={dict.title} subtitle={dict.subtitle} badge={dict.badge} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch pt-12">
-          {dict?.items?.map((plan: any, idx: number) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {dict.items?.map((plan: any, idx: number) => (
             <motion.div
               key={plan.name}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.15, type: "spring", stiffness: 100 }}
-              className={`p-8 md:p-14 rounded-[3.5rem] md:rounded-[4rem] border transition-all duration-700 flex flex-col relative group ${plan.recommended ? 'glass-premium border-primary/50 shadow-[0_0_100px_rgba(56,189,248,0.15)] md:scale-105 z-20' : 'bg-white/5 border-white/5 hover:border-white/20 z-10'}`}
+              transition={{ delay: idx * 0.1 }}
+              className={`p-10 rounded-[3rem] border transition-all duration-500 flex flex-col relative group ${plan.recommended ? 'bg-white border-primary shadow-2xl scale-105 z-20' : 'bg-white/5 border-white/10 hover:border-white/20 z-10'}`}
             >
               {plan.recommended && (
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary text-black text-[11px] font-black px-10 py-3 rounded-full uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(56,189,248,0.5)]">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black px-8 py-3 rounded-full uppercase tracking-[0.2em] shadow-xl">
                   {dict.recommended}
                 </div>
               )}
 
-              <div className="mb-12 relative">
-                <div className="text-primary/40 font-black text-[10px] tracking-[0.4em] uppercase mb-4">{plan.name}</div>
-                <div className="text-white/20 font-mono text-[9px] font-bold tracking-[0.3em] mb-4 uppercase flex items-center gap-2">
-                   <div className="w-1 h-1 bg-primary rounded-full animate-pulse" />
-                   {dict.investment}: {plan.setup}
+              <div className="mb-10">
+                <div className={`font-black text-[12px] tracking-[0.4em] uppercase mb-4 ${plan.recommended ? 'text-primary' : 'text-white/40'}`}>{plan.name}</div>
+                <div className={`text-[10px] font-bold tracking-[0.2em] mb-4 uppercase flex items-center gap-2 ${plan.recommended ? 'text-secondary/60' : 'text-white/20'}`}>
+                   {dict.investment}
                 </div>
-                <div className="flex items-baseline gap-2 w-full overflow-hidden">
-                  <span className={`${isNaN(Number(plan.price)) ? 'text-4xl md:text-5xl lg:text-6xl' : 'text-6xl lg:text-8xl'} font-heading font-black text-white tracking-tighter italic leading-none whitespace-pre-wrap`}>
-                    {plan.price}{!isNaN(Number(plan.price)) && <span className="text-4xl ml-1">€</span>}
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-6xl md:text-7xl font-heading font-black tracking-tighter italic ${plan.recommended ? 'text-secondary' : 'text-white'}`}>
+                    {plan.price}
                   </span>
-                  {!isNaN(Number(plan.price)) && <span className="text-white/20 font-black italic uppercase text-lg">{dict.monthly_suffix}</span>}
+                  <span className={`text-2xl font-black italic ${plan.recommended ? 'text-secondary/40' : 'text-white/20'}`}>€</span>
                 </div>
               </div>
 
-              <div className="flex-grow mb-16 px-2">
-                <ul className="space-y-6">
+              <div className="flex-grow mb-12">
+                <ul className="space-y-5">
                   {plan.features.map((feature: string, fIdx: number) => (
-                    <li key={fIdx} className="flex items-start gap-4 text-white/40 text-[13px] font-medium leading-relaxed group-hover:text-white transition-colors duration-500">
-                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                    <li key={fIdx} className={`flex items-start gap-4 text-[14px] font-medium leading-relaxed ${plan.recommended ? 'text-secondary/70' : 'text-white/40'}`}>
+                      <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${plan.recommended ? 'text-primary' : 'text-white/20'}`} />
                       {feature}
                     </li>
                   ))}
@@ -65,16 +56,11 @@ export const Planes = ({ dict = {}, system = {} }: { dict: any, system?: any }) 
 
               <a 
                 href="#contacto" 
-                className="btn-elite w-full group py-8 h-20"
+                className={`w-full py-6 flex items-center justify-center gap-3 rounded-2xl font-black uppercase tracking-widest text-xs transition-all duration-300 ${plan.recommended ? 'bg-primary text-white hover:bg-secondary' : 'bg-white/10 text-white hover:bg-white hover:text-secondary'}`}
               >
-                <span className="text-[14px]">{dict.cta}</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />
+                <span>{dict.cta}</span>
+                <ArrowRight className="w-4 h-4" />
               </a>
-              
-              {/* Subtle background number Decoration */}
-              <div className="absolute bottom-10 right-10 text-9xl font-heading font-black text-white/5 italic pointer-events-none group-hover:text-primary/5 transition-colors duration-1000">
-                 0{idx + 1}
-              </div>
             </motion.div>
           ))}
         </div>

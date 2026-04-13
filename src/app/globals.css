@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-base: #F8FAFC; /* Architectural Off-White */
-  --color-surface-low: #FFFFFF;
+  --color-base: #FFFFFF; /* Clean White */
+  --color-surface-low: #F8FAFC;
   --color-surface-mid: #F1F5F9;
   --color-surface-high: #E2E8F0;
-  --color-primary: #020617; /* Deep Charcoal */
-  --color-secondary: #475569; /* Slate Gray */
-  --color-accent: #0f172a; /* Industrial Navy/Black */
-  --color-gold: #854d0e; /* Ochre Accents */
+  --color-primary: #0066FF; /* Electric Blue */
+  --color-secondary: #0F172A; /* Slate Navy */
+  --color-accent: #22C55E; /* Success Green */
+  --color-gold: #0066FF; /* Replaced with primary blue */
 }
 
 @layer base {
   :root {
-    --font-heading: var(--font-space-grotesk), sans-serif;
-    --font-body: var(--font-outfit), sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
 
   body {
