@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 
-export const Planes = ({ dict = {} }: { dict: any }) => {
+export const Planes = ({ dict = {}, system }: { dict: any, system?: any }) => {
   return (
     <section id="precios" className="py-24 px-6 relative overflow-hidden bg-secondary text-white">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 blur-[180px] opacity-20 pointer-events-none" />

@@ -31,7 +31,7 @@ const ServiceCard = ({ icon: Icon, title, description, specs, className = "" }: 
   </motion.div>
 );
 
-export const Sistemas = ({ dict }: { dict: any }) => (
+export const Sistemas = ({ dict, system }: { dict: any, system?: any }) => (
   <section id="servicios" className="py-24 px-6 relative overflow-hidden bg-white">
     <div className="max-w-7xl mx-auto relative z-10">
       <div className="flex flex-col mb-16 items-center text-center">
