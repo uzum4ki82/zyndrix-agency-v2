@@ -35,7 +35,7 @@ export const ChatAgent = () => {
 
     try {
       // Reemplaza esta URL con tu webhook de producción de n8n
-      const response = await fetch('https://tu-instancia.n8n.cloud/webhook/zyndrix-chat', {
+      const response = await fetch('https://n8n.zyndrix.dev/webhook/7f93bc65-c3da-4de3-99e4-800040bdbc35/chat', {
         method: 'POST',
         body: JSON.stringify({ 
             message: input, 
