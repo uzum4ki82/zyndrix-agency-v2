@@ -37,14 +37,14 @@ export const Metodo = ({ dict = {} }: { dict: any }) => {
 
         {/* Timeline Steps */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20 relative"
+          className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20 relative"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ staggerChildren: 0.15, delayChildren: 0.1 }}
         >
-          {/* Connecting Line */}
-          <div className="hidden md:block absolute top-24 left-[12.5%] right-[12.5%] h-[2px] bg-gradient-to-r from-transparent via-primary/30 to-transparent z-0" />
+          {/* Connecting Line - Adjusted for new icon position */}
+          <div className="hidden md:block absolute top-12 left-[12.5%] right-[12.5%] h-[1px] bg-gradient-to-r from-transparent via-secondary/10 to-transparent z-0" />
 
           {dict.steps?.map((step: any, i: number) => {
             const Icon = iconMap[step.icon] || Search;
@@ -52,21 +52,21 @@ export const Metodo = ({ dict = {} }: { dict: any }) => {
               <motion.div
                 key={i}
                 variants={itemVariants}
-                className="relative z-10 flex flex-col"
+                className="relative z-10 flex flex-col items-center text-center"
               >
-                {/* Number Badge */}
-                <div className="mb-10">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-primary text-white font-heading font-black text-2xl">
-                    {step.number}
-                  </div>
+                {/* Protocol Icon: The new visual anchor */}
+                <div className="mb-8 relative">
+                    <div className="w-24 h-24 rounded-[2rem] bg-white border border-secondary/5 shadow-[0_20px_50px_rgba(0,0,0,0.05)] flex items-center justify-center text-primary relative z-10 transition-all duration-500 hover:border-primary/30">
+                        <Icon size={32} strokeWidth={1.5} />
+                    </div>
+                    {/* Subtle Number Indicator */}
+                    <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center text-[10px] font-black tracking-tighter z-20 shadow-xl border-4 border-white">
+                        {step.number}
+                    </div>
                 </div>
 
-                {/* Icon and Content Card */}
-                <div className="flex-1 p-8 bg-slate-50 border border-secondary/5 rounded-[2.5rem] hover:border-primary/20 transition-all duration-500">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
-                    <Icon size={24} className="text-primary" />
-                  </div>
-
+                {/* Content Card */}
+                <div className="flex-1 w-full p-6 rounded-[3rem] transition-all duration-500 hover:bg-slate-50/50">
                   <h3 className="text-2xl font-heading font-black uppercase tracking-tight mb-4 text-secondary">
                     {step.title}
                   </h3>
@@ -75,7 +75,7 @@ export const Metodo = ({ dict = {} }: { dict: any }) => {
                     {step.description}
                   </p>
 
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+                  <div className="inline-block px-4 py-2 bg-primary/5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
                     {step.timeline}
                   </div>
                 </div>
