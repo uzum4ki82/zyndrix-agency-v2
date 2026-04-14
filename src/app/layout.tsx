@@ -2,6 +2,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { Viewport } from 'next';
 import { Background } from "@/components/common/Background";
+import { ChatAgent } from "@/components/layout/ChatAgent";
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
 
@@ -73,6 +74,7 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#03040a] selection:bg-primary selection:text-black`}>
         <Background />
         {children}
+        <ChatAgent />
       </body>
     </html>
   );

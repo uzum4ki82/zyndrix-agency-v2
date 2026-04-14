@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export const PainPoints = ({ dict, system }: { dict: any, system?: any }) => {
   return (
@@ -15,8 +16,13 @@ export const PainPoints = ({ dict, system }: { dict: any, system?: any }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {dict.items?.map((item: any, i: number) => (
             <div key={i} className="p-12 bg-slate-50 border border-secondary/5 rounded-[3rem] hover:border-primary/20 transition-all duration-500 group">
-              <div className="bg-primary/5 w-12 h-12 rounded-2xl flex items-center justify-center mb-10 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <span className="text-xl font-black italic">0{i+1}</span>
+              <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden mb-10 border border-secondary/5 group-hover:border-primary/20 transition-all">
+                <Image 
+                  src={`/img/pain_${i+1}.png`} 
+                  alt={item.title} 
+                  fill 
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                />
               </div>
               <h3 className="text-2xl font-black uppercase tracking-tight mb-6 text-secondary">{item.title}</h3>
               <p className="text-secondary/50 text-lg leading-relaxed font-medium">{item.description}</p>
