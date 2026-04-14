@@ -3,6 +3,7 @@ import "./globals.css";
 import { Viewport } from 'next';
 import { Background } from "@/components/common/Background";
 import { ChatAgent } from "@/components/layout/ChatAgent";
+import { CookieConsent } from "@/components/common/CookieConsent";
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
 
@@ -75,6 +76,7 @@ export default async function RootLayout({
         <Background />
         {children}
         <ChatAgent />
+        <CookieConsent />
       </body>
     </html>
   );
