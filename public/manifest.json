@@ -1,0 +1,17 @@
+{
+  "name": "StreetCloser AI",
+  "short_name": "StreetCloser",
+  "description": "Sales automation on the go.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3203/3203071.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -35,7 +35,14 @@ yarn-error.log*
 
 # vercel
 .vercel
+.agent/
+*.txt
+scratch/
+videos/
+lanza_zyndrix.bat
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel

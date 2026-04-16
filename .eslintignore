@@ -1,0 +1,7 @@
+.next/
+node_modules/
+.agent/
+scratch/
+test-send.js
+out/
+build/
