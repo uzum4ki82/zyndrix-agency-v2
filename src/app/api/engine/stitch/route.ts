@@ -14,17 +14,13 @@ export async function POST(request: Request) {
     
     await new Promise(r => setTimeout(r, 2000)); // Simulate deep generation
     
-    // For the demo "Taller Xapi", we return the high-fidelity prototype path
-    const isTallerXapi = business.name.toLowerCase().includes('xapi');
-    const previewUrl = isTallerXapi 
-      ? "/demo-taller.html" 
-      : `https://stitch.zyndrix.dev/preview/${business.id}?theme=supreme`;
+    const previewUrl = `/demo/${business.id}`;
 
     return NextResponse.json({
       success: true,
       projectId: `stitch-${business.name.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`,
       previewUrl: previewUrl,
-      screenshotUrl: business.photoUrl || (isTallerXapi ? "/assets/demo/hero.png" : "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"),
+      screenshotUrl: business.screenshotUrl || business.screenshot || business.photoUrl || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1000",
       metadata: {
         theme: "Architectural Luxury",
         prompt: supremePrompt,

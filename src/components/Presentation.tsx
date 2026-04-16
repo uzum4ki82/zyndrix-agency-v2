@@ -27,7 +27,7 @@ export default function Presentation({ business, onClose }: { business: Business
       case 'TIER_1':
         return {
           badge: "VISIBILIDAD_CERO",
-          headline: "NACIMIENTO <br/> <span className='text-primary neon-text-green'>DIGITAL</span> <br/> INTEGRAL",
+          headline: "ARQUITECTURA <br/> <span className='text-primary'>DIGITAL</span> <br/> INTEGRAL",
           description: `Análisis crítico para ${business.name}. Actualmente operando fuera del radar digital. Capturamos el 100% de la demanda orgánica que hoy se pierde en ${business.neighborhood}.`,
           insight: `"SIN PRESENCIA WEB, ${business.name} NO EXISTE PARA EL 85% DE LOS CLIENTES POTENCIALES EN ${business.neighborhood}."`,
           status: "INEXISTENTE"
@@ -35,7 +35,7 @@ export default function Presentation({ business, onClose }: { business: Business
       case 'TIER_2':
         return {
           badge: "ESCAPE_RRSS",
-          headline: "PROFESIO- <br/> <span className='text-primary neon-text-green'>NALIZACIÓN</span> <br/> DE IMPACTO",
+          headline: "PROFESIONALIZACIÓN <br/> <span className='text-primary'>ESTRATÉGICA</span> <br/> DE IMPACTO",
           description: `Auditoría para ${business.name}. Su presencia en redes es un 'leak' de tráfico. Convertimos seguidores en clientes finales con una infraestructura propietaria de alta conversión.`,
           insight: `"LAS REDES SOCIALES SON ALQUERIDAS; SU WEB PROPIA ES EL ÚNICO ACTIVO QUE USTED CONTROLA TOTALMENTE."`,
           status: "FRAGMENTADA"
@@ -44,7 +44,7 @@ export default function Presentation({ business, onClose }: { business: Business
       default:
         return {
           badge: "RECONFIGURACIÓN_UX",
-          headline: "EVOLUCIÓN <br/> <span className='text-primary neon-text-green'>VECTORIAL</span> <br/> DE MERCADO",
+          headline: "EVOLUCIÓN <br/> <span className='text-primary'>VECTORIAL</span> <br/> DE MERCADO",
           description: `Optimización técnica para ${business.name}. Su web actual presenta una latencia crítica. Implementamos arquitectura de velocidad militar para eliminar el rebote del 40%.`,
           insight: `"CADA SEGUNDO DE CARGA ADICIONAL REDUCE SU CONVERSIÓN EN UN 7%. ESTAMOS AQUÍ PARA ELIMINAR ESA FRICCIÓN."`,
           status: "OBSOLETA"
@@ -76,14 +76,10 @@ export default function Presentation({ business, onClose }: { business: Business
 
       {/* Header Bar */}
       <div className="max-w-7xl mx-auto mb-20 flex justify-between items-center border-b border-primary/20 pb-8 relative z-10">
-        <div className="flex items-center gap-4 group">
-          <div className="w-14 h-14 bg-primary/10 border border-primary/30 flex items-center justify-center shadow-[0_0_15px_rgba(0,255,156,0.2)]">
-            <Zap size={28} className="text-primary fill-primary/20" />
-          </div>
-          <div>
-            <div className="text-3xl font-black tracking-tighter leading-none neon-text-green">ZYNDRIX <span className="text-secondary">INTELLIGENCE</span></div>
-            <div className="text-[9px] uppercase font-black tracking-[0.3em] text-primary/60 mt-1">Strategic Audit Protocol // CLASSIFIED</div>
-          </div>
+        <div className="flex items-center gap-6 group">
+          <img src="/logo-zyndrix.png" alt="Zyndrix Logo" className="h-14 w-auto object-contain brightness-0 invert" />
+          <div className="h-10 w-px bg-white/10 hidden sm:block" />
+          <div className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 mt-1 hidden sm:block">Análisis Operacional Estratégico // CORPORATE_READY</div>
         </div>
         
         <div className="hidden md:flex items-center gap-8">

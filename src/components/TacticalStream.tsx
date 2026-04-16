@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Info, CheckCircle, AlertCircle, Bot, Zap, Search, Target, Mail, Activity, Terminal } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { MissionLog } from "@/types";
+import { OperationLog } from "@/types";
 import Image from "next/image";
 
 function cn(...inputs: ClassValue[]) {
@@ -13,7 +13,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 interface TacticalStreamProps {
-  logs: MissionLog[];
+  logs: OperationLog[];
 }
 
 export function TacticalStream({ logs }: TacticalStreamProps) {

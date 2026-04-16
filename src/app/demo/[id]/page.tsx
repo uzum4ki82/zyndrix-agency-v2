@@ -1,281 +1,214 @@
-import { notFound } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import { BusinessCard } from '@/components/BusinessCard'; // Reusaremos componentes si es necesario, pero crearemos una vista especial
-import Image from 'next/image';
-import { ShieldCheck } from 'lucide-react';
-import { cn } from '@/lib/utils';
+"use client";
 
-async function getLeadData(id: string) {
-  const { data, error } = await supabase
-    .from('leads')
-    .select('*')
-    .eq('id', id)
-    .single();
-  
-  if (error || !data) return null;
-  return data;
-}
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { getLeadById, Lead } from '@/lib/supabase';
+import { Shield, Zap, TrendingUp, ArrowRight, CheckCircle2, Globe, Laptop, Smartphone } from 'lucide-react';
 
-export default async function DemoPage({ params }: { params: { id: string } }) {
-  const lead = await getLeadData(params.id);
+export default function DemoPage() {
+  const { id } = useParams();
+  const [lead, setLead] = useState<Lead | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      if (typeof id === 'string') {
+        const data = await getLeadById(id);
+        setLead(data);
+      }
+      setLoading(false);
+    }
+    load();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-[#020617]">
+        <motion.div 
+          animate={{ rotate: 360 }} 
+          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+          className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full" 
+        />
+      </div>
+    );
+  }
 
   if (!lead) {
-    notFound();
+    return (
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-[#020617] text-white p-10 text-center">
+        <h1 className="text-4xl font-bold mb-4 italic">Error de Acceso</h1>
+        <p className="text-slate-400 max-w-md">Este Active Digital ha expirado o no ha sido generado correctamente para este ID.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white pb-20">
-      {/* Cinematic Pulse Header */}
-      <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference invert border-b border-black/5 backdrop-blur-sm">
-        <div className="font-black text-xl tracking-tighter">ZYNDRIX <span className="font-light">STRATEGIC</span></div>
-        <div className="flex gap-8 text-[10px] font-bold uppercase tracking-widest invisible md:visible">
-          <span>{lead.category || 'Sector Premium'}</span>
-          <span>Core Ops</span>
-          <span>IA v4.2</span>
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-indigo-500 selection:text-white pb-32">
+      {/* Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px]" />
+      </div>
+
+      <nav className="relative z-10 px-10 py-8 flex justify-between items-center max-w-7xl mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 bg-white rounded-lg flex items-center justify-center text-black font-black italic">Z</div>
+          <span className="text-xl font-black tracking-tighter uppercase">Zyndrix <span className="text-indigo-500">I-Q</span></span>
         </div>
-        <a 
-          href={`https://wa.me/34684411135?text=Hola Óscar, he visto el Prototipo Estratégico para ${encodeURIComponent(lead.name)} y quiero activarlo.`}
-          className="bg-black text-white px-6 py-2.5 rounded-none text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform"
-        >
-          Solicitar Activación
-        </a>
+        <div className="hidden md:flex items-center gap-8 text-[11px] font-black uppercase tracking-widest text-slate-400">
+          <span className="text-indigo-500">Dossier #4829</span>
+          <span>Arquitectura Digital</span>
+          <span>Analítica Predictiva</span>
+        </div>
       </nav>
 
-      {/* Audit Hero */}
-      <section className="pt-40 pb-20 px-8 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-20 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest mb-6">
-              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-none animate-pulse" />
-              Auditoría Ejecutiva para {lead.name}
+      <main className="relative z-10 max-w-7xl mx-auto px-10 mt-24">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }} 
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+              <Zap size={12} /> Exclusividad de Zona Detectada
             </div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
-              Tu ventaja <br/> estratégica.
-            </h1>
-            <p className="text-xl text-slate-500 max-w-md leading-relaxed mb-12 font-medium">
-              Hemos detectado una <strong>brecha de conversión crítica</strong> en vuestra operativa en {lead.address || 'vuestra zona'}. Zyndrix no es una web; es el protocolo que la cierra.
-            </p>
             
-            <div className="flex flex-col gap-4">
-               {/* Fuga de Crecimiento */}
-               <div className="p-6 rounded-[2rem] bg-rose-50 border border-rose-100 relative overflow-hidden group">
-                  <div className="absolute right-0 top-0 p-4 opacity-10 font-black text-8xl text-rose-500 select-none">!</div>
-                  <div className="relative z-10">
-                    <h4 className="text-rose-500 text-[10px] font-black uppercase tracking-widest mb-2">Fuga de Crecimiento Detectada</h4>
-                    <p className="text-lg font-black text-rose-950 leading-tight">
-                       {lead.growth_leak_label || 'Capacidad de conversión infrautilizada'}
-                    </p>
-                    <div className="mt-4 text-[10px] font-bold text-rose-400 uppercase tracking-widest">
-                       Pérdida estimada: <span className="text-rose-600 underline">{lead.estimated_loss || 'Consultar con estratega'}</span>
-                    </div>
-                  </div>
-               </div>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 uppercase">
+              El Futuro Digital de <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-400 to-emerald-400">
+                {lead.name}
+              </span>
+            </h1>
+            
+            <p className="text-xl text-slate-400 leading-relaxed mb-12 max-w-xl font-light">
+              Hemos diseñado una <span className="text-white font-medium italic underline decoration-indigo-500">herramienta de autoridad</span> proyectada para dominar el sector de {lead.category} en {lead.neighborhood || 'vuestra zona'}.
+            </p>
 
-               {/* Puntuación de Velocidad */}
-               <div className="p-6 rounded-[2rem] bg-slate-50 border border-slate-100 flex items-center justify-between">
-                  <div>
-                    <h4 className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">Score de Velocidad Actual</h4>
-                    <p className="text-2xl font-black text-black">{lead.speed_score || '34'}/100</p>
-                  </div>
-                  <div className="h-12 w-24 bg-slate-200 rounded-none overflow-hidden relative">
-                    <div 
-                      className="absolute inset-y-0 left-0 bg-rose-500 transition-all duration-1000" 
-                      style={{ width: `${lead.speed_score || 34}%` }} 
-                    />
-                  </div>
-               </div>
+            <div className="flex flex-wrap gap-6">
+              <button className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-indigo-50 transition-all flex items-center gap-3 group shadow-2xl shadow-white/5">
+                Ver Prototipo Real <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+              </button>
+              <button className="bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-slate-800 transition-all shadow-xl">
+                Agendar Consulta
+              </button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl shadow-black/10 border border-black/5 group">
-            <div className="absolute inset-x-0 top-0 p-10 z-20 bg-gradient-to-b from-black/60 to-transparent text-white">
-               <div className="text-[10px] font-black uppercase tracking-widest mb-2 opacity-70">Concepto de Rediseño</div>
-               <div className="text-3xl font-black leading-tight italic">Reborn for High Frequency Ops.</div>
-            </div>
-            <Image 
-              src={lead.screenshot_url || lead.og_image_url || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200'} 
-              alt="Prototype Preview"
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-1000 grayscale hover:grayscale-0"
-            />
-            <div className="absolute bottom-0 inset-x-0 p-10 z-20 bg-gradient-to-t from-black/80 to-transparent text-white">
-               <div className="text-[10px] font-black uppercase tracking-widest mb-1 opacity-50">Stack Propuesto</div>
-               <div className="font-mono text-[9px] tracking-wider text-emerald-400">{lead.tech_stack || 'NEXT.JS 15 + AI DISPATCH ENGINE + CDN EDGE'}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Strategic Comparison */}
-      <section className="py-32 px-8 max-w-7xl mx-auto">
-         <div className="text-center mb-20">
-            <h2 className="text-5xl font-black tracking-tighter uppercase italic">Protocolo vs Realidad</h2>
-            <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mt-4">Benchmark técnico de alta fidelidad</p>
-         </div>
-
-         <div className="grid md:grid-cols-2 gap-8">
-            {/* Estado Actual */}
-            <div className="glass p-10 rounded-[3.5rem] border-rose-100/50 bg-rose-50/10">
-               <div className="flex justify-between items-start mb-8">
-                  <div>
-                     <div className="text-[10px] font-black text-rose-500 uppercase tracking-widest mb-1">Estado Actual</div>
-                     <div className="text-2xl font-black tracking-tighter">Infraestructura Base</div>
-                  </div>
-                  <div className="px-3 py-1 rounded-none bg-rose-500/10 text-rose-500 text-[8px] font-black uppercase tracking-widest border border-rose-500/20">
-                     Vulnerable
-                  </div>
-               </div>
-               <div className="space-y-6">
-                  <div className="flex justify-between items-center py-4 border-b border-rose-100">
-                     <span className="text-xs font-bold text-slate-500 uppercase">Tiempo de Carga</span>
-                     <span className="text-xs font-black text-rose-600">3.8s (Avg)</span>
-                  </div>
-                  <div className="flex justify-between items-center py-4 border-b border-rose-100">
-                     <span className="text-xs font-bold text-slate-500 uppercase">Mobile UX</span>
-                     <span className="text-xs font-black text-rose-600">Bajo Rendimiento</span>
-                  </div>
-                  <div className="flex justify-between items-center py-4 border-b border-rose-100">
-                     <span className="text-xs font-bold text-slate-500 uppercase">Fuga de Leads</span>
-                     <span className="text-xs font-black text-rose-600">~{lead.ltv_estimate ? '15%' : 'Crítica'}</span>
-                  </div>
-               </div>
-            </div>
-
-            {/* Estado Zyndrix */}
-            <div className="bg-black text-white p-10 rounded-[3.5rem] shadow-2xl shadow-black/20 relative overflow-hidden group">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] -mr-32 -mt-32" />
-               <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-8">
-                     <div>
-                        <div className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Zyndrix Protocol</div>
-                        <div className="text-2xl font-black tracking-tighter">High Frequency Ops</div>
-                     </div>
-                     <div className="px-3 py-1 rounded-none bg-primary/20 text-primary text-[8px] font-black uppercase tracking-widest border border-primary/40 animate-pulse">
-                        Active Agent
-                     </div>
-                  </div>
-                  <div className="space-y-6">
-                     <div className="flex justify-between items-center py-4 border-b border-white/10">
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Despliegue Edge</span>
-                        <span className="text-xs font-black text-primary">{"< 0.5s"}</span>
-                     </div>
-                     <div className="flex justify-between items-center py-4 border-b border-white/10">
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">AI Integration</span>
-                        <span className="text-xs font-black text-primary">Autopilot Active</span>
-                     </div>
-                     <div className="flex justify-between items-center py-4 border-b border-white/10">
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Boost esperado</span>
-                        <span className="text-xs font-black text-primary">+{lead.conversion_boost || '30'}%</span>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-
-      {/* Tactical Strategy Section */}
-      <section className="bg-black text-white py-32 px-8 overflow-hidden rounded-[4rem] mx-4">
-        <div className="max-w-7xl mx-auto">
-           <div className="grid md:grid-cols-2 gap-20 items-center">
-              <div>
-                <h2 className="text-5xl font-black tracking-tighter mb-10 leading-none">El plan de <br/> dominancia local.</h2>
-                <div className="space-y-8">
-                   <div className="flex gap-6">
-                      <div className="w-12 h-12 rounded-none bg-white/10 border border-white/20 flex items-center justify-center font-bold text-xl">01</div>
-                      <div>
-                        <h4 className="font-black text-sm uppercase tracking-widest mb-2 italic text-primary">Diagnóstico</h4>
-                        <p className="text-slate-400 text-sm leading-relaxed">{lead.conversion_gap || 'Identificación de puntos ciegos en la captación de tráfico actual.'}</p>
-                      </div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="relative perspective-1000"
+          >
+            <div className="relative group">
+               {/* Decorative layers */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity" />
+              
+              <div className="relative bg-slate-900 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[16/10]">
+                 {lead.screenshot_url ? (
+                   <img src={lead.screenshot_url} alt="Presencia Actual" className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" />
+                 ) : (
+                   <div className="w-full h-full flex items-center justify-center bg-slate-800/50">
+                     <span className="text-slate-600 font-black italic uppercase text-2xl tracking-tighter">Capturando Digital Asset...</span>
                    </div>
-                   <div className="flex gap-6">
-                      <div className="w-12 h-12 rounded-none bg-white/10 border border-white/20 flex items-center justify-center font-bold text-xl">02</div>
-                      <div>
-                        <h4 className="font-black text-sm uppercase tracking-widest mb-2 italic text-primary">Inyección de IA</h4>
-                        <p className="text-slate-400 text-sm leading-relaxed">{lead.strategy || 'Despliegue de un motor de reservas/captación con inteligencia conversacional.'}</p>
-                      </div>
+                 )}
+                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
+                 
+                 <div className="absolute bottom-10 left-10 right-10">
+                    <div className="flex items-center gap-4 bg-white/10 backdrop-blur-2xl border border-white/10 p-5 rounded-3xl">
+                       <div className="h-12 w-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-lg">
+                          <TrendingUp size={24} />
+                       </div>
+                       <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 leading-none mb-1">Impacto Proyectado</p>
+                          <p className="text-lg font-bold text-white tracking-tight leadng-tight">Potencial incremento de ventas del 32% interanual</p>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Intelligence Grid */}
+        <div className="mt-40 grid md:grid-cols-3 gap-8">
+           {[
+             { title: "Arquitectura TIER 1", icon: Shield, desc: "Desarrollo de baja latencia con seguridad militar integrada." },
+             { title: "Captura Activa", icon: Zap, desc: "Embudo de ventas con inteligencia de respuesta inmediata vía WhatsApp." },
+             { title: "Dominio Local", icon: Globe, desc: "Posicionamiento geo-específico para saturar búsquedas relevantes." }
+           ].map((item, i) => (
+             <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-10 rounded-[2rem] bg-slate-900/30 border border-white/5 backdrop-blur-sm hover:border-indigo-500/30 transition-all group"
+             >
+                <div className="h-14 w-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-8 group-hover:scale-110 transition-transform">
+                  <item.icon size={28} />
+                </div>
+                <h3 className="text-xl font-bold mb-4 uppercase tracking-tighter leading-tight">{item.title}</h3>
+                <p className="text-slate-400 font-light leading-relaxed">{item.desc}</p>
+             </motion.div>
+           ))}
+        </div>
+
+        {/* Audit Details */}
+        <div className="mt-40 bg-slate-900/40 rounded-[3rem] border border-white/5 p-16 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[50%] h-full bg-indigo-500/5 rotate-12 blur-[100px]" />
+          <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+             <div>
+                <h2 className="text-4xl font-black tracking-tighter uppercase mb-6 leading-[0.9]">Diagnóstico de <br/>Fuga Comercial</h2>
+                <div className="space-y-6">
+                   {[
+                     `Tecnología actual: ${lead.tech_stack || 'Infraestructura Legacy (TIER 3)'}`,
+                     `Tiempo de carga: ${lead.load_time || '4.8s'} (Pérdida de retención crítica)`,
+                     'Embudo de reservas: Manual / No escalable',
+                     'Presencia social: Desvinculada de la captura directa'
+                   ].map((text, j) => (
+                     <div key={j} className="flex items-start gap-4">
+                        <CheckCircle2 size={18} className="text-indigo-500 mt-1 shrink-0" />
+                        <span className="text-slate-300 font-light">{text}</span>
+                     </div>
+                   ))}
+                </div>
+             </div>
+             <div className="space-y-10">
+                <div className="grid grid-cols-2 gap-6">
+                   <div className="p-8 rounded-3xl bg-white/5 border border-white/5">
+                      <p className="text-3xl font-black text-white leading-none mb-2">92%</p>
+                      <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest">Confianza Digital</p>
+                   </div>
+                   <div className="p-8 rounded-3xl bg-white/5 border border-white/5">
+                      <p className="text-3xl font-black text-emerald-500 leading-none mb-2">+120%</p>
+                      <p className="text-[10px] uppercase font-black text-slate-500 tracking-widest">Leads Proyectados</p>
                    </div>
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                 <div className="aspect-square glass-dark p-8 rounded-[2.5rem] border-white/10 flex flex-col justify-between">
-                    <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Conversión</div>
-                    <div className="text-5xl font-black">+40%</div>
-                 </div>
-                 <div className="aspect-square bg-white text-black p-8 rounded-[2.5rem] flex flex-col justify-between">
-                    <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Latencia</div>
-                    <div className="text-5xl font-black">-90%</div>
-                 </div>
-              </div>
+                <div className="p-10 rounded-3xl bg-indigo-600 text-white shadow-2xl shadow-indigo-500/20">
+                   <p className="text-xl font-bold mb-4">Dictamen Final</p>
+                   <p className="text-slate-100 font-light leading-relaxed opacity-90">
+                     Su negocio presenta una oportunidad de escalado excepcional. La implementación de la Arquitectura Digital Zyndrix detendrá la fuga de clientes y profesionalizará su captura automática.
+                   </p>
+                </div>
+             </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="mt-40 border-t border-white/5 pt-20 pb-10 px-10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+           <div className="text-center md:text-left">
+              <p className="text-[10px] uppercase font-black text-slate-500 tracking-[0.3em] mb-4">Protocolo de Exclusividad</p>
+              <p className="text-slate-400 font-light">Este dossier ha sido generado específicamente para la Dirección de {lead.name}.</p>
+           </div>
+           <div className="flex items-center gap-6">
+              <Globe size={20} className="text-slate-700" />
+              <Laptop size={20} className="text-slate-700" />
+              <Smartphone size={20} className="text-slate-700" />
            </div>
         </div>
-      </section>
-
-      {/* Tech Stack & Reliability Audit */}
-      <section className="py-32 px-8 max-w-7xl mx-auto">
-         <div className="flex flex-col md:flex-row gap-20 items-center">
-            <div className="flex-1 space-y-8">
-               <div className="w-16 h-1 bg-black mb-10" />
-               <h2 className="text-4xl font-black tracking-tighter uppercase leading-[0.9]">Auditoría de Resiliencia y Stack Técnico</h2>
-               <p className="text-slate-500 text-lg font-medium leading-relaxed">
-                  Analizamos los cimientos digitales de <span className="text-black font-bold">{lead.name}</span>. No se trata solo de estética, sino de la capacidad técnica para escalar sin fricciones.
-               </p>
-               
-               <div className="space-y-4 pt-6">
-                  {['Arquitectura Edge-First', 'Seguridad Blindada', 'Latencia de Nueva Generación'].map(item => (
-                     <div key={item} className="flex items-center gap-4">
-                        <div className="w-5 h-5 rounded-none bg-black/5 flex items-center justify-center">
-                           <ShieldCheck size={12} className="text-black" />
-                        </div>
-                        <span className="text-xs font-black uppercase tracking-widest text-slate-700">{item}</span>
-                     </div>
-                  ))}
-               </div>
-            </div>
-
-            <div className="flex-1 w-full">
-               <div className="glass p-12 rounded-[4rem] border-slate-200 relative overflow-hidden bg-slate-50/50">
-                  <div className="grid grid-cols-2 gap-8 relative z-10">
-                     {[
-                        { label: 'Core System', value: lead.tech_stack || 'Standard Architecture', status: 'Optimizable' },
-                        { label: 'Security Protocols', value: 'Edge Protection', status: 'Moderate' },
-                        { label: 'CDN Global Relay', value: 'Cloudflare/Vercel Ready', status: 'Active' },
-                        { label: 'AI Readiness Index', value: 'Alpha Stage', status: 'High Opportunity' }
-                     ].map((item, i) => (
-                        <div key={i} className="p-6 rounded-3xl bg-white border border-slate-100 shadow-sm">
-                           <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2">{item.label}</div>
-                           <div className="text-xs font-black mb-1">{item.value}</div>
-                           <div className={cn(
-                              "text-[8px] font-bold uppercase",
-                              item.status === 'Optimizable' || item.status === 'Moderate' ? 'text-blue-500' : 'text-emerald-500'
-                           )}>{item.status}</div>
-                        </div>
-                     ))}
-                  </div>
-                  {/* Visual Decoration */}
-                  <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-slate-200 rounded-full blur-3xl opacity-30" />
-               </div>
-            </div>
-         </div>
-      </section>
-
-      {/* WhatsApp Activation CTA */}
-      <footer className="py-40 text-center px-8">
-         <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-7xl font-black tracking-tighter mb-12">¿Listo para activar <br/> {lead.name} v2.0?</h2>
-            <p className="text-slate-500 mb-16 text-xl">Un estratega senior está asignado para tu implementación.</p>
-            <a 
-              href={`https://wa.me/34684411135?text=Hola Óscar, he visto la auditoría de ${encodeURIComponent(lead.name)} y quiero lanzarlo.`}
-              className="inline-flex items-center gap-4 bg-black text-white px-12 py-7 rounded-none text-xl font-black uppercase tracking-wider hover:bg-slate-900 transition-colors shadow-2xl shadow-black/20"
-            >
-              Hablar con Óscar por WhatsApp
-              <div className="w-2 h-2 bg-emerald-500 rounded-none animate-ping" />
-            </a>
-            <div className="mt-16 flex justify-center items-center gap-10 opacity-30 grayscale underline transition-all hover:grayscale-0">
-               <span className="text-[10px] font-black uppercase tracking-widest">Protocolo de seguridad SSL/AES</span>
-               <span className="text-[10px] font-black uppercase tracking-widest">Sla 99.9% Garantizado</span>
-            </div>
-         </div>
       </footer>
     </div>
   );

@@ -138,10 +138,16 @@ export const syncLead = async (lead: Partial<Lead> & Record<string, unknown>): P
   }
 
   try {
+    const cleanData = { ...mappedData };
+    // Hotfix: remove columns that might be missing in production schema
+    delete (cleanData as any).google_photo_url;
+    delete (cleanData as any).reviews_count;
+    delete (cleanData as any).rating;
+
     const { data, error } = await supabase
       .from('leads')
       .upsert({
-        ...mappedData,
+        ...cleanData,
         updated_at: new Date().toISOString()
       }, { onConflict: 'id' })
       .select();
@@ -242,5 +248,27 @@ export const getLeads = async (): Promise<Lead[]> => {
   } catch (err) {
     console.error('Fatal error in getLeads:', err);
     return [];
+  }
+};
+
+export const getLeadById = async (id: string): Promise<Lead | null> => {
+  if (!supabaseUrl || !supabaseAnonKey || (supabaseUrl.includes('placeholder'))) return null;
+  
+  try {
+    const { data, error } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('id', id)
+      .single();
+      
+    if (error) {
+      console.error('Error fetching lead by id:', error);
+      return null;
+    }
+    
+    return data;
+  } catch (err) {
+    console.error('Fatal error in getLeadById:', err);
+    return null;
   }
 };

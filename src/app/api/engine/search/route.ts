@@ -125,15 +125,22 @@ function isPublicInstitution(place: any): boolean {
 export async function POST(request: Request) {
   try {
     const { niche, location, companyType } = await request.json();
-    
+    console.log(`[Search API Started] Niche: ${niche} | Location: ${location} | Type: ${companyType}`);
+
     let refinedQuery = refineQueryAggressively(niche, location);
     if (companyType === 'corporativo') refinedQuery = `grandes ${refinedQuery}`;
 
     const realPlaces = await searchGlobalLeads(refinedQuery, location);
     
     if (realPlaces && realPlaces.length > 0) {
+      console.log(`[Search API] Found ${realPlaces.length} real places before filtering.`);
+      
       const mappedLeads = realPlaces
-        .filter((place: any) => !isPublicInstitution(place))
+        .filter((place: any) => {
+            const isPublic = isPublicInstitution(place);
+            if (isPublic) console.log(`[Search API] Filtering out public institution: ${place.displayName?.text}`);
+            return !isPublic;
+        })
         .map((place: any) => {
           const baseBusiness = {
             name: place.displayName?.text || "Negocio Desconocido",
@@ -165,25 +172,31 @@ export async function POST(request: Request) {
         });
 
       if (mappedLeads.length > 0) {
+        console.log(`[Search API] Processing ${mappedLeads.length} leads for deep discovery...`);
         // Enriquecemos con Emails y Datos Profundos antes de devolver
         const enrichedLeads = await enrichLeadsWithDeepDiscovery(mappedLeads);
         return NextResponse.json(enrichedLeads);
+      } else {
+          console.warn("[Search API] No leads left after filtering public institutions.");
       }
+    } else {
+        console.warn("[Search API] No real places found from Google Maps.");
     }
 
-    // 2. MODO SIMULACIÓN
+    // 2. MODO SIMULACIÓN (Demos)
+    console.log("[Search API] Switching to High-Resolution Simulation Mode.");
     const simulationLeads = [
-      { name: `${niche} Central ${location}`, rating: 3.8, reviews: 42, website: `https://central-${location}.com` },
+      { name: `${niche} Principal ${location}`, rating: 3.8, reviews: 42, website: `https://central-${location}.com` },
       { name: `${niche} Elite ${location}`, rating: 4.5, reviews: 12, website: null },
-      { name: `Servicios ${niche} ${location}`, rating: 3.2, reviews: 89, website: `https://servicios-${location}.es` },
-      { name: `${location} ${niche} & Co.`, rating: 4.1, reviews: 5, website: null },
-      { name: `${niche} Continental`, rating: 3.9, reviews: 156, website: "https://facebook.com/nichelocal" },
-      { name: `The ${niche} Hub`, rating: 4.7, reviews: 28, website: null }
+      { name: `Especialistas ${niche} ${location}`, rating: 3.2, reviews: 89, website: `https://servicios-${location}.es` },
+      { name: `${location} ${niche} & Boutique`, rating: 4.1, reviews: 5, website: null },
+      { name: `${niche} Metropolitano`, rating: 3.9, reviews: 156, website: "https://facebook.com/nichelocal" },
+      { name: `The ${niche} Alliance`, rating: 4.7, reviews: 28, website: null }
     ].map((sim) => {
         const baseBusiness = {
           ...sim,
           reviewsCount: sim.reviews,
-          address: `Zona Centro, ${location}`,
+          address: `Eje Central, ${location}`,
           category: niche,
           neighborhood: location,
         };
@@ -207,7 +220,7 @@ export async function POST(request: Request) {
     return NextResponse.json(enrichedSimulation);
 
   } catch (error) {
-    console.error("Search API Error:", error);
+    console.error("[Search API Global Error]:", error);
     return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }

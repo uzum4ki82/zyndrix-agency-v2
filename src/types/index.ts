@@ -61,22 +61,22 @@ export interface Business {
 
 export type AuditResult = {
   score: number;
-  gapIntensity: 'CRITICAL' | 'HIGH' | 'MODERATE' | 'STABLE';
+  gapIntensity?: 'CRITICAL' | 'HIGH' | 'MODERATE' | 'STABLE';
   screenshotUrl?: string;
   foundEmails: string[];
   findings: string[];
-  presenceQuality: number; // 0 to 100
+  presenceQuality?: number; // 0 to 100
   pitchHeadline: string;
-  opportunityScore: number; // 0-100 derived from gap
-  growthIndex: 'CRITICAL' | 'HIGH' | 'MODERATE' | 'OPTIMAL';
+  opportunityScore?: number; // 0-100 derived from gap
+  growthIndex?: 'CRITICAL' | 'HIGH' | 'MODERATE' | 'OPTIMAL';
   proposedLayout?: string;
-  ltvEstimate: number;
-  conversionBoost: number;
+  ltvEstimate?: number;
+  conversionBoost?: number;
   strategy?: string;
-  marketPotential: 'CRÍTICO' | 'ALTO' | 'SIGNIFICATIVO' | 'MODERADO';
-  estimatedLossLabel: string;
-  strategicImpact: 'CRITICAL_FINANCIAL' | 'SIGNIFICANT_COMMERCIAL' | 'MODERATE_OPERATIONAL' | 'STABLE';
-  growthLeakLabel: string;
+  marketPotential?: 'CRÍTICO' | 'ALTO' | 'SIGNIFICATIVO' | 'MODERADO';
+  estimatedLossLabel?: string;
+  strategicImpact?: 'CRITICAL_FINANCIAL' | 'SIGNIFICANT_COMMERCIAL' | 'MODERATE_OPERATIONAL' | 'STABLE';
+  growthLeakLabel?: string;
   favicon?: string;
   ogImage?: string;
   techStack?: string[];
@@ -96,6 +96,10 @@ export type AuditResult = {
   };
   competitorGap?: string;
   marketLeaderRef?: string;
+  roi?: number;
+  impact?: string;
+  industryName?: string;
+  screenshot?: string;
 };
 
 export interface TeamMember {
@@ -111,7 +115,7 @@ export interface TeamMember {
 
 export type LogType = 'info' | 'success' | 'warning' | 'ai' | 'error';
 
-export interface MissionLog {
+export interface OperationLog {
   id: string;
   text: string;
   type: LogType;
@@ -120,7 +124,7 @@ export interface MissionLog {
   meta?: string;
 }
 
-export interface Mission {
+export interface Cycle {
   id: string;
   name: string;
   type: 'DISCOVERY' | 'AUDIT' | 'OUTREACH' | 'FOLLOWUP';
@@ -134,6 +138,6 @@ export interface ProtocolSettings {
   autoOutreach: boolean;
   aggressiveMode: boolean;
   minScore: number;
-  missionRadius: number;
+  searchRadius: number;
   priorityVerticals: string[];
 }

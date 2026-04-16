@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Business, MissionLog } from "@/types";
+import { Business, OperationLog } from "@/types";
 import { calculateLeadIntelligence } from "@/lib/agent-brain";
 import { syncLead, logAutomationAction, checkLeadExists } from "@/lib/supabase";
 
@@ -18,20 +18,20 @@ interface UseAutopilotProps {
 export function useAutopilot({ leads, selectedNiche, location, selectedCompanyType, onLeadSynced }: Omit<UseAutopilotProps, 'activeTab' | 'setActiveTab'>) {
   const [autopilotActive, setAutopilotActive] = useState(false);
   const [automationStep, setAutomationStep] = useState<'IDLE' | 'DISCOVERING' | 'AUDITING' | 'STITCHING' | 'PITCHING' | 'AWAITING_APPROVAL' | 'SENDING'>('IDLE');
-  const [missionLogs, setMissionLogs] = useState<MissionLog[]>([]);
+  const [operationLogs, setOperationLogs] = useState<OperationLog[]>([]);
   const [lastProcessedTarget, setLastProcessedTarget] = useState<Business | null>(null);
   const [botId] = useState(() => `zyndrix-${Date.now().toString(36).substring(-5)}`);
   const alreadyProcessedIds = useRef(new Set<string>());
   const hasCheckedStatus = useRef(false);
 
-  const addMissionLog = useCallback((
+  const addOperationLog = useCallback((
     text: string, 
-    type: MissionLog['type'] = 'info', 
+    type: OperationLog['type'] = 'info', 
     isInternal = false, 
     image?: string, 
     meta?: string
   ) => {
-    const newLog: MissionLog = {
+    const newLog: OperationLog = {
       id: `log-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       text,
       type,
@@ -39,7 +39,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       image,
       meta
     };
-    setMissionLogs(prev => [newLog, ...prev].slice(0, 100));
+    setOperationLogs(prev => [newLog, ...prev].slice(0, 100));
     
     // Sincronizar con Supabase Logs si no es interno trivial
     if (!isInternal || type === 'error' || type === 'warning') {
@@ -57,7 +57,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       try {
         const res = await fetch('/api/send', { method: 'POST', body: JSON.stringify({ ping: true }) });
         if (res.ok) {
-          addMissionLog("🟢 LIVE MODE: Infraestructura Resend conectada correctamente.", "success");
+          addOperationLog("🟢 LIVE MODE: Infraestructura Resend conectada correctamente.", "success");
         }
       } catch (e) {
         console.error("Live status check failed:", e);
@@ -65,7 +65,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
     };
     checkLiveStatus();
     hasCheckedStatus.current = true;
-  }, [addMissionLog]);
+  }, [addOperationLog]);
 
   const runCycle = useCallback(async () => {
     if (automationStep !== 'IDLE') return;
@@ -73,7 +73,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
     try {
       // 1. DESCUBRIMIENTO
       setAutomationStep('DISCOVERING');
-      addMissionLog(`🌐 Iniciando barrido en Maps: ${selectedNiche} en ${location}...`, "info");
+      addOperationLog(`🌐 Iniciando búsqueda de mercado: ${selectedNiche} en ${location}...`, "info");
       
       const res = await fetch('/api/engine/search', {
         method: 'POST',
@@ -86,7 +86,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       });
       const candidates: Business[] = await res.json();
       
-      addMissionLog(`✅ Descubiertos ${candidates.length} candidatos potenciales.`, "success", true);
+      addOperationLog(`✅ Identificados ${candidates.length} prospectos potenciales.`, "success", true);
 
       // 2. FILTRADO INTELIGENTE Y VERIFICACIÓN PERSISTENTE
       const candidatesWithIntel = candidates.map((c) => ({ 
@@ -139,10 +139,10 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
         });
 
       if (prioritizedCandidates.length === 0) {
-        addMissionLog("📡 Barrido de zona completado. Todos los objetivos locales ya están en seguimiento.", "info");
+        addOperationLog("📡 Escaneo de mercado completado. Todos los objetivos locales ya están en seguimiento.", "info");
         
         // Fallback: Si no hay nuevos, intentamos forzar una simulación para no detener el flujo visual
-        addMissionLog("🧠 Generando simulación de alta fidelidad para zona adyacente...", "ai", true);
+        addOperationLog("🧠 Generando análisis de alta fidelidad para zona adyacente...", "ai", true);
         const simRes = await fetch('/api/engine/search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -153,10 +153,10 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
         if (simCandidates.length > 0) {
           const simTarget = { ...simCandidates[0], isSimulation: true } as Business & { isSimulation?: boolean };
           setLastProcessedTarget(simTarget);
-          addMissionLog(`✨ Objetivo Simulado Detectado: ${simTarget.name}`, "ai");
+          addOperationLog(`✨ Prospecto Simulado Identificado: ${simTarget.name}`, "ai");
           // Proceed with the cycle using the simulated target
         } else {
-          addMissionLog("🛡️ Protocolo de Seguridad: Sin nuevos contactos disponibles. Pausando motor.", "warning");
+          addOperationLog("🛡️ Protocolo de Continuidad: Sin nuevos contactos. Pausando motor de búsqueda.", "warning");
           setAutopilotActive(false);
           setAutomationStep('IDLE');
           return;
@@ -170,22 +170,22 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       alreadyProcessedIds.current.add(target.name);
 
       if (target.intel?.tier === 'TIER_1') {
-        addMissionLog(`🚨 OBJETIVO CRÍTICO DETECTADO: ${target.name} opera sin sitio web propio (TIER 1).`, "warning");
+        addOperationLog(`🚨 ALTA PRIORIDAD: ${target.name} opera sin sitio web propio (TIER 1).`, "warning");
       } else if (target.intel?.tier === 'TIER_2') {
-        addMissionLog(`💎 OPORTUNIDAD ELITE: ${target.name} depende de redes sociales para su web (TIER 2).`, "ai");
+        addOperationLog(`💎 OPORTUNIDAD ELITE: ${target.name} depende de redes sociales para su web (TIER 2).`, "ai");
       } else {
-        addMissionLog(`🧠 Cerebro Seleccionó: ${target.name} (TIER 3 / Estándar)`, "ai");
+        addOperationLog(`🧠 Análisis de Oportunidad Completo: ${target.name} clasificado como TIER 3.`, "ai");
       }
       
       if (target.photoUrl) {
-        addMissionLog(`📍 Localización confirmada vía Satélite / Maps para ${target.name}.`, "info", false, target.photoUrl);
+        addOperationLog(`📍 Localización confirmada vía Inteligencia Geoespacial para ${target.name}.`, "info", false, target.photoUrl);
       }
       
-      target.intel?.findings.forEach((f: string) => addMissionLog(`🔍 Hallazgo: ${f}`, "info", true));
+      target.intel?.findings.forEach((f: string) => addOperationLog(`🔍 Hallazgo: ${f}`, "info", true));
 
       // 3. AUDITORIA REAL
       setAutomationStep('AUDITING');
-      addMissionLog(`📸 Realizando Auditoría Visual y Técnica...`, "info");
+      addOperationLog(`📸 Realizando Auditoría Técnica Integral...`, "info");
       
       const auditRes = await fetch('/api/engine/audit', {
         method: 'POST',
@@ -195,11 +195,11 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       const auditData = await auditRes.json();
       
       if (auditData.screenshotUrl) {
-         addMissionLog("🖼️ Captura de auditoría obtenida con éxito.", "success", false, auditData.screenshotUrl);
+         addOperationLog("🖼️ Auditoría visual completada con éxito.", "success", false, auditData.screenshotUrl);
          target.screenshotUrl = auditData.screenshotUrl;
          
          // INTEGRACIÓN DE INTELIGENCIA PROFUNDA
-         addMissionLog("🧠 Recalibrando Beast Brain con datos técnicos reales...", "ai", true);
+         addOperationLog("🧠 Sincronizando Zyndrix Intelligence con datos técnicos...", "ai", true);
          const deepIntel = calculateLeadIntelligence(target, auditData);
          target.intel = deepIntel;
          
@@ -216,7 +216,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       // 4. GENERACIÓN DE WEB (STITCH)
       if (target.intel?.tier === 'TIER_1' || target.intel?.tier === 'TIER_2') {
         setAutomationStep('STITCHING');
-        addMissionLog(`🎨 Generando prototipo de sitio web en tiempo real...`, "ai");
+        addOperationLog(`🎨 Generando prototipo de activo digital en tiempo real...`, "ai");
         
         try {
           const stitchRes = await fetch('/api/engine/stitch', {
@@ -227,17 +227,17 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
           const stitchData = await stitchRes.json();
           if (stitchData.previewUrl) {
             target.stitch_preview_url = stitchData.previewUrl;
-            addMissionLog(`✨ ¡Web Prototipada! Link generado para el correo de prospección.`, "success", false, stitchData.screenshotUrl);
+            addOperationLog(`✨ ¡Prototipo Generado! Enlace integrado en el protocolo de contacto.`, "success", false, stitchData.screenshotUrl);
           }
         } catch (e) {
           console.error("Stitch generation failed:", e);
-          addMissionLog("⚠️ Fallo en la generación de web. Continuando con el pitch estándar.", "warning");
+          addOperationLog("⚠️ Error en generación de Prototipo. Procediendo con propuesta técnica estándar.", "warning");
         }
       }
 
       // 5. GENERACIÓN DE PITCH
       setAutomationStep('PITCHING');
-      addMissionLog(`✍️ Generando Propuesta Irresistible con IA...`, "ai");
+      addOperationLog(`✍️ Generando Propuesta de Alto Impacto...`, "ai");
       
       const pitchRes = await fetch('/api/engine/pitch', {
         method: 'POST',
@@ -247,11 +247,11 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       const pitchData = await pitchRes.json();
       target.draftEmail = pitchData.email;
 
-      addMissionLog('✍️ Propuesta generada:', "info", false, undefined, target.draftEmail);
+      addOperationLog('✍️ Propuesta Comercial Generada:', "info", false, undefined, target.draftEmail);
 
       // 6. ENVÍO REAL AUTÓNOMO (RESEND)
       setAutomationStep('SENDING');
-      addMissionLog(`🛰️ Modo Autónomo: Iniciando secuencia de envío para ${target.name}...`, "info", true);
+      addOperationLog(`🛰️ Modo Autónomo: Iniciando secuencia de outreach para ${target.name}...`, "info", true);
       
       const sendRes = await fetch('/api/send', {
         method: 'POST',
@@ -309,15 +309,15 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
 
       if (onLeadSynced) onLeadSynced(target);
       
-      addMissionLog(`🚀 MISIÓN CUMPLIDA: Email enviado automáticamente a ${target.name}.`, "success");
+      addOperationLog(`🚀 OPERACIÓN COMPLETADA: Propuesta enviada a ${target.name}.`, "success");
       setAutomationStep('IDLE');
 
     } catch (err) {
       console.error("Autopilot Fail:", err);
-      addMissionLog("⚠️ Fallo en el motor. Reintentando en 10s...", "warning");
+      addOperationLog("⚠️ Interrupción en el flujo de ejecución. Reintentando...", "warning");
       setAutomationStep('IDLE');
     }
-  }, [automationStep, addMissionLog, selectedNiche, location, selectedCompanyType, leads, lastProcessedTarget, onLeadSynced]);
+  }, [automationStep, addOperationLog, selectedNiche, location, selectedCompanyType, leads, lastProcessedTarget, onLeadSynced]);
 
   const approveMission = useCallback(async () => {
     if (automationStep !== 'AWAITING_APPROVAL' || !lastProcessedTarget) return;
@@ -325,7 +325,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
     try {
       setAutomationStep('SENDING');
       const target = lastProcessedTarget;
-      addMissionLog(`🛰️ Autorización recibida. Iniciando secuencia de envío...`, "info", true);
+      addOperationLog(`🛰️ Autorización concedida. Iniciando secuencia de despliegue...`, "info", true);
       
       const sendRes = await fetch('/api/send', {
         method: 'POST',
@@ -361,14 +361,14 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
 
       if (onLeadSynced) onLeadSynced(target);
       
-      addMissionLog(`🚀 MISIÓN CUMPLIDA: Email enviado a ${target.name}.`, "success");
+      addOperationLog(`🚀 OPERACIÓN COMPLETADA: Propuesta enviada a ${target.name}.`, "success");
       setAutomationStep('IDLE');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Error desconocido en envío autorizado";
-      addMissionLog(`❌ Error en envío autorizado: ${errorMessage}`, "warning");
+      addOperationLog(`❌ Error en despliegue autorizado: ${errorMessage}`, "warning");
       setAutomationStep('IDLE');
     }
-  }, [automationStep, lastProcessedTarget, addMissionLog, location, onLeadSynced]);
+  }, [automationStep, lastProcessedTarget, addOperationLog, location, onLeadSynced]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
@@ -392,10 +392,10 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
     autopilotActive,
     setAutopilotActive,
     automationStep,
-    missionLogs,
+    operationLogs,
     lastProcessedTarget,
     runCycle,
     approveMission,
-    addMissionLog
+    addOperationLog
   };
 }
