@@ -36,6 +36,35 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+// [FIX #1] Service Role Client - Bypasses RLS for daemon operations
+const supabaseServiceRole = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key'
+);
+
+// [FIX #1] Helper function to update leads using service role (bypasses RLS)
+async function updateLeadServiceRole(leadId, updates) {
+    try {
+        const { data, error } = await supabaseServiceRole
+            .from('leads')
+            .update(updates)
+            .eq('id', leadId)
+            .select()
+            .single();
+
+        if (error) {
+            log('error', `[RLS BYPASS] Update failed for lead ${leadId}: ${error.message}`);
+            return { success: false, error: error.message };
+        }
+
+        log('success', `[RLS BYPASS] Successfully updated lead ${leadId}`);
+        return { success: true, data };
+    } catch (err) {
+        log('error', `[RLS BYPASS] Exception updating lead ${leadId}: ${err.message}`);
+        return { success: false, error: err.message };
+    }
+}
+
 // Configuration
 const CONFIG = {
     loopDelayMs: 60000, // 1 minute between main cycles
@@ -154,7 +183,7 @@ async function runAutoAudit() {
             });
 
             log('success', `Discovery: Email: ${discoveryData.email || 'None'}, Color: ${discoveryData.primaryColor}`);
-            
+
             // --- DETECT TECH STACK ---
             const tech = await page.evaluate(() => {
                 const stack = [];
@@ -175,25 +204,22 @@ async function runAutoAudit() {
 
             log('success', `Result for ${lead.name}: ${tech.join(', ') || 'Custom'} (${loadTime.toFixed(2)}s)`);
 
-            // Sincronización directa con Supabase
-            const { error: syncError } = await supabase
-                .from('leads')
-                .update({
-                    email: discoveryData.email || lead.email,
-                    tech_stack: tech.join(', ') || 'Custom',
-                    load_time: loadTime,
-                    speed_score: speedScore,
-                    pain_points: painPoints,
-                    screenshot_url: screenshotUrl,
-                    strategy: `Marca premium con paleta ${discoveryData.primaryColor} y tipografía ${discoveryData.fontFamily}.`,
-                    last_audit: new Date().toISOString()
-                })
-                .eq('id', lead.id);
+            // [FIX #1] Use service role to update lead (bypasses RLS)
+            const auditResult = await updateLeadServiceRole(lead.id, {
+                email: discoveryData.email || lead.email,
+                tech_stack: tech.join(', ') || 'Custom',
+                load_time: loadTime,
+                speed_score: speedScore,
+                pain_points: painPoints,
+                screenshot_url: screenshotUrl,
+                strategy: `Marca premium con paleta ${discoveryData.primaryColor} y tipografía ${discoveryData.fontFamily}.`,
+                last_audit: new Date().toISOString()
+            });
 
-            if (!syncError) {
-                log('success', `Result for ${lead.name} synced DIRECTLY.`);
+            if (auditResult.success) {
+                log('success', `Result for ${lead.name} synced via SERVICE ROLE.`);
             } else {
-                log('error', `Direct sync failed for ${lead.name} after audit: ${syncError.message}`);
+                log('error', `Service role sync failed for ${lead.name}: ${auditResult.error}`);
             }
 
         } catch (err) {
@@ -246,23 +272,20 @@ async function runAutoGeneration() {
             });
 
             const result = await response.json();
-            
-            if (result.success) {
-                // Sincronización directa con Supabase para evitar dependencia del despliegue en Vercel
-                const { error: syncError } = await supabase
-                    .from('leads')
-                    .update({
-                        stitch_preview_url: result.previewUrl,
-                        stitch_project_id: result.stitchProjectId,
-                        status: 'GENERATED',
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('id', lead.id);
 
-                if (!syncError) {
-                    log('success', `Project generated and synced (DIRECT) for ${lead.name}: ${result.previewUrl}`);
+            if (result.success) {
+                // [FIX #1] Use service role to persist Stitch URL (bypasses RLS)
+                const stitchResult = await updateLeadServiceRole(lead.id, {
+                    stitch_preview_url: result.previewUrl,
+                    stitch_project_id: result.stitchProjectId,
+                    status: 'GENERATED',
+                    updated_at: new Date().toISOString()
+                });
+
+                if (stitchResult.success) {
+                    log('success', `Project generated and synced via SERVICE ROLE for ${lead.name}: ${result.previewUrl}`);
                 } else {
-                    log('error', `Direct sync failed for ${lead.name}: ${syncError.message}`);
+                    log('error', `Service role sync failed for ${lead.name}: ${stitchResult.error}`);
                 }
             } else {
                 log('error', `Generation failed for ${lead.name}: ${result.error}`);
@@ -323,21 +346,18 @@ async function runAutoOutreach() {
 
             if (result.success) {
                 log('success', `Outreach successful for ${lead.name}`);
-                
-                // Sincronización DIRECTA con Supabase para evitar bucles de spam
-                const { error: syncError } = await supabase
-                    .from('leads')
-                    .update({
-                        email_sent: true,
-                        status: 'OUTREACH_COMPLETE',
-                        last_outreach_at: new Date().toISOString()
-                    })
-                    .eq('id', lead.id);
 
-                if (!syncError) {
-                    log('success', `Lead ${lead.name} marked as CONTACTED in database.`);
+                // [FIX #1] Use service role to mark email as sent (bypasses RLS)
+                const outreachResult = await updateLeadServiceRole(lead.id, {
+                    email_sent: true,
+                    status: 'OUTREACH_COMPLETE',
+                    last_outreach_at: new Date().toISOString()
+                });
+
+                if (outreachResult.success) {
+                    log('success', `Lead ${lead.name} marked as CONTACTED via SERVICE ROLE.`);
                 } else {
-                    log('error', `Failed to mark lead ${lead.name} as contacted: ${syncError.message}`);
+                    log('error', `Service role sync failed for ${lead.name}: ${outreachResult.error}`);
                 }
             } else {
                 log('error', `Outreach failed for ${lead.name}: ${JSON.stringify(result.error)}`);

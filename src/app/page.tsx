@@ -8,6 +8,7 @@ import { getLeads, syncLead } from "@/lib/supabase";
 import { BarChart3, ShieldCheck } from "lucide-react";
 
 // Components
+import { Business } from "@/types";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { StatsGrid } from "@/components/dashboard/StatsGrid";
@@ -27,7 +28,8 @@ export default function Dashboard() {
   const [province, setProvince] = useState('Barcelona');
   const [city, setCity] = useState('Sant Antoni de Vilamajor');
   const [postalCode, setPostalCode] = useState('');
-  const [selectedLead, setSelectedLead] = useState<any>(null);
+  const [selectedLead, setSelectedLead] = useState<Business | null>(null);
+  const [selectedLeadIds, setSelectedLeadIds] = useState<string[]>([]);
   const [isProcessingOutreach, setIsProcessingOutreach] = useState(false);
   const [isGeneratingSite, setIsGeneratingSite] = useState(false);
 
@@ -44,7 +46,7 @@ export default function Dashboard() {
     leads: businesses, 
     selectedNiche: niche, 
     location: location,
-    selectedCompanyType: 'empresa' as any,
+    selectedCompanyType: 'empresa' as 'empresa' | 'pyme' | 'autonomo' | 'corporativo',
     onLeadSynced: (synced) => {
        setLeads(prev => [synced, ...prev.filter(l => l.id !== synced.id)]);
     }
@@ -54,7 +56,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchInitialData = async () => {
       const data = await getLeads();
-      if (data) setLeads(data as any);
+      if (data) setLeads(data as Business[]);
     };
     fetchInitialData();
   }, [setLeads]);
@@ -170,7 +172,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleGenerateSite = async (lead: any) => {
+  const handleGenerateSite = async (lead: Business) => {
     setIsGeneratingSite(true);
     autopilot.addOperationLog(`🎨 Iniciando modelado arquitectónico para ${lead.name}...`, "ai");
 
@@ -282,6 +284,13 @@ export default function Dashboard() {
                     onSelectLead={setSelectedLead}
                     onSendOutreach={handleSendOutreach}
                     selectedLeadId={selectedLead?.id}
+                    selectedLeadIds={selectedLeadIds}
+                    onToggleSelect={(id) => {
+                      setSelectedLeadIds(prev => 
+                        prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+                      );
+                    }}
+                    onSelectAll={(ids) => setSelectedLeadIds(ids)}
                   />
               </div>
             </motion.div>
@@ -294,7 +303,7 @@ export default function Dashboard() {
                  <p className="text-sm text-slate-500 font-medium">Historial completo de entidades detectadas y estados de prospección estratégica.</p>
                </div>
                <LeadsTable 
-                 leads={leads as any} 
+                 leads={leads} 
                  onSelectLead={setSelectedLead}
                  onSendOutreach={handleSendOutreach}
                  selectedLeadId={selectedLead?.id}
@@ -309,8 +318,9 @@ export default function Dashboard() {
                  <p className="text-sm text-slate-500 font-medium">Control en tiempo real de los activos digitales proyectados hacia entidades TIER 1 y TIER 2.</p>
                </div>
                <LeadsTable 
-                 leads={leads.filter(l => l.email_sent) as any} 
+                 leads={leads.filter(l => l.email_sent)} 
                  onSelectLead={setSelectedLead}
+                 onSendOutreach={handleSendOutreach}
                  selectedLeadId={selectedLead?.id}
                />
             </motion.div>
@@ -323,7 +333,7 @@ export default function Dashboard() {
                  <p className="text-sm text-slate-500 font-medium">Gestión administrativa de los sitios web operativos y prototipos desplegados.</p>
                </div>
                <AssetsManagementTable 
-                 assets={leads.filter(l => l.stitch_preview_url) as any} 
+                 assets={leads.filter(l => l.stitch_preview_url)} 
                  onToggleStatus={handleToggleSiteStatus}
                  onPreview={(asset) => window.open(asset.stitch_preview_url, '_blank')}
                />

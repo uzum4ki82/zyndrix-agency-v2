@@ -32,10 +32,20 @@ async function checkData() {
         .not('tech_stack', 'is', null);
     console.log(`Leads with Tech Stack: ${withTechCount || 0}`);
 
-    // Leads with status GENERATED
-    const { count: generatedCount } = await supabase.from('leads').select('*', { count: 'exact', head: true })
-        .eq('status', 'GENERATED');
-    console.log(`Leads Status GENERATED: ${generatedCount || 0}`);
+    // Leads with status OUTREACH_COMPLETE
+    const { count: outreachCount } = await supabase.from('leads').select('*', { count: 'exact', head: true })
+        .eq('status', 'OUTREACH_COMPLETE');
+    console.log(`Leads Status OUTREACH_COMPLETE: ${outreachCount || 0}`);
+
+    // Leads with site_active: true
+    const { count: activeCount } = await supabase.from('leads').select('*', { count: 'exact', head: true })
+        .eq('site_active', true);
+    console.log(`Leads with SITE_ACTIVE: ${activeCount || 0}`);
+
+    // Leads with status opened
+    const { count: openedCount } = await supabase.from('leads').select('*', { count: 'exact', head: true })
+        .eq('status', 'opened');
+    console.log(`Leads Status OPENED (Tracked): ${openedCount || 0}`);
 
     // Detail of latest leads
     const { data: latestLeads } = await supabase.from('leads').select('name, status, stitch_preview_url, tech_stack')

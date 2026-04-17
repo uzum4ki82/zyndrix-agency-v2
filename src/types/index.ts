@@ -5,7 +5,7 @@ export interface Business {
   address: string;
   neighborhood: string;
   score: number;
-  status: 'high' | 'medium' | 'low';
+  status: 'high' | 'medium' | 'low' | 'DESIGN_READY' | 'ARCHIVED' | string;
   website: string | null;
   reviews: number;
   reviewsCount?: number;
@@ -57,6 +57,22 @@ export interface Business {
   stitch_preview_url?: string;
   stitch_project_id?: string;
   loadTime?: number;
+  opened_at?: string | null;
+  // [FIX #4] Email tracking fields
+  resend_email_id?: string;
+  email_sent_at?: string;
+  email_delivered?: boolean;
+  email_delivered_at?: string;
+  email_opened?: boolean;
+  email_opened_at?: string;
+  email_clicked?: boolean;
+  email_clicked_at?: string;
+  email_bounced?: boolean;
+  email_bounced_at?: string;
+  email_complained?: boolean;
+  email_complained_at?: string;
+  engagement_score?: number;
+  open_status?: 'pending' | 'delivered' | 'opened' | 'clicked' | 'bounced' | 'complained';
   [key: string]: any;
 }
 

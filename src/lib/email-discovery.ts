@@ -71,35 +71,87 @@ async function scrapeWithPuppeteer(url: string) {
 }
 
 export async function discoverDataFromUrl(url: string | null): Promise<any> {
-  if (!url || !url.startsWith('http')) return { emails: [], socials: {}, tech: [], seo: {} };
+  if (!url || !url.startsWith('http')) return { emails: [], socials: {}, tech: [], seo: {}, whatsapp: null };
 
   console.log(`[Strategic Discovery] Analizando infraestructura de ${url}...`);
   const emails = new Set<string>();
   const socials: any = {};
   const tech: string[] = [];
   const seo: any = {};
+  let whatsapp: string | null = null;
   
   // Paso 1: Scraping Dinámico con Puppeteer
   const result = await scrapeWithPuppeteer(url);
-  if (!result) {
-      console.warn(`[Strategic Discovery] Puppeteer falló, recurriendo a fetch básico.`);
-      // Podríamos llamar al fetch básico aquí si Puppeteer falla
-      return { emails: [], socials: {}, tech: [], seo: {} };
-  }
+  if (!result) return { emails: [], socials: {}, tech: [], seo: {}, whatsapp: null };
 
   const { content: html, title, screenshotUrl } = result;
   seo.title = title;
 
-  // Extraer Emails con Regex
-  const emailMatches = html.match(EMAIL_REGEX);
-  emailMatches?.forEach(e => {
-    const email = e.toLowerCase();
-    if (!FORBIDDEN_EMAILS.some(f => email.includes(f))) {
-      if (!email.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/)) {
+  function extractEmails(text: string) {
+    const matches = text.match(EMAIL_REGEX);
+    matches?.forEach(e => {
+      const email = e.toLowerCase();
+      if (!FORBIDDEN_EMAILS.some(f => email.includes(f))) {
+        if (!email.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/)) {
+          emails.add(email);
+        }
+      }
+    });
+
+    // Extract mailto: links specifically
+    const mailtoMatches = text.match(/mailto:([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/gi);
+    mailtoMatches?.forEach(m => {
+      const email = m.replace('mailto:', '').toLowerCase();
+      if (!FORBIDDEN_EMAILS.some(f => email.includes(f))) {
         emails.add(email);
       }
+    });
+  }
+
+  function extractWhatsApp(text: string) {
+    const waMatch = text.match(/(?:wa\.me|api\.whatsapp\.com\/send\?phone=|whatsapp:\/\/send\?phone=)(\d+)/i);
+    if (waMatch && waMatch[1]) {
+      whatsapp = waMatch[1];
     }
-  });
+    // Also check for tel: links that might be whatsapp
+    if (!whatsapp) {
+      const telMatch = text.match(/tel:(\+?\d{9,15})/i);
+      if (telMatch && telMatch[1]) {
+        // We assume it might be whatsapp for business if it's on a landing page
+        whatsapp = telMatch[1].replace(/\s/g, '');
+      }
+    }
+  }
+
+  extractEmails(html);
+  extractWhatsApp(html);
+
+  // Paso 2: Deep Link Discovery (Si no hay emails en la Home)
+  if (emails.size === 0) {
+    // Look for more variants of contact/legal pages
+    const contactLinks = html.match(/href="([^"]*(?:contacto|contact|legal|about|quienes|nosotros|aviso|privacidad|cookies)[^"]*)"/gi);
+    if (contactLinks && contactLinks.length > 0) {
+        // Explore top 2 likely candidates instead of just 1
+        const uniqueLinks = Array.from(new Set(contactLinks)).slice(0, 2);
+        
+        for (const link of uniqueLinks) {
+          let contactUrl = link.match(/href="([^"]*)"/i)?.[1];
+          if (contactUrl) {
+              if (!contactUrl.startsWith('http')) {
+                  const base = new URL(url).origin;
+                  contactUrl = new URL(contactUrl, base).href;
+              }
+              console.log(`[Deep Discovery] Explorando sub-página táctica: ${contactUrl}`);
+              const contactResult = await scrapeWithPuppeteer(contactUrl);
+              if (contactResult) {
+                  extractEmails(contactResult.content);
+                  if (!whatsapp) extractWhatsApp(contactResult.content);
+              }
+          }
+          if (emails.size > 0) break;
+        }
+    }
+  }
 
   // Identificar Huella Social
   Object.entries(SOCIAL_PATTERNS).forEach(([platform, regex]) => {
@@ -117,7 +169,8 @@ export async function discoverDataFromUrl(url: string | null): Promise<any> {
     socials,
     tech,
     seo,
-    screenshotUrl
+    screenshotUrl,
+    whatsapp
   };
 }
 
@@ -143,13 +196,14 @@ export async function enrichLeadsWithDeepDiscovery(leads: any[]): Promise<any[]>
       
       return {
         ...lead,
-        email: lead.email || data.emails[0],
+        email: lead.email || (data.emails.length > 0 ? data.emails[0] : null),
+        whatsapp: lead.whatsapp || data.whatsapp,
         all_emails: data.emails,
         tech_stack: data.tech,
         social_links: data.socials,
         seo_meta: data.seo,
         screenshotUrl: finalScreenshotUrl,
-        score: lead.score + (data.emails.length > 0 ? 10 : 0) + (data.tech.length < 2 ? 15 : 0)
+        score: lead.score + (data.emails.length > 0 ? 10 : 0) + (data.whatsapp ? 15 : 0) + (data.tech.length < 2 ? 15 : 0)
       };
     } catch (e) {
       return lead;

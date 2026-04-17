@@ -3,39 +3,53 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Star, Shield, TrendingUp, Mail, Eye, MoreVertical } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface Lead {
-  id: string;
-  name: string;
-  website?: string | null;
-  address?: string | null;
-  email?: string | null;
-  score: number;
-  tier: 'TIER_1' | 'TIER_2' | 'TIER_3' | 'OPTIMAL' | string;
-  status?: string | null;
-  stitch_preview_url?: string;
-  email_sent?: boolean;
-}
+import { Business } from '@/types';
 
 interface LeadsTableProps {
-  leads: Lead[];
-  onSelectLead: (lead: Lead) => void;
-  onSendOutreach: (leadId: string, type?: string) => void;
+  leads: Business[];
+  onSelectLead: (lead: Business) => void;
+  onSendOutreach?: (leadId: string, type?: string) => void;
+  onGenerateSite?: (leadId: string) => void;
   selectedLeadId?: string;
+  selectedLeadIds?: string[];
+  onToggleSelect?: (id: string) => void;
+  onSelectAll?: (ids: string[]) => void;
 }
 
 export const LeadsTable: React.FC<LeadsTableProps> = ({ 
   leads, 
   onSelectLead, 
   onSendOutreach,
-  selectedLeadId 
+  selectedLeadId,
+  selectedLeadIds = [],
+  onToggleSelect,
+  onSelectAll
 }) => {
+  const isAllSelected = leads.length > 0 && selectedLeadIds.length === leads.length;
+
   return (
-    <div className="bg-white border border-slate-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden min-h-[600px] flex flex-col">
+    <div className="bg-white border border-slate-200/60 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden min-h-[600px] flex flex-col relative">
       <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/30">
         <div>
           <h3 className="text-lg font-semibold text-slate-900 tracking-tight">Directorio de Oportunidades</h3>
           <p className="text-sm text-slate-500 font-medium">Unidades de inteligencia comercial detectadas</p>
         </div>
+        
+        {selectedLeadIds.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex items-center gap-4 bg-indigo-600 px-4 py-2 rounded-xl border border-indigo-500 shadow-lg shadow-indigo-600/20"
+          >
+            <span className="text-white text-xs font-bold">{selectedLeadIds.length} Seleccionados</span>
+            <div className="h-4 w-px bg-white/20" />
+            <div className="flex gap-2">
+              <button className="text-[10px] uppercase font-black text-white hover:text-indigo-100 transition-colors">Enviar Masivo</button>
+              <button className="text-[10px] uppercase font-black text-white hover:text-indigo-100 transition-colors">Generar Demos</button>
+            </div>
+          </motion.div>
+        )}
+
         <div className="flex items-center gap-3 px-3 py-1.5 bg-emerald-50 rounded-full border border-emerald-100/50">
           <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[10px] uppercase font-bold text-emerald-700 tracking-wider">Motor Activo</span>
@@ -46,8 +60,20 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-slate-50/80 border-b border-slate-200/60">
+              <th className="px-6 py-4 w-12">
+                <input 
+                  type="checkbox" 
+                  checked={isAllSelected}
+                  onChange={() => {
+                    if (isAllSelected) onSelectAll?.([]);
+                    else onSelectAll?.(leads.map(l => l.id));
+                  }}
+                  className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                />
+              </th>
               <th className="px-8 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-left">Entidad Táctica</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100/50">Canal / Estado</th>
+              <th className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100/50">Engagement</th>
               <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100/50">Demos</th>
               <th className="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-center">Score IQ</th>
               <th className="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-center">Clasificación Tier</th>
@@ -63,15 +89,23 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.2, delay: i * 0.03 }}
+                  transition={{ duration: 0.2, delay: i * 0.01 }}
                   onClick={() => onSelectLead(lead)}
                   className={cn(
                     "group cursor-pointer transition-all duration-200 border-b border-slate-100",
                     selectedLeadId === lead.id 
                       ? "bg-indigo-50/40 relative after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-indigo-600" 
-                      : "hover:bg-slate-50/50"
+                      : (selectedLeadIds.includes(lead.id) ? "bg-indigo-50/20" : "hover:bg-slate-50/50")
                   )}
                 >
+                  <td className="px-6 py-5 text-center" onClick={(e) => e.stopPropagation()}>
+                    <input 
+                      type="checkbox" 
+                      checked={selectedLeadIds.includes(lead.id)}
+                      onChange={() => onToggleSelect?.(lead.id)}
+                      className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                  </td>
                   <td className="px-8 py-5">
                     <div className="flex items-center gap-4">
                       {lead.website ? (
@@ -119,6 +153,51 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                           </span>
                         )}
                       </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-5 text-center">
+                    <div className="flex flex-col items-center gap-2">
+                      {lead.engagement_score !== undefined ? (
+                        <>
+                          <div className="flex items-center gap-2">
+                            <span className={cn(
+                              "text-xs font-bold",
+                              lead.email_complained ? "text-red-600" :
+                              lead.email_bounced ? "text-orange-600" :
+                              lead.email_clicked ? "text-emerald-600" :
+                              lead.email_opened ? "text-emerald-500" :
+                              "text-slate-400"
+                            )}>
+                              {lead.engagement_score}
+                            </span>
+                            <span className={cn(
+                              "text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full",
+                              lead.email_complained ? "bg-red-100 text-red-700" :
+                              lead.email_bounced ? "bg-orange-100 text-orange-700" :
+                              lead.email_clicked ? "bg-emerald-100 text-emerald-700" :
+                              lead.email_opened ? "bg-emerald-50 text-emerald-600" :
+                              "bg-slate-100 text-slate-500"
+                            )}>
+                              {lead.open_status || 'Pendiente'}
+                            </span>
+                          </div>
+                          <div className="w-12 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className={cn(
+                                "h-full rounded-full transition-all",
+                                lead.email_complained ? "bg-red-500" :
+                                lead.email_bounced ? "bg-orange-500" :
+                                lead.email_clicked ? "bg-emerald-600" :
+                                lead.email_opened ? "bg-emerald-500" :
+                                "bg-slate-300"
+                              )}
+                              style={{ width: `${Math.max(10, (lead.engagement_score || 0) + 100) / 2}%` }}
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <span className="text-[10px] font-medium text-slate-400">-</span>
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-5 text-center">
@@ -181,7 +260,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                         </a>
                       )}
                       <button 
-                         onClick={(e) => { e.stopPropagation(); onSendOutreach(lead.id, lead.email_sent ? 'followup' : 'impact'); }}
+                         onClick={(e) => { e.stopPropagation(); onSendOutreach?.(lead.id, lead.email_sent ? 'followup' : 'impact'); }}
                          className={cn(
                            "h-9 px-4 flex items-center gap-2 rounded-xl transition-all duration-300 text-[10px] font-black uppercase tracking-widest shadow-lg",
                            lead.email_sent 

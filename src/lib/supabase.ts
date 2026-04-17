@@ -42,7 +42,6 @@ export type Lead = {
   address?: string;
   neighborhood?: string;
   score: number;
-  status: 'high' | 'medium' | 'low';
   website: string | null;
   strategy?: string;
   conversion_gap?: string;
@@ -262,22 +261,62 @@ export const getLeads = async (): Promise<Lead[]> => {
 
 export const getLeadById = async (id: string): Promise<Lead | null> => {
   if (!supabaseUrl || !supabaseAnonKey || (supabaseUrl.includes('placeholder'))) return null;
-  
+
   try {
     const { data, error } = await supabase
       .from('leads')
       .select('*')
       .eq('id', id)
       .single();
-      
+
     if (error) {
       console.error('Error fetching lead by id:', error);
       return null;
     }
-    
+
     return data;
   } catch (err) {
     console.error('Fatal error in getLeadById:', err);
     return null;
+  }
+};
+
+// SERVICE ROLE CLIENT - For daemon/server operations that bypass RLS
+const supabaseServiceRole = (() => {
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey || serviceRoleKey === 'placeholder-service-key') {
+    console.warn('SUPABASE_SERVICE_ROLE_KEY not configured. Daemon operations may fail.');
+    return null;
+  }
+  return createClient(supabaseUrl, serviceRoleKey);
+})();
+
+export const updateLeadWithServiceRole = async (
+  leadId: string,
+  updates: Partial<Lead> & Record<string, unknown>
+): Promise<{ success: boolean; error?: string; data?: Lead }> => {
+  if (!supabaseServiceRole) {
+    return { success: false, error: 'Service role client not initialized' };
+  }
+
+  try {
+    const { data, error } = await supabaseServiceRole
+      .from('leads')
+      .update(updates)
+      .eq('id', leadId)
+      .select()
+      .single();
+
+    if (error) {
+      console.error(`[RLS BYPASS] Update failed for lead ${leadId}:`, error.message);
+      return { success: false, error: error.message };
+    }
+
+    console.log(`[RLS BYPASS] Successfully updated lead ${leadId}`);
+    return { success: true, data };
+  } catch (err: any) {
+    const errorMsg = err?.message || String(err);
+    console.error(`[RLS BYPASS] Exception updating lead ${leadId}:`, errorMsg);
+    return { success: false, error: errorMsg };
   }
 };

@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Globe, Mail, BarChart3, Braces, Rocket, ShieldCheck, AlertCircle, ChevronRight, ExternalLink, Activity, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { Business } from '@/types';
+
 interface LeadDetailSidebarProps {
-  lead: any;
+  lead: Business;
   onClose: () => void;
-  onSendOutreach: (leadId: string) => void;
-  onGenerateSite: (lead: any) => void;
+  onSendOutreach: (leadId: string, type?: string) => void;
+  onGenerateSite: (lead: Business) => void;
   isProcessing: boolean;
   isGenerating: boolean;
 }

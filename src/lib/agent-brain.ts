@@ -1,8 +1,9 @@
 import { AuditResult, Business, TeamMember } from "@/types";
+import { extractBrandColors, BrandPalette } from "./color-extractor";
 
 /**
- * MOTOR DE INTELIGENCIA ESTRATÉGICA ZYNDRIX (BRAIN v2.0)
- * Orquestador de agentes especializados para la auditoría y conversión de leads.
+ * [FIX #3] MOTOR DE INTELIGENCIA ESTRATÉGICA ZYNDRIX (BRAIN v3.0)
+ * Orquestador de agentes especializados para auditoría + Visual DNA extraction
  */
 
 class HunterAgent {
@@ -10,37 +11,37 @@ class HunterAgent {
     let score = 0;
     const findings: string[] = [];
     const painPoints: string[] = [];
-    let tier: 'TIER_1' | 'TIER_2' | 'TIER_3' | 'OPTIMAL' = 'OPTIMAL';
+    let tier: 'TIER_1' | 'TIER_2' | 'TIER_3' | 'OPTIMAL' | 'DISCARDED' = 'OPTIMAL';
     
-    const reviewsCount = lead.reviewsCount || lead.reviews || 0;
-    const rating = lead.rating || 0;
+    const hasEmail = !!lead.email;
+    const hasWhatsApp = !!lead.whatsapp || !!lead.phone; // Assuming phone might be whatsapp
 
-    // TIER 1: Anemia Digital Absoluta (Sin Web)
-    if (!lead.website || lead.website === "" || lead.website.includes("noweb")) {
+    // NEW STRICT TIER RULES
+    if (!hasEmail && !hasWhatsApp) {
+      tier = 'DISCARDED';
+      score = 0;
+      findings.push("DESCARGADO: Sin puntos de contacto detectados.");
+    } else if (hasEmail && hasWhatsApp) {
       tier = 'TIER_1';
-      score += 75;
-      findings.push(`EMERGENCIA DIGITAL: ${lead.name} opera sin infraestructura propia.`);
-      painPoints.push("Pérdida total de leads orgánicos", "Dependencia de plataformas de terceros", "Falta de autoridad profesional");
-    } 
-    // TIER 2: Identidad Prestada (Web en RS o Directorios)
-    else if (lead.website?.includes("facebook.com") || lead.website?.includes("instagram.com") || lead.website?.includes("cylex")) {
-      tier = 'TIER_2';
-      score += 60;
-      findings.push(`ESTRATEGIA REHÉN: Su activo digital principal pertenece a Meta/Google.`);
-      painPoints.push("Escalabilidad nula", "Falta de control sobre el embudo", "Distracción del cliente");
-    }
-    // TIER 3: Obsolescencia Técnica (Web Propia pero Obsoleta)
-    else {
+      score = 95;
+      findings.push("OPORTUNIDAD VESTIGIAL: Máximo potencial de conversión detectado (Email + WhatsApp).");
+    } else if (hasWhatsApp) {
       tier = 'TIER_3';
-      score += 35;
-      findings.push(`DESGASTE DIGITAL: Infraestructura activa pero con erosión de conversión.`);
-      painPoints.push("Baja velocidad de carga", "Arquitectura pre-IA", "Diseño no alineado con el ticket promedio");
+      score = 45;
+      findings.push("CANAL RESTRINGIDO: Solo se detectó WhatsApp. Requiere contacto manual.");
+    } else {
+      // Email only? Standard TIER 2
+      tier = 'TIER_2' as any;
+      score = 65;
+      findings.push("CANAL ESTÁNDAR: Solo se detectó Email corporativo.");
     }
 
-    // High Impact Bonus (Muchos reviews, poca tecnología)
-    if (reviewsCount > 50 && (tier as any) !== 'OPTIMAL') {
-      score += 15;
-      findings.push(`AUTORIDAD DESPERDICIADA: Poseen ${reviewsCount} reseñas (${rating}★) que no están monetizando digitalmente.`);
+    // Pain point enhancement based on website
+    if (!lead.website || lead.website === "" || lead.website.includes("noweb")) {
+      painPoints.push("Invisibilidad total en búsquedas locales", "Falta de credibilidad ante clientes premium", "Sin captura de datos de clientes");
+      score += 10;
+    } else {
+      painPoints.push("Embudo de ventas con fugas críticas", "Arquitectura móvil deficiente", "Velocidad de carga subóptima para retención");
     }
 
     return { score: Math.min(score, 100), findings, tier, painPoints };
@@ -49,54 +50,89 @@ class HunterAgent {
 
 class StrategistAgent {
   private industryData: Record<string, { ltv: number, leads: number, name: string, ticket: number }> = {
-    'Clínica Dental': { ltv: 3500, leads: 25, name: 'Dental', ticket: 1200 },
-    'Inmobiliaria': { ltv: 12000, leads: 10, name: 'Real Estate', ticket: 8000 },
-    'Taller Mecánico': { ltv: 1500, leads: 40, name: 'Automoción', ticket: 400 },
-    'Centro Médico': { ltv: 5000, leads: 30, name: 'Salud', ticket: 2000 },
-    'Default': { ltv: 1000, leads: 20, name: 'Servicios', ticket: 500 }
+    'restaurante': { ltv: 500, leads: 50, name: 'Gastronomía', ticket: 45 },
+    'taller': { ltv: 2000, leads: 15, name: 'Automotriz', ticket: 350 },
+    'clinica': { ltv: 4000, leads: 20, name: 'Salud', ticket: 1200 },
+    'reforma': { ltv: 15000, leads: 5, name: 'Construcción', ticket: 10000 },
+    'default': { ltv: 1000, leads: 20, name: 'Servicios', ticket: 500 }
   };
 
   projectROI(score: number, category: string) {
-    const data = this.industryData[Object.keys(this.industryData).find(k => category?.includes(k)) || 'Default'];
+    const cat = category?.toLowerCase() || '';
+    const key = Object.keys(this.industryData).find(k => cat.includes(k)) || 'default';
+    const data = this.industryData[key];
     const gap = score / 100;
-    const projectedGrowth = Math.round(data.leads * gap * 12); // Leads anuales adicionales
-    const roiLabel = gap > 0.7 ? 'CRÍTICO' : gap > 0.4 ? 'ALTO' : 'SIGNIFICATIVO';
 
     return {
-       roi: Math.round(gap * 85), // % de mejora estimada
-       projectedLeads: projectedGrowth,
-       impact: roiLabel,
+       roi: Math.round(gap * 150),
+       projectedLeads: Math.round(data.leads * gap * 12),
+       impact: gap > 0.8 ? 'CRÍTICO' : 'ALTO',
        industryName: data.name
     };
   }
 }
 
-export function calculateLeadIntelligence(lead: Partial<Business>, auditData?: any): AuditResult {
+// [FIX #3] Visual DNA Agent - Extracts brand colors from screenshots
+class VisualDNAAgent {
+  async extractBrandIdentity(lead: Partial<Business>): Promise<BrandPalette | null> {
+    if (!lead.screenshot_url || lead.screenshot_url.includes('placeholder') || lead.screenshot_url.includes('undefined')) {
+      console.log(`[VISUAL_DNA] No valid screenshot for ${lead.name}, skipping color extraction`);
+      return null;
+    }
+
+    try {
+      console.log(`[VISUAL_DNA] Extracting brand DNA for ${lead.name}...`);
+      const palette = await extractBrandColors(
+        lead.screenshot_url,
+        lead.name || 'Unknown',
+        lead.category
+      );
+
+      console.log(`[VISUAL_DNA] ✓ Extracted palette for ${lead.name}:`, {
+        primary: palette.primary,
+        secondary: palette.secondary,
+        confidence: palette.confidence
+      });
+
+      return palette;
+    } catch (error) {
+      console.error(`[VISUAL_DNA] Error extracting colors for ${lead.name}:`, error);
+      return null;
+    }
+  }
+}
+
+export async function calculateLeadIntelligence(lead: Partial<Business>, auditData?: any): Promise<AuditResult & { brandPalette?: BrandPalette }> {
   const hunter = new HunterAgent();
   const strategist = new StrategistAgent();
-  
+  const visualDNA = new VisualDNAAgent();
+
   const { score: rawScore, findings, tier, painPoints } = hunter.analyze(lead);
   const metrics = strategist.projectROI(rawScore, lead.category || '');
+
+  // [FIX #3] Extract brand colors if screenshot available
+  const brandPalette = await visualDNA.extractBrandIdentity(lead);
 
   // Consolidar inteligencia
   return {
     score: rawScore,
-    tier,
+    tier: tier as any,
     findings,
     painPoints,
     roi: metrics.roi,
     impact: metrics.impact,
     industryName: metrics.industryName,
     foundEmails: lead.email ? [lead.email] : (auditData?.emails || []),
-    techStack: auditData?.tech || [],
-    screenshot: auditData?.screenshot,
-    pitchHeadline: `Informe de Impacto Digital para ${lead.name} // Zyndrix Strategy`,
-    strategy: `Despliegue de Arquitectura Zyndrix para corregir: ${findings[0]}`
+    techStack: auditData?.tech || ["Legacy HTML", "Sin Optimización Conversion"],
+    screenshot: auditData?.screenshot || lead.screenshot_url,
+    pitchHeadline: `Transformación Digital Radical: Propuesta Estratégica para ${lead.name}`,
+    strategy: findings[0],
+    brandPalette: brandPalette || undefined
   };
 }
 
 export function recommendTeamMember(lead: any, team: TeamMember[]): TeamMember {
-  const isPriority = lead.tier === 'TIER_1' || (lead.score || 0) > 80;
-  if (isPriority) return team.find(m => m.role === 'CLOSER') || team[0];
+  const isHighValue = lead.tier === 'TIER_1' || lead.score > 90;
+  if (isHighValue) return team.find(m => m.role === 'CLOSER') || team[0];
   return team[0];
 }

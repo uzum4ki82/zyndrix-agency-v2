@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
+import { updateLeadWithServiceRole } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -29,7 +30,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, status: process.env.RESEND_API_KEY ? 'live' : 'mock' });
     }
 
-    const targetEmail = isTest ? 'omontesquesada@gmail.com' : (email || 'omontesquesada@gmail.com');
+    if (!isTest && !email) {
+      return NextResponse.json({ error: 'Email receptor no proporcionado' }, { status: 400 });
+    }
+
+    const targetEmail = isTest ? 'omontesquesada@gmail.com' : email;
     const apiKey = process.env.RESEND_API_KEY || '';
     
     if (!apiKey || apiKey.toLowerCase().includes('your_key') || apiKey === 're_123456789' || apiKey.length < 10) {
@@ -166,7 +171,7 @@ export async function POST(request: Request) {
     const { data, error } = await resend.emails.send({
       from: fromEmail, 
       to: [targetEmail],
-      reply_to: 'omontesquesada@gmail.com',
+      replyTo: 'omontesquesada@gmail.com',
       subject: subject,
       tags: [
         { name: 'lead_id', value: id || 'test' }
@@ -179,9 +184,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error }, { status: 500 });
     }
 
-    return NextResponse.json({ 
-      success: true, 
-      data 
+    // [FIX #4] Persist email_id and initial engagement tracking
+    if (id && data?.id) {
+      try {
+        await updateLeadWithServiceRole(id, {
+          resend_email_id: data.id,
+          email_sent: true,
+          email_sent_at: new Date().toISOString(),
+          status: 'OUTREACH_COMPLETE',
+          engagement_score: 0 // Will be updated by webhook events
+        });
+        console.log(`[FIX #4] ✓ Email tracking initialized for lead ${id}`);
+      } catch (persistError) {
+        console.error(`[FIX #4] Warning: Could not persist email tracking for ${id}:`, persistError);
+        // Continue anyway - email was sent successfully
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      data,
+      emailId: data?.id
     });
   } catch (error: any) {
     console.error('CRITICAL [OUTREACH_EXCEPTION]:', error);

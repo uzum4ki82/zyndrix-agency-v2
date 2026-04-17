@@ -3,20 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Globe, Power, PowerOff, ShieldCheck, Eye, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface Asset {
-  id: string;
-  name: string;
-  website?: string | null;
-  stitch_preview_url?: string;
-  site_active?: boolean;
-  score: number;
-  last_audit?: string;
-}
+import { Business } from '@/types';
 
 interface AssetsManagementTableProps {
-  assets: Asset[];
+  assets: Business[];
   onToggleStatus: (assetId: string, currentStatus: boolean) => void;
-  onPreview: (asset: Asset) => void;
+  onPreview: (asset: Business) => void;
 }
 
 export const AssetsManagementTable: React.FC<AssetsManagementTableProps> = ({ assets, onToggleStatus, onPreview }) => {
