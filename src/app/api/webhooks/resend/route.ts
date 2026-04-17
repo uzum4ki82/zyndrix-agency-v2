@@ -1,47 +1,45 @@
-import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
 
-/**
- * WEBHOOK DE RESEND
- * Escucha eventos de apertura y clic para actualizar el CRM en tiempo real.
- */
+import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // Necesitamos la Service Role para bypass RLS
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
     const { type, data } = payload;
 
-    console.log(`📩 Webhook de Resend recibido: ${type}`);
+    console.log(`[RESEND_WEBHOOK] Evento recibido: ${type}`);
 
-    // Solo nos interesan las aperturas y clics por ahora
-    if (type === 'email.opened' || type === 'email.clicked') {
+    // Solo nos interesan las aperturas
+    if (type === 'email.opened') {
+      const emailId = data.email_id;
       const leadId = data.tags?.lead_id;
 
       if (leadId && leadId !== 'test') {
-        const newStatus = type === 'email.clicked' ? 'INTERESTED' : 'OPENED';
+        console.log(`🎯 [TRACKING] Apertura detectada para Lead: ${leadId}`);
         
-        console.log(`🎯 Lead ${leadId} ha interactuado (${type}). Actualizando estado a ${newStatus}...`);
-
         const { error } = await supabase
           .from('leads')
           .update({ 
-            follow_up_status: newStatus,
-            updated_at: new Date().toISOString()
+            opened_at: new Date().toISOString(),
+            status: 'opened' 
           })
           .eq('id', leadId);
 
         if (error) {
-          console.error('❌ Error actualizando lead en Supabase:', error.message);
-          return NextResponse.json({ error: error.message }, { status: 500 });
+          console.error('❌ Error actualizando apertura en Supabase:', error);
+        } else {
+          console.log(`✅ Status actualizado para Lead ${leadId}`);
         }
-
-        // Loggear la actividad en el sistema de auditoría si fuera necesario
-        console.log(`✅ Lead ${leadId} marcado como ${newStatus}.`);
       }
     }
 
     return NextResponse.json({ received: true });
   } catch (error: any) {
-    console.error('❌ Error fatal en Webhook:', error.message);
+    console.error('[WEBHOOK_ERROR]:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

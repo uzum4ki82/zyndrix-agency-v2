@@ -13,17 +13,23 @@ import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { StatsGrid } from "@/components/dashboard/StatsGrid";
 import { TargetingPanel } from "@/components/dashboard/TargetingPanel";
 import { LeadsTable } from "@/components/dashboard/LeadsTable";
+import { AssetsManagementTable } from "@/components/dashboard/AssetsManagementTable";
 import { LeadDetailSidebar } from "@/components/dashboard/LeadDetailSidebar";
+import { LiveOperationsFeed } from "@/components/dashboard/LiveOperationsFeed";
 import { navItems } from "@/lib/constants";
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<'commander' | 'leads' | 'outreach' | 'analytics'>('commander');
+  const [activeTab, setActiveTab] = useState<'commander' | 'leads' | 'sites' | 'outreach' | 'analytics'>('commander');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [niche, setNiche] = useState('Auditorías de Lujo');
-  const [location, setLocation] = useState('Madrid, España');
+  const [location, setLocation] = useState('Sant Antoni de Vilamajor, Barcelona');
+  const [province, setProvince] = useState('Barcelona');
+  const [city, setCity] = useState('Sant Antoni de Vilamajor');
+  const [postalCode, setPostalCode] = useState('');
   const [selectedLead, setSelectedLead] = useState<any>(null);
   const [isProcessingOutreach, setIsProcessingOutreach] = useState(false);
+  const [isGeneratingSite, setIsGeneratingSite] = useState(false);
 
   const {
     businessList: businesses,
@@ -54,15 +60,20 @@ export default function Dashboard() {
   }, [setLeads]);
 
   const handleSearch = async () => {
-    if (!niche || !location) return;
+    if (!niche || (!city && !province)) return;
     setIsSearching(true);
-    autopilot.addOperationLog(`📡 Desplegando rastreo sectorial: ${niche} en ${location}...`, "ai", true);
+    
+    // Construct exact location string
+    const finalLocation = `${city || ''} ${province || ''} ${postalCode || ''} España`.trim().replace(/\s+/g, ' ');
+    setLocation(finalLocation);
+
+    autopilot.addOperationLog(`📡 Desplegando rastreo sectorial: ${niche} en ${finalLocation}...`, "ai", true);
     
     try {
       const res = await fetch('/api/engine/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ niche, location })
+        body: JSON.stringify({ niche, location: finalLocation })
       });
       const data = await res.json();
       if (data && data.length > 0) {
@@ -80,34 +91,44 @@ export default function Dashboard() {
     }
   };
 
-  const handleSendOutreach = async (leadId: string) => {
+  const handleSendOutreach = async (leadId: string, type: string = 'impact') => {
     const lead = leads.find(l => l.id === leadId) || businesses.find(b => b.id === leadId);
     if (!lead) return;
 
     setIsProcessingOutreach(true);
-    autopilot.addOperationLog(`🛰️ Generando Activo Digital Strategic para ${lead.name}...`, "ai");
+    const logMsg = type === 'followup' 
+      ? `🛰️ Re-impactando a ${lead.name} con Protocolo de Seguimiento...` 
+      : `🛰️ Generando Activo Digital Strategic para ${lead.name}...`;
+    
+    autopilot.addOperationLog(logMsg, "ai");
 
     try {
-      // 1. Generar preview con Stitch
-      const stitchRes = await fetch('/api/engine/stitch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ business: lead })
-      });
-      const stitchData = await stitchRes.json();
-      const previewUrl = stitchData.previewUrl;
-      const screenshot = stitchData.screenshotUrl || lead.screenshotUrl;
+      // 1. Obtener o Generar preview con Stitch
+      let previewUrl = lead.stitch_preview_url;
+      let screenshot = lead.screenshot_url;
 
-      // 2. Enviar email con la data de Stitch (Asegurar isTest si estamos en depuración)
+      if (!previewUrl) {
+        const stitchRes = await fetch('/api/engine/stitch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ business: lead })
+        });
+        const stitchData = await stitchRes.json();
+        previewUrl = stitchData.previewUrl;
+        screenshot = stitchData.screenshotUrl || lead.screenshot_url;
+      }
+
+      // 2. Enviar email (Impacto o Seguimiento)
       const res = await fetch('/api/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: lead.email || 'omontesquesada@gmail.com',
+          email: lead.email,
           name: lead.name,
           id: lead.id,
-          location: lead.neighborhood || location,
-          isTest: true, // Forzamos true para asegurar que te llega a ti en estas pruebas
+          type: type,
+          location: lead.neighborhood || lead.address || location,
+          isTest: false,
           analysisData: {
              strategicImpact: 'HIGH_CONVERSION',
              techStack: lead.tech_stack || 'Legacy Infrastructure',
@@ -119,20 +140,82 @@ export default function Dashboard() {
       });
 
       if (res.ok) {
-        autopilot.addOperationLog(`🚀 Propuesta estratégica desplegada con éxito.`, "success");
+        const successLog = type === 'followup'
+          ? `✅ Refuerzo estratégico enviado a ${lead.name}.`
+          : `🚀 Propuesta estratégica desplegada con éxito.`;
+          
+        autopilot.addOperationLog(successLog, "success");
+        
+        const now = new Date().toISOString();
         const updated = { 
           ...lead, 
           email_sent: true, 
-          last_contacted_at: new Date().toISOString(),
-          stitch_preview_url: previewUrl
+          last_outreach_at: now,
+          stitch_preview_url: previewUrl,
+          screenshot_url: screenshot
+        };
+        
+        updateBusinessInLists(updated);
+        await syncLead(updated);
+        
+        // Update selected lead to refresh UI
+        if (selectedLead?.id === leadId) {
+          setSelectedLead(updated);
+        }
+      }
+    } catch (error) {
+       autopilot.addOperationLog(`⚠️ Error en operación de outreach.`, "error");
+    } finally {
+      setIsProcessingOutreach(false);
+    }
+  };
+
+  const handleGenerateSite = async (lead: any) => {
+    setIsGeneratingSite(true);
+    autopilot.addOperationLog(`🎨 Iniciando modelado arquitectónico para ${lead.name}...`, "ai");
+
+    try {
+      const res = await fetch('/api/engine/stitch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ business: lead })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        autopilot.addOperationLog(`🏛️ Activo Digital "${data.projectId}" generado en el motor Stitch.`, "success");
+        const updated = { 
+          ...lead, 
+          stitch_preview_url: data.previewUrl, 
+          stitch_project_id: data.stitchProjectId,
+          projectId: data.projectId 
         };
         updateBusinessInLists(updated);
         await syncLead(updated);
+        
+        // Abrir el preview en pestaña nueva
+        window.open(data.previewUrl, '_blank');
       }
     } catch (error) {
-       autopilot.addOperationLog(`⚠️ Error enviando campaña.`, "error");
+      autopilot.addOperationLog(`⚠️ Fallo en la generación del activo.`, "error");
     } finally {
-      setIsProcessingOutreach(false);
+      setIsGeneratingSite(false);
+    }
+  };
+
+  const handleToggleSiteStatus = async (leadId: string, currentStatus: boolean) => {
+    const lead = leads.find(l => l.id === leadId);
+    if (!lead) return;
+
+    const updated = { ...lead, site_active: !currentStatus };
+    updateBusinessInLists(updated);
+    
+    autopilot.addOperationLog(`🔄 Cambiando estado del activo ${lead.name}: ${!currentStatus ? 'ACTIVADO' : 'DESACTIVADO'}`, "info");
+    
+    try {
+      await syncLead(updated);
+    } catch (err) {
+      autopilot.addOperationLog(`⚠️ Error al sincronizar estado del activo.`, "error");
     }
   };
 
@@ -161,14 +244,23 @@ export default function Dashboard() {
                 efficiencyRate={`${leads.length > 0 ? Math.round((leads.filter(l => (l.score || 0) > 80).length / leads.length) * 100) : 0}%`}
               />
 
-              <TargetingPanel 
-                query={niche} 
-                setQuery={setNiche} 
-                location={location} 
-                setLocation={setLocation} 
-                isSearching={isSearching} 
-                onSearch={handleSearch} 
-              />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <TargetingPanel 
+                  query={niche} 
+                  setQuery={setNiche} 
+                  location={location} 
+                  setLocation={setLocation} 
+                  province={province}
+                  setProvince={setProvince}
+                  city={city}
+                  setCity={setCity}
+                  postalCode={postalCode}
+                  setPostalCode={setPostalCode}
+                  isSearching={isSearching} 
+                  onSearch={handleSearch} 
+                />
+                <LiveOperationsFeed />
+              </div>
 
               <div className="grid grid-cols-1 gap-10">
                   <LeadsTable 
@@ -183,10 +275,12 @@ export default function Dashboard() {
                         ...l,
                         id: l.id.toString(),
                         tier: (l as any).tier || 'TIER 2',
-                        score: l.score || 85
+                        score: l.score || 85,
+                        email_sent: l.email_sent
                       }))
                     } 
                     onSelectLead={setSelectedLead}
+                    onSendOutreach={handleSendOutreach}
                     selectedLeadId={selectedLead?.id}
                   />
               </div>
@@ -202,6 +296,7 @@ export default function Dashboard() {
                <LeadsTable 
                  leads={leads as any} 
                  onSelectLead={setSelectedLead}
+                 onSendOutreach={handleSendOutreach}
                  selectedLeadId={selectedLead?.id}
                />
             </motion.div>
@@ -217,6 +312,20 @@ export default function Dashboard() {
                  leads={leads.filter(l => l.email_sent) as any} 
                  onSelectLead={setSelectedLead}
                  selectedLeadId={selectedLead?.id}
+               />
+            </motion.div>
+          )}
+
+          {activeTab === 'sites' && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto space-y-8">
+               <div className="flex flex-col gap-1">
+                 <h2 className="text-2xl font-bold tracking-tight text-slate-900">Consola de Activos Generados</h2>
+                 <p className="text-sm text-slate-500 font-medium">Gestión administrativa de los sitios web operativos y prototipos desplegados.</p>
+               </div>
+               <AssetsManagementTable 
+                 assets={leads.filter(l => l.stitch_preview_url) as any} 
+                 onToggleStatus={handleToggleSiteStatus}
+                 onPreview={(asset) => window.open(asset.stitch_preview_url, '_blank')}
                />
             </motion.div>
           )}
@@ -246,7 +355,9 @@ export default function Dashboard() {
               lead={selectedLead} 
               onClose={() => setSelectedLead(null)} 
               onSendOutreach={handleSendOutreach}
+              onGenerateSite={handleGenerateSite}
               isProcessing={isProcessingOutreach}
+              isGenerating={isGeneratingSite}
             />
           )}
         </AnimatePresence>

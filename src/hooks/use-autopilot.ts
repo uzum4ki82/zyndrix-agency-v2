@@ -257,7 +257,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: target.email || "omontesquesada@gmail.com",
+          email: target.email,
           name: target.name,
           location: location,
           analysisData: {
@@ -331,7 +331,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: target.email || "omontesquesada@gmail.com",
+          email: target.email,
           name: target.name,
           location: location,
           analysisData: {

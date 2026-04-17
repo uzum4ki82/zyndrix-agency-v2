@@ -4,12 +4,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { getLeadById, Lead } from '@/lib/supabase';
-import { Shield, Zap, TrendingUp, ArrowRight, CheckCircle2, Globe, Laptop, Smartphone } from 'lucide-react';
+import { Shield, Zap, TrendingUp, ArrowRight, CheckCircle2, Globe, Laptop, Smartphone, Eye } from 'lucide-react';
+import SocialProof from '@/components/SocialProof';
+import HeatMapOverlay from '@/components/HeatMapOverlay';
+import ConsultationModal from '@/components/ConsultationModal';
 
 export default function DemoPage() {
   const { id } = useParams();
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -86,10 +90,16 @@ export default function DemoPage() {
             </p>
 
             <div className="flex flex-wrap gap-6">
-              <button className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-indigo-50 transition-all flex items-center gap-3 group shadow-2xl shadow-white/5">
-                Ver Prototipo Real <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="bg-white text-black px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-slate-100 transition-all flex items-center gap-3 group shadow-2xl shadow-white/5"
+              >
+                Activar Dominio <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
               </button>
-              <button className="bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-slate-800 transition-all shadow-xl">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="bg-slate-900/50 backdrop-blur-xl border border-white/10 text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-slate-800 transition-all shadow-xl"
+              >
                 Agendar Consulta
               </button>
             </div>
@@ -115,6 +125,20 @@ export default function DemoPage() {
                  )}
                  <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
                  
+                 {/* Scanning Line Animation */}
+                 <motion.div 
+                    animate={{ top: ['0%', '100%', '0%'] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                    className="absolute left-0 right-0 h-[2px] bg-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.8)] z-20 pointer-events-none"
+                  />
+                  
+                  <div className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-[9px] font-black uppercase tracking-widest">
+                     <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                     DIAGNÓSTICO EN TIEMPO REAL
+                  </div>
+                  
+                  <HeatMapOverlay />
+                 
                  <div className="absolute bottom-10 left-10 right-10">
                     <div className="flex items-center gap-4 bg-white/10 backdrop-blur-2xl border border-white/10 p-5 rounded-3xl">
                        <div className="h-12 w-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-lg">
@@ -129,6 +153,11 @@ export default function DemoPage() {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Social Proof Integration */}
+        <div className="mt-32">
+          <SocialProof />
         </div>
 
         {/* Intelligence Grid */}
@@ -210,6 +239,12 @@ export default function DemoPage() {
            </div>
         </div>
       </footer>
+
+      <ConsultationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        businessName={lead.name}
+      />
     </div>
   );
 }

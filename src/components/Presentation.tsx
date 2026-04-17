@@ -77,7 +77,7 @@ export default function Presentation({ business, onClose }: { business: Business
       {/* Header Bar */}
       <div className="max-w-7xl mx-auto mb-20 flex justify-between items-center border-b border-primary/20 pb-8 relative z-10">
         <div className="flex items-center gap-6 group">
-          <img src="/logo-zyndrix.png" alt="Zyndrix Logo" className="h-14 w-auto object-contain brightness-0 invert" />
+          <img src="/img/logo_raw.png" alt="Zyndrix Logo" className="h-14 w-auto object-contain" />
           <div className="h-10 w-px bg-white/10 hidden sm:block" />
           <div className="text-[10px] uppercase font-black tracking-[0.3em] text-white/40 mt-1 hidden sm:block">Análisis Operacional Estratégico // CORPORATE_READY</div>
         </div>

@@ -29,10 +29,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ activeTab, s
       <div className="flex flex-col h-full">
         {/* Institutional Branding */}
         <div className="h-24 flex items-center px-8">
-          <div className="flex items-center gap-3">
-             <div className="h-8 w-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20">Z</div>
-             <span className="text-xl font-bold tracking-tight text-white">Zyndrix <span className="text-slate-500 font-medium">B2B</span></span>
-          </div>
+          <img src="/img/logo_raw.png" alt="Zyndrix Logo" className="h-8 w-auto object-contain" />
         </div>
 
         {/* Enhanced Navigation */}
@@ -80,7 +77,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ activeTab, s
         {/* User Card - Institutional Profile */}
         <div className="p-4 border-t border-slate-800 mt-auto bg-slate-900/50">
           <div className="flex items-center gap-3 p-3 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-indigo-500/10">OM</div>
+            <img src="/img/avatar-final.png" alt="Óscar Montes" className="w-9 h-9 rounded-lg object-cover shadow-lg shadow-indigo-500/10" />
             <div className="flex-1 overflow-hidden">
               <p className="text-xs font-semibold truncate text-white">Óscar Montes</p>
               <p className="text-[10px] text-slate-500 font-medium truncate uppercase tracking-tighter">Director de Estrategia</p>

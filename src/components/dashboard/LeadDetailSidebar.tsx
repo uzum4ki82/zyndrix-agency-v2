@@ -1,16 +1,18 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Globe, Mail, BarChart3, Braces, Rocket, ShieldCheck, AlertCircle, ChevronRight, ExternalLink } from 'lucide-react';
+import { X, Globe, Mail, BarChart3, Braces, Rocket, ShieldCheck, AlertCircle, ChevronRight, ExternalLink, Activity, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface LeadDetailSidebarProps {
   lead: any;
   onClose: () => void;
   onSendOutreach: (leadId: string) => void;
+  onGenerateSite: (lead: any) => void;
   isProcessing: boolean;
+  isGenerating: boolean;
 }
 
-export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onClose, onSendOutreach, isProcessing }) => {
+export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onClose, onSendOutreach, onGenerateSite, isProcessing, isGenerating }) => {
   if (!lead) return null;
 
   return (
@@ -50,65 +52,106 @@ export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onCl
         </div>
 
         <div className="space-y-8">
-          {/* ROI Potential */}
-          <div className="bg-[#0F172A] text-white p-8 rounded-2xl relative overflow-hidden ring-1 ring-slate-800 shadow-xl">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl -mr-16 -mt-16" />
-            <div className="flex items-center gap-2 text-indigo-400 mb-6">
+          {/* ROI Potential - Luxury Version */}
+          <div className="bg-slate-950 text-white p-8 rounded-3xl relative overflow-hidden ring-1 ring-white/10 shadow-2xl">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] -mr-32 -mt-32" />
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-500/5 rounded-full blur-[60px] -ml-20 -mb-20" />
+            
+            <div className="flex items-center gap-2 text-amber-400/80 mb-6">
               <BarChart3 size={14} /> 
-              <span className="text-[10px] font-bold uppercase tracking-widest">Análisis de Retorno Proyectado</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Retorno de Impacto Proyectado</span>
             </div>
+            
             <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-5xl font-bold tracking-tighter text-white">+{lead.score || '85'}%</span>
-              <span className="text-indigo-400 text-[10px] font-bold uppercase tracking-widest">IQ Operativo</span>
+              <span className="text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400">+{lead.score || '85'}%</span>
+              <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.1em]">IQ Estratégico</span>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed font-medium">
-              El motor de Zyndrix detecta una obsolescencia técnica severa. La implementación de la nueva infraestructura garantiza una captura de mercado inmediata.
+            
+            <p className="text-slate-400 text-xs leading-relaxed font-medium">
+              Arquitectura digital detectada como deficiente. La implementación de la infraestructura <span className="text-white">Zyndrix v2</span> garantiza una ventaja competitiva inmediata y una captura de mercado institucional.
             </p>
           </div>
+
+          {/* Digital Twin Section - Highlighted when ready */}
+          {lead.status === 'DESIGN_READY' ? (
+            <section className="bg-amber-50/30 border border-amber-200/50 p-6 rounded-3xl space-y-4 shadow-sm relative overflow-hidden group">
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-200/20 rounded-full blur-2xl group-hover:bg-amber-200/40 transition-all duration-700" />
+              <div className="flex items-center justify-between">
+                <h3 className="text-[10px] font-black uppercase text-amber-600 tracking-[0.15em] flex items-center gap-2">
+                  <Rocket size={12} /> Architectural Preview
+                </h3>
+                <span className="text-[9px] font-black bg-amber-400 text-amber-900 px-2 py-0.5 rounded flex items-center gap-1 shadow-sm">
+                   LIVE
+                </span>
+              </div>
+              <p className="text-[12px] font-semibold text-slate-900 leading-snug">
+                Hemos generado un "Double Digital" personalizado para este cliente. La arquitectura visual está lista para demostración ejecutiva.
+              </p>
+              <a 
+                href={lead.stitch_preview_url} 
+                target="_blank"
+                className="flex items-center justify-center gap-3 w-full bg-slate-950 text-amber-400 rounded-2xl py-4 font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-amber-900/10 border border-amber-400/20"
+              >
+                <Eye size={16} /> Abrir Experiencia Live
+              </a>
+            </section>
+          ) : (
+            <section className="space-y-4">
+              <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.15em] flex items-center gap-2">
+                <Activity size={12} className="text-indigo-500" /> Inteligencia de Conversión
+              </h3>
+              <div className="bg-slate-50 border border-slate-100 p-6 rounded-3xl space-y-5">
+                <VectorProgress label="Estética Identitaria" value={lead.website ? 45 : 10} color="bg-rose-500" />
+                <VectorProgress label="Autoridad de Mercado" value={lead.rating ? (lead.rating * 20) : 30} color="bg-amber-500" />
+                <VectorProgress label="Escalabilidad Infra" value={20} color="bg-indigo-600" />
+              </div>
+            </section>
+          )}
 
           {/* Audit Details */}
           <section>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-[10px] font-bold uppercase text-slate-400 tracking-widest flex items-center gap-2">
+              <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.15em] flex items-center gap-2">
                 <Braces size={14} /> Diagnóstico Estructural
               </h3>
-              <span className="text-[10px] text-slate-300 font-medium">Protocolo V2.4</span>
+              <span className="text-[9px] font-mono text-slate-300">PROTOCOLO Z-960</span>
             </div>
             <div className="space-y-3">
               <AuditItem label="Infraestructura Web" status={lead.website ? 'warning' : 'critical'} text={lead.website ? 'Sistema Obsoleto / Bloqueado' : 'Ausencia de Activos Digitales'} />
               <AuditItem label="Visibilidad My Business" status="success" text="Perfil Verificado por Red" />
               <AuditItem label="Huella Social IQ" status="critical" text="Sin Identidad de Marca Unificada" />
-              <AuditItem label="Entregabilidad Email" status="warning" text="Riesgo de Filtrado en Inbox" />
             </div>
           </section>
 
-          {/* Action Button */}
-          <div className="pt-6 relative">
+          {/* Action Footer */}
+          <div className="pt-6 space-y-3">
             <button 
               disabled={isProcessing}
-              onClick={() => onSendOutreach(lead.id)}
-              className="w-full bg-indigo-600 text-white rounded-xl py-4 font-bold flex items-center justify-center gap-3 hover:bg-slate-900 transition-all duration-300 active:scale-95 disabled:opacity-50 shadow-lg shadow-indigo-600/20 group"
-            >
-              {isProcessing ? (
-                <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
-                  <Rocket size={18}/>
-                </motion.div>
-              ) : (
-                <Rocket size={18} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+              onClick={() => onSendOutreach(lead.id, lead.email_sent ? 'followup' : 'impact')}
+              className={cn(
+                "w-full rounded-2xl py-5 font-black flex items-center justify-center gap-3 transition-all duration-500 active:scale-[0.98] shadow-xl text-xs uppercase tracking-widest border",
+                lead.email_sent 
+                  ? "bg-slate-50 text-slate-500 border-slate-200 hover:bg-white" 
+                  : "bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700 shadow-indigo-200"
               )}
-              <span className="text-sm">Ejecutar Outreach Estratégico</span>
-              <ChevronRight size={14} className="ml-auto opacity-50" />
-            </button>
-            <button 
-              disabled={isProcessing}
-              onClick={() => onSendOutreach(lead.id)}
-              className="w-full mt-3 bg-slate-50 text-slate-900 border border-slate-200 rounded-xl py-3 font-bold flex items-center justify-center gap-3 hover:bg-slate-100 transition-all duration-300"
             >
-              <Mail size={16} className="text-indigo-600" />
-              <span className="text-xs uppercase tracking-tight">Enviar Test de Producción (960px)</span>
+              <Mail size={16} className={cn(!lead.email_sent && "animate-pulse")} />
+              <span>{lead.email_sent ? 'Reforzar Impacto (Seguimiento)' : 'Lanzar Outreach Estratégico'}</span>
             </button>
-            <p className="text-center mt-4 text-[11px] text-slate-400 font-medium">
-              Esta acción desplegará la infraestructura personalizada y enviará un reporte técnico detallado.
+
+            {!lead.stitch_preview_url && (
+              <button 
+                disabled={isProcessing || isGenerating}
+                onClick={() => onGenerateSite(lead)}
+                className="w-full bg-white text-slate-900 border border-slate-200 rounded-2xl py-4 font-black flex items-center justify-center gap-3 hover:bg-slate-50 transition-all text-xs uppercase tracking-widest group shadow-sm"
+              >
+                <Braces size={16} className="text-indigo-600 group-hover:scale-110 transition-transform" />
+                <span>Generar Digital Twin (Stitch AI)</span>
+              </button>
+            )}
+            
+            <p className="text-center px-4 text-[10px] text-slate-400 font-bold uppercase tracking-tight leading-relaxed opacity-60">
+              Zyndrix Commander v2.2 - Operaciones Autónomas 24/7
             </p>
           </div>
         </div>
@@ -130,5 +173,22 @@ const AuditItem = ({ label, status, text }: { label: string, status: 'success' |
       <p className="text-[13px] font-semibold text-slate-900 tracking-tight">{text}</p>
     </div>
     <ChevronRight size={12} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+  </div>
+);
+
+const VectorProgress = ({ label, value, color }: { label: string, value: number, color: string }) => (
+  <div className="space-y-1.5">
+    <div className="flex justify-between items-center px-1">
+      <span className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter">{label}</span>
+      <span className="text-[10px] font-mono font-bold text-slate-900">{value}%</span>
+    </div>
+    <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+      <motion.div 
+        initial={{ width: 0 }}
+        animate={{ width: `${value}%` }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className={cn("h-full rounded-full", color)}
+      />
+    </div>
   </div>
 );

@@ -55,6 +55,7 @@ export interface Business {
   marketLeaderRef?: string;
   competitorGap?: number;
   stitch_preview_url?: string;
+  stitch_project_id?: string;
   loadTime?: number;
   [key: string]: any;
 }

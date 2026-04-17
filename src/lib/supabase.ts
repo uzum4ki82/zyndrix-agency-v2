@@ -76,9 +76,14 @@ export type Lead = {
   priority_score?: number;
   google_place_id?: string;
   stitch_preview_url?: string;
+  stitch_project_id?: string;
   rating?: number;
   reviews_count?: number;
   google_photo_url?: string;
+  email?: string | null;
+  opened_at?: string | null;
+  status?: string | null;
+  site_active?: boolean;
 };
 
  // Database Helpers
@@ -96,6 +101,8 @@ export const syncLead = async (lead: Partial<Lead> & Record<string, unknown>): P
     category: lead.category || biz.category || biz.intel?.niche,
     address: lead.address || biz.address || biz.vicinity,
     website: lead.website || biz.website || 'https://zyndrix.dev/pending',
+    email: lead.email || biz.email || biz.intel?.email,
+    opened_at: lead.opened_at || biz.opened_at,
     phone: lead.phone || (biz.phone as string) || (biz.international_phone_number as string) || (biz.nationalPhoneNumber as string),
     score: Math.round(Number(lead.score || biz.score || biz.intel?.score || 0)),
     status: (lead.status as any) || biz.status || 'medium',
@@ -119,10 +126,12 @@ export const syncLead = async (lead: Partial<Lead> & Record<string, unknown>): P
     last_audit: lead.last_audit || (biz.lastAudit as string) || new Date().toISOString(),
     google_place_id: lead.google_place_id || (biz.googlePlaceId as string) || (biz.google_place_id as string),
     stitch_preview_url: lead.stitch_preview_url || (biz.stitchPreviewUrl as string),
+    stitch_project_id: lead.stitch_project_id || (biz.stitchProjectId as string),
     rating: lead.rating !== undefined ? lead.rating : (biz.rating as number),
     reviews_count: lead.reviews_count !== undefined ? lead.reviews_count : (biz.reviewsCount as number),
     google_photo_url: lead.google_photo_url || (biz.photoUrl as string),
-    signals: lead.signals || biz.signals || (biz.intel as any)?.signals
+    signals: lead.signals || biz.signals || (biz.intel as any)?.signals,
+    site_active: lead.site_active !== undefined ? !!lead.site_active : (biz.site_active !== undefined ? !!biz.site_active : true)
   };
 
   // Limpiar nulos y asegurar consistencia

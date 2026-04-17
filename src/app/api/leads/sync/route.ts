@@ -34,16 +34,24 @@ export async function POST(request: Request) {
       whatsapp_sent: false,
       email_sent: false,
       phone: lead.phone || null,
-      google_place_id: lead.googlePlaceId || null
+      google_place_id: lead.googlePlaceId || null,
+      // Metadata de automatización
+      stitch_preview_url: lead.stitch_preview_url || lead.stitchPreviewUrl,
+      stitch_project_id: lead.stitch_project_id || lead.stitchProjectId,
+      screenshot_url: lead.screenshot_url || lead.screenshotUrl,
+      tech_stack: lead.tech_stack || lead.techStack,
+      speed_score: lead.speed_score || lead.speedScore,
+      load_time: lead.load_time || lead.loadTime,
+      last_audit: lead.last_audit || new Date().toISOString()
     };
 
     // 3. Upsert en Supabase
-    // Usamos el nombre y sitio web como identificador único para evitar duplicados.
-    // Al usar '' en lugar de NULL para website, Postgres puede casar las filas correctamente.
+    // Usamos el nombre y la dirección como identificador único para evitar duplicados nacionales.
+    // (Asegúrate de que la restricción UNIQUE en la DB sea 'name, address')
     const { data, error } = await supabase
       .from('leads')
       .upsert(leadData, { 
-        onConflict: 'name,website'
+        onConflict: 'name,address'
       })
       .select()
       .single();
