@@ -5,9 +5,22 @@
  * Creates a unique visual identity for each lead's demo
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+// Dynamic import for Anthropic to prevent browser bundling issues
+let anthropicClient: any = null;
 
-const client = new Anthropic();
+async function getAnthropicClient() {
+  if (anthropicClient) return anthropicClient;
+  if (typeof window !== 'undefined') return null; // Safe guard for browser
+  
+  try {
+    const { default: Anthropic } = await import("@anthropic-ai/sdk");
+    anthropicClient = new Anthropic();
+    return anthropicClient;
+  } catch (e) {
+    console.error("[COLOR_EXTRACTOR] Failed to load Anthropic SDK:", e);
+    return null;
+  }
+}
 
 export interface BrandPalette {
   primary: string;      // Main brand color (hex)
@@ -33,6 +46,12 @@ export async function extractBrandColors(
     }
 
     console.log(`[COLOR_EXTRACTOR] Analyzing visual DNA for ${businessName}...`);
+    
+    const client = await getAnthropicClient();
+    if (!client) {
+      console.warn(`[COLOR_EXTRACTOR] Anthropic client unavailable (Browser or Key missing) for ${businessName}, using default palette`);
+      return getDefaultPaletteByCategory(businessCategory);
+    }
 
     const response = await client.messages.create({
       model: "claude-3-5-sonnet-20241022",

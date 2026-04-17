@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     }
 
     // 1. Enriquecimiento de Inteligencia
-    const intel = calculateLeadIntelligence(lead);
+    const intel = await calculateLeadIntelligence(lead);
     
     // 2. Preparación del objeto para Supabase (Mapping CamelCase to SnakeCase)
     const leadData: Partial<Lead> = {

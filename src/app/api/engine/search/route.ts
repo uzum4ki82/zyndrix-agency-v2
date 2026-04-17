@@ -135,13 +135,13 @@ export async function POST(request: Request) {
     if (realPlaces && realPlaces.length > 0) {
       console.log(`[Search API] Found ${realPlaces.length} real places before filtering.`);
       
-      const mappedLeads = realPlaces
+      const mappedLeads = await Promise.all(realPlaces
         .filter((place: any) => {
             const isPublic = isPublicInstitution(place);
             if (isPublic) console.log(`[Search API] Filtering out public institution: ${place.displayName?.text}`);
             return !isPublic;
         })
-        .map((place: any) => {
+        .map(async (place: any) => {
           const baseBusiness = {
             name: place.displayName?.text || "Negocio Desconocido",
             address: place.formattedAddress || "Dirección no disponible",
@@ -157,7 +157,7 @@ export async function POST(request: Request) {
               : null,
           };
           
-          const intel = calculateLeadIntelligence(baseBusiness);
+          const intel = await calculateLeadIntelligence(baseBusiness);
 
           return {
             ...baseBusiness,
@@ -169,7 +169,7 @@ export async function POST(request: Request) {
             tier: intel.tier,
             intel
           };
-        });
+        }));
 
       if (mappedLeads.length > 0) {
         console.log(`[Search API] Processing ${mappedLeads.length} leads for deep discovery...`);
@@ -185,14 +185,14 @@ export async function POST(request: Request) {
 
     // 2. MODO SIMULACIÓN (Demos)
     console.log("[Search API] Switching to High-Resolution Simulation Mode.");
-    const simulationLeads = [
+    const simulationLeads = await Promise.all([
       { name: `${niche} Principal ${location}`, rating: 3.8, reviews: 42, website: `https://central-${location}.com` },
       { name: `${niche} Elite ${location}`, rating: 4.5, reviews: 12, website: null },
       { name: `Especialistas ${niche} ${location}`, rating: 3.2, reviews: 89, website: `https://servicios-${location}.es` },
       { name: `${location} ${niche} & Boutique`, rating: 4.1, reviews: 5, website: null },
       { name: `${niche} Metropolitano`, rating: 3.9, reviews: 156, website: "https://facebook.com/nichelocal" },
       { name: `The ${niche} Alliance`, rating: 4.7, reviews: 28, website: null }
-    ].map((sim) => {
+    ].map(async (sim) => {
         const baseBusiness = {
           ...sim,
           reviewsCount: sim.reviews,
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
           neighborhood: location,
         };
         
-        const intel = calculateLeadIntelligence(baseBusiness);
+        const intel = await calculateLeadIntelligence(baseBusiness);
 
         return {
           ...baseBusiness,
@@ -213,7 +213,7 @@ export async function POST(request: Request) {
           tier: intel.tier,
           intel
         };
-    });
+    }));
 
     await new Promise(r => setTimeout(r, 800));
     const enrichedSimulation = await enrichLeadsWithDeepDiscovery(simulationLeads);

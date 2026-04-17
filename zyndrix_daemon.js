@@ -67,11 +67,11 @@ async function updateLeadServiceRole(leadId, updates) {
 
 // Configuration
 const CONFIG = {
-    loopDelayMs: 60000, // 1 minute between main cycles
-    maxAuditBatch: 10,
-    maxGenerateBatch: 5,
-    maxOutreachBatch: 5,
-    minScoreForGeneration: 30,
+    loopDelayMs: 30000, // Reduced to 30s for more aggressive cycles
+    maxAuditBatch: 20,  // Doubled capacity
+    maxGenerateBatch: 10, // Doubled capacity
+    maxOutreachBatch: 10, // Doubled capacity
+    minScoreForGeneration: 10, // Lowered threshold to generate more demos
 };
 
 // --- LOGGING HELPER ---
@@ -89,6 +89,7 @@ function log(level, message, context = {}) {
 async function runAutoAudit() {
     log('info', 'Searching for NEW leads to audit...');
     
+    // Select leads that have a website but haven't been audited yet (no tech_stack)
     const { data: leads, error } = await supabase
         .from('leads')
         .select('*')
@@ -108,26 +109,30 @@ async function runAutoAudit() {
 
     log('info', `Starting audit for ${leads.length} leads.`);
     
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ 
+        headless: "new",
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
 
     for (const lead of leads) {
         try {
             log('info', `Auditing: ${lead.name} (${lead.website})`);
             const page = await browser.newPage();
             await page.setViewport({ width: 1280, height: 800 });
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36');
+            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
             
             const start = Date.now();
             await page.goto(lead.website, { waitUntil: 'networkidle2', timeout: 35000 });
             const loadTime = (Date.now() - start) / 1000;
             
             // TAKE SCREENSHOT
-            const screenshotName = `audit-${lead.id}.png`;
+            const screenshotName = `audit-${lead.id}-${Date.now()}.png`;
             const screenshotBuffer = await page.screenshot({ type: 'png' });
             
             log('info', `Uploading screenshot to Supabase Storage: ${screenshotName}`);
             
-            const { data: uploadData, error: uploadError } = await supabase.storage
+            // [FIX] Use service role client to bypass RLS for screenshots
+            const { data: uploadData, error: uploadError } = await supabaseServiceRole.storage
                 .from('screenshots')
                 .upload(screenshotName, screenshotBuffer, {
                     contentType: 'image/png',
@@ -145,95 +150,165 @@ async function runAutoAudit() {
                 log('success', `Screenshot live: ${screenshotUrl}`);
             }
             
-            // --- EXTRACT BRAND DNA ---
-            log('info', `Extracting Brand DNA and Contact info for ${lead.name}...`);
-            const discoveryData = await page.evaluate(() => {
-                const getStyle = (el, prop) => window.getComputedStyle(el).getPropertyValue(prop);
-                
-                // Email extraction
-                const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
-                const html = document.documentElement.innerHTML;
-                const matches = html.match(EMAIL_REGEX) || [];
-                const forbidden = ['wixpress.com', 'sentry.io', 'example.com', 'domain.com'];
-                const email = matches.find(e => !forbidden.some(f => e.includes(f)));
+            // --- DEEP DISCOVERY HELPER ---
+            async function extractEmailsAndInfo(p) {
+                return await p.evaluate(() => {
+                    const getStyle = (el, prop) => window.getComputedStyle(el).getPropertyValue(prop);
+                    
+                    // Email extraction (improved regex)
+                    const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+                    const html = document.documentElement.innerHTML;
+                    const matches = html.match(EMAIL_REGEX) || [];
+                    
+                    // Filter forbidden/common domains
+                    const forbidden = [
+                        'wixpress.com', 'sentry.io', 'example.com', 'domain.com', 
+                        'bootstrap.com', 'wp.com', 'template.com', 'email@email.com',
+                        'github.com', 'google.com'
+                    ];
+                    
+                    const emails = Array.from(new Set(matches))
+                        .map(e => e.toLowerCase())
+                        .filter(e => !forbidden.some(f => e.includes(f)))
+                        .filter(e => !e.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/));
 
-                // Get main background and primary text/button colors
-                const bodyBg = getStyle(document.body, 'background-color');
-                const headings = document.querySelectorAll('h1, h2, h3, button, a.button, .btn');
-                const primaryColor = headings.length > 0 ? getStyle(headings[0], 'color') : '#000000';
-                
-                // Helper to convert rgb to hex
-                const rgbToHex = (rgb) => {
-                  try {
-                    const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                    if (!match) return rgb;
-                    const r = parseInt(match[1]).toString(16).padStart(2, '0');
-                    const g = parseInt(match[2]).toString(16).padStart(2, '0');
-                    const b = parseInt(match[3]).toString(16).padStart(2, '0');
-                    return `#${r}${g}${b}`;
-                  } catch(e) { return rgb; }
-                };
+                    // WhatsApp detection
+                    const waMatch = html.match(/(?:wa\.me|api\.whatsapp\.com|whatsapp:|web\.whatsapp\.com)\/(\d+)/i);
+                    const whatsapp = waMatch ? waMatch[1] : null;
 
-                return {
-                    email: email || null,
-                    primaryColor: rgbToHex(primaryColor),
-                    backgroundColor: rgbToHex(bodyBg),
-                    fontFamily: getStyle(document.body, 'font-family').split(',')[0].replace(/['"]/g, '')
-                };
-            });
+                    // Social detection
+                    const socials = {
+                        instagram: !!html.match(/instagram\.com/i),
+                        facebook: !!html.match(/facebook\.com/i),
+                        linkedin: !!html.match(/linkedin\.com/i)
+                    };
 
-            log('success', `Discovery: Email: ${discoveryData.email || 'None'}, Color: ${discoveryData.primaryColor}`);
+                    // Brand DNA
+                    const bodyBg = getStyle(document.body, 'background-color');
+                    const headings = document.querySelectorAll('h1, h2, h3, button, a.button, .btn');
+                    const primaryColor = headings.length > 0 ? getStyle(headings[0], 'color') : '#000000';
+                    
+                    const rgbToHex = (rgb) => {
+                      try {
+                        const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                        if (!match) return rgb;
+                        const r = parseInt(match[1]).toString(16).padStart(2, '0');
+                        const g = parseInt(match[2]).toString(16).padStart(2, '0');
+                        const b = parseInt(match[3]).toString(16).padStart(2, '0');
+                        return `#${r}${g}${b}`;
+                      } catch(e) { return rgb; }
+                    };
+
+                    return {
+                        emails,
+                        socials,
+                        primaryColor: rgbToHex(primaryColor),
+                        backgroundColor: rgbToHex(bodyBg),
+                        fontFamily: getStyle(document.body, 'font-family').split(',')[0].replace(/['"]/g, '')
+                    };
+                });
+            }
+
+            // Extract from Home
+            let discovery = await extractEmailsAndInfo(page);
+            log('info', `Home Discovery: ${discovery.emails.length} emails found.`);
+
+            // DEEP SEARCH: If no emails on Home, look for contact pages
+            if (discovery.emails.length === 0) {
+                const contactLink = await page.evaluate(() => {
+                    const links = Array.from(document.querySelectorAll('a'));
+                    const target = links.find(a => {
+                        const txt = a.innerText.toLowerCase();
+                        const href = a.getAttribute('href')?.toLowerCase() || '';
+                        return txt.includes('contact') || txt.includes('contacto') || 
+                               href.includes('contact') || href.includes('contacto') ||
+                               txt.includes('legal') || txt.includes('aviso') ||
+                               txt.includes('politica') || txt.includes('privacidad') ||
+                               href.includes('legal') || href.includes('aviso');
+                    });
+                    return target ? target.href : null;
+                });
+
+                if (contactLink && contactLink.startsWith('http')) {
+                    log('info', `Deep Discovery: Navigating to secondary page: ${contactLink}`);
+                    try {
+                        await page.goto(contactLink, { waitUntil: 'load', timeout: 15000 });
+                        const contactDiscovery = await extractEmailsAndInfo(page);
+                        discovery.emails = [...new Set([...discovery.emails, ...contactDiscovery.emails])];
+                        log('success', `Deep Discovery finished: ${discovery.emails.length} emails found after exploration.`);
+                    } catch (e) {
+                        log('warning', `Failed to visit contact page: ${e.message}`);
+                    }
+                }
+            }
 
             // --- DETECT TECH STACK ---
             const tech = await page.evaluate(() => {
                 const stack = [];
                 const html = document.documentElement.innerHTML;
                 if (html.includes('wp-content')) stack.push('WordPress');
-                if (html.includes('wix.com')) stack.push('Wix');
+                if (html.includes('wix.com') || html.includes('wixstatic')) stack.push('Wix');
                 if (html.includes('shopify')) stack.push('Shopify');
                 if (html.includes('squarespace')) stack.push('Squarespace');
-                if (window.next) stack.push('Next.js');
+                if (html.includes('webflow')) stack.push('Webflow');
+                if (window.next || html.includes('_next/static')) stack.push('Next.js');
                 return stack;
             });
 
             const speedScore = Math.round(Math.max(0, 100 - (loadTime * 15)));
             const painPoints = [];
             if (speedScore < 60) painPoints.push(`Velocidad crítica: ${loadTime.toFixed(1)}s`);
-            if (tech.includes('Wix') || tech.includes('WordPress')) painPoints.push(`Arquitectura limitada (${tech[0]})`);
+            if (tech.length > 0) {
+                if (tech.includes('Wix') || tech.includes('WordPress')) painPoints.push(`Arquitectura limitada (${tech[0]})`);
+            } else {
+                painPoints.push("Infraestructura Legacy (No detectada)");
+            }
             if (!lead.website.startsWith('https')) painPoints.push("Falta SSL / Seguridad");
 
-            log('success', `Result for ${lead.name}: ${tech.join(', ') || 'Custom'} (${loadTime.toFixed(2)}s)`);
+            const finalEmail = discovery.emails.length > 0 ? discovery.emails[0] : null;
+
+            log('success', `Final Result for ${lead.name}: Email: ${finalEmail || 'None'}, Tech: ${tech.join(', ') || 'Custom'}`);
 
             // [FIX #1] Use service role to update lead (bypasses RLS)
             const auditResult = await updateLeadServiceRole(lead.id, {
-                email: discoveryData.email || lead.email,
+                email: finalEmail || lead.email,
                 tech_stack: tech.join(', ') || 'Custom',
                 load_time: loadTime,
                 speed_score: speedScore,
                 pain_points: painPoints,
                 screenshot_url: screenshotUrl,
-                strategy: `Marca premium con paleta ${discoveryData.primaryColor} y tipografía ${discoveryData.fontFamily}.`,
+                signals: discovery.socials,
+                extracted_colors: {
+                    primary: discovery.primaryColor,
+                    background: discovery.backgroundColor,
+                    secondary: discovery.primaryColor === '#000000' ? '#4f46e5' : discovery.primaryColor // Simple derivation for now
+                },
+                business_dna: {
+                    strategic_angle: `${tech.length > 0 ? tech[0] : 'Legacy'} Efficiency Optimization`,
+                    vibe: discovery.fontFamily || 'Sans-serif'
+                },
+                strategy: `Marca premium con paleta ${discovery.primaryColor} y tipografía ${discovery.fontFamily}. Potencial de conversión mediante Headless UI.`,
                 last_audit: new Date().toISOString()
             });
 
             if (auditResult.success) {
-                log('success', `Result for ${lead.name} synced via SERVICE ROLE.`);
-            } else {
-                log('error', `Service role sync failed for ${lead.name}: ${auditResult.error}`);
+                log('success', `Lead ${lead.name} fully audited and synced.`);
             }
 
         } catch (err) {
             log('warning', `Failed to audit ${lead.name}: ${err.message}`);
-            // Marcar como auditado con error directamente para evitar bucles infinitos
-            await supabase
-                .from('leads')
-                .update({ tech_stack: 'Check Manual', last_audit: new Date().toISOString() })
-                .eq('id', lead.id);
+            // Fallback: minimal update to avoid infinite loop
+            await updateLeadServiceRole(lead.id, { 
+                tech_stack: 'Check Manual', 
+                last_audit: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            });
         }
     }
 
     await browser.close();
 }
+
 
 // --- PHASE 3: ASSET GENERATION (STITCH) ---
 async function runAutoGeneration() {
@@ -298,15 +373,16 @@ async function runAutoGeneration() {
 
 // --- PHASE 4: OUTREACH (RESEND) ---
 async function runAutoOutreach() {
-    log('info', 'Phase 4: Checking for Outreach candidates...');
+    log('info', 'Phase 4: Outreach is currently DISABLED by user request.');
+    return;
     
     // Only send if it has a preview URL and hasn't been sent yet
     const { data: leads, error } = await supabase
         .from('leads')
         .select('*')
-        .eq('status', 'GENERATED')
-        .eq('site_active', true)
+        .not('email', 'is', null)
         .is('email_sent', false)
+        .or('status.eq.GENERATED,status.eq.AUDITED') // Broadened to catch audited leads too
         .limit(CONFIG.maxOutreachBatch);
 
     if (error || !leads || leads.length === 0) return;
@@ -337,7 +413,8 @@ async function runAutoOutreach() {
                         painPoints: lead.pain_points,
                         stitchPreviewUrl: lead.stitch_preview_url,
                         screenshotUrl: lead.screenshot_url,
-                        ogImageUrl: lead.og_image_url || lead.screenshot_url
+                        ogImageUrl: lead.og_image_url || lead.screenshot_url,
+                        extracted_colors: lead.extracted_colors
                     }
                 })
             });
@@ -460,7 +537,7 @@ async function startCommander() {
 
             await runAutoAudit();
             await runAutoGeneration();
-            await runAutoOutreach();
+            // await runAutoOutreach(); // DISABLED BY USER
             
             log('info', `Cycle complete. Sleeping for ${CONFIG.loopDelayMs / 1000}s...`);
             await new Promise(r => setTimeout(r, CONFIG.loopDelayMs));

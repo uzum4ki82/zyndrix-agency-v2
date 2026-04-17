@@ -83,6 +83,15 @@ export type Lead = {
   opened_at?: string | null;
   status?: string | null;
   site_active?: boolean;
+  extracted_colors?: {
+    primary: string;
+    secondary: string;
+    background: string;
+  };
+  business_dna?: {
+    strategic_angle: string;
+    vibe: string;
+  };
 };
 
  // Database Helpers
@@ -320,3 +329,26 @@ export const updateLeadWithServiceRole = async (
     return { success: false, error: errorMsg };
   }
 };
+
+export const getLeadByIdWithServiceRole = async (id: string): Promise<Lead | null> => {
+  if (!supabaseServiceRole) return null;
+
+  try {
+    const { data, error } = await supabaseServiceRole
+      .from('leads')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error(`[RLS BYPASS] Error fetching lead ${id}:`, error.message);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error(`[RLS BYPASS] Fatal error fetching lead ${id}:`, err);
+    return null;
+  }
+};
+

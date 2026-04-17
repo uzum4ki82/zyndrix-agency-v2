@@ -10,11 +10,11 @@ export async function POST(request: Request) {
     }
 
     // El Diseñador (DesignerAgent) ya está en calculateLeadIntelligence
-    const intel = calculateLeadIntelligence(business);
+    const intel = await calculateLeadIntelligence(business);
 
     // Simulamos generación de assets (tokens, colores, fuentes sugeridas)
     const prototype = {
-      layoutType: intel.proposedLayout,
+      layoutType: intel.proposedLayout || 'Luxury Editorial',
       primaryColor: '#6366f1',
       secondaryColor: '#a855f7',
       typography: 'Outfit, sans-serif',

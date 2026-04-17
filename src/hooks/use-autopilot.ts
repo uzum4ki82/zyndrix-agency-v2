@@ -89,10 +89,10 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
       addOperationLog(`✅ Identificados ${candidates.length} prospectos potenciales.`, "success", true);
 
       // 2. FILTRADO INTELIGENTE Y VERIFICACIÓN PERSISTENTE
-      const candidatesWithIntel = candidates.map((c) => ({ 
+      const candidatesWithIntel = await Promise.all(candidates.map(async (c) => ({ 
         ...c, 
-        intel: calculateLeadIntelligence(c) 
-      }));
+        intel: await calculateLeadIntelligence(c) 
+      })));
 
       // Ejecutar chequeos de Supabase en paralelo para velocidad
       const availabilityChecks = await Promise.all(
@@ -200,7 +200,7 @@ export function useAutopilot({ leads, selectedNiche, location, selectedCompanyTy
          
          // INTEGRACIÓN DE INTELIGENCIA PROFUNDA
          addOperationLog("🧠 Sincronizando Zyndrix Intelligence con datos técnicos...", "ai", true);
-         const deepIntel = calculateLeadIntelligence(target, auditData);
+         const deepIntel = await calculateLeadIntelligence(target, auditData);
          target.intel = deepIntel;
          
          // Guardar assets persistentes para la UI

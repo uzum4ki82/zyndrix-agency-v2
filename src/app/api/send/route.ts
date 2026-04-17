@@ -103,6 +103,9 @@ export async function POST(request: Request) {
         techComment = `El uso de sistemas de plantilla como ${tech} limita su capacidad de diferenciación en un mercado saturado, homogeneizando su propuesta de valor.`;
       }
 
+      const brandColor = analysisData?.extracted_colors?.primary || '#4f46e5';
+      const brandSecondary = analysisData?.extracted_colors?.secondary || '#0f172a';
+
       htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -117,12 +120,12 @@ export async function POST(request: Request) {
             .hero { background: #ffffff; padding: 100px 40px 60px; text-align: center; border-bottom: 1px solid #f1f5f9; }
             .logo { height: 120px; width: auto; display: block; margin: 0 auto; }
             .content { padding: 80px 100px; }
-            .badge { display: inline-block; padding: 8px 16px; background: #eef2ff; color: #4f46e5; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; border-radius: 8px; margin-bottom: 32px; }
+            .badge { display: inline-block; padding: 8px 16px; background: ${brandColor}15; color: ${brandColor}; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; border-radius: 8px; margin-bottom: 32px; }
             .headline { font-size: 64px; font-weight: 800; color: #0f172a; margin: 0 0 24px; line-height: 1.05; letter-spacing: -0.04em; }
-            .diagnostic-card { background: #f8fafc; border-left: 6px solid #4f46e5; border-radius: 20px; padding: 56px; margin-bottom: 64px; }
-            .diagnostic-title { font-size: 14px; font-weight: 800; color: #4f46e5; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 24px; display: block; }
+            .diagnostic-card { background: #f8fafc; border-left: 6px solid ${brandColor}; border-radius: 20px; padding: 56px; margin-bottom: 64px; }
+            .diagnostic-title { font-size: 14px; font-weight: 800; color: ${brandColor}; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 24px; display: block; }
             .diagnostic-text { font-size: 22px; color: #0f172a; font-weight: 600; line-height: 1.5; }
-            .cta-button { display: inline-block; background: #4f46e5; color: #ffffff !important; padding: 28px 60px; border-radius: 16px; text-decoration: none; font-size: 19px; font-weight: 800; box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3); }
+            .cta-button { display: inline-block; background: ${brandColor}; color: #ffffff !important; padding: 28px 60px; border-radius: 16px; text-decoration: none; font-size: 19px; font-weight: 800; box-shadow: 0 20px 40px ${brandColor}40; }
             .footer { padding: 80px 100px; background: #ffffff; border-top: 1px solid #f1f5f9; }
             .signature-avatar { border-radius: 16px; border: 1px solid #e2e8f0; width: 64px; height: 64px; }
           </style>
@@ -143,7 +146,7 @@ export async function POST(request: Request) {
                 </div>
                 <div style="margin-bottom: 64px; text-align: center;">
                   <a href="${demoUrl}" style="text-decoration: none;">
-                    <div style="position: relative; border-radius: 20px; overflow: hidden; border: 1.5px solid #4f46e5; box-shadow: 0 40px 80px rgba(79, 70, 229, 0.25);">
+                    <div style="position: relative; border-radius: 20px; overflow: hidden; border: 1.5px solid ${brandColor}; box-shadow: 0 40px 80px ${brandColor}25;">
                       <img src="${analysisData?.ogImageUrl ? absolutize(analysisData.ogImageUrl) : 'https://images.unsplash.com/photo-1481487196290-c152efe083f5?w=1200'}" style="width: 100%; height: auto; display: block;">
                       <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, #0f172a, transparent); padding: 40px; text-align: left;">
                         <h3 style="color: #fff; font-size: 26px; margin: 0;">Explorar su Nueva Arquitectura Digital →</h3>

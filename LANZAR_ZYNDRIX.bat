@@ -1,24 +1,26 @@
 @echo off
-TITLE ZYNDRIX COMMANDER - MOTOR DE PROSPECCION AUTONOMA
+TITLE ZYNDRIX PRODUCTION COMMANDER
 color 0b
 
 echo ======================================================
-echo           ZYNDRIX COMMANDER - AI ENGINE
+echo           ZYNDRIX SYSTEM - ADAPTIVE POWER
 echo ======================================================
 echo.
-echo [1/3] Verificando entorno de ejecucion...
+echo [1/3] Verificando infraestructura...
 if not exist node_modules (
-    echo [!] Error: No se detectan dependencias instaladas.
-    echo [!] Ejecutando instalacion rapida...
+    echo [!] Instalando dependencias necesarias...
     call npm install
 )
 
-echo [2/3] Arrancando Nucleo de Prospeccion (Localhost:3000)...
-start http://localhost:3000
+echo [2/3] Iniciando DAEMON (Motor Autónomo v2.2)...
+start "ZYNDRIX_DAEMON" cmd /k "node zyndrix_daemon.js"
 
-echo [3/3] Iniciando Servidor...
+echo [3/3] Iniciando DASHBOARD (Interfaz de Control)...
+start http://localhost:3000
 echo.
-echo Presiona CTRL+C para detener el motor.
+echo [✓] Sistema totalmente operativo.
+echo [!] Monitoriza los logs en la ventana 'ZYNDRIX_DAEMON'.
 echo.
+
 npm run dev
 pause
