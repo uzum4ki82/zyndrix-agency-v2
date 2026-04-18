@@ -1,9 +1,30 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Star, Shield, TrendingUp, Mail, Eye, MoreVertical } from 'lucide-react';
+import { Shield, TrendingUp, Mail, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 import { Business } from '@/types';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35 },
+  },
+  exit: { opacity: 0, scale: 0.98, transition: { duration: 0.2 } },
+};
 
 interface LeadsTableProps {
   leads: Business[];
@@ -80,16 +101,17 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
               <th className="px-8 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right">Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <motion.tbody
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <AnimatePresence mode='popLayout'>
-              {leads.map((lead, i) => (
-                <motion.tr 
+              {leads.map((lead) => (
+                <motion.tr
                   key={lead.id}
                   layout
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.2, delay: i * 0.01 }}
+                  variants={itemVariants}
                   onClick={() => onSelectLead(lead)}
                   className={cn(
                     "group cursor-pointer transition-all duration-200 border-b border-slate-100",
@@ -276,7 +298,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                 </motion.tr>
               ))}
             </AnimatePresence>
-          </tbody>
+          </motion.tbody>
         </table>
       </div>
       

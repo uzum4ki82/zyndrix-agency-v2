@@ -7,7 +7,7 @@ import { extractBrandColors, BrandPalette } from "./color-extractor";
  */
 
 class HunterAgent {
-  analyze(lead: Partial<Business>) {
+  analyze(lead: Partial<Business>, niche: string = "") {
     let score = 0;
     const findings: string[] = [];
     const painPoints: string[] = [];
@@ -15,6 +15,20 @@ class HunterAgent {
     
     const hasEmail = !!lead.email;
     const hasWhatsApp = !!lead.whatsapp || !!lead.phone; // Assuming phone might be whatsapp
+    const name = (lead.name || "").toLowerCase();
+    const query = niche.toLowerCase();
+
+    // [FIX #4] LACK OF CONNECTION (Section 5.1.8)
+    const subEntityModifiers = ["pharmacy", "farmacia", "atm", "cajero", "garage", "taller", "clinic", "clínica", "department", "departamento"];
+    const foundModifier = subEntityModifiers.find(mod => name.includes(mod));
+    const queryHasModifier = subEntityModifiers.some(mod => query.includes(mod));
+
+    if (foundModifier && !queryHasModifier) {
+      tier = 'DISCARDED';
+      score = 0;
+      findings.push(`LACK OF CONNECTION: El resultado parece una sub-entidad (${foundModifier}) que no coincide con la intención de búsqueda principal.`);
+      return { score: 0, findings, tier, painPoints };
+    }
 
     // NEW STRICT TIER RULES
     if (!hasEmail && !hasWhatsApp) {
@@ -41,7 +55,9 @@ class HunterAgent {
       painPoints.push("Invisibilidad total en búsquedas locales", "Falta de credibilidad ante clientes premium", "Sin captura de datos de clientes");
       score += 10;
     } else {
-      painPoints.push("Embudo de ventas con fugas críticas", "Arquitectura móvil deficiente", "Velocidad de carga subóptima para retención");
+      if (tier !== 'DISCARDED') {
+         painPoints.push("Embudo de ventas con fugas críticas", "Arquitectura móvil deficiente", "Velocidad de carga subóptima para retención");
+      }
     }
 
     return { score: Math.min(score, 100), findings, tier, painPoints };
@@ -102,12 +118,12 @@ class VisualDNAAgent {
   }
 }
 
-export async function calculateLeadIntelligence(lead: Partial<Business>, auditData?: any): Promise<AuditResult & { brandPalette?: BrandPalette }> {
+export async function calculateLeadIntelligence(lead: Partial<Business>, niche: string = "", auditData?: any): Promise<AuditResult & { brandPalette?: BrandPalette }> {
   const hunter = new HunterAgent();
   const strategist = new StrategistAgent();
   const visualDNA = new VisualDNAAgent();
-
-  const { score: rawScore, findings, tier, painPoints } = hunter.analyze(lead);
+  
+  const { score: rawScore, findings, tier, painPoints } = hunter.analyze(lead, niche);
   const metrics = strategist.projectROI(rawScore, lead.category || '');
 
   // [FIX #3] Extract brand colors if screenshot available

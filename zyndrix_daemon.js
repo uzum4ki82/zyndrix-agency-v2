@@ -37,32 +37,55 @@ const supabase = createClient(
 );
 
 // [FIX #1] Service Role Client - Bypasses RLS for daemon operations
+// [FIX #5] Validate environment on startup
+function validateEnvironment() {
+  const REQUIRED = [
+    'NEXT_PUBLIC_SUPABASE_URL',
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+    'SUPABASE_SERVICE_ROLE_KEY',
+    'GOOGLE_MAPS_API_KEY',
+    'ANTHROPIC_API_KEY'
+  ];
+
+  const missing = REQUIRED.filter(key => !process.env[key]);
+  if (missing.length > 0) {
+    console.error('❌ CRITICAL: Missing required environment variables:');
+    missing.forEach(k => console.error(`   - ${k}`));
+    process.exit(1);
+  }
+  console.log('✅ Environment validation passed');
+}
+
+validateEnvironment();
+
 const supabaseServiceRole = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key'
+    process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// [FIX #1] Helper function to update leads using service role (bypasses RLS)
+// [FIX #1] + [FIX #5] Helper function to update leads using service role (bypasses RLS) with retry logic
 async function updateLeadServiceRole(leadId, updates) {
-    try {
-        const { data, error } = await supabaseServiceRole
-            .from('leads')
-            .update(updates)
-            .eq('id', leadId)
-            .select()
-            .single();
+    return updateRetryPolicy.execute(async () => {
+        try {
+            const { data, error } = await supabaseServiceRole
+                .from('leads')
+                .update(updates)
+                .eq('id', leadId)
+                .select()
+                .single();
 
-        if (error) {
-            log('error', `[RLS BYPASS] Update failed for lead ${leadId}: ${error.message}`);
-            return { success: false, error: error.message };
+            if (error) {
+                log('error', `[RLS BYPASS] Update failed for lead ${leadId}: ${error.message}`);
+                throw new Error(error.message); // Throw so retry logic catches it
+            }
+
+            log('success', `[RLS BYPASS] Successfully updated lead ${leadId}`);
+            return { success: true, data };
+        } catch (err) {
+            log('error', `[RLS BYPASS] Exception updating lead ${leadId}: ${err.message}`);
+            throw err; // Let retry policy handle retries
         }
-
-        log('success', `[RLS BYPASS] Successfully updated lead ${leadId}`);
-        return { success: true, data };
-    } catch (err) {
-        log('error', `[RLS BYPASS] Exception updating lead ${leadId}: ${err.message}`);
-        return { success: false, error: err.message };
-    }
+    }, `update lead ${leadId}`);
 }
 
 // Configuration
@@ -80,10 +103,84 @@ function log(level, message, context = {}) {
     const entry = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
     console.log(entry);
     if (Object.keys(context).length > 0) console.log(JSON.stringify(context, null, 2));
-    
+
     // Also append to a local log file for the Dashboard to read
     fs.appendFileSync(path.resolve(__dirname, './daemon.log'), entry + '\n');
 }
+
+// --- RETRY POLICY [FIX #5] ---
+class RetryPolicy {
+    constructor(maxRetries = 3, initialDelayMs = 1000, backoffMultiplier = 2) {
+        this.maxRetries = maxRetries;
+        this.initialDelayMs = initialDelayMs;
+        this.backoffMultiplier = backoffMultiplier;
+    }
+
+    async execute(fn, context = '') {
+        let lastError;
+        for (let attempt = 0; attempt < this.maxRetries; attempt++) {
+            try {
+                return await fn();
+            } catch (error) {
+                lastError = error;
+                if (attempt === this.maxRetries - 1) {
+                    log('error', `[RETRY] Final attempt failed for ${context}: ${error.message}`);
+                    throw error;
+                }
+                const delayMs = this.initialDelayMs * Math.pow(this.backoffMultiplier, attempt);
+                log('warning', `[RETRY] Attempt ${attempt + 1}/${this.maxRetries - 1} failed for ${context}. Retrying in ${delayMs}ms...`);
+                await new Promise(r => setTimeout(r, delayMs));
+            }
+        }
+        throw lastError;
+    }
+}
+
+const updateRetryPolicy = new RetryPolicy(3, 1000, 2);
+
+// --- CIRCUIT BREAKER [FIX #5] ---
+class CircuitBreaker {
+    constructor(failureThreshold = 5, resetTimeoutMs = 60000) {
+        this.failureThreshold = failureThreshold;
+        this.resetTimeoutMs = resetTimeoutMs;
+        this.failureCount = 0;
+        this.lastFailureTime = null;
+        this.state = 'CLOSED';
+    }
+
+    async execute(fn, name) {
+        if (this.state === 'OPEN') {
+            if (Date.now() - this.lastFailureTime > this.resetTimeoutMs) {
+                log('info', `[CIRCUIT_BREAKER] ${name} attempting recovery...`);
+                this.state = 'HALF_OPEN';
+                this.failureCount = 0;
+            } else {
+                throw new Error(`Circuit breaker for ${name} is OPEN - service unavailable`);
+            }
+        }
+
+        try {
+            const result = await fn();
+            if (this.state === 'HALF_OPEN') {
+                log('success', `[CIRCUIT_BREAKER] ${name} recovered!`);
+                this.state = 'CLOSED';
+                this.failureCount = 0;
+            }
+            return result;
+        } catch (error) {
+            this.failureCount++;
+            this.lastFailureTime = Date.now();
+            if (this.failureCount >= this.failureThreshold) {
+                log('error', `[CIRCUIT_BREAKER] ${name} OPENED after ${this.failureCount} failures`);
+                this.state = 'OPEN';
+            }
+            throw error;
+        }
+    }
+}
+
+const stitchBreaker = new CircuitBreaker(3, 60000);
+const genRetryPolicy = new RetryPolicy(3, 2000, 2);
 
 // --- PHASE 2: AUDIT LOGIC (PUPPETEER) ---
 async function runAutoAudit() {
@@ -310,64 +407,73 @@ async function runAutoAudit() {
 }
 
 
-// --- PHASE 3: ASSET GENERATION (STITCH) ---
+// --- PHASE 3: ASSET GENERATION (STITCH) [FIX #5] ---
 async function runAutoGeneration() {
     log('info', 'Searching for candidates for Asset Generation...');
-    
-    const { data: leads, error } = await supabase
-        .from('leads')
-        .select('*')
-        .not('tech_stack', 'is', null)
-        .is('stitch_preview_url', null)
-        .gt('score', CONFIG.minScoreForGeneration)
-        .limit(CONFIG.maxGenerateBatch);
 
-    if (error) {
-        log('error', `Error fetching candidates for Asset Generation: ${error.message}`);
-        return;
-    }
+    try {
+        const { data: leads, error } = await supabase
+            .from('leads')
+            .select('*')
+            .not('tech_stack', 'is', null)
+            .is('stitch_preview_url', null)
+            .gt('score', CONFIG.minScoreForGeneration)
+            .limit(CONFIG.maxGenerateBatch);
 
-    if (!leads || leads.length === 0) {
-        log('info', 'Phase 3: No candidates found for generation.');
-        return;
-    }
-
-    log('info', `Phase 3: Found ${leads.length} candidates for personalzed design generation.`);
-
-    for (const lead of leads) {
-        log('info', `Triggering Automatic Stitch Project for ${lead.name}...`);
-        
-        try {
-            // Call our own Stitch API to generate the design metadata
-            const apiBase = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-            const response = await fetch(`${apiBase}/api/engine/stitch`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ business: lead })
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                // [FIX #1] Use service role to persist Stitch URL (bypasses RLS)
-                const stitchResult = await updateLeadServiceRole(lead.id, {
-                    stitch_preview_url: result.previewUrl,
-                    stitch_project_id: result.stitchProjectId,
-                    status: 'GENERATED',
-                    updated_at: new Date().toISOString()
-                });
-
-                if (stitchResult.success) {
-                    log('success', `Project generated and synced via SERVICE ROLE for ${lead.name}: ${result.previewUrl}`);
-                } else {
-                    log('error', `Service role sync failed for ${lead.name}: ${stitchResult.error}`);
-                }
-            } else {
-                log('error', `Generation failed for ${lead.name}: ${result.error}`);
-            }
-        } catch (err) {
-            log('error', `Generation failed for ${lead.name}`, err);
+        if (error) {
+            log('error', `Error fetching candidates for Asset Generation: ${error.message}`);
+            return;
         }
+
+        if (!leads || leads.length === 0) {
+            log('info', 'Phase 3: No candidates found for generation.');
+            return;
+        }
+
+        log('info', `Phase 3: Found ${leads.length} candidates for personalized design generation.`);
+
+        for (const lead of leads) {
+            log('info', `Triggering Automatic Stitch Project for ${lead.name}...`);
+
+            try {
+                const apiBase = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
+                // Use circuit breaker + retry for Stitch API
+                const result = await stitchBreaker.execute(
+                    () => genRetryPolicy.execute(
+                        () => fetch(`${apiBase}/api/engine/stitch`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ business: lead, autoTrigger: true })
+                        }).then(r => {
+                            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                            return r.json();
+                        }),
+                        `Stitch API for ${lead.name}`
+                    ),
+                    'Stitch API'
+                );
+
+                if (result.success) {
+                    const stitchResult = await updateLeadServiceRole(lead.id, {
+                        stitch_preview_url: result.previewUrl,
+                        stitch_project_id: result.stitchProjectId,
+                        status: 'GENERATED',
+                        updated_at: new Date().toISOString()
+                    });
+
+                    if (stitchResult.success) {
+                        log('success', `Generated for ${lead.name}: ${result.previewUrl}`);
+                    }
+                } else {
+                    log('error', `Generation failed for ${lead.name}: ${result.error}`);
+                }
+            } catch (err) {
+                log('warning', `Generation skipped for ${lead.name}: ${err.message}`);
+            }
+        }
+    } catch (err) {
+        log('error', 'CRITICAL ERROR IN GENERATION PHASE', err);
     }
 }
 
@@ -518,33 +624,59 @@ async function runAutoScan() {
     }
 }
 
-// --- MAIN LOOP ---
+// --- MAIN LOOP [FIX #5] ---
 async function startCommander() {
     log('info', '================================================');
-    log('info', '🚀 ZYNDRIX COMMANDER v2.2 - Discovery Robustness');
+    log('info', '🚀 ZYNDRIX COMMANDER v2.4 - RESILIENT');
     log('info', '================================================');
-    
+
     let lastScanTime = 0;
     const SCAN_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+    let consecutiveErrors = 0;
+    const MAX_CONSECUTIVE_ERRORS = 5;
 
     while (true) {
         try {
             const now = Date.now();
+
             if (now - lastScanTime > SCAN_INTERVAL) {
-                await runAutoScan();
-                lastScanTime = now;
+                try {
+                    await runAutoScan();
+                    lastScanTime = now;
+                } catch (err) {
+                    log('error', `Scan phase failed: ${err.message}`);
+                }
             }
 
-            await runAutoAudit();
-            await runAutoGeneration();
-            // await runAutoOutreach(); // DISABLED BY USER
-            
+            try {
+                await runAutoAudit();
+            } catch (err) {
+                log('error', `Audit phase failed: ${err.message}`);
+            }
+
+            try {
+                await runAutoGeneration();
+            } catch (err) {
+                log('error', `Generation phase failed: ${err.message}`);
+            }
+
+            consecutiveErrors = 0;
             log('info', `Cycle complete. Sleeping for ${CONFIG.loopDelayMs / 1000}s...`);
             await new Promise(r => setTimeout(r, CONFIG.loopDelayMs));
+
         } catch (err) {
-            log('error', 'CRITICAL ERROR IN COMMANDER ENGINE', err);
-            // Self-healing attempt: wait longer on critical error
-            await new Promise(r => setTimeout(r, 30000));
+            consecutiveErrors++;
+            log('error', `CYCLE ERROR (${consecutiveErrors}/${MAX_CONSECUTIVE_ERRORS}): ${err.message}`);
+
+            if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+                log('error', '🚨 TOO MANY ERRORS - SHUTTING DOWN FOR MANUAL REVIEW');
+                process.exit(1);
+            }
+
+            // Exponential backoff on errors
+            const backoffMs = 30000 * Math.pow(2, Math.min(consecutiveErrors - 1, 3));
+            log('warning', `Waiting ${backoffMs / 1000}s before retry...`);
+            await new Promise(r => setTimeout(r, backoffMs));
         }
     }
 }

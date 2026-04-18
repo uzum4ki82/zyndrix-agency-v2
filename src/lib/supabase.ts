@@ -156,10 +156,6 @@ export const syncLead = async (lead: Partial<Lead> & Record<string, unknown>): P
 
   try {
     const cleanData = { ...mappedData };
-    // Hotfix: remove columns that might be missing in production schema
-    delete (cleanData as any).google_photo_url;
-    delete (cleanData as any).reviews_count;
-    delete (cleanData as any).rating;
 
     const { data, error } = await supabase
       .from('leads')
@@ -178,14 +174,6 @@ export const syncLead = async (lead: Partial<Lead> & Record<string, unknown>): P
         return syncLead(mappedData as any);
       }
       
-      // Fallback 2: El ID no es UUID y la tabla lo requiere (PGRST204 o similar)
-      if (error.code === '22P02' && error.message.includes('id')) {
-         console.warn("Table expects UUID for ID but received string. Removing ID block to let Supabase generate one.");
-          const dataWithoutId = { ...mappedData };
-          delete dataWithoutId.id;
-          return syncLead(dataWithoutId as any);
-      }
-
       throw error;
     }
     return data?.[0] || null;
@@ -231,17 +219,28 @@ export const checkLeadByCriteria = async (name: string, neighborhood: string, go
 
 export const checkLeadExists = async (website: string | null) => {
   if (!website || !supabaseUrl || !supabaseAnonKey) return false;
-  
-  // Normalizar URL para evitar duplicados por protocolos o slashes
+
   const cleanUrl = website.replace(/^https?:\/\//, '').replace(/\/$/, '');
-  
+
   const { data } = await supabase
     .from('leads')
     .select('id')
     .or(`website.ilike.%${cleanUrl}%,website.ilike.%${website}%`)
     .single();
-    
+
   return !!data;
+};
+
+export const checkLeadByGooglePlaceId = async (googlePlaceId: string) => {
+  if (!googlePlaceId || !supabaseUrl || !supabaseAnonKey) return null;
+
+  const { data } = await supabase
+    .from('leads')
+    .select('id, name, email_sent, status')
+    .eq('google_place_id', googlePlaceId)
+    .maybeSingle();
+
+  return data;
 };
 
 export const getLeads = async (): Promise<Lead[]> => {

@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBusinesses } from "@/hooks/useBusinesses";
 import { useAutopilot } from "@/hooks/use-autopilot";
-import { getLeads, syncLead } from "@/lib/supabase";
-import { BarChart3, ShieldCheck } from "lucide-react";
+import { supabase, getLeads, syncLead } from "@/lib/supabase";
+import { BarChart3, ShieldCheck, Palette, Zap } from "lucide-react";
 
 // Components
 import { Business } from "@/types";
@@ -52,21 +52,42 @@ export default function Dashboard() {
     }
   });
 
-  // Initial data fetch
+  // Initial data fetch and real-time subscription
   useEffect(() => {
     const fetchInitialData = async () => {
       const data = await getLeads();
       if (data) setLeads(data as Business[]);
     };
     fetchInitialData();
+
+    // Subscribe to real-time updates
+    const channel = supabase
+      .channel('public:leads')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setLeads(prev => [payload.new as Business, ...prev]);
+        } else if (payload.eventType === 'UPDATE') {
+          setLeads(prev => prev.map(l => l.id === payload.new.id ? { ...l, ...payload.new } : l));
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [setLeads]);
 
   const handleSearch = async () => {
     if (!niche || (!city && !province)) return;
     setIsSearching(true);
     
-    // Construct exact location string
-    const finalLocation = `${city || ''} ${province || ''} ${postalCode || ''} España`.trim().replace(/\s+/g, ' ');
+    // Construct exact location string avoiding duplicates
+    const finalLocation = Array.from(new Set([city, province, postalCode, 'España']))
+      .filter(Boolean)
+      .join(' ')
+      .trim()
+      .replace(/\s+/g, ' ');
+    
     setLocation(finalLocation);
 
     autopilot.addOperationLog(`📡 Desplegando rastreo sectorial: ${niche} en ${finalLocation}...`, "ai", true);
@@ -75,8 +96,13 @@ export default function Dashboard() {
       const res = await fetch('/api/engine/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ niche, location: finalLocation })
+        body: JSON.stringify({ niche, location: finalLocation, companyType: 'empresa' })
       });
+      
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}`);
+      }
+      
       const data = await res.json();
       if (data && data.length > 0) {
         addBusinesses(data);
@@ -85,9 +111,12 @@ export default function Dashboard() {
            await syncLead(biz);
         }
         autopilot.addOperationLog(`✅ Inteligencia de mercado procesada. ${data.length} objetivos detectados.`, "success");
+      } else {
+        autopilot.addOperationLog(`⚠️ No se detectaron objetivos válidos para esta configuración.`, "warning");
       }
-    } catch (err) {
-      autopilot.addOperationLog(`❌ Error en despliegue de rastreo.`, "error");
+    } catch (err: any) {
+      console.error('Search Error:', err);
+      autopilot.addOperationLog(`❌ Error en despliegue: ${err.message || 'Fallo de conexión'}`, "error");
     } finally {
       setIsSearching(false);
     }
@@ -237,8 +266,9 @@ export default function Dashboard() {
         />
 
         <main className="flex-1 overflow-y-auto p-8 space-y-8">
-          {activeTab === 'commander' && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8 max-w-7xl mx-auto">
+          <AnimatePresence mode="wait">
+            {activeTab === 'commander' && (
+              <motion.div key="commander" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8 max-w-7xl mx-auto">
               <StatsGrid 
                 leadsCount={leads.length} 
                 highConversionCount={leads.filter(l => (l.score || 0) > 80).length}
@@ -247,46 +277,91 @@ export default function Dashboard() {
               />
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <TargetingPanel 
-                  query={niche} 
-                  setQuery={setNiche} 
-                  location={location} 
-                  setLocation={setLocation} 
-                  province={province}
-                  setProvince={setProvince}
-                  city={city}
-                  setCity={setCity}
-                  postalCode={postalCode}
-                  setPostalCode={setPostalCode}
-                  isSearching={isSearching} 
-                  onSearch={handleSearch} 
-                />
-                <LiveOperationsFeed />
+                <div className="backdrop-blur-md bg-white/30 border border-white/20 rounded-2xl p-6 shadow-xl">
+                  <TargetingPanel
+                    query={niche}
+                    setQuery={setNiche}
+                    location={location}
+                    setLocation={setLocation}
+                    province={province}
+                    setProvince={setProvince}
+                    city={city}
+                    setCity={setCity}
+                    postalCode={postalCode}
+                    setPostalCode={setPostalCode}
+                    isSearching={isSearching}
+                    onSearch={handleSearch}
+                  />
+                </div>
+                <div className="backdrop-blur-md bg-white/30 border border-white/20 rounded-2xl shadow-xl overflow-hidden">
+                  <LiveOperationsFeed />
+                </div>
               </div>
 
+              {selectedLead?.extracted_colors && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="backdrop-blur-md bg-white/30 border border-white/20 rounded-2xl p-8 shadow-xl"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <Palette className="text-indigo-600" size={24} />
+                    <h3 className="text-lg font-bold text-slate-900">Visual DNA - {selectedLead.name}</h3>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-16 h-16 rounded-xl shadow-lg mb-3 border-2 border-white/40"
+                        style={{ backgroundColor: selectedLead.extracted_colors.primary || '#6366f1' }}
+                      />
+                      <p className="text-xs font-medium text-slate-600">Primary</p>
+                      <p className="text-xs text-slate-500">{selectedLead.extracted_colors.primary || '#6366f1'}</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-16 h-16 rounded-xl shadow-lg mb-3 border-2 border-white/40"
+                        style={{ backgroundColor: selectedLead.extracted_colors.secondary || '#10b981' }}
+                      />
+                      <p className="text-xs font-medium text-slate-600">Secondary</p>
+                      <p className="text-xs text-slate-500">{selectedLead.extracted_colors.secondary || '#10b981'}</p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-16 h-16 rounded-xl shadow-lg mb-3 border-2 border-white/40"
+                        style={{ backgroundColor: selectedLead.extracted_colors.background || '#020617' }}
+                      />
+                      <p className="text-xs font-medium text-slate-600">Background</p>
+                      <p className="text-xs text-slate-500">{selectedLead.extracted_colors.background || '#020617'}</p>
+                    </div>
+                  </div>
+                  {selectedLead.business_dna && (
+                    <div className="mt-6 pt-6 border-t border-white/20 flex items-start gap-3">
+                      <Zap className="text-amber-500 mt-1 flex-shrink-0" size={20} />
+                      <div>
+                        <p className="text-sm font-semibold text-slate-900">{selectedLead.business_dna.strategic_angle}</p>
+                        <p className="text-xs text-slate-600 mt-1">Vibe: {selectedLead.business_dna.vibe}</p>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
               <div className="grid grid-cols-1 gap-10">
-                  <LeadsTable 
-                    leads={businesses.length > 0 ? 
-                      businesses.slice(0, 10).map(b => ({ 
-                        ...b, 
-                        id: b.id?.toString() || crypto.randomUUID(), 
-                        tier: (b as any).tier || 'TIER 3', 
-                        score: b.score || 45 
-                      })) : 
-                      leads.slice(0, 10).map(l => ({
+                  <LeadsTable
+                    leads={leads.map(l => ({
                         ...l,
                         id: l.id.toString(),
                         tier: (l as any).tier || 'TIER 2',
                         score: l.score || 85,
                         email_sent: l.email_sent
                       }))
-                    } 
+                    }
                     onSelectLead={setSelectedLead}
                     onSendOutreach={handleSendOutreach}
                     selectedLeadId={selectedLead?.id}
                     selectedLeadIds={selectedLeadIds}
                     onToggleSelect={(id) => {
-                      setSelectedLeadIds(prev => 
+                      setSelectedLeadIds(prev =>
                         prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
                       );
                     }}
@@ -296,8 +371,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {activeTab === 'leads' && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="max-w-7xl mx-auto space-y-8">
+            {activeTab === 'leads' && (
+              <motion.div key="leads" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="max-w-7xl mx-auto space-y-8">
                <div className="flex flex-col gap-1">
                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Repositorio de Inteligencia Operativa</h2>
                  <p className="text-sm text-slate-500 font-medium">Historial completo de entidades detectadas y estados de prospección estratégica.</p>
@@ -311,8 +386,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {activeTab === 'outreach' && (
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="max-w-7xl mx-auto space-y-8">
+            {activeTab === 'outreach' && (
+              <motion.div key="outreach" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="max-w-7xl mx-auto space-y-8">
                <div className="flex flex-col gap-1">
                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Despliegues Activos</h2>
                  <p className="text-sm text-slate-500 font-medium">Control en tiempo real de los activos digitales proyectados hacia entidades TIER 1 y TIER 2.</p>
@@ -326,8 +401,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {activeTab === 'sites' && (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl mx-auto space-y-8">
+            {activeTab === 'sites' && (
+              <motion.div key="sites" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="max-w-7xl mx-auto space-y-8">
                <div className="flex flex-col gap-1">
                  <h2 className="text-2xl font-bold tracking-tight text-slate-900">Consola de Activos Generados</h2>
                  <p className="text-sm text-slate-500 font-medium">Gestión administrativa de los sitios web operativos y prototipos desplegados.</p>
@@ -340,8 +415,8 @@ export default function Dashboard() {
             </motion.div>
           )}
 
-          {activeTab === 'analytics' && (
-            <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="max-w-7xl mx-auto py-20 flex flex-col items-center text-center">
+            {activeTab === 'analytics' && (
+              <motion.div key="analytics" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} className="max-w-7xl mx-auto py-20 flex flex-col items-center text-center">
               <div className="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center text-indigo-600 mb-8 border border-indigo-100 shadow-sm">
                 <BarChart3 size={40} />
               </div>
@@ -356,7 +431,8 @@ export default function Dashboard() {
                  </div>
               </div>
             </motion.div>
-          )}
+            )}
+          </AnimatePresence>
         </main>
 
         <AnimatePresence>

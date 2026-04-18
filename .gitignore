@@ -34,6 +34,11 @@ yarn-error.log*
 .env*
 
 # vercel
+# operational
+daemon.log
+automation_logs.json
+*.log
+
 .vercel
 .agent/
 *.txt
