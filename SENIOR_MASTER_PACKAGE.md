@@ -17,10 +17,11 @@ Este documento centraliza toda la información estratégica y técnica necesaria
 
 ## 🛠️ 2. Arquitectura del "Cerebro" (Agent-Brain)
 
-El motor de Zyndrix no es un simple buscador; es una suite de agentes encadenados:
-
-1.  **HunterAgent:** Descubre leads, inyecta lógica de "Lack of Connection" (v5.1.8) para filtrar ruido (ej. descartar farmacias en nichos de retail puro).
-2.  **Visual DNA Extractor:** Analiza la identidad visual del lead (si existe) y genera una paleta JSON con colores reales.
+### **2. Auditoría Inteligente (Brain v3.1)**
+- **Filtros de Calidad:** Se ha implementado una lista negra de grandes cadenas y servicios públicos en `src/services/searchService.ts` y `src/lib/agent-brain.ts` para evitar prospectar entidades irrelevantes (ej. Mercadona, Deixalleria).
+- **Lógica de Descarte:** El `HunterAgent` marca automáticamente como `DISCARDED` cualquier lead que sea una gran marca o que presente una "Falta de Conexión" (ej. Farmacia en una búsqueda de Restaurantes).
+- **Deduplicación:** Sistema de prevención de duplicados basado en `googlePlaceId` en la capa de persistencia para evitar leads repetidos en el Dashboard.
+- **Visual DNA Extraction:** El sistema extrae colores de marca a partir de screenshots y los inyecta en los prompts de Stitch para demos 100% personalizadas.
 3.  **Strategist:** Calcula el "Engagement Score" e identifica los puntos de dolor.
 4.  **Designer (Stitch AI):** Genera una landing page única inyectando los colores y el prompt estratégico.
 

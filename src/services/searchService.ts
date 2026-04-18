@@ -59,13 +59,22 @@ const CATEGORY_TRANSLATIONS: Record<string, string> = {
 const PUBLIC_INSTITUTIONS_TYPES = [
   'local_government_office', 'police', 'town_hall', 'city_hall', 'embassy',
   'government_office', 'courthouse', 'fire_station', 'post_office',
-  'school', 'university', 'library', 'museum', 'public_transport_station'
+  'school', 'university', 'library', 'museum', 'public_transport_station',
+  'cemetery', 'church', 'place_of_worship'
 ];
 
 const PUBLIC_KEYWORDS = [
   'ayuntamiento', 'policia', 'guardia civil', 'ministerio', 'centro publico',
   'escuela publica', 'instituto publico', 'biblioteca municipal', 'juzgado',
-  'correos', 'asociacion', 'federacion', 'consistorio', 'diputacion'
+  'correos', 'asociacion', 'federacion', 'consistorio', 'diputacion',
+  'deixalleria', 'punto limpio', 'centro de salud', 'cap ', 'ambulatorio'
+];
+
+const BIG_CHAINS_KEYWORDS = [
+  'mercadona', 'lidl', 'aldi', 'carrefour', 'bonarea', 'spar', 'dia %', 'el corte ingles',
+  'decathlon', 'ikea', 'leroy merlin', 'mediamarkt', 'zara', 'h&m', 'bbva', 'santander',
+  'caixabank', 'caixa', 'sabadell', 'bankinter', 'telepizza', 'burger king', 'mcdonalds',
+  'starbucks', 'vips', 'foster', 'dominos', 'pans & company'
 ];
 
 function refineQueryAggressively(niche: string, location: string): string {
@@ -106,6 +115,13 @@ function isPublicInstitution(place: any): boolean {
 
     if (type && PUBLIC_INSTITUTIONS_TYPES.includes(type)) return true;
     if (PUBLIC_KEYWORDS.some(kw => name.includes(kw))) return true;
+    
+    // [FIX] Filter Big Chains
+    if (BIG_CHAINS_KEYWORDS.some(chain => name.includes(chain))) {
+        daemonLog('info', `[Search Service] Ignorando gran cadena detectada: ${place.displayName?.text}`);
+        return true;
+    }
+    
     return false;
   } catch (e) {
     return false;

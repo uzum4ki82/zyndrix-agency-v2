@@ -18,10 +18,16 @@ class HunterAgent {
     const name = (lead.name || "").toLowerCase();
     const query = niche.toLowerCase();
 
-    // [FIX #4] LACK OF CONNECTION (Section 5.1.8)
-    const subEntityModifiers = ["pharmacy", "farmacia", "atm", "cajero", "garage", "taller", "clinic", "clínica", "department", "departamento"];
-    const foundModifier = subEntityModifiers.find(mod => name.includes(mod));
-    const queryHasModifier = subEntityModifiers.some(mod => query.includes(mod));
+    // [FIX #5] LARGE CHAINS & PUBLIC SERVICES FILTER
+    const BIG_BRANDS = ["mercadona", "lidl", "aldi", "carrefour", "bonarea", "spar", "dia %", "corte ingles", "decathlon", "ikea", "leroy merlin", "mediamarkt", "zara", "h&m", "bbva", "santander", "caixabank", "caixa", "sabadell", "telepizza", "burger king", "mcdonalds", "starbucks"];
+    const PUBLIC_INST = ["ayuntamiento", "policia", "colegio", "instituto", "juzgado", "correos", "deixalleria", "punto limpio", "cap ", "ambulatorio"];
+
+    if (BIG_BRANDS.some(brand => name.includes(brand)) || PUBLIC_INST.some(inst => name.includes(inst))) {
+      tier = 'DISCARDED';
+      score = 0;
+      findings.push("FILTRO DE CALIDAD: Entidad descartada por ser una Gran Cadena o Institución Pública no apta para outreach.");
+      return { score: 0, findings, tier, painPoints };
+    }
 
     if (foundModifier && !queryHasModifier) {
       tier = 'DISCARDED';
