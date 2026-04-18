@@ -68,7 +68,7 @@
 
 **Hallazgo:** API key válido en .env.local, límites no documentados
 ```
-GOOGLE_MAPS_API_KEY=AIzaSyCTq0KN1smOjEpuzzmPHVNA2vo99Y2F410
+GOOGLE_MAPS_API_KEY=[REDACTED]
 ```
 
 ### 2.2 Supabase (Anon + Service Role)
@@ -195,8 +195,8 @@ Posible inconsistencia:
 
 **Hallazgo en .env.local:**
 ```
-GOOGLE_MAPS_API_KEY=AIzaSyCTq0KN1smOjEpuzzmPHVNA2vo99Y2F410
-RESEND_API_KEY=re_bfdcjfVN_3PD2ydT4HQLDX66ZMZRbedxi
+GOOGLE_MAPS_API_KEY=[REDACTED]
+RESEND_API_KEY=[REDACTED]
 ANTHROPIC_API_KEY=sk-ant-api03-OAtq9g12JERjE4Z...
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
 ```

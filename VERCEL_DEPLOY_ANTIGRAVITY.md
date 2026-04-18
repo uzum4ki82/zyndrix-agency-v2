@@ -70,9 +70,9 @@ git push origin feature-branch
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://etcxlzpwxwnlrhowldel.supabase.co` | .env.local |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` | .env.local |
 | `SUPABASE_SERVICE_ROLE_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` | .env.local (SECRETO) |
-| `GOOGLE_MAPS_API_KEY` | `AIzaSyCTq0KN1smOjEpuzzmPHVNA2vo99Y2F410` | .env.local |
+| `GOOGLE_MAPS_API_KEY` | `[REDACTED]` | .env.local |
 | `ANTHROPIC_API_KEY` | `sk-ant-api03-OAtq9g12JERjE4Z_Q_PpznQdSu3g5uf0JG...` | .env.local (SECRETO) |
-| `RESEND_API_KEY` | `re_bfdcjfVN_3PD2ydT4HQLDX66ZMZRbedxi` | .env.local (SECRETO) |
+| `RESEND_API_KEY` | `[REDACTED]` | .env.local (SECRETO) |
 | `RESEND_FROM_EMAIL` | `Zyndrix Capital <info@zyndrix.dev>` | .env.local |
 | `NEXT_PUBLIC_APP_URL` | `https://comercial-eta.vercel.app` | .env.local |
 

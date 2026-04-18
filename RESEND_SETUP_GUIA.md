@@ -3,7 +3,7 @@
 ## INFO ACTUAL (En tu .env.local)
 
 ```
-RESEND_API_KEY=re_bfdcjfVN_3PD2ydT4HQLDX66ZMZRbedxi
+RESEND_API_KEY=[REDACTED]
 RESEND_FROM_EMAIL="Zyndrix Capital <info@zyndrix.dev>"
 NEXT_PUBLIC_APP_URL=https://comercial-eta.vercel.app
 ```

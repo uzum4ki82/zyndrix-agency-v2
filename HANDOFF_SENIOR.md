@@ -1,32 +1,28 @@
 # 🏗️ Zyndrix: Documento de Traspaso para Programador Senior
 
-**Última Actualización:** 18 de Abril, 2026  
-**Estado Actual:** MVP Avanzado (Funcional en Local, listo para escalado)  
-**Objetivo:** Dejar el sistema 100% autónomo y listo para producción.
+**Última Actualización:** 18 de Abril, 2026 (Fase Final: Producción Activa)  
+**Estado Actual:** Producción Operativa (Vercel Live + DB Optimizada)  
+**Objetivo:** Supervisión final de los flujos de correo y optimización de acciones masivas.
 
 ---
 
-## 🛠️ 1. Infraestructura Crítica (Supabase & RLS)
+## 🛠️ 1. Infraestructura Crítica (Supabase & DB)
 
-Se han implementado las bases para saltar las restricciones de RLS por parte del daemon, pero falta que el usuario final ejecute los permisos en el dashboard de Supabase.
+La base de datos ya está completamente preparada y optimizada para la escala de producción.
 
-- [ ] **Acción Pendiente:** Ejecutar el contenido de `FIX_1_RLS_POLICIES.sql` en el SQL Editor de Supabase.
-- [ ] **Configuración `.env`:** Asegurarse de que `SUPABASE_SERVICE_ROLE_KEY` esté configurado (es el que usa el daemon para persistir los `stitch_preview_url`).
-- [ ] **Verificación de Esquema:** Confirmar que la tabla `leads` tiene estas columnas (o ejecutar `STITCH_SCHEMA_FINAL.sql`):
-    - `stitch_preview_url` (text)
-    - `stitch_project_id` (text)
-    - `brand_palette` (jsonb)
-    - `engagement_score` (int)
-    - `open_status` (text)
+- [x] **Fixes SQL Aplicados:** Se han ejecutado todos los scripts de migración (`FIX_1`, `FIX_5`, etc.). Las políticas de RLS ya permiten al daemon operar sin restricciones.
+- [x] **Configuración `.env`:** El backend ya utiliza satisfactoriamente el `SUPABASE_SERVICE_ROLE_KEY` para la persistencia automática.
+- [x] **Esquema Verificado:** La tabla `leads` cuenta con todos los campos necesarios (`stitch_preview_url`, `brand_palette`, `engagement_score`, etc.).
 
 ---
 
 ## 🤖 2. Motores de Inteligencia (Stitch & Visual DNA)
 
-El "Cerebro" de Zyndrix ya es capaz de clasificar Leads en **TIER 1** (Sin Web), **TIER 2** (Solo RRSS) y **TIER 3** (Web estándar), pero la generación de demos necesita el último empujón.
+### 2. Capa de Inteligencia y Generación (Stitch AI)
+- [x] **Integración Completada:** Se han configurado las claves de producción (`STITCH_API_KEY`).
+- [x] **Endpoints Configurados:** El sistema está apuntando a `https://stitch-mcp.googleapis.com`.
+- [x] **Motor Activo:** La generación de demos reales está habilitada y lista para producción.
 
-- **Stitch Integration (`src/services/stitchService.ts`):**
-    - [ ] El código está preparado para usar el `STITCH_MCP_ENDPOINT`. Necesitas una API Key real para que las demos sean 100% personalizadas por AI. Actualmente tiene un fallback a `/demo/[id]` que es un mock.
 - **Visual DNA (`src/lib/color-extractor.ts`):**
     - [x] Hemos implementado la extracción de colores basada en el `screenshot_url` del lead.
     - [x] **[FIX #4] Lógica Lack of Connection (Sección 5.1.8):** Implementado filtro inteligente para descartar sub-entidades (p.ej. "Walmart Pharmacy" cuando se busca "Walmart") basando en discrepancias Niche vs Nombre.
@@ -57,11 +53,32 @@ La interfaz está al 90%, falta conectar la "lógica de masas".
 
 ---
 
-## 🚀 5. Producción (Vercel)
+## 🚀 5. Producción (Vercel) - ¡COMPLETADO!
 
-- [ ] **Despliegue:** Configurar el proyecto en Vercel.
-- [ ] **Variables de Entorno:** Mapear todas las del `.env.local` (Google Maps, Resend, Supabase, Anthropic, Stitch API).
-- [ ] **Daemon Autónomo:** El script `zyndrix_daemon.js` está diseñado para ejecutarse como un proceso de fondo o vía un CRON job llamando a `/api/admin/daemon`.
+El sistema ya está desplegado y operando en vivo.
+
+- [x] **Despliegue Live:** [https://comercial-eta-xi.vercel.app](https://comercial-eta-xi.vercel.app)
+- [x] **Entorno de Producción:** Todas las variables (Google, Supabase, Anthropic, Stitch, Resend) han sido migradas a Vercel.
+- [x] **Daemon en Acción:** El script `zyndrix_daemon.js` está listo para ser orquestado vía cron-job externo apuntando al endpoint de administración.
+
+---
+
+## 🛠️ 6. Mantenimiento y Re-Auditoría
+
+Si se requiere que el sistema vuelva a analizar todos los leads con las nuevas reglas de "Adaptive Visual DNA" o tras un cambio mayor en los prompts de Stitch:
+
+- **Reset Completo:** Ejecutar `GRAND_RESET_VISUAL_DNA.sql`. Esto devolverá todos los leads al estado `NEW`, limpiará las auditorías viejas y permitirá que el Daemon procese todo de nuevo con la calidad máxima de producción.
+
+---
+
+## 🔍 7. Troubleshooting para el Senior
+
+| Problema | Causa Probable | Solución |
+| :--- | :--- | :--- |
+| Demos no personalizadas | Falta `STITCH_API_KEY` | Verificar logs en Vercel; el sistema hace fallback a mock si no hay key. |
+| El Daemon no escribe en DB | RLS bloqueando | Verificar que la key usada sea la de `service_role` y no la `anon`. |
+| Emails no se trackean | Webhook no registrado | Confirmar en el panel de Resend que la URL `/api/webhooks/resend` está activa. |
+| Leads duplicados | Place ID fallido | El sistema usa el Google Place ID como clave única; revisar `searchService.ts`. |
 
 ---
 
