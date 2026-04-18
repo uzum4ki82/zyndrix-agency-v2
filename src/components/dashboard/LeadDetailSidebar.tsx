@@ -10,11 +10,12 @@ interface LeadDetailSidebarProps {
   onClose: () => void;
   onSendOutreach: (leadId: string, type?: string) => void;
   onGenerateSite: (lead: Business) => void;
+  onPreview?: (asset: Business) => void;
   isProcessing: boolean;
   isGenerating: boolean;
 }
 
-export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onClose, onSendOutreach, onGenerateSite, isProcessing, isGenerating }) => {
+export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onClose, onSendOutreach, onGenerateSite, onPreview, isProcessing, isGenerating }) => {
   if (!lead) return null;
 
   return (
@@ -89,13 +90,15 @@ export const LeadDetailSidebar: React.FC<LeadDetailSidebarProps> = ({ lead, onCl
               <p className="text-[12px] font-semibold text-slate-900 leading-snug">
                 Hemos generado un "Double Digital" personalizado para este cliente. La arquitectura visual está lista para demostración ejecutiva.
               </p>
-              <a 
-                href={lead.stitch_preview_url} 
-                target="_blank"
+              <button 
+                onClick={() => {
+                  if (onPreview) onPreview(lead);
+                  else if (lead.stitch_preview_url) window.open(lead.stitch_preview_url, '_blank');
+                }}
                 className="flex items-center justify-center gap-3 w-full bg-slate-950 text-amber-400 rounded-2xl py-4 font-black text-xs uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-amber-900/10 border border-amber-400/20"
               >
                 <Eye size={16} /> Abrir Experiencia Live
-              </a>
+              </button>
             </section>
           ) : (
             <section className="space-y-4">

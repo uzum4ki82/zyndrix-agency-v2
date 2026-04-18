@@ -95,6 +95,7 @@ const CONFIG = {
     maxGenerateBatch: 10, // Doubled capacity
     maxOutreachBatch: 10, // Doubled capacity
     minScoreForGeneration: 10, // Lowered threshold to generate more demos
+    parallelAudits: 3, // [SENIOR] Process 3 leads in parallel
 };
 
 // --- LOGGING HELPER ---
@@ -104,8 +105,16 @@ function log(level, message, context = {}) {
     console.log(entry);
     if (Object.keys(context).length > 0) console.log(JSON.stringify(context, null, 2));
 
-    // Also append to a local log file for the Dashboard to read
-    fs.appendFileSync(path.resolve(__dirname, './daemon.log'), entry + '\n');
+    const logPath = path.resolve(__dirname, './daemon.log');
+    
+    // [SENIOR] Basic Log Rotation: If > 5MB, rename and start fresh
+    if (fs.existsSync(logPath) && fs.statSync(logPath).size > 5 * 1024 * 1024) {
+      const backupPath = logPath + '.old';
+      fs.renameSync(logPath, backupPath);
+      fs.writeFileSync(logPath, `[${timestamp}] [INFO] LOG ROTATED - SYSTEM CLEAN\n`);
+    }
+
+    fs.appendFileSync(logPath, entry + '\n');
 }
 
 // --- RETRY POLICY [FIX #5] ---
@@ -204,125 +213,45 @@ async function runAutoAudit() {
         return;
     }
 
-    log('info', `Starting audit for ${leads.length} leads.`);
+    log('info', `Starting audit for ${leads.length} leads in groups of ${CONFIG.parallelAudits}.`);
     
     const browser = await puppeteer.launch({ 
         headless: "new",
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
     });
 
-    for (const lead of leads) {
-        let page;
-        try {
-            // [FIX #1.2] URL Validation
-            const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
-            if (!lead.website || !URL_REGEX.test(lead.website)) {
-                log('warning', `Skipping invalid URL for ${lead.name}: ${lead.website}`);
-                continue;
-            }
+    // [SENIOR] Parallel processing with Worker-style chunks
+    for (let i = 0; i < leads.length; i += CONFIG.parallelAudits) {
+        const chunk = leads.slice(i, i + CONFIG.parallelAudits);
+        await Promise.all(chunk.map(async (lead) => {
+            let page;
+            try {
+                // [FIX #1.2] URL Validation
+                const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+                if (!lead.website || !URL_REGEX.test(lead.website)) {
+                    log('warning', `Skipping invalid URL for ${lead.name}: ${lead.website}`);
+                    return;
+                }
 
-            log('info', `Auditing: ${lead.name} (${lead.website})`);
-            page = await browser.newPage();
-            await page.setViewport({ width: 1280, height: 800 });
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
-            
-            const start = Date.now();
-            await page.goto(lead.website, { waitUntil: 'networkidle2', timeout: 30000 });
-            const loadTime = (Date.now() - start) / 1000;
-            
-            // TAKE SCREENSHOT
-            const screenshotName = `audit-${lead.id}-${Date.now()}.png`;
-            const screenshotBuffer = await page.screenshot({ type: 'png' });
-            
-            log('info', `Uploading screenshot to Supabase Storage: ${screenshotName}`);
-            
-            // [FIX] Use service role client to bypass RLS for screenshots
-            const { data: uploadData, error: uploadError } = await supabaseServiceRole.storage
-                .from('screenshots')
-                .upload(screenshotName, screenshotBuffer, {
-                    contentType: 'image/png',
-                    upsert: true
-                });
-
-            let screenshotUrl = `/screenshots/${screenshotName}`; // Fallback local path
-            if (uploadError) {
-                log('error', `Supabase Upload Error: ${uploadError.message}`);
-            } else {
-                const { data: { publicUrl } } = supabase.storage
+                log('info', `Auditing: ${lead.name} (${lead.website})`);
+                page = await browser.newPage();
+                await page.setViewport({ width: 1280, height: 800 });
+                await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+                
+                const start = Date.now();
+                // [FIX #6] Strict timeout of 30s
+                await page.goto(lead.website, { waitUntil: 'networkidle2', timeout: 30000 });
+                const loadTime = (Date.now() - start) / 1000;
+                
+                // TAKE SCREENSHOT
+                const screenshotName = `audit-${lead.id}-${Date.now()}.png`;
+                const screenshotBuffer = await page.screenshot({ type: 'png' });
+                
+                log('info', `Uploading screenshot to Supabase Storage: ${screenshotName}`);
+                
+                // [FIX] Use service role client to bypass RLS for screenshots
+                const { data: uploadData, error: uploadError } = await supabaseServiceRole.storage
                     .from('screenshots')
-                    .getPublicUrl(uploadData.path);
-                screenshotUrl = publicUrl;
-                log('success', `Screenshot live: ${screenshotUrl}`);
-            }
-            
-            // --- DEEP DISCOVERY HELPER ---
-            async function extractEmailsAndInfo(p) {
-                return await p.evaluate(() => {
-                    const getStyle = (el, prop) => window.getComputedStyle(el).getPropertyValue(prop);
-                    
-                    // Email extraction (improved regex)
-                    const EMAIL_REGEX = /[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,255}\.[a-zA-Z]{2,}/g;
-                    const html = document.documentElement.innerHTML;
-                    const matches = html.match(EMAIL_REGEX) || [];
-                    
-                    // Filter forbidden/common domains
-                    const forbidden = [
-                        'wixpress.com', 'sentry.io', 'example.com', 'domain.com', 
-                        'bootstrap.com', 'wp.com', 'template.com', 'email@email.com',
-                        'github.com', 'google.com'
-                    ];
-                    
-                    const emails = Array.from(new Set(matches))
-                        .map(e => e.toLowerCase())
-                        .filter(e => !forbidden.some(f => e.includes(f)))
-                        .filter(e => !e.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/))
-                        .filter(e => e.length <= 254); // [FIX #5] length validation
-
-                    // WhatsApp detection
-                    const waMatch = html.match(/(?:wa\.me|api\.whatsapp\.com|whatsapp:|web\.whatsapp\.com)\/(\d+)/i);
-                    const whatsapp = waMatch ? waMatch[1] : null;
-
-                    // Social detection
-                    const socials = {
-                        instagram: !!html.match(/instagram\.com/i),
-                        facebook: !!html.match(/facebook\.com/i),
-                        linkedin: !!html.match(/linkedin\.com/i)
-                    };
-
-                    // Brand DNA
-                    const bodyBg = getStyle(document.body, 'background-color');
-                    const headings = document.querySelectorAll('h1, h2, h3, button, a.button, .btn');
-                    const primaryColor = headings.length > 0 ? getStyle(headings[0], 'color') : '#000000';
-                    
-                    const rgbToHex = (rgb) => {
-                      try {
-                        const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                        if (!match) return rgb;
-                        const r = parseInt(match[1]).toString(16).padStart(2, '0');
-                        const g = parseInt(match[2]).toString(16).padStart(2, '0');
-                        const b = parseInt(match[3]).toString(16).padStart(2, '0');
-                        return `#${r}${g}${b}`;
-                      } catch(e) { return rgb; }
-                    };
-
-                    return {
-                        emails,
-                        socials,
-                        primaryColor: rgbToHex(primaryColor),
-                        backgroundColor: rgbToHex(bodyBg),
-                        fontFamily: getStyle(document.body, 'font-family').split(',')[0].replace(/['"]/g, '')
-                    };
-                });
-            }
-
-            // Extract from Home
-            let discovery = await extractEmailsAndInfo(page);
-            log('info', `Home Discovery: ${discovery.emails.length} emails found.`);
-
-            // DEEP SEARCH: If no emails on Home, look for contact pages
-            if (discovery.emails.length === 0) {
-                const contactLink = await page.evaluate(() => {
-                    const links = Array.from(document.querySelectorAll('a'));
                     const target = links.find(a => {
                         const txt = a.innerText.toLowerCase();
                         const href = a.getAttribute('href')?.toLowerCase() || '';
@@ -679,8 +608,7 @@ async function startCommander() {
             }
 
             try {
-                // [DISABLED BY USER] await runAutoGeneration();
-                log('info', 'Phase 3 (Generation) is currently DISABLED by user request.');
+                await runAutoGeneration();
             } catch (err) {
                 log('error', `Generation phase failed: ${err.message}`);
             }

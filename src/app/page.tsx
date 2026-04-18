@@ -17,6 +17,7 @@ import { LeadsTable } from "@/components/dashboard/LeadsTable";
 import { AssetsManagementTable } from "@/components/dashboard/AssetsManagementTable";
 import { LeadDetailSidebar } from "@/components/dashboard/LeadDetailSidebar";
 import { LiveOperationsFeed } from "@/components/dashboard/LiveOperationsFeed";
+import { ImmersivePreview } from "@/components/dashboard/ImmersivePreview";
 import { navItems } from "@/lib/constants";
 
 export default function Dashboard() {
@@ -32,6 +33,7 @@ export default function Dashboard() {
   const [selectedLeadIds, setSelectedLeadIds] = useState<string[]>([]);
   const [isProcessingOutreach, setIsProcessingOutreach] = useState(false);
   const [isGeneratingSite, setIsGeneratingSite] = useState(false);
+  const [fullPreviewUrl, setFullPreviewUrl] = useState<string | null>(null);
 
   const {
     businessList: businesses,
@@ -221,11 +223,10 @@ export default function Dashboard() {
           stitch_project_id: data.stitchProjectId,
           projectId: data.projectId 
         };
-        updateBusinessInLists(updated);
-        await syncLead(updated);
+        setLeads(prev => prev.map(l => l.id === lead.id ? updated : l));
         
-        // Abrir el preview en pestaña nueva
-        window.open(data.previewUrl, '_blank');
+        // Entrar en modo inmersivo directamente
+        setFullPreviewUrl(data.previewUrl);
       }
     } catch (error) {
       autopilot.addOperationLog(`⚠️ Fallo en la generación del activo.`, "error");
@@ -366,6 +367,7 @@ export default function Dashboard() {
                       );
                     }}
                     onSelectAll={(ids) => setSelectedLeadIds(ids)}
+                    onPreview={(asset) => setFullPreviewUrl(asset.stitch_preview_url || null)}
                   />
               </div>
             </motion.div>
@@ -382,6 +384,7 @@ export default function Dashboard() {
                  onSelectLead={setSelectedLead}
                  onSendOutreach={handleSendOutreach}
                  selectedLeadId={selectedLead?.id}
+                 onPreview={(asset) => setFullPreviewUrl(asset.stitch_preview_url || null)}
                />
             </motion.div>
           )}
@@ -397,6 +400,7 @@ export default function Dashboard() {
                  onSelectLead={setSelectedLead}
                  onSendOutreach={handleSendOutreach}
                  selectedLeadId={selectedLead?.id}
+                 onPreview={(asset) => setFullPreviewUrl(asset.stitch_preview_url || null)}
                />
             </motion.div>
           )}
@@ -410,7 +414,7 @@ export default function Dashboard() {
                <AssetsManagementTable 
                  assets={leads.filter(l => l.stitch_preview_url)} 
                  onToggleStatus={handleToggleSiteStatus}
-                 onPreview={(asset) => window.open(asset.stitch_preview_url, '_blank')}
+                 onPreview={(asset) => setFullPreviewUrl(asset.stitch_preview_url || null)}
                />
             </motion.div>
           )}
@@ -442,8 +446,19 @@ export default function Dashboard() {
               onClose={() => setSelectedLead(null)} 
               onSendOutreach={handleSendOutreach}
               onGenerateSite={handleGenerateSite}
+              onPreview={(asset) => setFullPreviewUrl(asset.stitch_preview_url || null)}
               isProcessing={isProcessingOutreach}
               isGenerating={isGeneratingSite}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {fullPreviewUrl && (
+            <ImmersivePreview 
+              url={fullPreviewUrl} 
+              onClose={() => setFullPreviewUrl(null)} 
+              businessName={leads.find(l => l.stitch_preview_url === fullPreviewUrl)?.name || "Bespoke Demo"}
             />
           )}
         </AnimatePresence>

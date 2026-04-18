@@ -35,6 +35,7 @@ interface LeadsTableProps {
   selectedLeadIds?: string[];
   onToggleSelect?: (id: string) => void;
   onSelectAll?: (ids: string[]) => void;
+  onPreview?: (asset: Business) => void;
 }
 
 export const LeadsTable: React.FC<LeadsTableProps> = ({ 
@@ -44,7 +45,8 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
   selectedLeadId,
   selectedLeadIds = [],
   onToggleSelect,
-  onSelectAll
+  onSelectAll,
+  onPreview
 }) => {
   const isAllSelected = leads.length > 0 && selectedLeadIds.length === leads.length;
 
@@ -272,14 +274,16 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
                   <td className="px-8 py-5 text-right">
                     <div className="flex justify-end items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
                       {lead.stitch_preview_url && (
-                        <a 
-                          href={lead.stitch_preview_url} 
-                          target="_blank" 
-                          onClick={(e) => e.stopPropagation()}
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (onPreview) onPreview(lead);
+                            else window.open(lead.stitch_preview_url, '_blank');
+                          }}
                           className="h-9 flex items-center gap-2 px-4 rounded-xl bg-slate-950 text-amber-400 border border-amber-400/20 hover:bg-black hover:border-amber-400/50 transition-all text-[10px] font-black uppercase tracking-widest shadow-xl shadow-amber-900/10"
                         >
                           <Eye size={12} /> View Demo
-                        </a>
+                        </button>
                       )}
                       <button 
                          onClick={(e) => { e.stopPropagation(); onSendOutreach?.(lead.id, lead.email_sent ? 'followup' : 'impact'); }}
