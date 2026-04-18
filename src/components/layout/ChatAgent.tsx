@@ -54,111 +54,112 @@ export const ChatAgent = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] font-sans pointer-events-none">
-      {/* Friendly Trigger: Human Face Avatar */}
-      <div className="flex justify-end pointer-events-auto">
+    <div className="fixed top-0 right-0 h-full z-[100] pointer-events-none flex items-center">
+      {/* Vertical Side Tab Trigger */}
+      <div className="flex justify-end pointer-events-auto h-fit">
           <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-16 h-16 bg-white rounded-full flex items-center justify-center p-0 shadow-[0_10px_40px_rgba(0,0,0,0.15)] border-2 border-white relative group overflow-hidden"
+            initial={{ x: 100 }}
+            animate={{ x: isOpen ? 100 : 0 }}
+            whileHover={{ x: -10 }}
+            onClick={() => setIsOpen(true)}
+            className="flex items-center gap-4 bg-white border border-slate-200 border-r-0 pl-4 py-4 pr-3 rounded-l-3xl shadow-[-20px_0_50px_rgba(0,0,0,0.1)] group transition-all"
           >
-            <img 
-                src="/img/ai_avatar.png" 
-                alt="AI Assistant" 
-                className="w-full h-full object-cover transition-transform group-hover:scale-110"
-            />
-            <div className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white shadow-sm" />
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
-                        className="absolute inset-0 bg-black/20 flex items-center justify-center"
-                    >
-                        <X className="w-5 h-5 text-white" />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <div className="flex flex-col items-center gap-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md relative">
+                    <img 
+                        src="/img/ai_avatar.png" 
+                        alt="AI Assistant" 
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
+                </div>
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary/40 vertical-text py-2">
+                    ASISTENTE VIRTUAL
+                </div>
+            </div>
           </motion.button>
       </div>
 
-      {/* Modern & Minimalist Conversation Window */}
+      {/* Slide-out Conversation Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 50 }}
-            className="absolute bottom-20 right-0 w-[350px] h-[580px] max-h-[80vh] flex flex-col bg-white rounded-[2rem] shadow-[0_30px_90px_rgba(0,30,80,0.15)] overflow-hidden pointer-events-auto border border-slate-100"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 right-0 w-[400px] h-full flex flex-col bg-white shadow-[-50px_0_100px_rgba(0,0,0,0.1)] overflow-hidden pointer-events-auto border-l border-slate-100"
           >
-            {/* Header: Human Perspective */}
-            <div className="px-8 py-6 bg-slate-50/50 flex items-center justify-between border-b border-slate-100">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm">
+            {/* Header: Executive Perspective */}
+            <div className="px-10 py-10 bg-slate-50/50 flex items-center justify-between border-b border-slate-100">
+                <div className="flex items-center gap-6">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-lg relative">
                         <img 
                             src="/img/ai_avatar.png" 
                             alt="Zyndrix AI" 
                             className="w-full h-full object-cover"
                         />
+                        <div className="absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 rounded-full border-4 border-white" />
                     </div>
                     <div>
-                        <h3 className="text-[14px] font-black tracking-tight text-slate-800">Asesor Zyndrix</h3>
-                        <div className="flex items-center gap-1.5">
-                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">En línea ahora</span>
+                        <h3 className="text-xl font-black tracking-tight text-slate-800 uppercase">Asesor Zyndrix</h3>
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Sistemas Conectados</span>
                         </div>
                     </div>
                 </div>
-                <button onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-slate-500 transition-colors">
-                    <ChevronDown className="w-5 h-5" />
+                <button 
+                    onClick={() => setIsOpen(false)} 
+                    className="w-12 h-12 rounded-full flex items-center justify-center text-slate-300 hover:text-slate-500 hover:bg-slate-100 transition-all"
+                >
+                    <X className="w-6 h-6" />
                 </button>
             </div>
 
-            {/* Clean Conversation Space */}
+            {/* Conversation Area */}
             <div 
               ref={scrollRef}
-              className="flex-grow overflow-y-auto p-8 space-y-6 scrollbar-minimal"
+              className="flex-grow overflow-y-auto p-10 space-y-8 scrollbar-minimal"
             >
               {messages.map((m, i) => (
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   key={i} 
                   className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[85%] ${m.role === 'user' ? 'bg-[#0066FF] text-white shadow-[0_10px_20px_rgba(0,102,255,0.1)]' : 'bg-slate-50 text-slate-700'} p-4 rounded-2xl text-[14px] leading-relaxed ${m.role === 'user' ? 'rounded-tr-none' : 'rounded-tl-none font-medium'}`}>
+                  <div className={`max-w-[85%] ${m.role === 'user' ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'bg-slate-50 text-slate-700'} p-6 rounded-[2rem] text-[15px] leading-relaxed ${m.role === 'user' ? 'rounded-tr-none' : 'rounded-tl-none font-medium'}`}>
                     {m.content}
                   </div>
                 </motion.div>
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                    <div className="bg-slate-50 px-5 py-3 rounded-2xl flex gap-1.5 items-center">
-                        <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 bg-slate-300 rounded-full" />
-                        <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.1 }} className="w-1.5 h-1.5 bg-slate-300 rounded-full" />
-                        <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-slate-300 rounded-full" />
+                    <div className="bg-slate-50 px-6 py-4 rounded-[1.5rem] flex gap-2 items-center">
+                        <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-2 h-2 bg-slate-300 rounded-full" />
+                        <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.1 }} className="w-2 h-2 bg-slate-300 rounded-full" />
+                        <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-2 h-2 bg-slate-300 rounded-full" />
                     </div>
                 </div>
               )}
             </div>
 
-            {/* Elegant Input Field */}
-            <div className="p-6 bg-white border-t border-slate-100">
-              <div className="flex items-center bg-slate-50 rounded-2xl border border-slate-100 focus-within:border-blue-500/20 focus-within:ring-4 focus-within:ring-blue-500/5 transition-all duration-300">
+            {/* Input Footer */}
+            <div className="p-10 bg-white border-t border-slate-100">
+              <div className="flex items-center bg-slate-50 rounded-[2rem] border border-slate-100 focus-within:border-primary/20 focus-within:ring-[15px] focus-within:ring-primary/5 transition-all duration-500">
                 <input 
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                  placeholder="Escribe un mensaje..."
-                  className="w-full bg-transparent border-none px-6 py-4 text-[14px] text-slate-800 focus:ring-0 outline-none"
+                  placeholder="Escribe tu mensaje aquí..."
+                  className="w-full bg-transparent border-none px-8 py-6 text-[15px] text-slate-800 focus:ring-0 outline-none placeholder:text-slate-300"
                 />
                 <button 
                   onClick={sendMessage}
                   disabled={isLoading}
-                  className="mr-2 p-3 bg-[#0066FF] text-white rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-30"
+                  className="mr-3 w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20 disabled:opacity-30"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -167,14 +168,19 @@ export const ChatAgent = () => {
       </AnimatePresence>
 
       <style jsx global>{`
+        .vertical-text {
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          transform: rotate(180deg);
+        }
         .scrollbar-minimal::-webkit-scrollbar {
-          width: 4px;
+          width: 6px;
         }
         .scrollbar-minimal::-webkit-scrollbar-track {
           background: transparent;
         }
         .scrollbar-minimal::-webkit-scrollbar-thumb {
-          background: rgba(0, 0, 0, 0.05);
+          background: rgba(0, 0, 0, 0.03);
           border-radius: 10px;
         }
       `}</style>
