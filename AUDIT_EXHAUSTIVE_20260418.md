@@ -117,7 +117,7 @@ if (!STITCH_API_KEY || !STITCH_ENDPOINT) {
 
 **Hallazgo:** API key presente y válido
 ```
-ANTHROPIC_API_KEY=sk-ant-api03-OAtq9g12JERjE4Z_Q_PpznQdSu3g5uf0JG...
+ANTHROPIC_API_KEY=[TU_ANTHROPIC_KEY]...
 ```
 
 ### 2.5 Resend (Email)
@@ -198,7 +198,7 @@ Posible inconsistencia:
 GOOGLE_MAPS_API_KEY=[REDACTED]
 RESEND_API_KEY=[REDACTED]
 ANTHROPIC_API_KEY=sk-ant-api03-OAtq9g12JERjE4Z...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
+SUPABASE_SERVICE_ROLE_KEY=[TU_SERVICE_ROLE_KEY]...
 ```
 
 **⚠️ PROBLEMA:** Archivo .env.local está versionado en git (NO DEBE ESTAR)

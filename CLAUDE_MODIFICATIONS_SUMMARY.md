@@ -187,7 +187,7 @@ CREATE POLICY "service_role_daemon_logs_select" ON daemon_logs
 
 **Add to `.env.local`:**
 ```
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=[TU_SERVICE_ROLE_KEY]...
 ```
 
 **How to obtain:**

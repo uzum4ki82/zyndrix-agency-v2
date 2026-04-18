@@ -109,7 +109,7 @@ ALTER TABLE daemon_logs ADD CONSTRAINT daemon_logs_lead_id_fkey
 
 ### Environment Variables Required
 ```
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...  # From Supabase > Settings > API Keys > Service Role
+SUPABASE_SERVICE_ROLE_KEY=[TU_SERVICE_ROLE_KEY]...  # From Supabase > Settings > API Keys > Service Role
 ```
 
 ---
@@ -497,10 +497,10 @@ ALTER TABLE leads ADD COLUMN brand_palette JSONB;
 ```bash
 # Existing
 NEXT_PUBLIC_SUPABASE_URL=https://vrvfftftnlspajplqjye.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[TU_ANON_KEY]...
 
 # FIX #1: Service Role (bypass RLS)
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
+SUPABASE_SERVICE_ROLE_KEY=[TU_SERVICE_ROLE_KEY]...
 
 # FIX #2: Stitch API (real demos)
 STITCH_API_KEY=sk_test_...

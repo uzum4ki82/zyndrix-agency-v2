@@ -67,12 +67,12 @@ git push origin feature-branch
 
 | Variable | Valor | Origen |
 |----------|-------|--------|
-| `NEXT_PUBLIC_SUPABASE_URL` | `https://etcxlzpwxwnlrhowldel.supabase.co` | .env.local |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` | .env.local |
-| `SUPABASE_SERVICE_ROLE_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` | .env.local (SECRETO) |
-| `GOOGLE_MAPS_API_KEY` | `[REDACTED]` | .env.local |
-| `ANTHROPIC_API_KEY` | `sk-ant-api03-OAtq9g12JERjE4Z_Q_PpznQdSu3g5uf0JG...` | .env.local (SECRETO) |
-| `RESEND_API_KEY` | `[REDACTED]` | .env.local (SECRETO) |
+| `NEXT_PUBLIC_SUPABASE_URL` | `TU_URL_DE_SUPABASE` | .env.local |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `TU_ANON_KEY` | .env.local |
+| `SUPABASE_SERVICE_ROLE_KEY` | `TU_SERVICE_ROLE_KEY` | .env.local (SECRETO) |
+| `GOOGLE_MAPS_API_KEY` | `TU_GOOGLE_MAPS_KEY` | .env.local |
+| `ANTHROPIC_API_KEY` | `TU_ANTHROPIC_KEY` | .env.local (SECRETO) |
+| `RESEND_API_KEY` | `TU_RESEND_KEY` | .env.local (SECRETO) |
 | `RESEND_FROM_EMAIL` | `Zyndrix Capital <info@zyndrix.dev>` | .env.local |
 | `NEXT_PUBLIC_APP_URL` | `https://comercial-eta.vercel.app` | .env.local |
 

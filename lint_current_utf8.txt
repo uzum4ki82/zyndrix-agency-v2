@@ -1,0 +1,999 @@
+﻿
+> comercial@0.1.0 lint
+> eslint
+
+
+E:\Antigravity\comercial\.agent\skills\algorithmic-art\templates\generator_template.js
+   53:10  warning  'setup' is defined but never used             @typescript-eslint/no-unused-vars
+   70:10  warning  'draw' is defined but never used              @typescript-eslint/no-unused-vars
+   92:7   warning  'Entity' is defined but never used            @typescript-eslint/no-unused-vars
+  132:10  warning  'hexToRgb' is defined but never used          @typescript-eslint/no-unused-vars
+  141:10  warning  'colorFromPalette' is defined but never used  @typescript-eslint/no-unused-vars
+  146:10  warning  'mapRange' is defined but never used          @typescript-eslint/no-unused-vars
+  150:10  warning  'easeInOutCubic' is defined but never used    @typescript-eslint/no-unused-vars
+  155:10  warning  'wrapAround' is defined but never used        @typescript-eslint/no-unused-vars
+  165:10  warning  'updateParameter' is defined but never used   @typescript-eslint/no-unused-vars
+  171:10  warning  'regenerate' is defined but never used        @typescript-eslint/no-unused-vars
+  183:10  warning  'fadeBackground' is defined but never used    @typescript-eslint/no-unused-vars
+  190:10  warning  'getNoiseValue' is defined but never used     @typescript-eslint/no-unused-vars
+  195:10  warning  'vectorFromAngle' is defined but never used   @typescript-eslint/no-unused-vars
+  203:10  warning  'exportImage' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\apify-audience-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-brand-reputation-monitoring\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-competitor-intelligence\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-content-analytics\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-ecommerce\reference\scripts\run_actor.js
+  301:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-influencer-discovery\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-lead-generation\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-market-research\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-trend-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apify-ultimate-scraper\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\postcss.config.js
+  1:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\refresh-skills-plugin.js
+  52:10  warning  'isLoopbackHost' is defined but never used  @typescript-eslint/no-unused-vars
+  66:10  warning  'getRequestHost' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\scripts\verify-seo-assets.js
+  118:14  warning  '_err' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\src\pages\__tests__\Home.test.tsx
+  10:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  14:62  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\src\pages\__tests__\SkillDetail.security.test.tsx
+  15:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\apps\web-app\src\pages\__tests__\SkillDetail.test.tsx
+  19:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\claude-d3js-skill\assets\chart-template.jsx
+  1:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\claude-d3js-skill\assets\interactive-template.jsx
+   56:11  warning  'xAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   61:11  warning  'yAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  212:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  210 |     id: i,
+  211 |     label: `Point ${i + 1}`,
+> 212 |     x: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]  react-hooks/purity
+  213:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  211 |     label: `Point ${i + 1}`,
+  212 |     x: Math.random() * 100,
+> 213 |     y: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));      react-hooks/purity
+  214:11  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  212 |     x: Math.random() * 100,
+  213 |     y: Math.random() * 100,
+> 214 |     size: Math.random() * 30 + 5,
+      |           ^^^^^^^^^^^^^ Cannot call impure function
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));
+  217 |                                react-hooks/purity
+  215:47  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+> 215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+      |                                               ^^^^^^^^^^^^^ Cannot call impure function
+  216 |   }));
+  217 |   
+  218 |   return (          react-hooks/purity
+
+E:\Antigravity\comercial\.agent\skills\loki-mode\scripts\take-screenshots.js
+  2:19  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\playwright-skill\lib\helpers.js
+    4:39  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   99:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  311:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  378:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  390:35  warning  'reject' is defined but never used       @typescript-eslint/no-unused-vars
+  413:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\playwright-skill\run.js
+   13:12  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   14:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   15:22  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   27:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+   96:18  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  101:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  209:5   error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\algorithmic-art\templates\generator_template.js
+   53:10  warning  'setup' is defined but never used             @typescript-eslint/no-unused-vars
+   70:10  warning  'draw' is defined but never used              @typescript-eslint/no-unused-vars
+   92:7   warning  'Entity' is defined but never used            @typescript-eslint/no-unused-vars
+  132:10  warning  'hexToRgb' is defined but never used          @typescript-eslint/no-unused-vars
+  141:10  warning  'colorFromPalette' is defined but never used  @typescript-eslint/no-unused-vars
+  146:10  warning  'mapRange' is defined but never used          @typescript-eslint/no-unused-vars
+  150:10  warning  'easeInOutCubic' is defined but never used    @typescript-eslint/no-unused-vars
+  155:10  warning  'wrapAround' is defined but never used        @typescript-eslint/no-unused-vars
+  165:10  warning  'updateParameter' is defined but never used   @typescript-eslint/no-unused-vars
+  171:10  warning  'regenerate' is defined but never used        @typescript-eslint/no-unused-vars
+  183:10  warning  'fadeBackground' is defined but never used    @typescript-eslint/no-unused-vars
+  190:10  warning  'getNoiseValue' is defined but never used     @typescript-eslint/no-unused-vars
+  195:10  warning  'vectorFromAngle' is defined but never used   @typescript-eslint/no-unused-vars
+  203:10  warning  'exportImage' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-audience-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-brand-reputation-monitoring\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-competitor-intelligence\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-content-analytics\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-ecommerce\reference\scripts\run_actor.js
+  301:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-influencer-discovery\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-lead-generation\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-market-research\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-trend-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\apify-ultimate-scraper\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\claude-d3js-skill\assets\chart-template.jsx
+  1:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\claude-d3js-skill\assets\interactive-template.jsx
+   56:11  warning  'xAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   61:11  warning  'yAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  212:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  210 |     id: i,
+  211 |     label: `Point ${i + 1}`,
+> 212 |     x: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]  react-hooks/purity
+  213:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  211 |     label: `Point ${i + 1}`,
+  212 |     x: Math.random() * 100,
+> 213 |     y: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));      react-hooks/purity
+  214:11  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  212 |     x: Math.random() * 100,
+  213 |     y: Math.random() * 100,
+> 214 |     size: Math.random() * 30 + 5,
+      |           ^^^^^^^^^^^^^ Cannot call impure function
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));
+  217 |                                react-hooks/purity
+  215:47  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+> 215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+      |                                               ^^^^^^^^^^^^^ Cannot call impure function
+  216 |   }));
+  217 |   
+  218 |   return (          react-hooks/purity
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\loki-mode\scripts\take-screenshots.js
+  2:19  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\playwright-skill\lib\helpers.js
+    4:39  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   99:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  311:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  378:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  390:35  warning  'reject' is defined but never used       @typescript-eslint/no-unused-vars
+  413:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\playwright-skill\run.js
+   13:12  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   14:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   15:22  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   27:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+   96:18  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  101:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  209:5   error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\pptx-official\scripts\html2pptx.js
+   28:22  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   29:14  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   30:7   warning  'sharp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   30:15  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  121:54  warning  'tmpDir' is defined but never used          @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\radix-ui-design-system\examples\dialog-example.tsx
+   36:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  118:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\radix-ui-design-system\examples\dropdown-example.tsx
+  139:12  error  'DotsHorizontalIcon' is not defined  react/jsx-no-undef
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\spline-3d-integration\examples\interactive-scene.tsx
+  26:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\telegram\assets\boilerplate\nodejs\src\bot-client.ts
+  45:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\telegram\assets\boilerplate\nodejs\src\handlers.ts
+  2:8  warning  'TelegramBot' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\typescript-expert\references\utility-types.ts
+   71:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:61  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:60  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:68  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:78  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:57  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  242:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  251:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:40  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  333:33  warning  '_value' is defined but never used        @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\template-manager.ts
+  22:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\types.ts
+  104:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\webhook-handler.ts
+  27:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\whatsapp-client.ts
+  173:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills-claude\skills\writing-skills\render-graphs.js
+  16:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  17:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\algorithmic-art\templates\generator_template.js
+   53:10  warning  'setup' is defined but never used             @typescript-eslint/no-unused-vars
+   70:10  warning  'draw' is defined but never used              @typescript-eslint/no-unused-vars
+   92:7   warning  'Entity' is defined but never used            @typescript-eslint/no-unused-vars
+  132:10  warning  'hexToRgb' is defined but never used          @typescript-eslint/no-unused-vars
+  141:10  warning  'colorFromPalette' is defined but never used  @typescript-eslint/no-unused-vars
+  146:10  warning  'mapRange' is defined but never used          @typescript-eslint/no-unused-vars
+  150:10  warning  'easeInOutCubic' is defined but never used    @typescript-eslint/no-unused-vars
+  155:10  warning  'wrapAround' is defined but never used        @typescript-eslint/no-unused-vars
+  165:10  warning  'updateParameter' is defined but never used   @typescript-eslint/no-unused-vars
+  171:10  warning  'regenerate' is defined but never used        @typescript-eslint/no-unused-vars
+  183:10  warning  'fadeBackground' is defined but never used    @typescript-eslint/no-unused-vars
+  190:10  warning  'getNoiseValue' is defined but never used     @typescript-eslint/no-unused-vars
+  195:10  warning  'vectorFromAngle' is defined but never used   @typescript-eslint/no-unused-vars
+  203:10  warning  'exportImage' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-audience-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-brand-reputation-monitoring\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-competitor-intelligence\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-content-analytics\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-influencer-discovery\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-lead-generation\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-market-research\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-trend-analysis\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\apify-ultimate-scraper\reference\scripts\run_actor.js
+  295:25  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\claude-d3js-skill\assets\chart-template.jsx
+  1:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\claude-d3js-skill\assets\interactive-template.jsx
+   56:11  warning  'xAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   61:11  warning  'yAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  212:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  210 |     id: i,
+  211 |     label: `Point ${i + 1}`,
+> 212 |     x: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]  react-hooks/purity
+  213:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  211 |     label: `Point ${i + 1}`,
+  212 |     x: Math.random() * 100,
+> 213 |     y: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));      react-hooks/purity
+  214:11  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  212 |     x: Math.random() * 100,
+  213 |     y: Math.random() * 100,
+> 214 |     size: Math.random() * 30 + 5,
+      |           ^^^^^^^^^^^^^ Cannot call impure function
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));
+  217 |                                react-hooks/purity
+  215:47  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+> 215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+      |                                               ^^^^^^^^^^^^^ Cannot call impure function
+  216 |   }));
+  217 |   
+  218 |   return (          react-hooks/purity
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\playwright-skill\lib\helpers.js
+    4:39  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   99:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  311:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  378:16  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  390:35  warning  'reject' is defined but never used       @typescript-eslint/no-unused-vars
+  413:14  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\playwright-skill\run.js
+   13:12  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   14:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   15:22  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   27:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+   96:18  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  101:12  warning  'e' is defined but never used            @typescript-eslint/no-unused-vars
+  209:5   error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\pptx-official\scripts\html2pptx.js
+   28:22  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   29:14  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   30:7   warning  'sharp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   30:15  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  121:54  warning  'tmpDir' is defined but never used          @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\radix-ui-design-system\examples\dialog-example.tsx
+   36:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  118:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\radix-ui-design-system\examples\dropdown-example.tsx
+  139:12  error  'DotsHorizontalIcon' is not defined  react/jsx-no-undef
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\spline-3d-integration\examples\interactive-scene.tsx
+  26:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\telegram\assets\boilerplate\nodejs\src\bot-client.ts
+  45:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\telegram\assets\boilerplate\nodejs\src\handlers.ts
+  2:8  warning  'TelegramBot' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\typescript-expert\references\utility-types.ts
+   71:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:61  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:60  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:68  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:78  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:57  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  242:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  251:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:40  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  333:33  warning  '_value' is defined but never used        @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\template-manager.ts
+  22:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\types.ts
+  104:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\webhook-handler.ts
+  27:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\whatsapp-client.ts
+  173:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-awesome-skills\skills\writing-skills\render-graphs.js
+  16:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  17:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-creative-director\skills\algorithmic-art\templates\generator_template.js
+   53:10  warning  'setup' is defined but never used             @typescript-eslint/no-unused-vars
+   70:10  warning  'draw' is defined but never used              @typescript-eslint/no-unused-vars
+   92:7   warning  'Entity' is defined but never used            @typescript-eslint/no-unused-vars
+  132:10  warning  'hexToRgb' is defined but never used          @typescript-eslint/no-unused-vars
+  141:10  warning  'colorFromPalette' is defined but never used  @typescript-eslint/no-unused-vars
+  146:10  warning  'mapRange' is defined but never used          @typescript-eslint/no-unused-vars
+  150:10  warning  'easeInOutCubic' is defined but never used    @typescript-eslint/no-unused-vars
+  155:10  warning  'wrapAround' is defined but never used        @typescript-eslint/no-unused-vars
+  165:10  warning  'updateParameter' is defined but never used   @typescript-eslint/no-unused-vars
+  171:10  warning  'regenerate' is defined but never used        @typescript-eslint/no-unused-vars
+  183:10  warning  'fadeBackground' is defined but never used    @typescript-eslint/no-unused-vars
+  190:10  warning  'getNoiseValue' is defined but never used     @typescript-eslint/no-unused-vars
+  195:10  warning  'vectorFromAngle' is defined but never used   @typescript-eslint/no-unused-vars
+  203:10  warning  'exportImage' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-data-analytics\skills\claude-d3js-skill\assets\chart-template.jsx
+  1:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-data-analytics\skills\claude-d3js-skill\assets\interactive-template.jsx
+   56:11  warning  'xAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   61:11  warning  'yAxisGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  212:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  210 |     id: i,
+  211 |     label: `Point ${i + 1}`,
+> 212 |     x: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]  react-hooks/purity
+  213:8   error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  211 |     label: `Point ${i + 1}`,
+  212 |     x: Math.random() * 100,
+> 213 |     y: Math.random() * 100,
+      |        ^^^^^^^^^^^^^ Cannot call impure function
+  214 |     size: Math.random() * 30 + 5,
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));      react-hooks/purity
+  214:11  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  212 |     x: Math.random() * 100,
+  213 |     y: Math.random() * 100,
+> 214 |     size: Math.random() * 30 + 5,
+      |           ^^^^^^^^^^^^^ Cannot call impure function
+  215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+  216 |   }));
+  217 |                                react-hooks/purity
+  215:47  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  213 |     y: Math.random() * 100,
+  214 |     size: Math.random() * 30 + 5,
+> 215 |     category: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+      |                                               ^^^^^^^^^^^^^ Cannot call impure function
+  216 |   }));
+  217 |   
+  218 |   return (          react-hooks/purity
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-documents-presentations\skills\pptx-official\scripts\html2pptx.js
+   28:22  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   29:14  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   30:7   warning  'sharp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   30:15  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  121:54  warning  'tmpDir' is defined but never used          @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-indie-game-dev\skills\algorithmic-art\templates\generator_template.js
+   53:10  warning  'setup' is defined but never used             @typescript-eslint/no-unused-vars
+   70:10  warning  'draw' is defined but never used              @typescript-eslint/no-unused-vars
+   92:7   warning  'Entity' is defined but never used            @typescript-eslint/no-unused-vars
+  132:10  warning  'hexToRgb' is defined but never used          @typescript-eslint/no-unused-vars
+  141:10  warning  'colorFromPalette' is defined but never used  @typescript-eslint/no-unused-vars
+  146:10  warning  'mapRange' is defined but never used          @typescript-eslint/no-unused-vars
+  150:10  warning  'easeInOutCubic' is defined but never used    @typescript-eslint/no-unused-vars
+  155:10  warning  'wrapAround' is defined but never used        @typescript-eslint/no-unused-vars
+  165:10  warning  'updateParameter' is defined but never used   @typescript-eslint/no-unused-vars
+  171:10  warning  'regenerate' is defined but never used        @typescript-eslint/no-unused-vars
+  183:10  warning  'fadeBackground' is defined but never used    @typescript-eslint/no-unused-vars
+  190:10  warning  'getNoiseValue' is defined but never used     @typescript-eslint/no-unused-vars
+  195:10  warning  'vectorFromAngle' is defined but never used   @typescript-eslint/no-unused-vars
+  203:10  warning  'exportImage' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\plugins\antigravity-bundle-typescript-javascript\skills\typescript-expert\references\utility-types.ts
+   71:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:61  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:60  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:68  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:78  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:57  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  242:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  251:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:40  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  333:33  warning  '_value' is defined but never used        @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\pptx-official\scripts\html2pptx.js
+   28:22  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   29:14  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   30:7   warning  'sharp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   30:15  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  121:54  warning  'tmpDir' is defined but never used          @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\radix-ui-design-system\examples\dialog-example.tsx
+   36:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  118:24  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+E:\Antigravity\comercial\.agent\skills\radix-ui-design-system\examples\dropdown-example.tsx
+  139:12  error  'DotsHorizontalIcon' is not defined  react/jsx-no-undef
+
+E:\Antigravity\comercial\.agent\skills\spline-3d-integration\examples\interactive-scene.tsx
+  26:27  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\telegram\assets\boilerplate\nodejs\src\bot-client.ts
+  45:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\telegram\assets\boilerplate\nodejs\src\handlers.ts
+  2:8  warning  'TelegramBot' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\tools\bin\install.js
+    3:23  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+    4:14  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+    5:12  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+    6:12  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+    7:33  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+    8:46  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+  344:12  warning  'error' is defined but never used                 @typescript-eslint/no-unused-vars
+  396:14  warning  'error' is defined but never used                 @typescript-eslint/no-unused-vars
+  524:9   warning  'originalCwd' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  551:14  warning  'e' is defined but never used                     @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\tools\lib\project-root.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\lib\skill-filter.js
+  13:7   warning  'fs' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  13:12  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+  14:7   warning  'path' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  14:14  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\lib\skill-utils.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\lib\symlink-safety.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\lib\workflow-contract.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\apply_skill_optimization.cjs
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\build-catalog.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  8:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  9:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\copy-file.js
+  5:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  7:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\generated_files.js
+  3:51  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\merge_batch.cjs
+   3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   5:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   7:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  11:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\normalize-frontmatter.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:44  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\pr_preflight.cjs
+   3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   5:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   7:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  16:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\release_workflow.js
+   3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   5:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   7:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  12:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\restore_vibeship_skills.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\run-python.js
+  5:30  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\setup_web.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:33  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\activate_skills_batch_security.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\activate_skills_batch_smoke.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\activate_skills_shell.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\apply_skill_optimization_security.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  7:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\automation_workflows.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\build_catalog_bundles.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\claude_plugin_marketplace.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\codex_plugin_marketplace.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\copy_security.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:31  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\docs_security_content.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\installer_antigravity_guidance.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:19  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\installer_filters.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:19  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\installer_update_sync.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  7:19  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\jetski_gemini_loader.test.cjs
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\local_temp_safety.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\merge_batch.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\npm_package_contents.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:21  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\plugin_directories.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\repo_hygiene_security.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\run-test-suite.js
+  3:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\setup_web_sync.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  7:30  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\skill_filter.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\skill_utils_security.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:60  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\symlink_safety.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  6:33  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\validate_skills_headings.test.js
+   1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   2:27  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  19:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  20:29  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  21:53  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\validate_skills_metadata.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  8:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\web_app_readme.test.js
+  1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\tests\workflow_contracts.test.js
+   1:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  10:5   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\.agent\skills\tools\scripts\validate-skills.js
+    5:12  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+    6:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+    7:44  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+    8:29  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  117:12  warning  'err' is defined but never used          @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\typescript-expert\references\utility-types.ts
+   71:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:61  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:60  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:68  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:78  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:57  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  242:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  251:15  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:40  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:50  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  333:33  warning  '_value' is defined but never used        @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\.agent\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\template-manager.ts
+  22:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\types.ts
+  104:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\webhook-handler.ts
+  27:29  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\whatsapp-cloud-api\assets\boilerplate\nodejs\src\whatsapp-client.ts
+  173:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\.agent\skills\writing-skills\render-graphs.js
+  16:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  17:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\scratch\fix_page.js
+   1:12  error    A `require()` style import is forbidden           @typescript-eslint/no-require-imports
+   9:7   warning  'target' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  13:7   warning  'replacement' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\scratch\test_db.js
+  1:26  error    A `require()` style import is forbidden    @typescript-eslint/no-require-imports
+  9:13  warning  'data' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\scratch\test_send.js
+  1:15  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Antigravity\comercial\src\app\api\engine\audit\route.ts
+   59:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  123:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\src\app\api\engine\pitch\route.ts
+   5:23  warning  'audit' is assigned a value but never used            @typescript-eslint/no-unused-vars
+  13:11  warning  'marketPotential' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  52:53  warning  'i' is defined but never used                         @typescript-eslint/no-unused-vars
+  77:12  warning  'error' is defined but never used                     @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\src\app\api\engine\search\route.ts
+  22:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\src\app\page.tsx
+  285:14  warning  'err' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  314:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  325:16  error    'Settings' is not defined                                                                                                                                                                                                                                                                react/jsx-no-undef
+  368:22  error    'AlertTriangle' is not defined                                                                                                                                                                                                                                                           react/jsx-no-undef
+  457:92  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  646:24  error    'ShieldCheck' is not defined                                                                                                                                                                                                                                                             react/jsx-no-undef
+  904:32  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  926:94  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  949:30  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+E:\Antigravity\comercial\src\components\BusinessCard.tsx
+  57:16  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+E:\Antigravity\comercial\src\components\Presentation.tsx
+    6:64  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   22:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  101:20  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  101:20  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  109:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  109:21  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  120:22  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  120:22  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  151:28  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+E:\Antigravity\comercial\src\components\TacticalStream.tsx
+  56:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+E:\Antigravity\comercial\src\components\UI.tsx
+  157:9   warning  '_strategicImpact' is assigned a value but never used                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  176:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  226:16  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  226:30  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+E:\Antigravity\comercial\src\hooks\use-autopilot.ts
+   18:64  warning  '_activeTab' is defined but never used                                                                                                                                               @typescript-eslint/no-unused-vars
+   18:97  warning  '_setActiveTab' is defined but never used                                                                                                                                            @typescript-eslint/no-unused-vars
+   62:16  warning  'e' is defined but never used                                                                                                                                                        @typescript-eslint/no-unused-vars
+   68:9   warning  The 'runCycle' function makes the dependencies of useEffect Hook (at line 328) change on every render. To fix this, wrap the definition of 'runCycle' in its own useCallback() Hook  react-hooks/exhaustive-deps
+   90:54  error    Unexpected any. Specify a different type                                                                                                                                             @typescript-eslint/no-explicit-any
+   97:43  error    Unexpected any. Specify a different type                                                                                                                                             @typescript-eslint/no-explicit-any
+  123:21  error    Unexpected any. Specify a different type                                                                                                                                             @typescript-eslint/no-explicit-any
+  124:19  error    Unexpected any. Specify a different type                                                                                                                                             @typescript-eslint/no-explicit-any
+  124:27  error    Unexpected any. Specify a different type                                                                                                                                             @typescript-eslint/no-explicit-any
+
+E:\Antigravity\comercial\src\lib\supabase.ts
+  85:17  warning  'error' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Antigravity\comercial\test-send.js
+  1:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+Ô£û 524 problems (367 errors, 157 warnings)
+

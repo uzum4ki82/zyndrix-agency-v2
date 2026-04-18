@@ -346,14 +346,14 @@ Usar en:
 ```bash
 # Crear src/.env.example (sin values reales)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-GOOGLE_MAPS_API_KEY=your-google-maps-key
-ANTHROPIC_API_KEY=your-anthropic-key
-RESEND_API_KEY=your-resend-key
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[REDACTED]
+SUPABASE_SERVICE_ROLE_KEY=[REDACTED]
+GOOGLE_MAPS_API_KEY=[REDACTED]
+ANTHROPIC_API_KEY=[REDACTED]
+RESEND_API_KEY=[REDACTED]
 RESEND_FROM_EMAIL="Your Name <your-email@domain.com>"
 NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
-STITCH_API_KEY=your-stitch-key (OPTIONAL - uses fallback if not set)
+STITCH_API_KEY=[REDACTED]
 STITCH_MCP_ENDPOINT=https://api.stitch.dev (OPTIONAL)
 ```
 
