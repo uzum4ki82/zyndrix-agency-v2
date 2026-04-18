@@ -24,9 +24,10 @@ export async function POST(request: Request) {
     // Extract lead_id from tags
     const leadIdTag = event.tags?.find(tag => tag.name === 'lead_id');
     const leadId = leadIdTag?.value;
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-    if (!leadId || leadId === 'test') {
-      console.log(`[RESEND_WEBHOOK] Ignoring event for test email: ${event.type}`);
+    if (!leadId || leadId === 'test' || !UUID_REGEX.test(leadId)) {
+      console.log(`[RESEND_WEBHOOK] Ignoring invalid or test leadId: ${leadId}`);
       return NextResponse.json({ success: true });
     }
 

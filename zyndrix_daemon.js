@@ -212,14 +212,22 @@ async function runAutoAudit() {
     });
 
     for (const lead of leads) {
+        let page;
         try {
+            // [FIX #1.2] URL Validation
+            const URL_REGEX = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+            if (!lead.website || !URL_REGEX.test(lead.website)) {
+                log('warning', `Skipping invalid URL for ${lead.name}: ${lead.website}`);
+                continue;
+            }
+
             log('info', `Auditing: ${lead.name} (${lead.website})`);
-            const page = await browser.newPage();
+            page = await browser.newPage();
             await page.setViewport({ width: 1280, height: 800 });
             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
             
             const start = Date.now();
-            await page.goto(lead.website, { waitUntil: 'networkidle2', timeout: 35000 });
+            await page.goto(lead.website, { waitUntil: 'networkidle2', timeout: 30000 });
             const loadTime = (Date.now() - start) / 1000;
             
             // TAKE SCREENSHOT
@@ -253,7 +261,7 @@ async function runAutoAudit() {
                     const getStyle = (el, prop) => window.getComputedStyle(el).getPropertyValue(prop);
                     
                     // Email extraction (improved regex)
-                    const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+                    const EMAIL_REGEX = /[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,255}\.[a-zA-Z]{2,}/g;
                     const html = document.documentElement.innerHTML;
                     const matches = html.match(EMAIL_REGEX) || [];
                     
@@ -267,7 +275,8 @@ async function runAutoAudit() {
                     const emails = Array.from(new Set(matches))
                         .map(e => e.toLowerCase())
                         .filter(e => !forbidden.some(f => e.includes(f)))
-                        .filter(e => !e.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/));
+                        .filter(e => !e.match(/\.(png|jpg|jpeg|gif|svg|webp|pdf|css|js)$/))
+                        .filter(e => e.length <= 254); // [FIX #5] length validation
 
                     // WhatsApp detection
                     const waMatch = html.match(/(?:wa\.me|api\.whatsapp\.com|whatsapp:|web\.whatsapp\.com)\/(\d+)/i);
@@ -327,14 +336,23 @@ async function runAutoAudit() {
                 });
 
                 if (contactLink && contactLink.startsWith('http')) {
-                    log('info', `Deep Discovery: Navigating to secondary page: ${contactLink}`);
+                    // [FIX #3] Unvalidated Redirects
                     try {
-                        await page.goto(contactLink, { waitUntil: 'load', timeout: 15000 });
+                        const targetHost = new URL(contactLink).hostname.replace('www.', '');
+                        const sourceHost = new URL(lead.website).hostname.replace('www.', '');
+                        
+                        if (targetHost !== sourceHost) {
+                            log('warning', `Redirect outside domain: ${targetHost} != ${sourceHost}`);
+                            return discovery;
+                        }
+
+                        log('info', `Deep Discovery: Navigating to secondary page: ${contactLink}`);
+                        await page.goto(contactLink, { waitUntil: 'load', timeout: 20000 });
                         const contactDiscovery = await extractEmailsAndInfo(page);
                         discovery.emails = [...new Set([...discovery.emails, ...contactDiscovery.emails])];
                         log('success', `Deep Discovery finished: ${discovery.emails.length} emails found after exploration.`);
                     } catch (e) {
-                        log('warning', `Failed to visit contact page: ${e.message}`);
+                        log('warning', `Failed to visit contact page or invalid URL: ${e.message}`);
                     }
                 }
             }
@@ -400,6 +418,8 @@ async function runAutoAudit() {
                 last_audit: new Date().toISOString(),
                 updated_at: new Date().toISOString()
             });
+        } finally {
+            if (page) await page.close();
         }
     }
 
@@ -438,18 +458,23 @@ async function runAutoGeneration() {
             try {
                 const apiBase = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
-                // Use circuit breaker + retry for Stitch API
+                // Use circuit breaker + retry for Stitch API + [FIX #6] Fetch Timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+
                 const result = await stitchBreaker.execute(
                     () => genRetryPolicy.execute(
                         () => fetch(`${apiBase}/api/engine/stitch`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ business: lead, autoTrigger: true })
+                            body: JSON.stringify({ business: lead, autoTrigger: true }),
+                            signal: controller.signal
                         }).then(r => {
+                            clearTimeout(timeoutId);
                             if (!r.ok) throw new Error(`HTTP ${r.status}`);
                             return r.json();
                         }),
-                        `Stitch API for ${lead.name}`
+                        `Asset Generation for ${lead.name}`
                     ),
                     'Stitch API'
                 );
@@ -513,7 +538,7 @@ async function runAutoOutreach() {
                     id: lead.id,
                     name: lead.name,
                     email: targetEmail,
-                    location: lead.address.split(',')[0],
+                    location: lead.address?.split(',')?.[0] || 'Unknown',
                     analysisData: {
                         techStack: lead.tech_stack,
                         painPoints: lead.pain_points,
@@ -559,13 +584,12 @@ async function runAutoScan() {
     const niches = ['restaurante', 'clínica dental', 'reformas', 'taller mecánico', 'peluquería'];
     const locations = [
         'Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Málaga', 'Murcia', 'Palma de Mallorca', 'Las Palmas de Gran Canaria', 'Bilbao',
-        'Alicante', 'Córdoba', 'Valladolid', 'Vigo', 'Gijón', 'Hospitalet de Llobregat', 'Vitoria-Gasteiz', 'A Coruña', 'Elche', 'Granada',
-        'Terrassa', 'Badalona', 'Oviedo', 'Sabadell', 'Cartagena', 'Jerez de la Frontera', 'Móstoles', 'Santa Cruz de Tenerife', 'Pamplona', 'Almería',
-        'Alcalá de Henares', 'Fuenlabrada', 'Leganés', 'San Sebastián', 'Getafe', 'Burgos', 'Albacete', 'Castellón de la Plana', 'Santander', 'Alcorcón',
-        'San Cristóbal de La Laguna', 'Logroño', 'Badajoz', 'Huelva', 'Salamanca', 'Marbella', 'Lleida', 'Dos Hermanas', 'Tarragona', 'Torrejón de Ardoz',
-        'León', 'Mataró', 'Parla', 'Algeciras', 'Cádiz', 'Santa Coloma de Gramenet', 'Jaén', 'Alcobendas', 'Ourense', 'Reus',
-        'Telde', 'Estepona', 'Benidorm', 'Sagunto', 'Paterna', 'San Cugat del Vallès', 'Torrevieja', 'Gandia', 'Avilés', 'Cuenca',
-        'Guadalajara', 'Toledo', 'Segovia', 'Ávila', 'Soria', 'Teruel', 'Zamora', 'Palencia', 'Cáceres', 'Ciudad Real'
+        'Alicante', 'Córdoba', 'Valladolid', 'Vigo', 'Gijón', 'L\'Hospitalet de Llobregat', 'Vitoria-Gasteiz', 'A Coruña', 'Granada', 'Elche',
+        'Oviedo', 'Badalona', 'Terrassa', 'Cartagena', 'Jerez de la Frontera', 'Sabadell', 'Móstoles', 'Santa Cruz de Tenerife', 'Alcalá de Henares', 'Fuenlabrada',
+        'Pamplona', 'Almería', 'Leganés', 'Donostia-San Sebastián', 'Castellón de la Plana', 'Burgos', 'Santander', 'Albacete', 'Getafe', 'Alcorcón',
+        'Logroño', 'San Cristóbal de La Laguna', 'Badajoz', 'Salamanca', 'Huelva', 'Marbella', 'Lleida', 'Dos Hermanas', 'Tarragona', 'Torrejón de Ardoz',
+        'Parla', 'Mataró', 'Algeciras', 'León', 'Alcobendas', 'Santa Coloma de Gramenet', 'Cádiz', 'Jaén', 'El Ejido', 'Roquetas de Mar',
+        'Telde', 'Reus', 'Santiago de Compostela', 'Lorca', 'Cerdanyola del Vallès', 'San Fernando', 'San Cugat del Vallès', 'San Sebastián de los Reyes', 'Rivas-Vaciamadrid', 'Cornellà de Llobregat'
     ];
     
     const niche = niches[Math.floor(Math.random() * niches.length)];
@@ -606,7 +630,7 @@ async function runAutoScan() {
                         phone: lead.phone || null,
                         score: Math.round(Number(lead.score || 0)),
                         status: lead.status || 'NEW',
-                        tech_stack: lead.tech_stack || '',
+                        tech_stack: lead.tech_stack || null,
                         screenshot_url: lead.screenshot_url || null,
                         stitch_preview_url: null,
                         created_at: new Date().toISOString()
@@ -630,8 +654,8 @@ async function startCommander() {
     log('info', '🚀 ZYNDRIX COMMANDER v2.4 - RESILIENT');
     log('info', '================================================');
 
-    let lastScanTime = 0;
-    const SCAN_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+    let lastScanTime = 0; // Will trigger immediate scan on first iteration
+    const SCAN_INTERVAL = 30 * 60 * 1000; // 30 minutes for nationwide coverage
     let consecutiveErrors = 0;
     const MAX_CONSECUTIVE_ERRORS = 5;
 
@@ -655,7 +679,8 @@ async function startCommander() {
             }
 
             try {
-                await runAutoGeneration();
+                // [DISABLED BY USER] await runAutoGeneration();
+                log('info', 'Phase 3 (Generation) is currently DISABLED by user request.');
             } catch (err) {
                 log('error', `Generation phase failed: ${err.message}`);
             }

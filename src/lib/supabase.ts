@@ -1,9 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder-url.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+function escapeSql(str: string): string {
+  return str.replace(/'/g, "''");
+}
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('CRITICAL: Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl!, supabaseAnonKey!);
 
 /**
  * Sube una captura de pantalla al bucket de 'screenshots'
@@ -225,7 +233,7 @@ export const checkLeadExists = async (website: string | null) => {
   const { data } = await supabase
     .from('leads')
     .select('id')
-    .or(`website.ilike.%${cleanUrl}%,website.ilike.%${website}%`)
+    .or(`website.ilike.%${escapeSql(cleanUrl)}%,website.ilike.%${escapeSql(website)}%`)
     .single();
 
   return !!data;
@@ -252,7 +260,7 @@ export const getLeads = async (): Promise<Lead[]> => {
   try {
     const { data, error } = await supabase
       .from('leads')
-      .select('*')
+      .select('id, name, category, email_sent, status, stitch_preview_url, updated_at, brand_palette, pain_points, score, website, follow_up_status, address')
       .order('created_at', { ascending: false });
       
     if (error) {
@@ -296,7 +304,7 @@ const supabaseServiceRole = (() => {
     console.warn('SUPABASE_SERVICE_ROLE_KEY not configured. Daemon operations may fail.');
     return null;
   }
-  return createClient(supabaseUrl, serviceRoleKey);
+  return createClient(supabaseUrl!, serviceRoleKey);
 })();
 
 export const updateLeadWithServiceRole = async (

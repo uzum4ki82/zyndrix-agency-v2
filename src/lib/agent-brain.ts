@@ -29,12 +29,6 @@ class HunterAgent {
       return { score: 0, findings, tier, painPoints };
     }
 
-    if (foundModifier && !queryHasModifier) {
-      tier = 'DISCARDED';
-      score = 0;
-      findings.push(`LACK OF CONNECTION: El resultado parece una sub-entidad (${foundModifier}) que no coincide con la intención de búsqueda principal.`);
-      return { score: 0, findings, tier, painPoints };
-    }
 
     // NEW STRICT TIER RULES
     if (!hasEmail && !hasWhatsApp) {
