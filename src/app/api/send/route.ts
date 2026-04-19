@@ -8,6 +8,9 @@ export async function POST(request: Request) {
     const { email, name = "Empresa", analysisData = {}, location = "su ciudad", isTest = false, ping, id, type = 'impact' } = body;
     const origin = request.headers.get('origin') || 'https://zyndrix.dev';
     
+    // Limpiar location si viene el placeholder "(su ciudad)"
+    const cleanLocation = (!location || location === "su ciudad") ? "" : ` (${location})`;
+    
     // Use a fixed production domain for branding assets to ensure visibility during local tests
     const productionUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://comercial-eta.vercel.app';
     const logoUrl = `${productionUrl}/img/logo_raw.png`;
@@ -52,8 +55,7 @@ export async function POST(request: Request) {
     const resend = new Resend(apiKey);
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'Zyndrix <info@zyndrix.dev>';
 
-    // --- TEMPLATE LOGIC ---
-    let subject = `Análisis de Autoridad Digital: ${name} — Propuesta Estratégica (${location})`;
+    let subject = `Análisis de Autoridad Digital: ${name} — Propuesta Estratégica${cleanLocation}`;
     let htmlContent = '';
 
     if (type === 'followup') {
