@@ -1,13 +1,22 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Lead } from '@/lib/supabase';
+import { getLeadById, Lead } from '@/lib/supabase';
 import { 
-  MapPin, Phone, Instagram, Facebook, Globe, 
-  ArrowRight, Shield, Zap, Sparkles, MessageSquare, 
-  Menu, X, CheckCircle2, Star, Clock, Trophy
+  Shield, 
+  Zap, 
+  MapPin, 
+  ArrowRight, 
+  CheckCircle2, 
+  Smartphone, 
+  Globe, 
+  ChevronRight,
+  Star,
+  Menu,
+  Clock,
+  Settings,
+  X
 } from 'lucide-react';
 import ConsultationModal from '@/components/ConsultationModal';
 
@@ -16,55 +25,42 @@ export default function DemoPage() {
   const [lead, setLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    async function load() {
+    const fetchLead = async () => {
       const rawId = Array.isArray(id) ? id[0] : id;
       if (rawId && typeof rawId === 'string') {
-        try {
-          const cleanId = rawId.split('\r')[0].split('\n')[0].trim();
-          const res = await fetch(`/api/leads/${cleanId}`);
-          if (res.ok) {
-            const data = await res.json();
-            setLead(data);
-          }
-        } catch (err) {
-          console.error('Error fetching lead:', err);
-        }
+        // Handle potential newline or carriage return in ID from URL params
+        const cleanId = rawId.split('\r')[0].split('\n')[0].trim();
+        const data = await getLeadById(cleanId);
+        setLead(data);
+        setLoading(false);
       }
-      setLoading(false);
-    }
-    load();
+    };
+    fetchLead();
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [id]);
 
   if (loading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center bg-[#020617]">
-        <div className="flex flex-col items-center gap-6">
-          <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            className="w-10 h-10 border-t-2 border-indigo-500 rounded-full"
-          />
+      <div className="fixed inset-0 bg-neutral-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-600 rounded-full animate-spin" />
+          <p className="text-neutral-400 font-medium animate-pulse text-xs tracking-[0.3em] uppercase">Esculpiendo Activo Digital...</p>
         </div>
       </div>
     );
   }
 
-  if (!lead) {
-    return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-[#020617] text-white p-10 text-center">
-        <Shield size={64} className="text-rose-500/20 mb-8" />
-        <h1 className="text-xl font-black mb-4 uppercase tracking-[0.5em] text-rose-500">Instance Not Found</h1>
-        <p className="text-slate-500 text-sm max-w-xs">The requested digital asset does not exist.</p>
-        <a href="/" className="mt-12 text-[10px] uppercase font-black tracking-widest text-indigo-400">Return Home</a>
-      </div>
-    );
-  }
-
-  // If we have a real external preview, show it FULL SCREEN with NO OVERLAYS.
-  if (lead.stitch_preview_url && !lead.stitch_preview_url.includes('/demo/')) {
+  // If we have a real external preview (Stitch Project), show it FULL SCREEN with NO OVERLAYS.
+  // Unless it's an internal /demo/ path
+  if (lead?.stitch_preview_url && !lead.stitch_preview_url.includes('/demo/')) {
     return (
       <div className="fixed inset-0 w-screen h-screen bg-black overflow-hidden z-[9999]">
         <iframe 
@@ -74,420 +70,349 @@ export default function DemoPage() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
+        {/* Floating CTA for the viewer */}
+        <div className="fixed bottom-10 right-10 z-[10000]">
+           <button 
+             onClick={() => setIsModalOpen(true)}
+             className="px-10 py-5 bg-blue-600 text-white rounded-full font-black uppercase tracking-widest shadow-2xl shadow-blue-500/40 hover:scale-105 transition-all"
+           >
+             Activar Mi Dominio
+           </button>
+        </div>
       </div>
     );
   }
 
-  const primaryColor = lead.extracted_colors?.primary || '#6366f1';
-  const secondaryColor = lead.extracted_colors?.secondary || '#10b981';
-  const bgColor = lead.extracted_colors?.background || '#020617';
+  if (!lead) {
+      return (
+        <div className="h-screen w-full flex flex-col items-center justify-center bg-white text-neutral-950 p-10 text-center">
+          <Shield size={64} className="text-neutral-200 mb-8" />
+          <h1 className="text-xl font-black mb-4 uppercase tracking-[0.5em]">Digital Asset Not Found</h1>
+          <p className="text-neutral-500 text-sm max-w-xs">El activo digital solicitado no existe o ha expirado.</p>
+          <a href="/" className="mt-12 text-[10px] uppercase font-black tracking-widest text-blue-600">Volver al Inicio</a>
+        </div>
+      );
+  }
 
-  const services = [
-    { title: "Servicios de Precisión", desc: "Gestión avanzada de todos los requerimientos con los más altos estándares.", icon: <Shield size={24} /> },
-    { title: "Excelencia Operativa", desc: "Optimización continua y atención al detalle en cada fase del proceso.", icon: <Zap size={24} /> },
-    { title: "Compromiso de Calidad", desc: "Integración perfecta de tradición y tecnologías modernas de alto nivel.", icon: <Star size={24} /> }
-  ];
-
-  const stats = [
-    { label: "Años de Experiencia", value: "20+" },
-    { label: "Clientes Satisfechos", value: "1.5k+" },
-    { label: "Proyectos Realizados", value: "3k+" },
-    { label: "Garantía de Calidad", value: "100%" }
-  ];
+  const heroImage = "/img/demos/workshop_hero.png";
+  const diagImage = "/img/demos/diag_service.png";
+  const mechImage = "/img/demos/mech_service.png";
 
   return (
-    <div 
-      className="min-h-screen text-slate-200 font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden"
-      style={{ backgroundColor: bgColor }}
-    >
-      {/* RADIANT DEPTH BACKGROUND */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div 
-          className="absolute -top-[25%] -left-[25%] w-[100%] h-[100%] rounded-full opacity-30 blur-[150px]"
-          style={{ background: `radial-gradient(circle, ${primaryColor} 0%, transparent 70%)` }}
-        />
-        <div 
-          className="absolute -bottom-[25%] -right-[25%] w-[100%] h-[100%] rounded-full opacity-20 blur-[150px]"
-          style={{ background: `radial-gradient(circle, ${secondaryColor} 0%, transparent 70%)` }}
-        />
-      </div>
-
-      {/* NAVIGATION - GLASSMORPHISM */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] backdrop-blur-md bg-black/30 border-b border-white/10">
-        <div className="container mx-auto px-8 h-24 flex items-center justify-between">
-          <div className="text-2xl font-black tracking-tighter uppercase flex items-center gap-4">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: primaryColor }}>
-                <Zap size={20} className="text-black" />
-             </div>
-             <span className="hidden sm:inline">{lead.name}</span>
+    <div className="min-h-screen bg-white text-neutral-900 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+      {/* Navigation */}
+      <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-neutral-200 py-4 shadow-sm' : 'bg-transparent py-8'
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-neutral-900 rounded-xl flex items-center justify-center rotate-3 shadow-lg group hover:rotate-0 transition-transform">
+              <span className="text-white font-black text-xl">{lead.name.charAt(0).toUpperCase()}</span>
+            </div>
+            <span className="text-xl font-extrabold tracking-tighter text-neutral-900">
+              {lead.name.toUpperCase()}
+            </span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-10 font-bold text-[11px] uppercase tracking-[0.2em]">
-             <a href="#experiencia" className="hover:text-white transition-colors text-white/60">Experiencia</a>
-             <a href="#servicios" className="hover:text-white transition-colors text-white/60">Servicios</a>
-             <a href="#contacto" className="hover:text-white transition-colors text-white/60">Ubicación</a>
-             <button 
-                onClick={() => setIsModalOpen(true)}
-                className="px-8 py-3.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all group flex items-center gap-2"
-             >
-                Contactar <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-             </button>
+          <div className="hidden md:flex items-center gap-10">
+            {['Inicio', 'Servicios', 'Cómo Trabajamos', 'Contacto'].map((item) => (
+              <a key={item} href="#" className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-600 hover:text-blue-600 transition-colors">
+                {item}
+              </a>
+            ))}
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="px-8 py-3 bg-blue-600 text-white rounded-full text-xs font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-blue-500/20"
+            >
+              Pide Cita
+            </button>
           </div>
 
-          <button className="lg:hidden text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={32} /> : <Menu size={32} />}
+          <button className="md:hidden text-neutral-900">
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[150] bg-[#020617] p-12 lg:hidden flex flex-col justify-center gap-10"
-          >
-            <button className="absolute top-10 right-10 text-white" onClick={() => setIsMenuOpen(false)}>
-              <X size={40} />
-            </button>
-            <a href="#experiencia" className="text-5xl font-black uppercase tracking-tighter" onClick={() => setIsMenuOpen(false)}>Experiencia</a>
-            <a href="#servicios" className="text-5xl font-black uppercase tracking-tighter" onClick={() => setIsMenuOpen(false)}>Servicios</a>
-            <a href="#contacto" className="text-5xl font-black uppercase tracking-tighter" onClick={() => setIsMenuOpen(false)}>Localización</a>
-            <button 
-              onClick={() => { setIsModalOpen(true); setIsMenuOpen(false); }}
-              className="mt-10 px-12 py-6 bg-white text-black text-xs font-black uppercase tracking-[0.2em] rounded-2xl"
-            >
-              Solicitar Información
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Background Image with High-End Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={heroImage} 
+            alt="Premium Workshop" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/50 to-white" />
+        </div>
 
-      <main className="relative z-10">
-        {/* HERO - IMMERSIVE 100VH */}
-        <section className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
-          <div className="absolute inset-0 z-0">
-             <img 
-               src={lead.screenshot_url || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"} 
-               className="w-full h-full object-cover"
-               alt="Background"
-             />
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
-             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617]" style={{ backgroundImage: `linear-gradient(to bottom, transparent, transparent, ${bgColor})` }} />
-          </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center lg:text-left grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/10 border border-blue-600/20 rounded-full mb-8">
+              <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+              <span className="text-blue-700 text-[10px] font-black uppercase tracking-[0.3em]">Tu taller de confianza en {lead.city || 'la zona'}</span>
+            </div>
 
-          <div className="container mx-auto px-8 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-6xl"
-            >
-              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/10 border border-white/10 text-[11px] font-bold uppercase tracking-[0.3em] text-white/70 mb-10 backdrop-blur-sm">
-                <Sparkles size={14} className="text-indigo-400" /> Líder en {lead.category || 'Servicios Profesionales'}
-              </div>
-              
-              <h1 className="text-7xl md:text-[min(12vw,140px)] font-black leading-[0.9] tracking-[-0.05em] uppercase mb-12 text-white">
-                {lead.name}
-              </h1>
-              
-              <p className="text-xl md:text-3xl text-slate-300/80 max-w-3xl mb-16 font-light leading-snug">
-                Definiendo el estándar de excelencia en <span className="text-white font-medium">{lead.city || 'la región'}</span> a través de precisión, calidad y compromiso absoluto.
-              </p>
+            <h1 className="text-[12vw] lg:text-[10rem] font-black leading-[0.85] tracking-[-0.06em] text-neutral-900 mb-8 uppercase drop-shadow-sm">
+              CUIDAMOS <br/>
+              <span className="text-blue-600 italic">TU</span> COCHE,<br/>
+              CUIDAMOS DE <span className="text-blue-600">TI</span>.
+            </h1>
 
-              <div className="flex flex-wrap gap-8 items-center">
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-10 py-5 bg-white text-black text-xs font-black uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-2xl rounded-xl"
-                >
-                  Hablar con nosotros
-                </button>
-                <div className="flex items-center gap-4 text-[12px] font-black uppercase tracking-[0.4em] text-white/40">
-                  <span className="w-12 h-[1px] bg-white/20" /> {lead.category || 'Empresa'} Consolidada
-                </div>
-              </div>
-            </motion.div>
+            <p className="max-w-xl text-xl md:text-2xl text-neutral-600 font-medium leading-relaxed mb-12">
+              En {lead.name} te ofrecemos mecánica de calidad, trato cercano y soluciones reales para tu día a día. Sin complicaciones, con total confianza.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="group w-full sm:w-auto px-12 py-6 bg-blue-600 text-white rounded-full text-lg font-black uppercase tracking-widest hover:scale-105 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-500/40 flex items-center justify-center gap-3"
+              >
+                Pide Cita Ahora
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button className="w-full sm:w-auto px-12 py-6 bg-white/80 backdrop-blur-md border border-neutral-200 text-neutral-900 rounded-full text-lg font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl">
+                ¿Qué hacemos?
+              </button>
+            </div>
           </div>
           
-          <div className="absolute bottom-12 right-12 flex items-center gap-6 opacity-30 group cursor-pointer">
-            <span className="text-[10px] font-black tracking-[0.5em] uppercase group-hover:text-white transition-colors">Saber Más</span>
-            <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
-          </div>
-        </section>
-
-        {/* TRUST BAR / BRANDS */}
-        <div className="py-16 border-y border-white/5 bg-black/40 backdrop-blur-sm overflow-hidden">
-          <div className="container mx-auto px-8">
-            <p className="text-center text-[10px] font-black uppercase tracking-[0.5em] text-slate-500 mb-8">Marcas de Confianza & Aliados Estratégicos</p>
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
-               <span className="text-2xl font-black italic tracking-tighter">PREMIUM</span>
-               <span className="text-2xl font-black italic tracking-tighter">EXCELLENCE</span>
-               <span className="text-2xl font-black italic tracking-tighter">PRECISION</span>
-               <span className="text-2xl font-black italic tracking-tighter">AUTHORITY</span>
-               <span className="text-2xl font-black italic tracking-tighter">DOMINANCE</span>
-            </div>
+          {/* Side Visual element - Card floating */}
+          <div className="hidden lg:block relative">
+             <div className="bg-white/40 backdrop-blur-3xl border border-white/40 rounded-[3rem] p-12 shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700">
+               <div className="space-y-12">
+                 <div className="flex items-start gap-6">
+                    <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shrink-0">
+                      <Zap className="text-white w-8 h-8 fill-current" />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-black text-neutral-900 mb-2 whitespace-nowrap">Diagnosis Digital</h4>
+                      <p className="text-neutral-600 text-sm font-medium">Tecnología de última generación para identificar el 100% de los fallos.</p>
+                    </div>
+                 </div>
+                 <div className="flex items-start gap-6">
+                    <div className="w-16 h-16 bg-neutral-900 rounded-2xl flex items-center justify-center shrink-0">
+                      <Shield className="text-white w-8 h-8" />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-black text-neutral-900 mb-2 whitespace-nowrap">Garantía Certificada</h4>
+                      <p className="text-neutral-600 text-sm font-medium">Todas nuestras reparaciones cuentan con certificado de garantía oficial.</p>
+                    </div>
+                 </div>
+               </div>
+             </div>
           </div>
         </div>
 
-        {/* STATS SECTION */}
-        <section id="experiencia" className="py-40 px-8">
-          <div className="container mx-auto max-w-7xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-24">
-              {stats.map((stat, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="space-y-4"
-                >
-                  <div className="text-6xl md:text-8xl font-black tracking-tighter block text-white" style={{ color: primaryColor }}>{stat.value}</div>
-                  <div className="text-[10px] uppercase font-black tracking-[0.4em] text-slate-500">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
+        {/* Brand Bar - Large Cinematic List */}
+        <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-sm border-t border-neutral-100 py-12 scroll-hide overflow-hidden">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {['AUDI', 'RENAULT', 'PEUGEOT', 'TOYOTA', 'HYUNDAI', 'FORD', 'CITROËN', 'FIAT', 'MERCEDES', 'BMW', 'VOLKSWAGEN', 'SEAT'].map((brand, i) => (
+              <span key={i} className="mx-12 text-4xl font-black tracking-tighter text-neutral-300 hover:text-blue-600 transition-colors cursor-default select-none">{brand}</span>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* BRAND STATEMENT - FULL BLEED SPLIT */}
-        <section className="py-60 md:py-80 px-8 bg-white/5">
-          <div className="container mx-auto max-w-7xl">
-            <div className="grid lg:grid-cols-2 gap-32 items-center">
-               <motion.div 
-                 initial={{ opacity: 0, x: -50 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 className="space-y-12"
-               >
-                 <span className="text-xs font-black uppercase tracking-[1em] text-indigo-500">Nuestra Filosofía</span>
-                 <h2 className="text-6xl md:text-9xl font-black uppercase tracking-[-0.04em] leading-[0.8] text-white">
-                   Más que <br/> un servicio.
-                 </h2>
-                 <p className="text-2xl text-slate-400 font-light leading-relaxed max-w-lg">
-                    Estamos redefiniendo la experiencia de {lead.category || 'servicio'} en {lead.city || 'el área'}. Un legado construido sobre resultados reales.
-                 </p>
-               </motion.div>
-               <motion.div 
-                 initial={{ opacity: 0, x: 50 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 className="space-y-10"
-               >
-                  <div className="backdrop-blur-2xl bg-white/[0.03] border border-white/10 p-16 rounded-[3rem]">
-                     <p className="text-2xl leading-relaxed font-semibold text-white mb-8">
-                       Ofrecemos una autoridad incomparable a través de una atención meticulosa al detalle en cada operación.
-                     </p>
-                     <div className="space-y-6">
-                        {[
-                          "Compromiso total con la excelencia técnica.",
-                          "Atención personalizada a cada necesidad.",
-                          "Resultados validados por años de experiencia."
-                        ].map((text, i) => (
-                          <div key={i} className="flex items-start gap-4">
-                            <CheckCircle2 size={24} className="text-emerald-500 shrink-0" />
-                            <span className="text-slate-400 font-medium">{text}</span>
-                          </div>
-                        ))}
-                     </div>
-                  </div>
-               </motion.div>
-            </div>
+      {/* Services Section - Clean & High Contrast */}
+      <section className="py-40 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-3xl mb-24">
+            <span className="text-blue-600 font-black uppercase tracking-[0.4em] text-xs mb-6 block">Nuestros Pilares</span>
+            <h2 className="text-6xl md:text-8xl font-black text-neutral-900 tracking-tighter leading-none mb-10">
+              Soluciones de ingeniería <br/> para el día a día.
+            </h2>
+            <p className="text-xl text-neutral-500 font-medium leading-relaxed">
+              En {lead.name} entendemos que tu coche no es solo una máquina, es tu herramienta vital. Por ello fusionamos precisión técnica con un trato humano excepcional.
+            </p>
           </div>
-        </section>
 
-        {/* SERVICES GRID */}
-        <section id="servicios" className="py-40 md:py-60 px-8">
-          <div className="container mx-auto max-w-7xl">
-             <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-32">
-                <div className="space-y-6">
-                   <span className="text-xs font-black uppercase tracking-[1em] text-white/30">Nuestros Pilares</span>
-                   <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-white">Excelencia <br/> Especializada</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {/* Service 1 */}
+            <div className="group relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl">
+              <img src={mechImage} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Mecánica" />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent" />
+              <div className="absolute bottom-12 left-12 right-12">
+                <span className="text-blue-400 font-black uppercase tracking-widest text-[10px] block mb-4">Ingeniería</span>
+                <h3 className="text-white text-4xl font-black mb-4 tracking-tight">Mecánica General</h3>
+                <p className="text-neutral-400 text-lg font-medium leading-snug">Desde el cambio de aceite hasta reconstrucción completa de motores.</p>
+                <div className="mt-8 pt-6 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button className="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2">Explorar <ArrowRight className="w-4 h-4"/></button>
                 </div>
-                <div className="flex flex-col items-start gap-6">
-                   <p className="text-slate-400 text-lg max-w-xs leading-relaxed">
-                      Despliegue táctico de servicios especializados para asegurar la máxima calidad.
-                   </p>
-                </div>
-             </div>
-
-             <div className="grid md:grid-cols-3 gap-10">
-                {services.map((s, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.2 }}
-                    className="p-14 border border-white/5 rounded-[3rem] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all group overflow-hidden relative"
-                  >
-                     <div className="absolute -right-10 -bottom-10 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity scale-[3]">
-                        {s.icon}
-                     </div>
-                     <div 
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-12 group-hover:scale-110 transition-transform"
-                        style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
-                     >
-                        {s.icon}
-                     </div>
-                     <h4 className="text-2xl font-black uppercase tracking-tight mb-6 text-white">{s.title}</h4>
-                     <p className="text-slate-400 text-lg leading-relaxed">{s.desc}</p>
-                  </motion.div>
-                ))}
-             </div>
-          </div>
-        </section>
-
-        {/* LOCATION / MAP - FULL WIDTH FEEL */}
-        <section id="contacto" className="py-40 md:py-60 px-8">
-          <div className="container mx-auto max-w-7xl">
-            <div className="bg-white/[0.02] rounded-[4rem] overflow-hidden border border-white/10">
-               <div className="grid lg:grid-cols-2 gap-0 items-stretch">
-                  <div className="p-16 md:p-24 space-y-16">
-                     <div className="space-y-6">
-                        <span className="text-xs font-black uppercase tracking-[1em] text-white/20">Ubicación</span>
-                        <h3 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-tight text-white">Nuestra <br/> Sede</h3>
-                        <p className="text-slate-400 text-2xl font-light">
-                          Visítanos en nuestro centro operativo principal en: <br/>
-                          <span className="text-white font-bold block mt-6 text-4xl tracking-tight">{lead.address}</span>
-                        </p>
-                     </div>
-                     
-                     <div className="grid sm:grid-cols-2 gap-12">
-                        <div className="space-y-4">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Contacto</span>
-                           <p className="text-xl font-bold flex items-center gap-4 text-white">
-                             <Phone size={20} className="text-indigo-500" /> {lead.phone || 'Privado'}
-                           </p>
-                        </div>
-                        <div className="space-y-4">
-                           <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Horarios</span>
-                           <p className="text-xl font-bold flex items-center gap-4 text-white">
-                             <Clock size={20} className="text-indigo-500" /> Lunes - Viernes
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="relative min-h-[500px]">
-                     <img 
-                       src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200" 
-                       className="w-full h-full object-cover grayscale brightness-50 contrast-125"
-                       alt="Location"
-                     />
-                     <div className="absolute inset-0 bg-indigo-500/10 mix-blend-overlay" />
-                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <div className="w-12 h-12 bg-indigo-500 rounded-full animate-ping absolute opacity-40" />
-                        <div className="w-12 h-12 bg-white rounded-full relative z-10 border-8 border-indigo-500 shadow-3xl" />
-                     </div>
-                  </div>
-               </div>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* FINAL CTA - HYPER IMPACT */}
-        <section className="relative py-80 px-10 text-center overflow-hidden bg-white">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="relative z-10"
-            >
-              <h2 className="text-black text-7xl md:text-[min(15vw,180px)] font-black uppercase tracking-tighter mb-20 italic leading-[0.75]">
-                 Construye tu <br/> Dominio Comercial.
-              </h2>
+            {/* Service 2 */}
+            <div className="group relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl">
+              <img src={diagImage} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Diagnosis" />
+              <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent" />
+              <div className="absolute bottom-12 left-12 right-12">
+                <span className="text-emerald-400 font-black uppercase tracking-widest text-[10px] block mb-4">Tecnología</span>
+                <h3 className="text-white text-4xl font-black mb-4 tracking-tight">Análisis Digital</h3>
+                <p className="text-neutral-400 text-lg font-medium leading-snug">Detección anticipada de errores mediante software de diagnóstico OBD-II.</p>
+                <div className="mt-8 pt-6 border-t border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button className="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2">Explorar <ArrowRight className="w-4 h-4"/></button>
+                </div>
+              </div>
+            </div>
+
+            {/* Service 3: Values Card */}
+            <div className="bg-neutral-950 rounded-[3rem] p-16 flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px] -mr-32 -mt-32" />
+              <div>
+                <h3 className="text-white text-4xl font-black mb-10 tracking-tight leading-tight">¿Por qué <span className="text-blue-600 italic">Tallers Bernat</span>?</h3>
+                <div className="space-y-8">
+                  {[
+                    { t: 'Transparencia', d: 'Presupuestos cerrados sin sorpresas finales.' },
+                    { t: 'Rapidez', d: 'Protocolos de entrega optimizados.' },
+                    { t: 'Recambios', d: 'Solo utilizamos piezas originales certificadas.' }
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="w-2 h-2 rounded-full bg-blue-600 mt-2" />
+                      <div>
+                        <h5 className="text-white font-black uppercase tracking-widest text-xs mb-1">{item.t}</h5>
+                        <p className="text-neutral-500 font-medium text-sm">{item.d}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="px-16 py-8 bg-black text-white text-[11px] font-black uppercase tracking-[1em] hover:scale-110 active:scale-95 transition-all shadow-4xl rounded-2xl"
+                className="w-full py-6 bg-white text-neutral-950 rounded-2xl font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all transform active:scale-95"
               >
-                Comenzar ahora
+                Solicitar Reservado
               </button>
-            </motion.div>
-        </section>
-      </main>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* FOOTER */}
-      <footer className="py-32 border-t border-white/5 bg-black/60 relative z-10">
-         <div className="container mx-auto px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-24">
-               <div className="col-span-2 space-y-10">
-                  <div className="text-4xl font-black tracking-tighter uppercase text-white">{lead.name}</div>
-                  <p className="text-slate-500 text-lg leading-relaxed max-w-sm">
-                    Dedicados a proporcionar estándares de excelencia y resultados estratégicos para cada uno de nuestros clientes.
-                  </p>
-                  <div className="flex gap-8 text-white/40">
-                      <Instagram size={24} className="hover:text-white cursor-pointer" />
-                      <Facebook size={24} className="hover:text-white cursor-pointer" />
-                      <Globe size={24} className="hover:text-white cursor-pointer" />
+      {/* Trust Quote Section - Minimalist & Large */}
+      <section className="py-60 bg-neutral-100 relative overflow-hidden">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-neutral-300 to-transparent" />
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <div className="w-20 h-20 bg-white shadow-xl rounded-full flex items-center justify-center mx-auto mb-16 rotate-12">
+             <Star className="w-8 h-8 text-blue-600 fill-current" />
+          </div>
+          <h2 className="text-5xl md:text-[5.5rem] font-black text-neutral-950 leading-[0.95] tracking-[-0.05em] mb-20 italic">
+            "NO SOLO REPARAMOS<br/>
+            MÁQUINAS. REPARAMOS<br/>
+            <span className="text-blue-600 not-italic">VUESTRA TRANQUILIDAD.</span>"
+          </h2>
+          <div className="flex items-center justify-center gap-6">
+            <div className="w-16 h-1 bg-neutral-300" />
+            <span className="text-sm font-black uppercase tracking-[0.4em] text-neutral-500">Fundado en {lead.city || 'el año 2004'}</span>
+            <div className="w-16 h-1 bg-neutral-300" />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA - The Final Contact */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto bg-blue-700 rounded-[4rem] p-12 md:p-32 text-center text-white relative overflow-hidden shadow-3xl shadow-blue-500/30">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+          <div className="relative z-10 max-w-4xl mx-auto">
+             <h2 className="text-6xl md:text-9xl font-black tracking-[-0.05em] leading-none mb-12 uppercase">
+               ¿Listo para el <br/> siguiente kilómetro?
+             </h2>
+             <p className="text-white/60 text-xl md:text-2xl font-medium mb-16 max-w-2xl mx-auto">
+               Asigne su plaza hoy mismo y experimente el servicio de mantenimiento premium que su vehículo merece.
+             </p>
+             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full sm:w-auto px-16 py-8 bg-white text-blue-700 rounded-[2rem] text-2xl font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl"
+                >
+                  Reservar Ahora
+                </button>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-neutral-950 text-white pt-40 pb-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-24 mb-40">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-12">
+                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center rotate-3">
+                  <span className="text-black font-black text-xl">{lead.name.charAt(0)}</span>
+                </div>
+                <span className="text-3xl font-black tracking-tighter uppercase">{lead.name}</span>
+              </div>
+              <p className="text-neutral-500 text-2xl font-medium max-w-sm mb-12 leading-relaxed">
+                Referente en automoción y mecánica de precisión en {lead.city || 'vuestra provincia'}.
+              </p>
+              <div className="flex gap-4">
+                {[Smartphone, MapPin, Globe].map((Icon, i) => (
+                  <div key={i} className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-white text-neutral-400 hover:text-black transition-all cursor-pointer border border-white/10">
+                    <Icon className="w-6 h-6" />
                   </div>
-               </div>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+               <h4 className="text-sm font-black uppercase tracking-[0.3em] mb-12 text-blue-600">Compañía</h4>
+               <ul className="space-y-6">
+                 {['Inicio', 'Especialidades', 'Cómo Trabajamos', 'Equipo', 'Legal'].map(item => (
+                   <li key={item}><a href="#" className="text-neutral-500 hover:text-white transition-colors text-lg font-medium">{item}</a></li>
+                 ))}
+               </ul>
+            </div>
+
+            <div>
+               <h4 className="text-sm font-black uppercase tracking-[0.3em] mb-12 text-blue-600">Contacto</h4>
                <div className="space-y-8">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Páginas</span>
-                  <ul className="space-y-5 text-lg text-slate-500 font-medium">
-                     <li className="hover:text-white cursor-pointer transition-colors">Servicios</li>
-                     <li className="hover:text-white cursor-pointer transition-colors">Proyectos</li>
-                     <li className="hover:text-white cursor-pointer transition-colors">Nosotros</li>
-                  </ul>
-               </div>
-               <div className="space-y-8">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Legal</span>
-                  <ul className="space-y-5 text-lg text-slate-500 font-medium">
-                     <li className="hover:text-white cursor-pointer transition-colors">Privacidad</li>
-                     <li className="hover:text-white cursor-pointer transition-colors">Aviso Legal</li>
-                     <li className="hover:text-white cursor-pointer transition-colors">Cookies</li>
-                  </ul>
+                 <div>
+                   <p className="text-neutral-600 text-xs font-black uppercase tracking-widest mb-2">Ubicación</p>
+                   <p className="text-neutral-300 font-medium">{lead.address || 'Polígono Industrial, Carrer 4'}</p>
+                 </div>
+                 <div>
+                   <p className="text-neutral-600 text-xs font-black uppercase tracking-widest mb-2">Teléfono Directo</p>
+                   <p className="text-neutral-300 font-medium">{lead.phone || '+34 930 000 000'}</p>
+                 </div>
                </div>
             </div>
-            <div className="mt-40 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-               <span className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-600">© 2026 {lead.name} | Desarrollado para la Excelencia</span>
-               <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-slate-700">
-                  <Shield size={14} /> Activo Digital Verificado
-               </div>
+          </div>
+          
+          <div className="pt-20 border-t border-white/5 flex flex-col md:flex-row justify-between gap-10 items-center">
+            <p className="text-neutral-700 font-black uppercase tracking-[0.3em] text-[10px]">© 2026 {lead.name.toUpperCase()} — TODOS LOS DERECHOS RESERVADOS</p>
+            <div className="flex items-center gap-4 text-neutral-700 font-black uppercase tracking-[0.3em] text-[10px]">
+               <span className="text-white/20">Desarrollo de Activos por Zyndrix</span>
             </div>
-         </div>
+          </div>
+        </div>
       </footer>
 
+      {/* Styles for animations */}
+      <style jsx global>{`
+        @keyframes fade-in-up {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+          animation: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: inline-flex;
+          animation: marquee 40s linear infinite;
+        }
+        .scroll-hide::-webkit-scrollbar { display: none; }
+      `}</style>
+
+      {/* Consultation Modal */}
       <ConsultationModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        businessName={lead.name}
+        leadName={lead.name}
       />
-
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&display=swap');
-        
-        body {
-          font-family: 'Inter', sans-serif;
-          background-color: #020617;
-          margin: 0;
-          padding: 0;
-          scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, h4 {
-           letter-spacing: -0.05em;
-        }
-
-        .shadow-3xl {
-          box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8);
-        }
-
-        .shadow-4xl {
-          box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #020617;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.2);
-        }
-      `}</style>
     </div>
   );
 }
