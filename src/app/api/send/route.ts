@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     console.log(`🚀 [OUTREACH] Triggering real send to: ${targetEmail}`);
 
     const resend = new Resend(apiKey);
-    const fromEmail = process.env.RESEND_FROM_EMAIL || 'Oscar Montes <onboarding@resend.dev>';
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'Zyndrix <info@zyndrix.dev>';
 
     // --- TEMPLATE LOGIC ---
     let subject = `Análisis de Autoridad Digital: ${name} — Propuesta Estratégica (${location})`;
