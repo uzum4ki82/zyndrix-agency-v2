@@ -1,0 +1,294 @@
+{
+  "name": "LinkedIn Post TEST - Zyndrix",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "linkedin-post-test",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "wh-linkedin-001",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "linkedin-post-test"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer parámetros del webhook\n// El webhook debe recibir: { \"text\": \"Texto del post\", \"token\": \"Bearer token de LinkedIn\" }\n// O solo { \"text\": \"...\" } si el token está en las credenciales de n8n\n\nconst body = $input.first().json.body || $input.first().json;\n\nconst postText = body.text || body.texto || body.contenido || 'Publicación de prueba desde Zyndrix Agency 🚀\\n\\n#automation #n8n #zyndrix';\nconst bearerToken = body.token || body.access_token || '';\nconst visibility = body.visibility || 'PUBLIC';\n\nif (!postText || postText.trim().length === 0) {\n  throw new Error('El texto del post no puede estar vacío. Envía { \"text\": \"Tu mensaje\" }');\n}\n\nif (postText.length > 3000) {\n  throw new Error('El texto supera los 3000 caracteres permitidos por LinkedIn.');\n}\n\nreturn [{\n  json: {\n    postText: postText.trim(),\n    bearerToken,\n    visibility\n  }\n}];"
+      },
+      "id": "extract-params-001",
+      "name": "Extract & Validate Params",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://api.linkedin.com/v2/userinfo",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "linkedInOAuth2Api",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "get-profile-oauth-001",
+      "name": "Get Profile (OAuth2)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, -120],
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "REEMPLAZA_CON_TU_CREDENTIAL_ID",
+          "name": "LinkedIn account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "OPCIÓN A: Usa credencial LinkedIn OAuth2 configurada en n8n. Necesita scope: openid profile w_member_social"
+    },
+    {
+      "parameters": {
+        "url": "https://api.linkedin.com/v2/userinfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Extract & Validate Params').first().json.bearerToken }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "get-profile-manual-001",
+      "name": "Get Profile (Token Manual)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 120],
+      "onError": "continueRegularOutput",
+      "notes": "OPCIÓN B: Usa el Bearer token enviado en el body del webhook como 'token'. Útil para testing rápido."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Intentar obtener el personId desde cualquiera de los dos nodos anteriores\nlet profileData = null;\nlet personId = null;\nlet source = '';\n\ntry {\n  const oauthResult = $('Get Profile (OAuth2)').first();\n  if (oauthResult && oauthResult.json) {\n    const data = oauthResult.json.body || oauthResult.json;\n    if (data.sub) {\n      personId = data.sub;\n      source = 'OAuth2 - userinfo.sub';\n    }\n  }\n} catch(e) {}\n\nif (!personId) {\n  try {\n    const manualResult = $('Get Profile (Token Manual)').first();\n    if (manualResult && manualResult.json) {\n      const data = manualResult.json.body || manualResult.json;\n      if (data.sub) {\n        personId = data.sub;\n        source = 'Token Manual - userinfo.sub';\n      }\n    }\n  } catch(e) {}\n}\n\nif (!personId) {\n  throw new Error(\n    'No se pudo obtener el Person ID de LinkedIn.\\n\\n' +\n    'CAUSAS POSIBLES:\\n' +\n    '1. Token sin scope \"openid\" o \"profile\"\\n' +\n    '2. Credencial LinkedIn OAuth2 no configurada en n8n\\n' +\n    '3. Token expirado o inválido\\n\\n' +\n    'SOLUCIÓN: Verifica que tu LinkedIn App tenga los scopes: openid, profile, w_member_social'\n  );\n}\n\nconst params = $('Extract & Validate Params').first().json;\n\nreturn [{\n  json: {\n    personId,\n    source,\n    postText: params.postText,\n    visibility: params.visibility,\n    bearerToken: params.bearerToken\n  }\n}];"
+      },
+      "id": "merge-profile-001",
+      "name": "Get Person ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const { personId, postText, visibility, bearerToken } = $input.first().json;\n\n// Construir el body para LinkedIn UGC Posts API v2\nconst ugcBody = {\n  author: `urn:li:person:${personId}`,\n  lifecycleState: 'PUBLISHED',\n  specificContent: {\n    'com.linkedin.ugc.ShareContent': {\n      shareCommentary: {\n        text: postText\n      },\n      shareMediaCategory: 'NONE'\n    }\n  },\n  visibility: {\n    'com.linkedin.ugc.MemberNetworkVisibility': visibility\n  }\n};\n\nreturn [{\n  json: {\n    ugcBody,\n    ugcBodyStr: JSON.stringify(ugcBody),\n    personId,\n    bearerToken\n  }\n}];"
+      },
+      "id": "build-ugc-body-001",
+      "name": "Build UGC Post Body",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [960, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "linkedInOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Restli-Protocol-Version",
+              "value": "2.0.0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.ugcBodyStr }}",
+        "options": {
+          "timeout": 20000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "post-linkedin-oauth-001",
+      "name": "Post LinkedIn (OAuth2)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, -120],
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "REEMPLAZA_CON_TU_CREDENTIAL_ID",
+          "name": "LinkedIn account"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "OPCIÓN A: LinkedIn OAuth2. Requiere scope w_member_social"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.linkedin.com/v2/ugcPosts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.bearerToken }}"
+            },
+            {
+              "name": "X-Restli-Protocol-Version",
+              "value": "2.0.0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.ugcBodyStr }}",
+        "options": {
+          "timeout": 20000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "post-linkedin-manual-001",
+      "name": "Post LinkedIn (Token Manual)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 120],
+      "onError": "continueRegularOutput",
+      "notes": "OPCIÓN B: Token manual enviado via webhook. Ideal para testing."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Evaluar resultado de ambas opciones de publicación\nlet result = null;\nlet error = null;\nlet statusCode = null;\nlet postId = null;\n\ntry {\n  const oauthResult = $('Post LinkedIn (OAuth2)').first();\n  if (oauthResult && oauthResult.json) {\n    statusCode = oauthResult.json.statusCode;\n    if (statusCode === 201 || statusCode === 200) {\n      postId = oauthResult.json.headers?.['x-restli-id'] || oauthResult.json.headers?.['X-RestLi-Id'];\n      result = { method: 'OAuth2', postId, status: 'published' };\n    } else {\n      error = { method: 'OAuth2', statusCode, body: oauthResult.json.body };\n    }\n  }\n} catch(e) {}\n\nif (!result) {\n  try {\n    const manualResult = $('Post LinkedIn (Token Manual)').first();\n    if (manualResult && manualResult.json) {\n      statusCode = manualResult.json.statusCode;\n      if (statusCode === 201 || statusCode === 200) {\n        postId = manualResult.json.headers?.['x-restli-id'] || manualResult.json.headers?.['X-RestLi-Id'];\n        result = { method: 'Token Manual', postId, status: 'published' };\n      } else {\n        error = { method: 'Token Manual', statusCode, body: manualResult.json.body };\n      }\n    }\n  } catch(e) {}\n}\n\nif (result) {\n  return [{ json: { success: true, ...result } }];\n} else {\n  return [{ json: {\n    success: false,\n    error: error || 'No se pudo publicar en LinkedIn',\n    diagnostico: [\n      '401 → Token inválido o expirado',\n      '403 → Sin permiso. Scope w_member_social requerido. Verifica en LinkedIn Developer Portal',\n      '422 → Body mal formateado o personId incorrecto',\n      '429 → Rate limit de LinkedIn (máx 150 req/día para ugcPosts)'\n    ]\n  }}];\n}"
+      },
+      "id": "check-result-001",
+      "name": "Check Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 0],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": "={{ $json.success ? 200 : 400 }}"
+        }
+      },
+      "id": "respond-result-001",
+      "name": "Respond Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1680, 0]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [{ "node": "Extract & Validate Params", "type": "main", "index": 0 }]
+      ]
+    },
+    "Extract & Validate Params": {
+      "main": [
+        [
+          { "node": "Get Profile (OAuth2)", "type": "main", "index": 0 },
+          { "node": "Get Profile (Token Manual)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Get Profile (OAuth2)": {
+      "main": [
+        [{ "node": "Get Person ID", "type": "main", "index": 0 }]
+      ]
+    },
+    "Get Profile (Token Manual)": {
+      "main": [
+        [{ "node": "Get Person ID", "type": "main", "index": 0 }]
+      ]
+    },
+    "Get Person ID": {
+      "main": [
+        [{ "node": "Build UGC Post Body", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build UGC Post Body": {
+      "main": [
+        [
+          { "node": "Post LinkedIn (OAuth2)", "type": "main", "index": 0 },
+          { "node": "Post LinkedIn (Token Manual)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Post LinkedIn (OAuth2)": {
+      "main": [
+        [{ "node": "Check Result", "type": "main", "index": 0 }]
+      ]
+    },
+    "Post LinkedIn (Token Manual)": {
+      "main": [
+        [{ "node": "Check Result", "type": "main", "index": 0 }]
+      ]
+    },
+    "Check Result": {
+      "main": [
+        [{ "node": "Respond Result", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "notes": "WORKFLOW DE PRUEBA LINKEDIN - Zyndrix Agency\n\nCÓMO USAR:\n1. Importa este workflow en n8n\n2. OPCIÓN A (OAuth2):\n   - Crea credencial LinkedIn OAuth2 en n8n con scopes: openid, profile, email, w_member_social\n   - Reemplaza REEMPLAZA_CON_TU_CREDENTIAL_ID con el ID real\n3. OPCIÓN B (Token Manual - más fácil para testing):\n   - Ve a https://www.linkedin.com/developers/tools/oauth\n   - Genera un token con scopes: openid, profile, w_member_social\n   - Activa el workflow y llama al webhook con: { 'text': 'Tu post', 'token': 'EL_TOKEN_AQUI' }\n\nESTRUCTURA DEL POST:\nPOST a tu-n8n/webhook/linkedin-post-test\nBody: { 'text': 'Texto del post en LinkedIn', 'token': 'tu_access_token_aqui' }\n\nERRORES COMUNES:\n- 403: El token no tiene scope w_member_social. Ve a LinkedIn Developer Portal y agrega el scope\n- 401: Token expirado. Genera uno nuevo\n- 422: Error en el body. Verifica el personId y el formato UGC"
+  },
+  "tags": [
+    { "name": "linkedin" },
+    { "name": "test" },
+    { "name": "zyndrix" }
+  ]
+}
