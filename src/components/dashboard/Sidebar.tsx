@@ -103,7 +103,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   AD
                </div>
                <div className="flex flex-col overflow-hidden max-w-[120px]">
-                  <span className="text-[11px] font-black text-slate-900 group-hover:text-indigo-600 transition-colors truncate">admin@zyndrix.ai</span>
+                  <span className="text-[11px] font-black text-slate-900 group-hover:text-indigo-600 transition-colors truncate">info@zyndrix.dev</span>
                   <span className="text-[9px] font-bold text-slate-400 uppercase group-hover:text-slate-500">Administrador</span>
                </div>
             </div>

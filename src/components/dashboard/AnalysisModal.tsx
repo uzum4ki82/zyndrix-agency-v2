@@ -72,7 +72,7 @@ export default function AnalysisModal({ isOpen, onClose, prospect }: AnalysisMod
                   <div className="space-y-4">
                      <div className="flex items-center gap-3 text-slate-600">
                         <Mail size={16} className="text-slate-400" />
-                        <span className="text-xs font-bold truncate">{prospect.email || 'info@zyndrix.ai'}</span>
+                        <span className="text-xs font-bold truncate">{prospect.email || 'info@zyndrix.dev'}</span>
                      </div>
                      <div className="flex items-center gap-3 text-slate-600">
                         <Phone size={16} className="text-slate-400" />

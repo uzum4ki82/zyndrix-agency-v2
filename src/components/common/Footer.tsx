@@ -48,7 +48,7 @@ export const Footer = ({ dict, locale }: { dict: any, locale: string }) => (
                 <div className="space-y-6">
                     <div className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">CONTACTO</div>
                     <div className="flex flex-col gap-4">
-                        <span className="text-sm font-bold text-secondary/60 uppercase">zyndrixia@gmail.com</span>
+                        <span className="text-sm font-bold text-secondary/60 uppercase">info@zyndrix.dev</span>
                     </div>
                 </div>
             </div>

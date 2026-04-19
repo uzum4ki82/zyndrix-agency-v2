@@ -119,7 +119,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                >
                   <div className="p-3 border-b border-slate-50 mb-2">
                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Identificado como</p>
-                     <p className="text-xs font-bold text-slate-900 truncate">admin@zyndrix.ai</p>
+                     <p className="text-xs font-bold text-slate-900 truncate">info@zyndrix.dev</p>
                   </div>
                   <div className="flex flex-col gap-1">
                      <button className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 text-slate-500 hover:text-indigo-600 transition-all">

@@ -144,7 +144,7 @@ En cada nodo que requiera credenciales:
 #### Gmail
 ```
 - OAuth2: Conectar tu cuenta Gmail
-- From email: hola@zyndrix.dev
+- From email: info@zyndrix.dev
 ```
 
 #### Telegram
