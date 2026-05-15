@@ -3,7 +3,8 @@ import Script from "next/script";
 import "./globals.css";
 import { Viewport } from 'next';
 import { Background } from "@/components/common/Background";
-import { ChatAgent } from "@/components/layout/ChatAgent";
+import Chatbot from "@/components/Chatbot";
+
 import { CookieConsent } from "@/components/common/CookieConsent";
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
@@ -94,7 +95,8 @@ export default async function RootLayout({
         )}
         <Background />
         {children}
-        <ChatAgent />
+        <Chatbot />
+
         <CookieConsent />
       </body>
     </html>
