@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import Chatbot from "@/components/Chatbot";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"] });
@@ -60,6 +61,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased selection:bg-indigo-100 selection:text-indigo-900 transition-colors duration-300`}>
         {children}
+        <Chatbot />
       </body>
     </html>
   );
