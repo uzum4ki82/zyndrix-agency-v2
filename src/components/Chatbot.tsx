@@ -68,11 +68,13 @@ export default function Chatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch('https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring', {
+      const response = await fetch('https://n8n.zyndrix.dev/webhook/7f93bc65-c3da-4de3-99e4-800040bdbc35/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          chatInput: cleanText,
           message: cleanText,
+          sessionId: 'marcos-chat-session',
           source: 'chatbot_marcos',
           timestamp: new Date().toISOString()
         })
