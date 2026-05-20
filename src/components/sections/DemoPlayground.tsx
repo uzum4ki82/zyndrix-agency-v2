@@ -25,13 +25,28 @@ export const DemoPlayground = () => {
     }
   }, [activeTab]);
 
+  const audioContextRef = useRef<any>(null);
+
+  const getAudioContext = () => {
+    if (typeof window === 'undefined') return null;
+    if (!audioContextRef.current) {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContextClass) {
+        audioContextRef.current = new AudioContextClass();
+      }
+    }
+    return audioContextRef.current;
+  };
+
   // Web Audio API chimes
   const playChime = (type: 'connect' | 'disconnect') => {
     if (typeof window === 'undefined' || isMuted) return;
     try {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       
@@ -65,6 +80,36 @@ export const DemoPlayground = () => {
       }
     } catch (e) {
       console.warn('AudioContext chime error:', e);
+    }
+  };
+
+  const handleCallToggle = () => {
+    if (isCalling) {
+      setIsCalling(false);
+    } else {
+      // Initialize/resume AudioContext under user gesture
+      try {
+        const ctx = getAudioContext();
+        if (ctx && ctx.state === 'suspended') {
+          ctx.resume();
+        }
+      } catch (e) {
+        console.warn('Click gesture AudioContext unlock error:', e);
+      }
+      
+      // Speak silent utterance to unlock SpeechSynthesis under user gesture
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+          const silent = new SpeechSynthesisUtterance('');
+          silent.volume = 0;
+          window.speechSynthesis.speak(silent);
+        } catch (e) {
+          console.warn('Click gesture SpeechSynthesis unlock error:', e);
+        }
+      }
+      setIsCalling(true);
+      setCallStep(0);
     }
   };
 
@@ -391,7 +436,7 @@ export const DemoPlayground = () => {
                       {/* Trigger Actions */}
                       <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
                         <button 
-                          onClick={() => setIsCalling(!isCalling)}
+                          onClick={handleCallToggle}
                           className={`w-full max-w-xs py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-500 border cursor-pointer ${isCalling ? 'bg-red-50 text-red-500 border-red-100 hover:bg-red-100' : 'bg-primary text-white border-primary shadow-[0_20px_40px_rgba(0,82,255,0.3)] hover:scale-105'}`}
                         >
                           {isCalling ? (
