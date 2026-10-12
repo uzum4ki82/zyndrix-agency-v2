@@ -1,21 +1,15 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+
+const BASE = 'https://zyndrix.dev';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://zyndrix.dev';
-
-  const routes = [
-    '',
-    '/blueprint',
-    '/auditoria',
-    '/privacy',
-    '/security',
-    '/terms',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : 'monthly' as any,
-    priority: route === '' ? 1 : 0.8,
-  }));
-
-  return routes;
+  const routes: { path: string; priority: number }[] = [
+    { path: '', priority: 1 },
+    { path: '/agente-whatsapp', priority: 0.9 },
+    { path: '/agente-voz', priority: 0.9 },
+    { path: '/aviso-legal', priority: 0.2 },
+    { path: '/privacidad', priority: 0.2 },
+    { path: '/cookies', priority: 0.2 },
+  ];
+  return routes.map((r) => ({ url: `${BASE}${r.path}`, changeFrequency: 'monthly', priority: r.priority }));
 }

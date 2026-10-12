@@ -5,8 +5,12 @@ export async function POST(request: Request) {
     const { username, password } = await request.json();
 
     // Use private env vars (without NEXT_PUBLIC_)
-    const adminUser = process.env.ADMIN_USER || 'admin';
-    const adminPass = process.env.ADMIN_PASS || 'zyndrix2026';
+    const adminUser = process.env.ADMIN_USER;
+    const adminPass = process.env.ADMIN_PASS;
+    // Sin credenciales configuradas en el servidor no se permite el acceso (antes había una clave por defecto en el código).
+    if (!adminUser || !adminPass) {
+      return NextResponse.json({ success: false, error: 'Acceso no configurado.' }, { status: 503 });
+    }
 
     if (username === adminUser && password === adminPass) {
       return NextResponse.json({ 

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
   --color-base: #FFFFFF; /* Clean White */
   --color-surface-low: #F8FAFC;
   --color-surface-mid: #F1F5F9;
@@ -13,13 +14,13 @@
 
 @layer base {
   :root {
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-heading: var(--font-montserrat), 'Montserrat', system-ui, sans-serif;
+    --font-body: var(--font-inter), 'Inter', system-ui, sans-serif;
   }
 
   body {
     background-color: var(--color-base);
-    color: var(--color-primary);
+    color: var(--color-secondary);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
@@ -27,8 +28,7 @@
 
   h1, h2, h3, h4, .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: -0.04em;
-    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -109,3 +109,7 @@ html {
 
 
 
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

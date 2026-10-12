@@ -1,103 +1,56 @@
-import { Inter, Outfit } from "next/font/google";
-import Script from "next/script";
-import "./globals.css";
-import { Viewport } from 'next';
-import { Background } from "@/components/common/Background";
-import Chatbot from "@/components/Chatbot";
+import type { Metadata, Viewport } from 'next';
+import { Inter, Montserrat } from 'next/font/google';
+import './globals.css';
+import { ConsentAnalytics } from '@/components/site/ConsentAnalytics';
 
-import { CookieConsent } from "@/components/common/CookieConsent";
-import { headers } from 'next/headers';
-import { getDictionary } from '@/lib/dictionaries';
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const montserrat = Montserrat({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-montserrat', display: 'swap' });
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const SITE_URL = 'https://zyndrix.dev';
 
-export const viewport: Viewport = {
-  themeColor: '#03040a',
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 5,
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Zyndrix · Agentes de IA para WhatsApp y teléfono',
+    template: '%s',
+  },
+  description:
+    'Agentes de IA que atienden el WhatsApp y el teléfono de pequeños negocios con su propia información. Desde 50 €/mes.',
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    siteName: 'Zyndrix',
+    url: SITE_URL,
+  },
+  twitter: { card: 'summary_large_image' },
+  icons: { icon: '/img/favicon-zyndrix.png', apple: '/apple-touch-icon.png' },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const headerList = await headers();
-  const locale = (headerList.get('x-zyndrix-lang') as string) || 'es';
-  const dict = await getDictionary(locale);
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
+};
 
+// Datos estructurados mínimos y verificables: sin dirección, valoraciones ni precios estructurados.
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Zyndrix',
+  url: SITE_URL,
+  logo: `${SITE_URL}/img/logo_raw.png`,
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={locale} className="scroll-smooth">
-      <head>
-        {/* Localized JSON-LD Schema */}
+    <html lang="es" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
+      <body className="bg-white font-sans text-secondary antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              "name": dict.metadata.schema_name || "ZYNDRIX | Arquitectura de Automatización IA",
-              "image": "https://www.zyndrix.com/img/zyndrix-live.png",
-              "url": "https://www.zyndrix.com",
-              "telephone": "+34637729266",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Torre Europa, P.º de la Castellana, 95",
-                "addressLocality": "Madrid",
-                "postalCode": "28046",
-                "addressCountry": "ES"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 40.4502,
-                "longitude": -3.6918
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "09:00",
-                "closes": "18:00"
-              },
-              "sameAs": [
-                "https://www.linkedin.com/company/zyndrix",
-                "https://x.com/zyndrix"
-              ]
-            })
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-      </head>
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#03040a] selection:bg-primary selection:text-black`}>
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <Script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-              `}
-            </Script>
-          </>
-        )}
-        <Background />
         {children}
-        <Chatbot />
-
-        <CookieConsent />
+        <ConsentAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );

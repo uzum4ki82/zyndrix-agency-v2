@@ -1,126 +1,130 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-// CONFIGURACIÓN DE RESPALDO (Hardcoded para máxima fiabilidad)
-const SB_URL = 'https://vrvfftftnlspajplqjye.supabase.co';
-const SB_KEY = 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE';
+/**
+ * Recepción de solicitudes del formulario público.
+ * - Valida en servidor, filtra bots (campo trampa + tiempo mínimo) y limita la frecuencia por IP.
+ * - Guarda en Supabase y avisa al flujo de n8n desde el servidor (nada sensible llega al navegador).
+ * - Solo responde éxito si al menos uno de los dos destinos ha recibido el lead.
+ */
+
+const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://vrvfftftnlspajplqjye.supabase.co';
+const SB_KEY = process.env.SUPABASE_LEADS_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_04ivizRHZPLg2eH6YkQUtw_MJG7DXfE';
+const N8N_LEAD_WEBHOOK = process.env.N8N_LEAD_WEBHOOK_URL || 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^\+?[0-9\s().-]{9,20}$/;
+const PRODUCTS: Record<string, string> = {
+  whatsapp: 'Agente de WhatsApp (50 €/mes)',
+  voz: 'Agente de voz (75 €/mes)',
+  no_lo_se: 'Sin decidir',
+};
+
+// Límite simple en memoria por instancia: 5 envíos cada 10 minutos por IP.
+const hits = new Map<string, number[]>();
+function rateLimited(ip: string) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < 10 * 60_000);
+  recent.push(now);
+  hits.set(ip, recent);
+  return recent.length > 5;
+}
+
+const clean = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+
+async function withTimeout(url: string, init: RequestInit, ms = 8000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await fetch(url, { ...init, signal: ctrl.signal });
+  } finally {
+    clearTimeout(t);
+  }
+}
 
 export async function POST(req: Request) {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  let body: Record<string, unknown>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'invalid_json' }, { status: 400 });
+  }
+
+  // Bots: campo trampa relleno o envío demasiado rápido → respuesta neutra sin procesar
+  const elapsed = Number(body.elapsedMs) || 0;
+  if (clean(body.website, 200) || elapsed < 2500) {
+    return NextResponse.json({ ok: true }, { status: 202 });
+  }
+
+  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
+  if (rateLimited(ip)) {
+    return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
+  }
+
+  const nombre = clean(body.nombre, 120);
+  const negocio = clean(body.negocio, 160);
+  const contacto = clean(body.contacto, 160);
+  const mensaje = clean(body.mensaje, 1500);
+  const producto = PRODUCTS[clean(body.producto, 20)] ? clean(body.producto, 20) : 'no_lo_se';
+  const isEmail = EMAIL_RE.test(contacto);
+  const isPhone = !isEmail && PHONE_RE.test(contacto);
+
+  if (nombre.length < 2 || (!isEmail && !isPhone) || body.privacidad !== true) {
+    return NextResponse.json({ error: 'validation' }, { status: 422 });
+  }
+
+  const record = {
+    name: nombre,
+    email: isEmail ? contacto.toLowerCase() : null,
+    phone: isPhone ? contacto : null,
+    company_name: negocio || null,
+    message: mensaje || '(sin mensaje)',
+    service: PRODUCTS[producto],
+    language_preference: 'es',
+    status: 'new',
   };
 
-  if (req.method === 'OPTIONS') return NextResponse.json({}, { headers: corsHeaders });
-
+  let leadId: string | null = null;
+  let stored = false;
   try {
-    const body = await req.json();
-    console.log('--- INICIO PROCESAMIENTO LEAD ---', body.email);
-
-    // 1. PERSISTENCIA EN SUPABASE
-    const resSupabase = await fetch(`${SB_URL}/rest/v1/leads`, {
+    const sb = await withTimeout(`${SB_URL}/rest/v1/leads`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'apikey': SB_KEY,
-        'Authorization': `Bearer ${SB_KEY}`,
-        'Prefer': 'return=representation'
+        apikey: SB_KEY,
+        Authorization: `Bearer ${SB_KEY}`,
+        Prefer: 'return=representation',
       },
-      body: JSON.stringify({
-        name: body.name || 'Anónimo',
-        email: body.email,
-        phone: body.phone || null,
-        company_name: body.company_name || body.company || body.business || null,
-        message: body.message || 'Lead Inyectado',
-        budget: body.budget || null,
-        service: body.service || 'General',
-        language_preference: body.language || body.locale || 'es',
-        niche_category: body.sector || body.niche || null,
-        status: 'new'
-      })
+      body: JSON.stringify(record),
     });
-
-    let leadData = null;
-    let leadId = Date.now().toString(); // ID de respaldo
-
-    try {
-      const text = await resSupabase.text();
-      if (text) {
-        leadData = JSON.parse(text);
-        leadId = Array.isArray(leadData) ? (leadData?.[0]?.id || leadId) : (leadData?.id || leadId);
-      }
-    } catch (e) {
-      console.warn('Error parseando respuesta Supabase:', e);
+    if (sb.ok) {
+      stored = true;
+      const data = await sb.json().catch(() => null);
+      leadId = Array.isArray(data) ? data[0]?.id ?? null : data?.id ?? null;
+    } else {
+      console.error('lead: supabase status', sb.status);
     }
-
-    if (!resSupabase.ok) {
-      console.error('Supabase Error Status:', resSupabase.status);
-    }
-
-    // 2. DISPARO DE WEBHOOKS (n8n)
-    const isMagnet = body.service?.toLowerCase().includes('blueprint');
-    const n8nUrl = isMagnet 
-      ? 'https://n8n.zyndrix.dev/webhook/blueprint'
-      : 'https://n8n.zyndrix.dev/webhook/zyndrix-lead-scoring';
-
-    const payload = { 
-      source: body.service || 'landing', 
-      record: {
-        id: leadId,
-        name: body.name || 'Anónimo',
-        email: body.email,
-        phone: body.phone || null,
-        company_name: body.company_name || body.company || body.business || null,
-        message: body.message || 'Lead Inyectado',
-        service: body.service || 'General',
-        budget: body.budget || null,
-        language: body.language || body.locale || 'es',
-        sector: body.sector || body.niche || null,
-        status: 'new',
-        source: body.service || 'landing'
-      }
-    };
-
-    console.log(`>>> FORCING WEBHOOK DELIVERY TO: ${n8nUrl}`);
-    
-    // IMPORTANTE: DEBEMOS ESPERAR (await) para asegurar que n8n reciba el lead
-    // Pero añadimos un timeout de 10s para no colgar la web si n8n es lento
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-    try {
-      console.log('>>> FETCHING WEBHOOK with 10s timeout...');
-      const webhookRes = await fetch(n8nUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (!webhookRes.ok) throw new Error(`Webhook Error: ${webhookRes.status}`);
-      console.log('>>> WEBHOOK DELIVERED SUCCESSFULLY');
-    } catch (err: any) {
-      clearTimeout(timeoutId);
-      if (err.name === 'AbortError') {
-        console.warn('>>> WEBHOOK TIMEOUT (10s) - Lead captured in Supabase, continuing...');
-      } else {
-        console.error('Error crítico enviando a n8n:', err.message);
-      }
-    }
-
-    // 3. RESPUESTA DE ÉXITO INMEDIATA
-    return NextResponse.json({ 
-      success: true, 
-      id: leadId,
-      processed: true 
-    }, { status: 201, headers: corsHeaders });
-
-  } catch (err: any) {
-    console.error('ERROR CRÍTICO EN API LEAD:', err.message);
-    return NextResponse.json({ 
-      error: 'Error de servidor', 
-      message: err.message 
-    }, { status: 500, headers: corsHeaders });
+  } catch (err) {
+    console.error('lead: supabase error', (err as Error).name);
   }
+
+  let notified = false;
+  try {
+    const wh = await withTimeout(N8N_LEAD_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: 'web_agentes_ia',
+        record: { id: leadId ?? `web-${Date.now()}`, ...record, product: producto, source: 'web_agentes_ia' },
+      }),
+    });
+    notified = wh.ok;
+    if (!wh.ok) console.error('lead: n8n status', wh.status);
+  } catch (err) {
+    console.error('lead: n8n error', (err as Error).name);
+  }
+
+  if (!stored && !notified) {
+    return NextResponse.json({ error: 'delivery_failed' }, { status: 502 });
+  }
+  return NextResponse.json({ ok: true }, { status: 201 });
 }
