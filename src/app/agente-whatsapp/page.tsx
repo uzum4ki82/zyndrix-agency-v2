@@ -10,6 +10,7 @@ import { TrackedLink } from '@/components/site/TrackedLink';
 import { ViewTracker } from '@/components/site/ViewTracker';
 import { btnPrimary, btnSecondary, container, eyebrow, h2, lead } from '@/components/site/ui';
 import { PRODUCTS } from '@/config/offer';
+import { JsonLd, serviceJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { FAQ_WHATSAPP } from '@/content/faqs';
 
 const P = PRODUCTS.whatsapp;
@@ -38,6 +39,9 @@ const STEPS = [
 export default function AgenteWhatsAppPage() {
   return (
     <>
+      <JsonLd data={serviceJsonLd(P)} />
+      <JsonLd data={breadcrumbJsonLd(P)} />
+      <JsonLd data={faqJsonLd(FAQ_WHATSAPP)} />
       <SiteHeader />
       <ViewTracker product="whatsapp" />
       <main id="contenido" className="bg-white text-secondary">
