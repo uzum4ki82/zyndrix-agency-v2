@@ -12,6 +12,13 @@ export function SiteFooter() {
           <p className="mt-4 text-[15px] leading-relaxed text-secondary/70">
             Agentes de IA para que los pequeños negocios atiendan WhatsApp y teléfono sin estar pendientes todo el día.
           </p>
+          <p className="mt-3 text-[15px] leading-relaxed text-secondary/70">
+            ¿Necesitas red por cable o instalación técnica en Cataluña?{' '}
+            <a href="https://www.oscarinstalaciones.es" className="underline hover:text-primary">
+              Oscar Instalaciones
+            </a>
+            , cableado Cat 6/6A y redes.
+          </p>
         </div>
         <nav aria-label="Productos">
           <h2 className="text-sm font-semibold text-secondary">Productos</h2>
