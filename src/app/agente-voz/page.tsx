@@ -10,6 +10,7 @@ import { TrackedLink } from '@/components/site/TrackedLink';
 import { ViewTracker } from '@/components/site/ViewTracker';
 import { btnPrimary, btnSecondary, container, eyebrow, h2, lead } from '@/components/site/ui';
 import { PRODUCTS } from '@/config/offer';
+import { JsonLd, serviceJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/components/seo/JsonLd';
 import { FAQ_VOZ } from '@/content/faqs';
 
 const P = PRODUCTS.voz;
@@ -38,6 +39,9 @@ const DIFFS = [
 export default function AgenteVozPage() {
   return (
     <>
+      <JsonLd data={serviceJsonLd(P)} />
+      <JsonLd data={breadcrumbJsonLd(P)} />
+      <JsonLd data={faqJsonLd(FAQ_VOZ)} />
       <SiteHeader />
       <ViewTracker product="voz" />
       <main id="contenido" className="bg-white text-secondary">
