@@ -14,7 +14,7 @@ import { btnPrimary, btnSecondary, container } from '@/components/site/ui';
 import { FAQ_GENERAL } from '@/content/faqs';
 
 export const metadata: Metadata = {
-  title: 'Agentes de IA para WhatsApp y teléfono para pequeños negocios | Zyndrix',
+  title: 'Agentes de IA para WhatsApp y teléfono de pequeños negocios | Zyndrix',
   description:
     'Un agente de IA que atiende el WhatsApp (50 €/mes) o el teléfono (75 €/mes) de tu negocio con tu información: responde lo habitual y te avisa de lo importante.',
   alternates: { canonical: '/' },

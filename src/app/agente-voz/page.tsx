@@ -16,7 +16,7 @@ import { FAQ_VOZ } from '@/content/faqs';
 const P = PRODUCTS.voz;
 
 export const metadata: Metadata = {
-  title: 'Agente de voz con IA: atención telefónica para tu negocio · 75 €/mes | Zyndrix',
+  title: 'Agente de voz con IA para atender llamadas · 75 €/mes | Zyndrix',
   description:
     'Un agente telefónico con IA que coge las llamadas que no puedes atender, responde lo habitual y te deja un resumen de cada llamada. 75 €/mes.',
   alternates: { canonical: P.path },

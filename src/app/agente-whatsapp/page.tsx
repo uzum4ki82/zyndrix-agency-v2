@@ -16,7 +16,7 @@ import { FAQ_WHATSAPP } from '@/content/faqs';
 const P = PRODUCTS.whatsapp;
 
 export const metadata: Metadata = {
-  title: 'Agente de WhatsApp con IA para empresas y autónomos · 50 €/mes | Zyndrix',
+  title: 'Agente de WhatsApp con IA para negocios · 50 €/mes | Zyndrix',
   description:
     'Un agente de IA que responde el WhatsApp de tu negocio con tu información, recoge los datos de quien escribe y te avisa cuando hace falta. 50 €/mes.',
   alternates: { canonical: P.path },
