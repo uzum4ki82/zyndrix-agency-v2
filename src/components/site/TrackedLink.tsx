@@ -6,7 +6,7 @@ import { track, type AnalyticsEvent } from '@/lib/analytics';
 
 type Props = ComponentProps<typeof Link> & {
   event?: AnalyticsEvent;
-  eventParams?: Record<string, string>;
+  eventParams?: { product?: string; location?: string };
 };
 
 export function TrackedLink({ event = 'cta_click', eventParams, onClick, ...rest }: Props) {

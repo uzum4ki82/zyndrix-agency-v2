@@ -31,10 +31,11 @@ function subscribe(cb: () => void) {
 }
 
 /**
- * Banner de consentimiento + carga de Google Analytics SOLO tras aceptar.
+ * Banner de consentimiento + carga de Google Tag Manager SOLO tras aceptar.
  * Sin aceptación no se carga ningún script de analítica.
+ * GTM (GTM-5WR2NQPT) lleva la etiqueta de Google de la propiedad GA4 zyndrix.dev.
  */
-export function ConsentAnalytics({ gaId }: { gaId?: string }) {
+export function ConsentAnalytics({ gtmId }: { gtmId?: string }) {
   const consent = useSyncExternalStore(subscribe, getSnapshot, () => 'ssr' as Snapshot);
 
   const choose = (v: 'granted' | 'denied') => {
@@ -48,13 +49,10 @@ export function ConsentAnalytics({ gaId }: { gaId?: string }) {
 
   return (
     <>
-      {gaId && consent === 'granted' && (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
-          <Script id="ga-init" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${gaId}',{anonymize_ip:true});`}
-          </Script>
-        </>
+      {gtmId && consent === 'granted' && (
+        <Script id="gtm-loader" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'granted'});dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtm.js?id=${gtmId}';document.head.appendChild(s);`}
+        </Script>
       )}
 
       {consent === 'none' && (

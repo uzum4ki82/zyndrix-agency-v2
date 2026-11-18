@@ -50,7 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         {children}
-        <ConsentAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        <ConsentAnalytics gtmId={process.env.NEXT_PUBLIC_GTM_ID || 'GTM-5WR2NQPT'} />
       </body>
     </html>
   );
