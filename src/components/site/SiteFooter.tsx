@@ -14,10 +14,10 @@ export function SiteFooter() {
           </p>
           <p className="mt-3 text-[15px] leading-relaxed text-secondary/70">
             ¿Necesitas red por cable o instalación técnica en Cataluña?{' '}
-            <a href="https://www.oscarinstalaciones.es" className="underline hover:text-primary">
-              Oscar Instalaciones
+            <a href="https://www.itrec.es/" className="underline hover:text-primary">
+              ITREC
             </a>
-            , cableado Cat 6/6A y redes.
+            , cableado Cat 6/6A, redes e instalaciones técnicas.
           </p>
         </div>
         <nav aria-label="Productos">
