@@ -1,5 +1,8 @@
 import { headers } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
+
+// Página secundaria (duplica /privacidad o es interna): fuera del índice de buscadores.
+export const metadata = { robots: { index: false, follow: true } };
 import PrivacyClient from '@/components/pages/PrivacyClient';
 
 export default async function PrivacyPage() {
