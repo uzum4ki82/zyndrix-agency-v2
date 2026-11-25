@@ -12,7 +12,6 @@ export async function generateMetadata() {
     title: m.title,
     description: m.description,
     keywords: dict.metadata.keywords.split(', '),
-    robots: { index: false, follow: true },
   };
 }
 
